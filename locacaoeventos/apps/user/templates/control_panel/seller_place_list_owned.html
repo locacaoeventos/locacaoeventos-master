@@ -1,0 +1,77 @@
+{% extends "control_panel/seller_base.html" %}
+{% block page_title %}Home{% endblock page_title %}
+{% block panel_title %}Buffets{% endblock panel_title %}
+{% load general_tags %}
+
+{% block user_panel_content %}
+    <a href="/usuario/anunciante/buffet/cadastrar" class="btn btn-default pull-right">Novo Anúncio</a>
+    <div class="separador-40"> </div>
+    <section class="block listing">
+    	{% for place in place_list %}
+	        <div class="item list" style="border: 1px solid #f9f9f9">
+	            <div class="image">
+	                <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
+	                <a href="item-detail.html">
+	                    <div class="overlay">
+	                        <div class="inner">
+	                            <div class="content">
+	                                <h4>Description</h4>
+	                                <p>{{place.description}}</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="item-specific">
+							<span title="Area">
+								<img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup>
+							</span>
+							<span title="Capacity">
+								<img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
+							</span>
+	                    </div>
+	                    <div class="icon">
+	                        <i class="fa fa-thumbs-up"></i>
+	                    </div>
+	                    <img src="/media/{{place.photo}}" alt="">
+	                </a>
+	            </div>
+	            <div class="wrapper">
+	                <a href="item-detail.html"><h3>{{place.name}}</h3></a>
+	                <figure>{{place.address}}</figure>
+	                <div class="info">
+			            <figure class="pull-left" style="font-weight:bolder">Média Total
+			                &nbsp;&nbsp; {{place.review_rates.rate_average}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+			            
+			            <figure class="pull-left">Infraestrutura
+			                &nbsp;&nbsp; {{place.review_rates.rate_infraestructure}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+			            
+			            <figure class="pull-left">Brinquedos
+			                &nbsp;&nbsp; {{place.review_rates.rate_rides}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+			            
+			            <figure class="pull-left">Custo-Benefício
+			                &nbsp;&nbsp; {{place.review_rates.rate_cost_benefit}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+			            
+			            <figure class="pull-left">Atendimento
+			                &nbsp;&nbsp; {{place.review_rates.rate_attendance}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+			            
+			            <figure class="pull-left">Opinião das Crianças
+			                &nbsp;&nbsp; {{place.review_rates.rate_children_opinion}}
+			            <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			        	</figure><br>
+	                </div>
+	            </div>
+	        </div>
+	    {% endfor %}
+    </section>
+
+
+{% endblock user_panel_content %}

@@ -1,0 +1,214 @@
+{% extends "_base_user.html" %}
+{% load general_tags %}
+{% block page_title %}Buffets{% endblock page_title %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_list.css" type="text/css">
+
+
+<section class="container">
+  <div class="row">
+    <!--Sidebar-->
+    <div class="col-md-3 col-sm-4">
+      <aside id="sidebar">
+        <section>
+          <label class="pnleft_label">Localização
+          <div class="separador-5"> </div>
+          <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px"/>
+          <div class="separador-20"> </div>
+
+          <label class="pnleft_label">Data
+          <div class="separador-5"> </div>
+          <input class="pnleft_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center"/>
+          <div class="separador-20"> </div>
+
+          <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
+          <div class="separador-5"> </div>
+          <div id="search_price" class="pnleft_input" style="width:75%; border-radius:0"></div>
+          <div class="separador-20"> </div>
+
+
+
+          <label class="pnleft_label">Outros</label>
+          <div class="pnleft_input">
+            {% for info in place_additional_information %}
+              <div class="checkbox" style="margin-bottom:13px;"><label><input type="checkbox" name="features[]" value="1">{{info.label}}</label></div>
+            {% endfor %}
+          </div>
+        </section>
+      </aside>
+      <!-- /#sidebar-->
+    </div>
+    <!-- /.col-md-3-->
+    <!--end Sidebar-->
+    <!--Content-->
+    <div class="col-md-9 col-sm-8">
+      <div class="separador-20"> </div>
+      <figure class="filter clearfix">
+        <div class="pull-right">
+          <aside class="sorting">
+            <span>Ordenar</span>
+            <div class="form-group">
+              <select class="framed" name="sort">
+                <option value="">Relevância</option>
+                <option value="2">Preço - Maior</option>
+                <option value="2">Preço - Menor</option>
+                <option value="2">Avaliação - Maior</option>
+                <option value="1">Nome - A-Z</option>
+                <option value="1">Nome - Z-A</option>
+              </select>
+            </div>
+            <!-- /.form-group -->
+          </aside>
+        </div>
+      </figure>
+      <!--Listing Grid-->
+      <nav>
+        <ul class="pagination pull-left">
+          {% if place_list.has_previous %}
+              <li><a href="?page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
+          {% endif %}
+          {% for page_number in place_list.paginator.place_range %}
+              {% if page_number == place_list.number %}
+                <li class="active"><a href="?page={{page_number}}">{{page_number}}</a></li>
+              {% else %}
+                <li><a href="?page={{page_number}}">{{page_number}}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if place_list.has_next %}
+            <li><a href="?page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </nav><br><br><br>
+
+      <section class="block equal-height">
+
+
+
+        <div class="row">
+
+
+          {% for place in place_list %}
+            <div class="col-md-4 col-sm-6">
+              <div class="item " style="border:1px solid #f9f9f9">
+                <div class="image">
+                  <!--
+                    <div class="quick-view" data-toggle="modal" data-target="#modal-bar"><i class="fa fa-eye"></i><span>Quick View</span></div>
+                    -->
+                  <a href="/buffet/detalhar/?pk={{place.pk}}">
+                    <div class="overlay">
+                      <div class="inner">
+                        <div class="content">
+                          <!--<h4>Descrição</h4>-->
+                          <p>{{place.description}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item-specific">
+                      <span title="Area"><img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup></span>
+                      <span title="Capacity"><img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas</span>
+                    </div>
+                    <div class="icon">
+                      <i class="fa fa-thumbs-up"></i>
+                    </div>
+                    <img src="/media/{{place.photo}}" alt="">
+                  </a>
+                </div>
+                <div class="wrapper">
+                  <a href="/buffet/detalhar/?pk={{place.pk}}">
+                    <h3>{{place.name}}</h3>
+                  </a>
+                  <figure>{{place.address}}</figure>
+                  <div class="info">
+                    <div class="rating" data-rating="4"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.item-->
+            </div>
+          {% endfor %}
+        </div>
+
+
+
+
+
+
+
+        <!--/.row-->
+      </section>
+      <!--end Listing Grid-->
+      <!--Pagination-->
+      <nav>
+        <ul class="pagination pull-right">
+          {% if place_list.has_previous %}
+              <li><a class="paginator_common" href="?page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
+          {% endif %}
+          {% for page_number in place_list.paginator.place_range %}
+              {% if page_number == place_list.number %}
+                <li class="active"><a class="paginator_common" href="?page={{page_number}}">{{page_number}}</a></li>
+              {% else %}
+                <li><a class="paginator_common" href="?page={{page_number}}">{{page_number}}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if place_list.has_next %}
+            <li><a class="paginator_common" href="?page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
+          {% endif %}
+        </ul>
+      </nav>        
+      <!--end Pagination-->
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock content %}
+
+
+
+
+{% block jquery %}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  {% block page_js %}
+    <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
+  {% endblock page_js %}
+
+  <script>
+    $( function() {
+      var capacity = {{capacity}}
+      $("#search_price").slider({
+        min: 0,
+        max: 5000,
+        value: capacity,
+        create: function() {
+        },
+        slide: function( event, ui ) {
+          val = ui.value
+          $("#capacity_val").html(val)
+
+        }
+      });
+    });
+  </script>
+  <script>
+    function initAutocomplete() {
+      //----autocomplete start
+      var input = (document.getElementById('place_id'));
+      var defaultBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-25.75083, -53.99056),
+          new google.maps.LatLng(-5.271944, -34.79278));
+
+      var options = {
+          bounds:defaultBounds
+      };
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
+      //----autocomplete end
+    }
+  </script>
+{% block js_maps %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+{% endblock js_maps %}
+{% endblock jquery %}
+

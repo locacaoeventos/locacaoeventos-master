@@ -1,0 +1,248 @@
+{% extends "_base_user.html" %}
+{% block page_title %}Home{% endblock page_title %}
+{% block content %} 
+<!-- =====================================================
+CSS imports
+===================================================== -->
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css" type="text/css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+<section class="hero-image search-filter-middle height-500">
+  <div class="inner">
+    <div class="container">
+      <h1>Encontre o melhor local<br>para a sua festa</h1>
+      <div class="search-bar horizontal">
+        <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+          <div class="input-row">
+            <div class="form-group">
+              <label class="form_label" for="place">Localização de Preferência</label>
+              <div class="input-group location">
+                <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form_label" for="date">Data da Comemoração</label>
+              <input type="text" class="form-control" id="date_id" name="date" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label class="form_label" for="capacity">Quantidade de Convidados</label>
+              <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados">
+            </div>
+            <div class="form-group">
+              <div style="margin-top:6px">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="background">
+    <img src="/static/img/background/balloonscropped.jpg" alt="">
+  </div>
+</section>
+
+
+
+<section id="featured" class="block equal-height">
+  <div class="container">
+    <header>
+      <h2>Featured</h2>
+    </header>
+    <div class="row">
+      <div class="col-md-3 col-sm-3">
+        <div class="item">
+          <div class="image">
+            <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
+            <a href="item-detail.html">
+              <div class="overlay">
+                <div class="inner">
+                  <div class="content">
+                    <h4>Description</h4>
+                    <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item-specific">
+                <span title="Bedrooms"><img src="/static/base_template_user/assets/img/bedrooms.png" alt="">2</span>
+                <span title="Bathrooms"><img src="/static/base_template_user/assets/img/bathrooms.png" alt="">2</span>
+                <span title="Area"><img src="/static/base_template_user/assets/img/area.png" alt="">240m<sup>2</sup></span>
+                <span title="Garages"><img src="/static/base_template_user/assets/img/garages.png" alt="">1</span>
+              </div>
+              <div class="icon">
+                <i class="fa fa-thumbs-up"></i>
+              </div>
+              <img src="/static/base_template_user/assets/img/items/1.jpg" alt="">
+            </a>
+          </div>
+          <div class="wrapper">
+            <a href="item-detail.html">
+              <h3>Steak House Restaurant</h3>
+            </a>
+            <figure>63 Birch Street</figure>
+            <div class="info">
+              <div class="type">
+                <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i>
+                <span>Restaurant</span>
+              </div>
+              <div class="rating" data-rating="4"></div>
+            </div>
+          </div>
+        </div>
+        <!-- /.item-->
+      </div>
+      <!--/.col-sm-4-->
+      <div class="col-md-3 col-sm-3">
+        <div class="item">
+          <div class="image">
+            <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
+            <a href="item-detail.html">
+              <div class="overlay">
+                <div class="inner">
+                  <div class="content">
+                    <h4>Description</h4>
+                    <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa</p>
+                  </div>
+                </div>
+              </div>
+              <img src="/static/base_template_user/assets/img/items/2.jpg" alt="">
+            </a>
+          </div>
+          <div class="wrapper">
+            <a href="item-detail.html">
+              <h3>Benny’s Cafeteria</h3>
+            </a>
+            <figure>63 Birch Street</figure>
+            <div class="info">
+              <div class="type">
+                <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/cafetaria.png" alt=""></i>
+                <span>Cafeteria</span>
+              </div>
+              <div class="rating" data-rating="4"></div>
+            </div>
+          </div>
+        </div>
+        <!-- /.item-->
+      </div>
+      <!--/.col-sm-4-->
+      <div class="col-md-3 col-sm-3">
+        <div class="item">
+          <div class="image">
+            <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
+            <a href="item-detail.html">
+              <div class="overlay">
+                <div class="inner">
+                  <div class="content">
+                    <h4>Description</h4>
+                    <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item-specific">
+                <span>Daily menu from: $6</span>
+              </div>
+              <img src="/static/base_template_user/assets/img/items/restaurant/9.jpg" alt="">
+            </a>
+          </div>
+          <div class="wrapper">
+            <a href="item-detail.html">
+              <h3>Big Bamboo</h3>
+            </a>
+            <figure>4662 Bruce Street</figure>
+            <div class="info">
+              <div class="type">
+                <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/japanese-food.png" alt=""></i>
+                <span>Sushi</span>
+              </div>
+              <div class="rating" data-rating="3"></div>
+            </div>
+          </div>
+        </div>
+        <!-- /.item-->
+      </div>
+      <!--/.col-sm-4-->
+      <div class="col-md-3 col-sm-3">
+        <div class="item">
+          <div class="image">
+            <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
+            <a href="item-detail.html">
+              <div class="overlay">
+                <div class="inner">
+                  <div class="content">
+                    <h4>Description</h4>
+                    <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item-specific">
+                <span>Daily menu from: $6</span>
+              </div>
+              <img src="/static/base_template_user/assets/img/items/restaurant/10.jpg" alt="">
+            </a>
+          </div>
+          <div class="wrapper">
+            <a href="item-detail.html">
+              <h3>Sushi Wooshi Bar</h3>
+            </a>
+            <figure>357 Trainer Avenue</figure>
+            <div class="info">
+              <div class="type">
+                <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/fishchips.png" alt=""></i>
+                <span>Sushi Bar</span>
+              </div>
+              <div class="rating" data-rating="3"></div>
+            </div>
+          </div>
+        </div>
+        <!-- /.item-->
+      </div>
+      <!--/.col-sm-4-->
+    </div>
+    <!--/.row-->
+  </div>
+  <!--/.container-->
+  <div class="background opacity-5">
+    <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
+  </div>
+</section>
+
+
+
+
+
+
+<!-- =====================================================
+JavaScript imports
+===================================================== -->
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/home.js"></script>
+<script>
+  function initAutocomplete() {
+    //----autocomplete start
+    var input = (document.getElementById('place_id'));
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-25.75083, -53.99056),
+        new google.maps.LatLng(-5.271944, -34.79278));
+
+    var options = {
+        bounds:defaultBounds
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    //----autocomplete end
+  }
+</script>
+{% block js_maps %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+{% endblock js_maps %}
+{% endblock content %}

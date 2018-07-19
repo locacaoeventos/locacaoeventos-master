@@ -1,0 +1,17 @@
+.form_radio {
+	display:inline
+}
+.row-100 {
+	width:100%;
+}
+.row-50 {
+	width:50%;
+	display:inline-block;
+	text-align:left;
+	padding:5px 0 5px 10px;
+
+}
+
+#buyer_wrapper, #seller_wrapper, #accept {
+	display:none
+}

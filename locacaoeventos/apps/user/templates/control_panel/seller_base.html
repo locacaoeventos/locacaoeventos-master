@@ -1,0 +1,88 @@
+{% extends "_base_user.html" %}
+
+{% block content %} 
+<!-- =====================================================
+CSS imports
+===================================================== -->
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/main.css" type="text/css">
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+  <section class="container">
+      <header>
+          <ul class="nav nav-pills">
+              <li><a href="/usuario/anunciante/conta/"><h1 class="page-title">{{profile.name}}</h1></a></li>
+              <li class="active"><a href="my-items.html"><h1 class="page-title">{% block panel_title %}{% endblock panel_title %}</h1></a></li>
+          </ul>
+      </header>
+      <div class="row">
+          <div class="col-md-3 col-sm-3">
+              <aside id="sidebar">
+                  <ul class="navigation-sidebar list-unstyled">
+                      <li {% if panel_type == "user" %}class="active"{% endif %}>
+                          <a href="/usuario/anunciante/conta/">
+                              <i class="icon_menu fa fa-user"></i>
+                              <span>Perfil</span>
+                          </a>
+                      </li>
+                      <li {% if panel_type == "listowned" %}class="active"{% endif %}>
+                          <a href="/usuario/anunciante/buffet/listar/">
+                              <i class="icon_menu fa fa-book"></i>
+                              <span>Buffets Cadastrados</span>
+                          </a>
+                      </li>
+                      <li {% if panel_type == "newplace" %}class="active"{% endif %}>
+                          <a href="/usuario/anunciante/buffet/cadastrar/">
+                              <i class="icon_menu fa fa-pencil"></i>
+                              <span>Novo Anúncio</span>
+                          </a>
+                      </li>
+
+                  </ul>
+              </aside>
+          </div>
+          <div class="col-md-9 col-sm-9">
+              <section id="items">
+                {% block user_panel_content %}{% endblock user_panel_content %}
+              </section>
+          </div>
+      </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================================================
+JavaScript imports
+===================================================== -->
+
+{% endblock content %}

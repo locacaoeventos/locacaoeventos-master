@@ -1,0 +1,9 @@
+.login_options {
+	font-weight:bold;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+#page-content {
+	padding-bottom:10px !important;
+}

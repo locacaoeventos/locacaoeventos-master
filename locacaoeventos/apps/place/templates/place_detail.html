@@ -1,0 +1,358 @@
+{% extends "_base_user.html" %}
+{% block page_title %}{{place.name}}{% endblock page_title %}
+{% block content %}
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
+    <!--<div id="map-detail"></div>-->
+	<section class="container">
+	    <div class="row">
+	        <!--Item Detail Content-->
+	        <div class="col-md-9">
+	            <section class="block" id="main-content">
+	                <header class="page-title">
+	                    <div class="title">
+	                        <h1>{{place.name}}</h1>
+	                    </div>
+	                    <div class="separador-15"> </div>
+	                    <div class="info">
+
+				            <div class="center-cropped" style="width:100%; height:250px; position:absolute">
+				              <div id="detail_img" style="background-image: url(/media/{{place_photo}});" class="img-center"></div>
+				            </div>
+				            <div style="width:100%; height:250px; background-color:rgba(0,0,0,0.3); position:absolute; margin-top:-10px">
+				            </div>
+				            <div class="separador-200"> </div>
+				            <div class="separador-50"> </div>
+	                        <figure>{{place.address}}</figure>
+						</div>
+	                </header>
+	                <div class="row">
+	                    <!--Detail Sidebar-->
+	                    <aside class="col-md-4 col-sm-4" id="detail-sidebar">
+	                        <section class="clearfix">
+	                            <header class="pull-left" style="width:100%">
+	                            	<a href="#reviews" class="roll">
+	                            		<h3>Avaliações</h3>
+	                            		<span class="rating_place">Infraestrutura</span>
+	                            		<div class="pull-right">
+		                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+										</div><br>
+	                            		<span class="rating_place">Brinquedos</span>
+	                            		<div class="pull-right">
+		                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+										</div><br>
+	                            		<span class="rating_place">Custo-Benefício</span>
+	                            		<div class="pull-right">
+		                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+										</div><br>
+	                            		<span class="rating_place">Atendimento</span>
+	                            		<div class="pull-right">
+		                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+										</div><br>
+	                            		<span class="rating_place">Opinião das Crianças</span>
+	                            		<div class="pull-right">
+		                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+										</div><br>
+	                            	</a>
+	                            </header>
+	                        </section>
+	                        <div class="separador-20"> </div>
+	                        <section>
+	                        	<hr class="line"/>
+	                        	{% include "calendar.html" %}
+	                        	<hr class="line"/>
+	                        </section>
+	                    </aside>
+
+
+
+
+
+
+
+	                    <div class="col-md-8 col-sm-8">
+	                        <section>
+	                            <article class="item-gallery">
+	                                <div class="owl-carousel item-slider">
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/12.jpg" data-hash="1"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/6.jpg" data-hash="2"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/1.jpg" data-hash="3"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/8.jpg" data-hash="4"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/9.jpg" data-hash="5"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/10.jpg" data-hash="6"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/7.jpg" data-hash="7"></div>
+	                                </div>
+	                                <!-- /.item-slider -->
+	                                <div class="thumbnails">
+	                                	{% if photo_list|length > 4 %}
+	                                    	<span class="expand-content btn framed icon" data-expand="#gallery-thumbnails" >Mais<i class="fa fa-plus"></i></span>
+	                                    {% endif %}
+	                                    <div class="expandable-content height collapsed show-70" id="gallery-thumbnails">
+	                                        <div class="content">
+	                                        	{% for photo in photo_list %}
+	                                        		{% if forloop.counter == 1 %}
+	                                            		<a class="active detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
+	                                            	{% else %}
+			                                            <a class="detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
+	                                            	{% endif %}
+	                                        	{% endfor %}
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </article>
+	                            <!-- /.item-gallery -->
+	                            <article class="block">
+	                                <header><h2>Descrição</h2></header>
+	                                <p>
+	                                    {{place.description}}
+	                                </p>
+	                            </article>
+	                            <!-- /.block -->
+	                            <article class="block">
+	                                <header><h2>Outras Informações</h2></header>
+	                                <ul class="bullets">
+			                        {% if additionalinformation|length > 0 %}
+		                            	{% for info in additionalinformation %}
+			                            	<li>{{info.name}}</li>
+		                                {% endfor %}
+				                    {% endif %}
+	                                </ul>
+	                            </article>
+	                            <!-- /.block -->
+	                        </section>
+						    <section class="block" id="reviews">
+						        <article class="clearfix overall-rating">
+						            <strong class="pull-left">Média Total</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_average}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						            <strong class="pull-left">Infraestrutura</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_infraestructure}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						            <strong class="pull-left">Brinquedos</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_rides}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						            <strong class="pull-left">Custo-Benefício</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_cost_benefit}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						            <strong class="pull-left">Atendimento</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_attendance}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						            <strong class="pull-left">Opinião das Crianças</strong>
+						                &nbsp;&nbsp; {{review_rates.rate_children_opinion}}
+						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+						        </article><!-- /.overall-rating-->
+						        <div class="separador-20"> </div>
+						    </section>
+						    <section class="reviews">
+						        {% for review in review_list %}
+						            <article class="review">
+						                <figure class="author">
+						                    <img src="assets/img/default-avatar.png" alt="">
+						                    <div class="date">12.05.2014</div>
+						                </figure>
+						                <div class="wrapper">
+						                    <h5>{{review.buyerprofile}} - {{review.rate}} <i class="fa fa-star"></i></h5>
+						                    <p>
+						                        {{review.comment}}
+						                    </p>
+						                    <div class="individual-rating">
+						                        <span>Infraestrutura</span>
+						                        <figure class="rating" data-rating="{{review.rate_infraestructure}}"></figure>
+						                    </div>
+						                    <div class="individual-rating">
+						                        <span>Brinquedos</span>
+						                        <figure class="rating" data-rating="{{review.rate_rides}}"></figure>
+						                    </div>
+						                    <div class="individual-rating">
+						                        <span>Custo-Benefício</span>
+						                        <figure class="rating" data-rating="{{review.rate_cost_benefit}}"></figure>
+						                    </div>
+						                    <div class="individual-rating">
+						                        <span>Atendimento</span>
+						                        <figure class="rating" data-rating="{{review.rate_attendance}}"></figure>
+						                    </div>
+						                    <div class="individual-rating">
+						                        <span>Opinião das Crianças</span>
+						                        <figure class="rating" data-rating="{{review.rate_children_opinion}}"></figure>
+						                    </div>
+						                </div>
+						            </article>
+						        {% endfor %}
+						    </section>
+						        <!-- /.reviews-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	                    </div>
+	                </div>
+	            </section>
+	        </div>
+	        <div class="col-md-3">
+	            <aside id="sidebar">
+	                <section>
+	                    <header><h2>New Places</h2></header>
+	                    <a href="item-detail.html" class="item-horizontal small">
+	                        <h3>3295 Valley Street</h3>
+	                        <figure>Collingswood</figure>
+	                        <div class="wrapper">
+	                            <div class="image"><img src="assets/img/items/real-estate/6.jpg" alt=""></div>
+	                            <div class="info">
+	                                <div class="type">
+	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
+	                                    <span>Apartment</span>
+	                                </div>
+	                                <div class="rating" data-rating="4"></div>
+	                            </div>
+	                        </div>
+	                    </a>
+	                    <!--/.item-horizontal small-->
+	                    <a href="item-detail.html" class="item-horizontal small">
+	                        <h3>534 Roosevelt Street</h3>
+	                        <figure>San Francisco</figure>
+	                        <div class="wrapper">
+	                            <div class="image"><img src="assets/img/items/real-estate/11.jpg" alt=""></div>
+	                            <div class="info">
+	                                <div class="type">
+	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
+	                                    <span>Apartment</span>
+	                                </div>
+	                                <div class="rating" data-rating="3"></div>
+	                            </div>
+	                        </div>
+	                    </a>
+	                    <!--/.item-horizontal small-->
+	                    <a href="item-detail.html" class="item-horizontal small">
+	                        <h3>3019 White Avenue</h3>
+	                        <figure>Corpus Christi</figure>
+	                        <div class="wrapper">
+	                            <div class="image"><img src="assets/img/items/real-estate/1.jpg" alt=""></div>
+	                            <div class="info">
+	                                <div class="type">
+	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
+	                                    <span>Apartment</span>
+	                                </div>
+	                                <div class="rating" data-rating="5"></div>
+	                            </div>
+	                        </div>
+	                    </a>
+	                    <!--/.item-horizontal small-->
+	                </section>
+	                <section>
+	                    <a href="#"><img src="assets/img/ad-banner-sidebar.png" alt=""></a>
+	                </section>
+	                <section>
+	                    <header><h2>Categories</h2></header>
+	                    <ul class="bullets">
+	                        <li><a href="#" >Restaurant</a></li>
+	                        <li><a href="#" >Steak House & Grill</a></li>
+	                        <li><a href="#" >Fast Food</a></li>
+	                        <li><a href="#" >Breakfast</a></li>
+	                        <li><a href="#" >Winery</a></li>
+	                        <li><a href="#" >Bar & Lounge</a></li>
+	                        <li><a href="#" >Pub</a></li>
+	                    </ul>
+	                </section>
+	                <section>
+	                    <header><h2>Events</h2></header>
+	                    <div class="form-group">
+	                        <select class="framed" name="events">
+	                            <option value="">Select Your City</option>
+	                            <option value="1">London</option>
+	                            <option value="2">New York</option>
+	                            <option value="3">Barcelona</option>
+	                            <option value="4">Moscow</option>
+	                            <option value="5">Tokyo</option>
+	                        </select>
+	                    </div>
+	                    <!-- /.form-group -->
+	                </section>
+	            </aside>
+	            <!-- /#sidebar-->
+	        </div>
+	        <!-- /.col-md-3-->
+	        <!--end Sidebar-->
+	    </div><!-- /.row-->
+	</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+<br><br>
+{% if not has_reviewed %}
+	<form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+
+	    Nota<br>
+	    <input type="text" id="rate_id" name="rate" autocomplete="off" /><br>
+	    <br>
+
+	    Descrição<br>
+	    <input type="text" id="description_id" name="description"/><br>
+	    <br>
+
+
+
+
+	    <button method="post" type="submit">Avaliar</button>
+	</form>
+
+	<br><br>
+{% endif %}
+<hr>
+-->
+{% block js_maps %}
+{% endblock js_maps %}
+
+{% endblock content %}
+{% block page_js %}
+<script>
+	$(document).on("click", ".detail_photo", function(){
+		var url_photo = $(this).attr("src")
+		$("#detail_img").attr("style", "background-image:url(" + url_photo + ");")
+		$(".detail_photoa").each(function(){
+			$(this).removeClass("active")
+		})
+		$(this).parent().addClass("active")
+	})
+</script>
+{% endblock page_js %}
+

@@ -1,0 +1,10 @@
+.pnleft_label {
+	color:#747474; 
+	font-weight:bold;
+}
+
+.pnleft_input {
+	margin-left:15px; 
+	font-size:12px !important;
+	font-weight:normal;
+}

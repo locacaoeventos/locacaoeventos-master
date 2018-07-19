@@ -1,0 +1,231 @@
+{% extends "_base_user.html" %}
+{% load user_tags %}
+{% block page_title %}Cadastrar{% endblock page_title %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/user_create.css" type="text/css">
+
+
+<section class="container">
+  <div class="block">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+        <header>
+          <h1 class="page-title">Cadastrar</h1>
+        </header>
+        <hr>
+        <div class="separador-10"> </div>
+        <div style="text-align:center; width:100%">
+          <span style="font-weight:bold; float:left">EU QUERO</span><br>
+          <div class="btn btn-default" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#0094e0"{% endif %}>Procurar</div>
+          <div class="btn btn-default" id="seller_button" {% if form_type == "seller" %}style="background-color:#0094e0"{% endif %}>Anunciar</div><br>
+        </div>
+
+        <div class="separador-20"> </div>
+
+
+        <div id="buyer_wrapper" {% if form_type == "buyer" %}style="display:block"{% endif %}>
+
+          <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+            {% for field in form_buyer %}
+                {% if forloop.counter != 5 and forloop.counter != 6 %}
+                <div class="form-group">
+                  <label>{{field.label}}</label>
+                {% endif %}
+                {% if forloop.counter == 2 %}
+                  <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password">
+                  <div class="separador-15"> </div>
+                  <label>Confirme a senha</label>
+                  <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm"onblur="validarSenha()">
+                  <div id="tooshort" class="error_message">
+                    A senha deve conter no mínimo 6 dígitos
+                  </div>
+
+                  <div id="nomatchpswd" class="error_message">
+                    As senhas não são correspondentes
+                  </div>
+                {% elif forloop.counter == 4 %}
+                  <div style="width:33% !important; display:inline">
+                    <select class="" id="day_id" style="width:50px" name="day" required>
+                      <option value="">Dia</option>
+                      {% for i in 31|create_monthday_set %}
+                        <option value="{{i}}">{{i}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="separador-3"> </div>
+                  <div style="width:33% !important; display:inline">
+                    <select class="" id="month_id" style="width:50px" name="month" required>
+                      <option value="">Mês</option>
+                      {% for i in 12|create_monthday_set %}
+                        <option value="{{i}}">{{i}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="separador-3"> </div>
+                  <div style="width:33% !important; display:inline">
+                    <select class="" id="year_id" style="width:50px" name="year" required>
+                      <option value="">Ano</option>
+                      {% for i in 120|create_year_set %}
+                        <option value="{{i}}">{{i}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      Data inválida
+                    </div>
+                  {% endif %}
+
+
+
+                {% elif forloop.counter == 8 %}
+                  <div class="row-100">
+                    <div class="row-50">
+                      <input required class="form_radio" type="radio" name="gender" value="masculino">&nbsp;&nbsp;
+                      <label class="form_radio">Masculino</label>
+                    </div><!--
+                    --><div class="row-50">
+                      <input class="form_radio" type="radio" name="gender" value="feminino">&nbsp;&nbsp;
+                      <label class="form_radio">Feminino</label>
+                    </div>
+                  </div>
+                {% elif forloop.counter == 9 %}
+                  <div class="row-100">
+                    <div class="row-50">
+                      <input required class="form_radio" type="radio" name="civil_status" value="solteiro">&nbsp;&nbsp;
+                      <label class="form_radio">Solteiro(a)</label>
+                    </div><!--
+                    --><div class="row-50">
+                      <input class="form_radio" type="radio" name="civil_status" value="casado">&nbsp;&nbsp;
+                      <label class="form_radio">Casado(a)</label>
+                    </div>
+                  </div>
+                  <div class="row-100">
+                    <div class="row-50">
+                      <input class="form_radio" type="radio" name="civil_status" value="viuvo">&nbsp;&nbsp;
+                      <label class="form_radio">Viúvo(a)</label>
+                    </div><!--
+                    --><div class="row-50">
+                      <input class="form_radio" type="radio" name="civil_status" value="divorciado">&nbsp;&nbsp;
+                      <label class="form_radio">Divorciado(a)</label>
+                    </div>
+                  </div>
+                  <div class="row-100">
+                    <div class="row-50">
+                      <input class="form_radio" type="radio" name="civil_status" value="outro">&nbsp;&nbsp;
+                      <label class="form_radio" for="contactChoice2">Outro</label>
+                    </div>
+                  </div>
+                {% elif forloop.counter != 5 and forloop.counter != 6 %}
+                  {{field}}
+                  <div id="{{field.name}}_error" class="error_message"></div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                      {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+
+                {% endif %}
+              {% if forloop.counter != 5 and forloop.counter != 6 %}
+              </div>
+              <div class="separador-10"> </div>
+              {% endif %}
+            {% endfor %}
+            <!--<div class="checkbox pull-left">
+              <label><input type="checkbox" name="newsletter">&nbsp;&nbsp;Concordo e Aceito com os Termos e Condições</label>
+            </div>-->
+            <div class="form-group clearfix">
+              <input type="submit" method="post" class="btn pull-right btn-default" id="send" name="buyer_form" value="Criar Conta"/>
+            </div>
+          </form>
+          <div class="separador-10"> </div>
+          <hr>
+          <div class="center">
+            <figure class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
+          </div>          
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ===============================================================================================
+          Seller
+        =============================================================================================== -->
+        <div id="seller_wrapper" {% if form_type == "seller" %}style="display:block"{% endif %}>
+          <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+            {% for field in form_seller %}
+                <div class="form-group">
+                  <label>{{field.label}}</label>
+                  {% if forloop.counter == 2 %}
+                    <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
+                    <div class="separador-15"> </div>
+                    <label>Confirme a senha</label>
+                    <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+                    <div id="tooshort_seller" class="error_message">
+                      A senha deve conter no mínimo 6 dígitos
+                    </div>
+
+                    <div id="nomatchpswd_seller" class="error_message">
+                      As senhas não são correspondentes
+                    </div>
+                  {% else %}
+
+                    {{field}}
+                    <div id="{{field.name}}_error" class="error_message"></div>
+                    {% if field.errors %}
+                      <div class="error_message" style="display:block">
+                        {% for error in field.errors %}
+                        {{error}}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  {% endif %}
+              </div>
+              <div class="separador-10"> </div>
+            {% endfor %}
+            <!--<div class="checkbox pull-left">
+              <label><input type="checkbox" name="newsletter">&nbsp;&nbsp;Concordo e Aceito com os Termos e Condições</label>
+            </div>-->
+            <div class="separador-20"> </div>
+            <div class="form-group clearfix">
+              <input type="submit" method="post" class="btn pull-right btn-default" id="send_seller" name="seller_form" value="Criar Conta"/>
+            </div>
+          </form>
+          <div class="separador-10"> </div>
+          <hr>
+          <div class="center">
+            <figure class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="/static/CUSTOM_JS/user/user_create.js"></script>
+{% endblock content %}

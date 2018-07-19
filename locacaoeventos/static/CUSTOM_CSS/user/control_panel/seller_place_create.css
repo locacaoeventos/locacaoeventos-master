@@ -1,0 +1,102 @@
+/* Children Rides and Decoration */
+#id_children_rides, #id_decoration {
+	display:none;
+}
+#id_children_rides_input, #id_decoration_input {
+	width:90%;
+	float:left;
+}
+.add_button {
+	cursor:pointer;
+	background-color:#50a7bc;
+	width:10%;
+	transition: 0.3s;
+}
+.add_button:hover {
+	background-color:#021b5e; 
+}
+
+.add_container {
+	background-color:white;
+	border:1px solid #f2f2f2;
+	padding:5px 0 5px 0;
+	min-height:80px;
+	box-shadow: inset 0px 1px 0.5px rgba(0, 0, 0, 0.15);
+}
+.add_option {
+	padding:5px;
+	height:40px;
+
+	color:#51a7bc;
+	font-weight:bold;
+	position:relative;
+	width:100%;
+	cursor:pointer;
+
+}
+.x_option_add {
+	font-size:10px;
+	padding:2px 5px 2px 5px;
+	position:absolute;
+	top:5px;
+	right: 5px;
+}
+
+
+
+
+
+
+
+/* Upload multiple files */
+.js-upload-photos {
+	background-color:#51a7bc; 
+	color:white; 
+	float:right;
+	transition: 0.3s;
+}
+.js-upload-photos:hover {
+	background-color:#021b5e; 
+}
+#upload_frame {
+	width:100%;
+	text-align:center;
+	color:#c8c8c8;
+	font-size:20px;
+	float:none;
+	background-color:white;
+	cursor:pointer;
+}
+#upload_frame:hover {
+	background-color:#51a7bc;
+	color:white; 
+}
+#gallery {
+	border:1px solid #f2f2f2 !important;
+}
+.img_gallery {
+	height:200px;
+	margin:5px;
+	display:inline-block;
+	cursor:pointer;
+}
+.img_gallery:hover {
+	border:3px solid #51a7bc;
+	padding:5px;
+}
+.upload_image {
+	position:relative;
+	width:auto;
+	display:inline-block;
+	padding:15px;
+}
+.upload_image:hover .x_option_upload {
+	display:block;
+}
+.x_option_upload {
+	position:absolute;
+	top:10px;
+	right:10px;
+	display:none;
+	padding:2px 6px 2px 6px;
+}

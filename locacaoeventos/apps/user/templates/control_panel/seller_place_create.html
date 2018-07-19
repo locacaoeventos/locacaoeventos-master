@@ -1,0 +1,285 @@
+{% extends "_base_user.html"%}
+{% block jquery %}{% endblock jquery %}
+{% block page_title %}Novo Anúncio{% endblock page_title %}
+{% block content %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.ui.widget.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.iframe-transport.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.fileupload.js"></script>
+  
+  <script type="text/javascript" src="/static/CUSTOM_JS/core/custom_upload.js"></script>
+
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_create.css" type="text/css">
+
+
+<section class="container">
+    <div class="row">
+        <!--Content-->
+        <div class="col-md-9">
+            <header>
+                <h1 class="page-title">Novo Anúncio</h1>
+            </header>
+      <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+        {% for field in form %}
+          {% if forloop.counter == 4 or forloop.counter == 5 %}
+            {% if forloop.counter == 4 %}
+              <div class="form-group medium">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label for="phone-number">Capacidade</label>
+                      <input type="number" step="0.1" class="form-control" id="id_capacity" name="capacity" pattern="\d*">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                      <label for="phone-number">Tamanho</label>
+                      <input type="number" step="0.1" class="form-control" id="id_size" name="size" pattern="\d*">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="separador-5"> </div>
+            {% endif %}
+          {% elif field.name == "children_rides" %}
+            <div class="form-group medium">
+              <input type="text" name="children_rides" id="id_children_rides">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="title">Brinquedos (opcional)</label>
+                  <input type="text" id="id_children_rides_input"/>
+                  <div class="add_button" type="children_rides">+</div>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                  <div class="separador-20"> </div>
+                  <div class="add_container" id="id_children_rides_container">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="separador-20"> </div>
+
+          {% elif field.name == "decoration" %}
+            <div class="form-group medium">
+              <input type="text" name="decoration" id="id_decoration">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="title">Decorações (opcional)</label>
+                  <input type="text" id="id_decoration_input"/>
+                  <div class="add_button" type="decoration">+</div>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                  <div class="separador-20"> </div>
+                  <div class="add_container" id="id_decoration_container">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="separador-30"> </div>
+
+
+
+
+
+
+
+
+          {% elif field.name == "photos" %}
+            <input type="text" name="photos" id="id_photos" class="hidden">
+            <!-- ==================================================
+              Upload multiple files 
+            ================================================== -->
+            <label>Carregue as fotos do estabelecimento</label>
+            <div class="separador-10"> </div>
+            <input id="fileupload" type="file" name="photo" multiple
+                   style="display: none;"
+                   data-url="/upload_file/"
+                   data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+                   >
+            <button type="button" class="btn btn-primary js-upload-photos">
+              <i class="fa fa-cloud-upload"></i> Carregar nova Foto
+            </button><br><br>
+            <div id="gallery">
+              <div class="js-upload-photos" id="upload_frame">
+                <br>
+                <i class="fa fa-cloud-upload" style="font-size:30px"> </i><br>Carregue uma foto <br>            
+                <br>
+              </div>
+            </div>
+
+
+            <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Uploading...</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="separador-20"> </div>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                    </div>
+                    <div class="separador-20"> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="separador-30"> </div>
+
+
+
+
+
+          {% elif field.name == "menu" %}
+            <label>Menu do Buffet (opcional)</label>
+            <div class="separador-10"> </div>
+
+            <label class="btn btn-default btn-file">
+                Carregar Arquivo <input type="file" id="id_menu" name="menu" style="display: none;">
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999" class="hidden">Teste</span>
+
+
+
+          {% else %}
+            <div class="form-group medium">
+              <label for="title">{{ field.label }}</label>
+              {{ field }}
+            </div>
+            <div class="separador-15"> </div>
+          {% endif %}
+        {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="separador-50"> </div>
+        <label>Informações  Adicionais</label>
+          {% for additionalinfo in place_additional_information %}
+          {% if not forloop.counter|divisibleby:2 %}
+          <div class="row">
+          {% endif %}
+            <div class="col-md-6">
+              <ul class="list-unstyled checkboxes">
+                <li>
+                  <div class="checkbox"><label>
+                    <input type="checkbox" name="{{additionalinfo.html_name}}" id="{{additionalinfo.html_id}}" value="1">{{additionalinfo.name}}
+                  </label></div>
+                </li>
+              </ul>
+            </div>
+          {% if forloop.counter|divisibleby:2 %}
+          </div>
+          {% endif %}
+          {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+        <section>
+          <figure class="pull-left margin-top-15">
+            <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
+          </figure>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default pull-right" id="submit">Cadastrar</button>
+          </div>
+          <!-- /.form-group -->
+        </section>
+
+      </form>
+            <!--/#form-submit-->
+        </div>
+        <!--/.col-md-9-->
+        <!--Sidebar-->
+        <div class="col-md-3">
+            <aside id="sidebar">
+                <div class="sidebar-box">
+                    <h3>Payment</h3>
+                    <div class="form-group">
+                        <label for="package">Your Package</label>
+                        <select name="package" id="package" class="framed">
+                            <option value="">Select your package</option>
+                            <option value="1">Free</option>
+                            <option value="2">Silver</option>
+                            <option value="3">Gold</option>
+                            <option value="4">Platinum</option>
+                        </select>
+                    </div>
+                    <h4>This package includes</h4>
+                    <ul class="bullets">
+                        <li>1 Property</li>
+                        <li>1 Agent Profile</li>
+                        <li class="disabled">Agency Profile</li>
+                        <li class="disabled">Featured Properties</li>
+                    </ul>
+                </div>
+            </aside>
+            <!-- /#sidebar-->
+        </div>
+        <!-- /.col-md-3-->
+        <!--end Sidebar-->
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/static/CUSTOM_JS/core/upload_single_file.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_create.js"></script>
+
+
+
+<script>
+  function initAutocomplete() {
+    //----autocomplete start
+    var input = (document.getElementById('id_address'));
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-25.75083, -53.99056),
+        new google.maps.LatLng(-5.271944, -34.79278));
+
+    var options = {
+        bounds:defaultBounds
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    //----autocomplete end
+  }
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock content %}
+
+
+{% block js_maps %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+{% endblock js_maps %}

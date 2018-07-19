@@ -1,0 +1,51 @@
+{% extends "_base_user.html" %}
+{% block page_title %}Login{% endblock page_title %}
+{% block content %}
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/login.css" type="text/css">
+
+
+<section class="container">
+    <div class="block">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                <header>
+                    <h1 class="page-title" style="padding-bottom:10px">Entrar</h1>
+                    <div style="text-align:center; color:#411859; font-weight:bold">
+                      {% if wrong_user == True %}
+                          <span >Usuário não cadastrado no sistema</span>
+                      {% endif %}
+                      {% if wrong_password == True %}
+                          <span>Usuário cadastrado, mas senha inválida</span>
+                      {% endif %}
+                      {% if not_active == True %}
+                          <span>Usuário desativo; verifique seu e-mail ou contacte um administrador</span>
+                      {% endif %}
+                    </div>
+
+
+                </header>
+                <hr>
+                <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+                    <div class="form-group">
+                        <label for="form-sign-in-email">Email:</label>
+                        <input type="text" class="form-control form_input_text" id="username_id" name="username" required>
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                        <label for="form-sign-in-password">Senha:</label>
+                        <input type="password" class="form-control form_input_text" id="password_id" name="password" required>
+                    </div><!-- /.form-group -->
+                    <div class="form-group clearfix">
+                        <button type="submit" class="btn pull-right btn-default" id="account-submit">Sign In</button>
+                    </div><!-- /.form-group -->
+                    <a href="/usuario/cadastrar/" class="login_options">Cadastrar Usuário</a><br>
+                    <div class="separador-5"> </div>
+                    <a href="/usuario/esqueceu-senha/" class="login_options">Esqueceu sua senha</a>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

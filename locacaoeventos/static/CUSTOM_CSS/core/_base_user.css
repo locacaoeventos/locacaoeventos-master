@@ -1,0 +1,7 @@
+/* Base URL */
+@media(min-width:768px) {
+	div.toggle-navigation {
+		display:none !important;
+	}	
+}
+

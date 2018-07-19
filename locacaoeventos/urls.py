@@ -1,21 +1,28 @@
-"""locacaoeventos URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include, url
+from django.conf.urls.static import static
+from django.conf import settings
+
+from locacaoeventos.apps.user.views_user import Home, Teste, Login, Logout, TermsConditions
+from locacaoeventos.apps.user.views import UploadFile
+
+import locacaoeventos.apps.user.urls
+import locacaoeventos.apps.place.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^$', Home.as_view()),
+    url(r'^teste/$', Teste.as_view()),
+    url(r'^termos-e-condicoes/$', TermsConditions.as_view()),
+
+    url(r'^usuario/', include(locacaoeventos.apps.user.urls)),
+    url(r'^buffet/', include(locacaoeventos.apps.place.urls)),
+    url(r'^login/$', Login.as_view()),
+    url(r'^logout/$', Logout.as_view()),
+
+
+    url(r'^upload_file/$', UploadFile.as_view()),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

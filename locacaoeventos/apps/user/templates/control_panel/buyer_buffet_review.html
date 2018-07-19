@@ -1,0 +1,141 @@
+{% extends "control_panel/buyer_base.html" %}
+{% load i18n %}
+{% block page_title %}Home{% endblock page_title %}
+{% block panel_title %}Avaliar{% endblock panel_title %}
+
+{% block user_panel_content %}
+
+
+
+	<section>
+		<a href="/buffet/detalhar/?pk={{place.pk}}" style="font-weight:bold">{{place.name}}</a><br>
+		{% language 'pt-br' %}
+	        Início do Evento: <i>{{place.datetime_begin}}</i><br>
+	        Fim do Evento: <i>{{place.datetime_end}}</i><br>
+		{% endlanguage %}
+		Endereço: <i>{{place.address}}</i><br>
+		Capacidade: <i>{{place.capacity}}</i> pessoas<br>
+		Tamanho: <i>{{place.size}}</i> m<sup>2</sup><br>
+		Descrição: <i>{{place.description}}</i><br>
+	</section>
+	<div class="separador-20"> </div>
+
+    <section id="write-review">
+    	{% if just_reviewed %}
+    		<h2>Sua avaliação foi enviada! <a href="/usuario/avaliar-buffet/?reservation=1">(Editar)</a></h2>
+    	{% else %}
+	        <form id="form-review" role="form" method="post" action="?" class="background-color-white">{% csrf_token %}
+	            <div class="row">
+	                <div class="col-md-8">
+	                    <div class="form-group">
+	                        <label for="form-review-message">Comentário</label>
+	                        <textarea class="form-control" id="comment_id" name="comment" rows="6" required="">{{review.comment}}</textarea>
+	                    </div>
+	                    <!-- /.form-group -->
+	                    <div class="form-group">
+	                    	<input class="hidden" id="pk_id" name="reservation_pk" type="text" value="{{place.reservation_pk}}"/>
+	                    	<input class="rate hidden" id="rate_infraestructure_id" name="rate_infraestructure" type="number" value="{{review.rate_infraestructure}}"/>
+	                    	<input class="rate hidden" id="rate_rides_id" name="rate_rides" type="number" value="{{review.rate_rides}}"/>
+	                    	<input class="rate hidden" id="rate_cost_benefit_id" name="rate_cost_benefit" type="number" value="{{review.rate_cost_benefit}}"/>
+	                    	<input class="rate hidden" id="rate_attendance_id" name="rate_attendance" type="number" value="{{review.rate_attendance}}"/>
+	                    	<input class="rate hidden" id="rate_children_opinion_id" name="rate_children_opinion" type="number" value="{{review.rate_children_opinion}}"/>
+	                        <button type="submit" class="btn btn-default" id="send_button" disabled>{% if review %}Salvar{% else %}Avaliar{% endif %}</button>
+	                    </div>
+	                    <!-- /.form-group -->
+	                </div>
+	                <div class="col-md-4">
+	                    <aside class="user-rating">
+	                        <label>Infraestrutura</label>
+	                        <figure data-rating="{{review.rate_infraestructure}}" id="figure_rate_infraestructure" class="rating active" data-name="value"></figure>
+	                    </aside>
+	                    <aside class="user-rating">
+	                        <label>Brinquedos</label>
+	                        <figure data-rating="{{review.rate_rides}}" id="figure_rate_rides" class="rating active" data-name="score"></figure>
+	                    </aside>
+	                    <aside class="user-rating">
+	                        <label>Custo-Benefício</label>
+	                        <figure data-rating="{{review.rate_cost_benefit}}" id="figure_rate_cost_benefit" class="rating active" data-name="score"></figure>
+	                    </aside>
+	                    <aside class="user-rating">
+	                        <label>Atendimento</label>
+	                        <figure data-rating="{{review.rate_attendance}}" id="figure_rate_attendance" class="rating active" data-name="score"></figure>
+	                    </aside>
+	                    <aside class="user-rating">
+	                        <label>Opinião das Crianças</label>
+	                        <figure data-rating="{{review.rate_children_opinion}}" id="figure_rate_children_opinion" class="rating active" data-name="score"></figure>
+	                    </aside>
+	                </div>
+	            </div>
+	        </form>
+	    {% endif %}
+    </section>
+    <section class="block" id="reviews">
+        <article class="clearfix overall-rating">
+            <strong class="pull-left">Média Total</strong>
+                &nbsp;&nbsp; {{review_rates.rate_average}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+            <strong class="pull-left">Infraestrutura</strong>
+                &nbsp;&nbsp; {{review_rates.rate_infraestructure}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+            <strong class="pull-left">Brinquedos</strong>
+                &nbsp;&nbsp; {{review_rates.rate_rides}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+            <strong class="pull-left">Custo-Benefício</strong>
+                &nbsp;&nbsp; {{review_rates.rate_cost_benefit}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+            <strong class="pull-left">Atendimento</strong>
+                &nbsp;&nbsp; {{review_rates.rate_attendance}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+            <strong class="pull-left">Opinião das Crianças</strong>
+                &nbsp;&nbsp; {{review_rates.rate_children_opinion}}
+                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+        </article><!-- /.overall-rating-->
+        <div class="separador-20"> </div>
+    </section>
+    <section class="reviews">
+        {% for review in review_list %}
+            <article class="review">
+                <figure class="author">
+                    <img src="assets/img/default-avatar.png" alt="">
+                    <div class="date">12.05.2014</div>
+                </figure>
+                <div class="wrapper">
+                    <h5>{{review.buyerprofile}} - {{review.rate}} <i class="fa fa-star"></i></h5>
+                    <p>
+                        {{review.comment}}
+                    </p>
+                    <div class="individual-rating">
+                        <span>Infraestrutura</span>
+                        <figure class="rating" data-rating="{{review.rate_infraestructure}}"></figure>
+                    </div>
+                    <div class="individual-rating">
+                        <span>Brinquedos</span>
+                        <figure class="rating" data-rating="{{review.rate_rides}}"></figure>
+                    </div>
+                    <div class="individual-rating">
+                        <span>Custo-Benefício</span>
+                        <figure class="rating" data-rating="{{review.rate_cost_benefit}}"></figure>
+                    </div>
+                    <div class="individual-rating">
+                        <span>Atendimento</span>
+                        <figure class="rating" data-rating="{{review.rate_attendance}}"></figure>
+                    </div>
+                    <div class="individual-rating">
+                        <span>Opinião das Crianças</span>
+                        <figure class="rating" data-rating="{{review.rate_children_opinion}}"></figure>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+        <!-- /.reviews-->
+
+
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+
+{% block page_js %}
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/buyer_buffet_review.js"></script>
+{% endblock page_js %}
+{% endblock user_panel_content %}

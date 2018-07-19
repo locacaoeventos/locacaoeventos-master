@@ -1,0 +1,117 @@
+{% extends "_base_user.html" %}
+
+
+{% block content %}
+    <!-- =========================================================
+      CSS imports
+    ========================================================= -->
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css">
+
+
+
+
+    <!-- =========================================================
+      BODY
+    ========================================================= -->
+    <div class="slider-container rev_slider_wrapper" style="height: 450px;">
+        <div id="revolutionSlider" class="slider rev_slider" data-plugin-revolution-slider data-plugin-options='{"delay": 9000, "gridwidth": 800, "gridheight": 450}'>
+            <ul>
+                <li data-transition="fade">
+                    <img src="/static/img/background/balloons.jpg"  
+                        alt=""
+                        data-bgposition="center center" 
+                        data-bgfit="cover" 
+                        data-bgrepeat="no-repeat" 
+                        class="rev-slidebg">
+
+                    <div class="tp-caption"
+                        data-x="center" data-hoffset="-150"
+                        data-y="center" data-voffset="-95"
+                        data-start="1000"
+                        style="z-index: 5"
+                        data-transform_in="x:[-300%];opacity:0;s:500;"></div>
+
+                    <div class="tp-caption top-label"
+                        data-x="center" data-hoffset="0"
+                        data-y="center" data-voffset="-95"
+                        data-start="500"
+                        style="z-index: 5"
+                        data-transform_in="y:[-300%];opacity:0;s:500;">Encontre os melhores</div>
+
+                    <div class="tp-caption"
+                        data-x="center" data-hoffset="150"
+                        data-y="center" data-voffset="-95"
+                        data-start="1000"
+                        style="z-index: 5"
+                        data-transform_in="x:[300%];opacity:0;s:500;"><img src="/static/base_template_user/img/slides/slide-title-border.png" alt=""></div>
+
+                    <div class="tp-caption main-label"
+                        data-x="center" data-hoffset="0"
+                        data-y="center" data-voffset="-45"
+                        data-start="1500"
+                        data-whitespace="nowrap"                         
+                        data-transform_in="y:[100%];s:500;"
+                        data-transform_out="opacity:0;s:500;"
+                        style="z-index: 5"
+                        data-mask_in="x:0px;y:0px;">BUFFETS</div>
+
+                    <div class="tp-caption bottom-label"
+                        data-x="center" data-hoffset="0"
+                        data-y="center" data-voffset="5"
+                        data-start="2000"
+                        style="z-index: 5"
+                        data-transform_in="y:[100%];opacity:0;s:500;">para as festas dos seus filhos.</div>
+
+
+                    <!-- PARA PC -->
+                    <div id="tp-caption-pc" class="tp-caption"
+                        data-hash
+                        data-hash-offset="85"
+                        href="#home-intro"
+                        data-x="center" data-hoffset="0"
+                        data-y="center" data-voffset="80"
+                        data-start="2200"
+                        data-whitespace="nowrap"                         
+                        data-transform_in="y:[100%];s:500;"
+                        data-transform_out="opacity:0;s:500;"
+                        style="z-index: 5; width:1000px; text-align:center"
+                        data-mask_in="x:0px;y:0px;">
+                            <span class="input_label">Cidade ou Estado</span>
+                                <input type="text" class="home_input" style="width:400px"/> <br>
+                        <div class="col-home">
+                            <span class="input_label">Data</span><br>
+                            <span class="input_label">Capacidade</span>
+                        </div><!--
+                        --><div class="col-home">
+                            <input type="text" class="home_input"/><br>    
+                            <input type="text" class="home_input"/><br>    
+                        </div>
+
+                    </div>
+                    <!-- PARA Mobile -->
+                    <div id="tp-caption-mobile" class="tp-caption"
+                        data-hash
+                        data-hash-offset="85"
+                        href="#home-intro"
+                        data-x="center" data-hoffset="0"
+                        data-y="center" data-voffset="80"
+                        data-start="2200"
+                        data-whitespace="nowrap"                         
+                        data-transform_in="y:[100%];s:500;"
+                        data-transform_out="opacity:0;s:500;"
+                        style="z-index: 5; width:1000px"
+                        data-mask_in="x:0px;y:0px;">
+                        <input type="text" class="home_input"/>    
+                    </div>
+
+
+
+
+
+
+
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
