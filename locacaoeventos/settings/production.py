@@ -19,10 +19,10 @@ DATABASES = {
 
 # Static files
 STATICFILES_DIRS = (
-    '/home/locacao123f/webapps/locacaoeventos/locacaoeventos-master/locacaoeventos/static/',
+    '/home/locacao123f/webapps/locacao_eventos/locacaoeventos-master/locacaoeventos/static/',
 )
 
-STATIC_ROOT = '/home/locacao123f/webapps/locacaoeventos_static/'
+STATIC_ROOT = '/home/locacao123f/webapps/locacao_eventos_static/'
 # MEDIA_ROOT = '/home/catalizr/webapps/catalizrv1_media/'
 
 # Comando 'python manage.py collectstatic' copiara arquivos deste caminho para
