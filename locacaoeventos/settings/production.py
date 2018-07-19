@@ -19,10 +19,10 @@ DATABASES = {
 
 # Static files
 STATICFILES_DIRS = (
-    '/home/polijr/webapps/datawa/datawa-master/datawa/apps/core/static/',
+    '/home/polijr/webapps/locacaoeventos/locacaoeventos-master/locacaoeventos/static/',
 )
 
-STATIC_ROOT = '/home/polijr/webapps/datawa_static/'
+STATIC_ROOT = '/home/polijr/webapps/locacaoeventos_static/'
 # MEDIA_ROOT = '/home/catalizr/webapps/catalizrv1_media/'
 
 # Comando 'python manage.py collectstatic' copiara arquivos deste caminho para
