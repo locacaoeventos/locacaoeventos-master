@@ -8,7 +8,6 @@ from locacaoeventos.apps.place.views import *
 
 
 urlpatterns = [
-    url(r'^$', Home.as_view()),
     url(r'^cadastrar/$', CreateUser.as_view()),
     url(r'^cadastro-concluido/$', CreateUserCompleted.as_view()),
     url(r'^esqueceu-senha/$', ForgotPassword.as_view()),

@@ -31,7 +31,10 @@ class Home(View):
         return redirect(url_str)
 
 
-
+class ComingSoon(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        return render(request, "coming_soon.html", context)
 
 
 

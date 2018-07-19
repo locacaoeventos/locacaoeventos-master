@@ -4,7 +4,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
 
-from locacaoeventos.apps.user.views_user import Home, Teste, Login, Logout, TermsConditions
+from locacaoeventos.apps.user.views_user import Home, Teste, Login, Logout, TermsConditions, ComingSoon
 from locacaoeventos.apps.user.views import UploadFile
 
 import locacaoeventos.apps.user.urls
@@ -13,7 +13,8 @@ import locacaoeventos.apps.place.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    url(r'^$', Home.as_view()),
+    url(r'^$', ComingSoon.as_view()),
+    url(r'^home/$', Home.as_view()),
     url(r'^teste/$', Teste.as_view()),
     url(r'^termos-e-condicoes/$', TermsConditions.as_view()),
 

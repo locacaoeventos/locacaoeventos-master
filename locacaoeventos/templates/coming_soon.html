@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- =====================================================
+CSS imports
+===================================================== -->  
+  <link href="/static/base_template_user/assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/static/base_template_user/assets/bootstrap/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="/static/base_template_user/assets/css/bootstrap-select.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/base_template_user/assets/css/owl.carousel.css" type="text/css">
+  <link rel="stylesheet" href="/static/base_template_user/assets/css/jquery.nouislider.min.css" type="text/css">
+  <link rel="stylesheet" href="/static/base_template_user/assets/css/colors/_custom.css" type="text/css">
+  <link rel="stylesheet" href="/static/base_template_user/assets/css/user.style.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/separadores.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/main.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/_base_user.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/icheck/purple.css" type="text/css">
+  <link rel="shortcut icon" href="/static/img/123festas/favicon.png"/>
+  <title>123Festas | Coming Soon</title>
+</head>
+
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top">
+
+<!-- =====================================================
+CSS imports
+===================================================== -->
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css" type="text/css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+<section class="hero-image search-filter-middle">
+  <div class="inner">
+    <div class="container">
+      <h1>Uma novidade para agendar a<br>festa dos seus sonhos!</h1>
+    </div>
+  </div>
+  <div class="background" style="height:100%">
+    <img src="/static/img/background/balloonscropped.jpg" alt="">
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================================================
+JavaScript imports
+===================================================== -->
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+{% block js_maps %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+    <script type="text/javascript" src="/static/base_template_user/assets/js/maps.js"></script>
+{% endblock js_maps %}
+<script type="text/javascript" src="/static/base_template_user/assets/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/icheck.min.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/before.load.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/smoothscroll.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="/static/base_template_user/assets/js/jquery.nouislider.all.min.js"></script>
+{% block old_custom_js %}
+<script type="text/javascript" src="/static/base_template_user/assets/js/custom.js"></script>
+<script>
+    $(window).load(function(){
+        var rtl = false; // Use RTL
+        initializeOwl(rtl);
+    });
+
+    autoComplete();
+    $(document).ready(function(){
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_square-purple',
+        radioClass: 'iradio_square-purple',
+        increaseArea: '10%' // optional
+      });
+    });
+
+
+</script>
+{% endblock old_custom_js %}
+{% block page_js %}{% endblock page_js %}
+    <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
