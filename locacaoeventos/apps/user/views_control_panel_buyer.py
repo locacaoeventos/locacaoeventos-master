@@ -13,6 +13,7 @@ class EditBuyer(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["panel_type"] = "user"
+        context["basemenu"] = "myaccount"
         return render(request, "control_panel/buyer_user_edit.html", context)
 
 
@@ -21,6 +22,7 @@ class ListPlaceBought(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["panel_type"] = "listbought"
+        context["basemenu"] = "listbought"
 
         buyer = context["buyer"]
         place_list = []

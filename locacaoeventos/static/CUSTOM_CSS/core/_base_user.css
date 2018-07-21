@@ -5,3 +5,8 @@
 	}	
 }
 
+
+.menu_selected {
+	border-bottom:2px solid #4fa7bc;
+	padding: 0 5px 0 5px
+}

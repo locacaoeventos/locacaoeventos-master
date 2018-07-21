@@ -13,6 +13,7 @@ class EditSeller(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["panel_type"] = "user"
+        context["basemenu"] = "myaccount"
         return render(request, "control_panel/seller_user_edit.html", context)
 
 
@@ -22,6 +23,7 @@ class ListPlaceOwned(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["panel_type"] = "listowned"
+        context["basemenu"] = "myaccount"
 
         place_list = []
         for place in Place.objects.filter(sellerprofile=context["seller"]):
@@ -52,6 +54,7 @@ class CreatePlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["panel_type"] = "newplace"
+        context["basemenu"] = "myaccount"
         context["place_additional_information"] = [{
             "name": "Serve bebidas alcólicas",
             "html_name":"alcoholic_drink",

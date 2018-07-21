@@ -39,14 +39,24 @@ def get_reviews_from_place(place):
                 sum_rate_average += review.rate_infraestructure + review.rate_rides + review.rate_cost_benefit + review.rate_attendance + review.rate_children_opinion
                 count_review += 1
     response["review_list"] = review_list
-    response["review_rates"] = {
-        "rate_infraestructure": sum_rate_infraestructure/count_review,
-        "rate_rides": sum_rate_rides/count_review,
-        "rate_cost_benefit": sum_rate_cost_benefit/count_review,
-        "rate_attendance": sum_rate_attendance/count_review,
-        "rate_children_opinion": sum_rate_children_opinion/count_review,
-        "rate_average": sum_rate_average/count_review/5,
-    }
+    if count_review != 0:
+        response["review_rates"] = {
+            "rate_infraestructure": sum_rate_infraestructure/count_review,
+            "rate_rides": sum_rate_rides/count_review,
+            "rate_cost_benefit": sum_rate_cost_benefit/count_review,
+            "rate_attendance": sum_rate_attendance/count_review,
+            "rate_children_opinion": sum_rate_children_opinion/count_review,
+            "rate_average": sum_rate_average/count_review/5,
+        }
+    else:
+        response["review_rates"] = {
+            "rate_infraestructure": "Não avaliado",
+            "rate_rides": "Não avaliado",
+            "rate_cost_benefit": "Não avaliado",
+            "rate_attendance": "Não avaliado",
+            "rate_children_opinion": "Não avaliado",
+            "rate_average": "Não avaliado",
+        }
     return response
 
 

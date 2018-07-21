@@ -1,0 +1,46 @@
+/* ======================== 
+GERAL
+======================== */
+.line {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #dddddd;
+    margin: 0;
+    padding: 0;
+}
+*:not(input, a) {
+	cursor:default;
+}
+th, td, tr {
+	font-size:12px !important;
+}
+.hidden {
+	display:none
+}
+
+.admin_button {
+    color:white;
+    background-color:#50a7bc;
+    display: inline-block;
+    padding:7px 13px 7px 13px;
+    cursor:pointer;
+    border-radius:10px;
+    font-size:13px;
+    border:none;
+}
+
+.navigation li a:hover {
+    background-color:#50a7bc !important
+}
+.menu-switch {
+    background-color: #1e293d !important
+}
+/* ======================== 
+Block content 
+======================== */
+.custom_content {
+	padding:40px 10px 0 10px;
+}
+
+

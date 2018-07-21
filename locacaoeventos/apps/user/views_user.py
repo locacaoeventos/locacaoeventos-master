@@ -38,6 +38,13 @@ class ComingSoon(View):
 
 
 
+class AboutUs(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["basemenu"] = "aboutus"
+        return render(request, "about_us.html", context)
+
+
 
 
 
@@ -45,11 +52,13 @@ class ComingSoon(View):
 class Login(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+        context["basemenu"] = "login"
         if not request.user.is_authenticated:
             return render(request, "login.html", context)
         return redirect('/')
     def post(self, request):
         context = base_context(request.user)
+        context["basemenu"] = "login"
         username = request.POST['username']
         password = request.POST['password']
         user = User.objects.filter(username=username)
@@ -103,15 +112,17 @@ class CreateUser(View):
             "form_buyer": BuyerForm(), 
             "form_seller": SellerForm(),
         }
+        context["basemenu"] = "register"
         return render(request, "user_create.html", context)
     def post(self, request, *args, **kwargs):
+        context = {}
+        context["basemenu"] = "register"
+
         if "buyer_form" in request.POST:
             form_buyer = BuyerForm(request.POST)
-            context = {
-                "form_buyer": form_buyer, 
-                "form_seller": SellerForm(),
-                "form_type": "buyer"
-            }
+            context["form_buyer"] = form_buyer 
+            context["form_seller"] = SellerForm()
+            context["form_type"] = "buyer"
 
             if form_buyer.is_valid():
                 
@@ -151,11 +162,9 @@ class CreateUser(View):
 
         elif "seller_form" in request.POST:
             form_seller = SellerForm(request.POST)
-            context = {
-                "form_buyer": BuyerForm(), 
-                "form_seller": form_seller,
-                "form_type": "seller"
-            }
+            context["form_buyer"] = BuyerForm()
+            context["form_seller"] = form_seller
+            context["form_type"] = "seller"
             if form_seller.is_valid():
                 user = User.objects.create(
                     username=form_seller.cleaned_data["email_seller"],
