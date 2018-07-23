@@ -301,5 +301,5 @@ class ChangePassword(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        return render(request, "teste.html", context)
+        return render(request, "control_panel/seller_place_createedit_completed.html", context)
 

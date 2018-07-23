@@ -19,16 +19,18 @@ class ListPlace(View):
         context = base_context(request.user)
         place_list = []
         for place in Place.objects.filter(is_active=True):
-            place_list.append({
+            place_dic = {
                 "pk": place.pk,
                 "size": place.size,
                 "name": place.name,
                 "capacity": place.capacity,
                 "address": place.address,
                 "description": place.description,
-                "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo
-            })
-
+            }
+            photo = PlacePhoto.objects.filter(place=place)
+            if photo:
+                place_dic["photo"] = photo[0].photo.photo
+            place_list.append(place_dic)
 
         # BEGIN Paginator
         paginator = Paginator(place_list, 6)
@@ -90,7 +92,6 @@ def detailplace_context(context, request):
     context["photo_list"] = [photo.photo for photo in PlacePhoto.objects.filter(place=place_obj)]
 
     context["additionalinformation"] = []
-
     additionalinformation = PlaceAdditionalInformation.objects.get(place=place_obj).__dict__
     additionalinformation_attributes = get_additional_information_important_attributes()
     for key in additionalinformation:
@@ -107,47 +108,3 @@ def detailplace_context(context, request):
 
     return context
 
-
-def get_additional_information_important_attributes():
-    return [
-        {
-            "name": "alcoholic_drink",
-            "label": "Serve bebidas alcólicas"
-        },
-        {
-            "name": "has_entertainment",
-            "label": "Enterteinimento"
-        },
-        {
-            "name": "has_thematicdecoration",
-            "label": "Decoração Temática"
-        },
-        {
-            "name": "has_childrenrides",
-            "label": "Brinquedo pra Crianças"
-        },
-        {
-            "name": "has_costumes",
-            "label": "Fantasias para os Atores"
-        },
-        {
-            "name": "has_parking",
-            "label": "Estacionamento"
-        },
-        {
-            "name": "has_externalarea",
-            "label": "Área externa"
-        },
-        {
-            "name": "has_music",
-            "label": "Música"
-        },
-        {
-            "name": "has_illumination",
-            "label": "Iluminação"
-        },
-        {
-            "name": "has_babychangingroom",
-            "label": "Fraldário"
-        },
-    ]

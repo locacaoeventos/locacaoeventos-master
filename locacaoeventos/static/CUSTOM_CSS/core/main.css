@@ -3,7 +3,7 @@ input, textarea {
 }
 .error_message {
 	display:none;
-	color:red;
+	color:#f74235;
 	float:right
 }
 

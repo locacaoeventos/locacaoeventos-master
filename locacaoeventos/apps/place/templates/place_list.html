@@ -111,7 +111,8 @@
                     <div class="icon">
                       <i class="fa fa-thumbs-up"></i>
                     </div>
-                    <img src="/media/{{place.photo}}" alt="">
+
+                    <img src="{% if place.photo %}/media/{{place.photo}}{% else %}/static/base_template_user/assets/img/blog-1.jpg{% endif %}" alt="">
                   </a>
                 </div>
                 <div class="wrapper">

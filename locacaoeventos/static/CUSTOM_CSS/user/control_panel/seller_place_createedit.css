@@ -1,7 +1,4 @@
 /* Children Rides and Decoration */
-#id_children_rides, #id_decoration {
-	display:none;
-}
 #id_children_rides_input, #id_decoration_input {
 	width:90%;
 	float:left;
@@ -15,7 +12,6 @@
 .add_button:hover {
 	background-color:#021b5e; 
 }
-
 .add_container {
 	background-color:white;
 	border:1px solid #f2f2f2;

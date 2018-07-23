@@ -1,0 +1,306 @@
+{% extends "control_panel/seller_base.html"%}
+{% block jquery %}{% endblock jquery %}
+{% block page_title %}{% if is_editing %}Editar{% else %}Novo{% endif %} Anúncio{% endblock page_title %}
+{% block panel_title %}{% if is_editing %}Editar{% else %}Novo{% endif %} Anúncio{% endblock panel_title %}
+{% block user_panel_content %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.ui.widget.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.iframe-transport.js"></script>
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery.fileupload.js"></script>
+  
+  <script type="text/javascript" src="/static/CUSTOM_JS/core/custom_upload.js"></script>
+
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_createedit.css" type="text/css">
+
+  <section class="block listing" style="padding-top:0">
+    <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+      <input class="hidden" name="place_pk" id="id_place_pk" value="{{place_pk}}"/>
+      {% for field in form %}
+        {% if forloop.counter == 4 or forloop.counter == 5 %}
+          {% if forloop.counter == 4 %}
+            <div class="form-group medium">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <label>Capacidade</label>
+                    {{field}}
+                  </div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+          {% elif forloop.counter == 5 %}
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <label>Tamanho</label>
+                    {{field}}
+                  </div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="separador-5"> </div>
+          {% endif %}
+        {% elif field.name == "children_rides" %}
+          <div class="form-group medium">
+            {{field.as_hidden}}<!-- hidden field -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="title">Brinquedos (opcional)</label>
+                <input type="text" id="id_children_rides_input"/>
+                <div class="add_button" type="children_rides">+</div>
+                <br><br>
+              </div>
+              <div class="col-md-6">
+                <div class="separador-20"> </div>
+                <div class="add_container" id="id_children_rides_container">
+                </div>
+              </div>
+            </div>
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                  {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+
+          </div>
+          <div class="separador-20"> </div>
+
+        {% elif field.name == "decoration" %}
+          <div class="form-group medium">
+            {{field.as_hidden}}<!-- hidden field -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="title">Decorações (opcional)</label>
+                <input type="text" id="id_decoration_input"/>
+                <div class="add_button" type="decoration">+</div>
+                <br><br>
+              </div>
+              <div class="col-md-6">
+                <div class="separador-20"> </div>
+                <div class="add_container" id="id_decoration_container">
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if field.errors %}
+            <div class="error_message" style="display:block">
+              {% for error in field.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+
+          <div class="separador-30"> </div>
+
+
+
+
+
+
+
+
+        {% elif field.name == "photos" %}
+          {{field.as_hidden}}<!-- hidden field -->
+          <!-- ==================================================
+            Upload multiple files 
+          ================================================== -->
+          <label>Carregue as fotos do estabelecimento</label>
+          <div class="separador-10"> </div>
+          <input id="fileupload" type="file" name="photo" multiple
+                 style="display: none;"
+                 data-url="/upload_file/"
+                 data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+                 >
+          <button type="button" class="btn btn-primary js-upload-photos">
+            <i class="fa fa-cloud-upload"></i> Carregar nova Foto
+          </button><br><br>
+          <div id="gallery">
+            <div class="js-upload-photos" id="upload_frame">
+              <br>
+              <i class="fa fa-cloud-upload" style="font-size:30px"> </i><br>Carregar <br>            
+              <br>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Uploading...</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="separador-20"> </div>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                  </div>
+                  <div class="separador-20"> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if field.errors %}
+            <div class="error_message" style="display:block">
+              {% for error in field.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="separador-30"> </div>
+
+
+
+
+
+
+        {% elif field.name == "name" or field.name == "description" or field.name == "video" or field.name == "address" %}
+          <div class="form-group medium">
+            <label for="title">{{ field.label }}</label>
+            {{ field }}
+          </div>
+          {% if field.errors %}
+            <div class="error_message" style="display:block">
+              {% for error in field.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="separador-15"> </div>
+
+
+        {% elif field.name == "menu" %}
+          <label>Menu do Buffet (opcional)</label>
+          <input name="menu_hidden" id="id_menu_hidden" value="{{menu_url}}" class="hidden"/><!-- hidden field -->
+          <label style="font-size:10px; font-style:italic">(pdf ou imagem)</label>
+          <div class="separador-10"> </div>
+
+          <label class="btn btn-default btn-file" id="menu_click">
+              Carregar Arquivo
+          </label>&nbsp;&nbsp;&nbsp;&nbsp;{{field}} <!-- hidden field --><span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
+          {% if field.errors %}
+            <div class="error_message" style="display:block">
+              {% for error in field.errors %}
+                {{error}}
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class="separador-40"> </div>
+          <label>Informações Adicionais (opcional)</label>
+
+      {% else %}
+        {% if not forloop.counter|divisibleby:2 %}
+        <div class="row">
+        {% endif %}
+          <div class="col-md-6">
+            <ul class="list-unstyled checkboxes">
+              <li>
+                <div class="checkbox"><label>
+                  {{field}}
+                  {{field.label}}
+                </label></div>
+              </li>
+            </ul>
+          </div>
+        {% if forloop.counter|divisibleby:2 %}
+        </div>
+        {% endif %}
+
+        {% endif %}
+      {% endfor %}
+
+      <div class="separador-60"> </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <section>
+        <figure class="pull-left margin-top-15">
+          <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
+        </figure>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
+        </div>
+        <!-- /.form-group -->
+      </section>
+
+    </form>
+  </section>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="/static/CUSTOM_JS/core/upload_single_file.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_createedit.js"></script>
+
+
+
+<script>
+  function initAutocomplete() {
+    //----autocomplete start
+    var input = (document.getElementById('id_address'));
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-25.75083, -53.99056),
+        new google.maps.LatLng(-5.271944, -34.79278));
+
+    var options = {
+        bounds:defaultBounds
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    //----autocomplete end
+  }
+
+
+
+</script>
+
+
+
+
+
+
+{% endblock user_panel_content %}
+
+
+{% block js_maps %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+{% endblock js_maps %}

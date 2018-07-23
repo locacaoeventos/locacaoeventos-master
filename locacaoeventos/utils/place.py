@@ -49,20 +49,71 @@ def get_reviews_from_place(place):
             "rate_average": sum_rate_average/count_review/5,
         }
     else:
-        response["review_rates"] = {
-            "rate_infraestructure": "Não avaliado",
-            "rate_rides": "Não avaliado",
-            "rate_cost_benefit": "Não avaliado",
-            "rate_attendance": "Não avaliado",
-            "rate_children_opinion": "Não avaliado",
-            "rate_average": "Não avaliado",
-        }
+        response["review_rates"] = "None"
     return response
 
 
 
-
-def get_latlng_with_address_str(address_str):
+def get_latlng_from_address_str(address_str):
     gmaps = googlemaps.Client(key ='AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw')
     geocode_result = gmaps.geocode(address_str)
-    return [geocode_result[0]['geometry']['location']['lng'],geocode_result[0]['geometry']['location']['lat']]
+    return [geocode_result[0]['geometry']['location']['lat'], geocode_result[0]['geometry']['location']['lng']]
+
+
+
+
+
+
+def get_additional_information_important_attributes():
+    return [
+        {
+            "name": "alcoholic_drink",
+            "id_name": "id_alcoholic_drink",
+            "label": "Serve bebidas alcólicas"
+        },
+        {
+            "name": "has_entertainment",
+            "id_name": "id_has_entertainment",
+            "label": "Enterteinimento"
+        },
+        {
+            "name": "has_thematicdecoration",
+            "id_name": "id_has_thematicdecoration",
+            "label": "Decoração Temática"
+        },
+        {
+            "name": "has_childrenrides",
+            "id_name": "id_has_childrenrides",
+            "label": "Brinquedo pra Crianças"
+        },
+        {
+            "name": "has_costumes",
+            "id_name": "id_has_costumes",
+            "label": "Fantasias para os Atores"
+        },
+        {
+            "name": "has_parking",
+            "id_name": "id_has_parking",
+            "label": "Estacionamento"
+        },
+        {
+            "name": "has_externalarea",
+            "id_name": "id_has_externalarea",
+            "label": "Área externa"
+        },
+        {
+            "name": "has_music",
+            "id_name": "id_has_music",
+            "label": "Música"
+        },
+        {
+            "name": "has_illumination",
+            "id_name": "id_has_illumination",
+            "label": "Iluminação"
+        },
+        {
+            "name": "has_babychangingroom",
+            "id_name": "id_has_babychangingroom",
+            "label": "Fraldário"
+        },
+    ]

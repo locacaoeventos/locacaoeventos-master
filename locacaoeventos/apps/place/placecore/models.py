@@ -11,14 +11,17 @@ class Place(models.Model):
     # Default
     creation = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=False)
     relevance = models.FloatField("Relevância", default=0)
     visualization = models.IntegerField("Visualizações", default=0)
+
+    is_active = models.BooleanField(default=True)
+    is_authorized_by_admin = models.BooleanField(default=False)
+    has_unavailability = models.BooleanField(default=False)
 
     # Place Form
     name = models.CharField("Nome", max_length=64)
     address = models.CharField("Endereço", max_length=256)
-    description = models.CharField("Descrição", max_length=512)
+    description = models.CharField("Descrição", max_length=2048)
 
     capacity = models.IntegerField("Capacidade")
     size = models.FloatField("Tamanho")
@@ -52,6 +55,9 @@ class PlaceAdditionalInformation(models.Model):
     has_music = models.BooleanField("Música")
     has_illumination = models.BooleanField("Iluminação")
     has_babychangingroom = models.BooleanField("Fraldário")
+
+    def __str__(self):
+        return "Additional Info of " + self.place.name
 
 
 

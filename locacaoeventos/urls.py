@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from locacaoeventos.apps.user.views_user import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs
-from locacaoeventos.apps.user.views import UploadFile
+from locacaoeventos.apps.user.views import UploadFile, GetPhoto
 
 import locacaoeventos.apps.user.urls
 import locacaoeventos.apps.place.urls
@@ -28,5 +28,7 @@ urlpatterns = [
 
 
     url(r'^upload_file/$', UploadFile.as_view()),
+    url(r'^get_photo/$', GetPhoto.as_view()),
+    
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

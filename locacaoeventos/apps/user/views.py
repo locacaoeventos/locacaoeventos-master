@@ -6,7 +6,7 @@ from django.views import View
 
 from locacaoeventos.utils.forms import PhotoProvisoryForm
 from locacaoeventos.utils.main import base_context
-from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto
+from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PhotoProvisory
 from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability
 class UploadFile(View):
     def post(self, request):
@@ -24,6 +24,20 @@ class UploadFile(View):
             data = {'is_valid': False}
         return JsonResponse(data)
 
+
+class GetPhoto(View):
+    def get(self, request):
+        photos_list = request.GET.get("photos_list").split(",")
+        photos = []
+        for i in range(len(photos_list)):
+            photo_provisory = PhotoProvisory.objects.get(pk=photos_list[i])
+            photo = PlacePhoto.objects.get(photo=photo_provisory)
+            photos.append({
+                "url":str(photo.photo),
+                "pk":str(photo.pk)
+            })
+        data = {"photos":photos}
+        return JsonResponse(data)
 
 
 class CalendarExample(View):

@@ -18,7 +18,7 @@ urlpatterns = [
 
     url(r'^anunciante/conta/$', EditSeller.as_view()),
     url(r'^anunciante/buffet/listar/$', ListPlaceOwned.as_view()),
-    url(r'^anunciante/buffet/cadastrar/$', CreatePlace.as_view()),
+    url(r'^anunciante/buffet/cadastrar/$', CreateEditPlace.as_view()),
 
     url(r'^conta/$', EditBuyer.as_view()),
     url(r'^buffets-agendados/$', ListPlaceBought.as_view()),

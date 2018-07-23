@@ -34,7 +34,6 @@ $(function () {
           current_val = data.result.pk
         }
         $("#id_photos").val(current_val)
-        console.log(data)
       }
     }
 
