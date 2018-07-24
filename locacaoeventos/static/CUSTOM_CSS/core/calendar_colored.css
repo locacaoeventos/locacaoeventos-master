@@ -1,0 +1,16 @@
+.month {
+    background:#4fa7bc!important;
+    padding: 5px 7px 5px 7px !important;
+}
+.month ul li {
+    color:white !important;
+}
+.weekdays, .days {
+    background-color:#fcfcfc !important;
+}
+.weekdays {
+    font-weight:bold;
+}
+.next a, .prev a {
+    color: white !important;
+}

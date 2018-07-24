@@ -56,11 +56,14 @@ class CalendarAjax(View):
             datetime_unavailability = unavailability.datetime_begin
             str_date_unavailability = str(datetime_unavailability.year) + "-" + str(datetime_unavailability.month) + "-" + str(datetime_unavailability.day)
             place_unavailability_list.append(str_date_unavailability)
+            datetime_unavailability = unavailability.datetime_end
+            str_date_unavailability = str(datetime_unavailability.year) + "-" + str(datetime_unavailability.month) + "-" + str(datetime_unavailability.day)
+            place_unavailability_list.append(str_date_unavailability)
 
 
         # Declaring Variables - Others
         today = datetime.datetime.today()
-        today_month = request.GET.get("meses", None)
+        today_month = request.GET.get("meses", None) # Checking if it's changing month
         if today_month == None:
             today_month = str(0)
         if today_month == str(0):
@@ -93,16 +96,16 @@ class CalendarAjax(View):
                 elif day < today_day:
                     list_month[i] = "<li><span class='pass'>" + str(i+1) + "</span></li>"
                 elif day > today_day and this_day in place_unavailability_list:
-                    list_month[i] = "<li><span class='occupied'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
             
             else:
                 # We are in a future month
                 if today_year > today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li><span class='occupied'>" + str(i+1) + "</span></li>"
+                        list_month[i] = "<li><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 elif today_month > today.month and today_year >= today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li><span class='occupied'>" + str(i+1) + "</span></li>"
+                        list_month[i] = "<li><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 # We are in past month
                 elif today_year < today.year:
                     list_month[i] = "<li><span class='pass'>" + str(i+1) + "</span></li>"

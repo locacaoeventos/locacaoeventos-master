@@ -1,0 +1,25 @@
+.section_availability {
+    padding:0 0 0 5px;
+}
+.section_title {
+    font-weight:bold;
+}
+.subsection_availability {
+    padding:0 0 0 5px;
+}
+
+
+/* Forms */
+select {
+    background-color: white;
+    border: 1px solid #cccccc;
+    padding:5px 2px 5px 2px;
+    font-weight:normal;
+}
+option {
+    background-color: white
+}
+#unavailability_sameday {
+    cursor:pointer;
+    font-style:italic;
+}

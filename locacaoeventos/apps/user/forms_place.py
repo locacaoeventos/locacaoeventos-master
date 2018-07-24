@@ -26,7 +26,7 @@ class PlaceForm(TOCForm):
     children_rides = forms.CharField(required=False, label="Brinquedos para Crianças")
     decoration = forms.CharField(required=False, label="Decorações")
     photos = SimpleArrayField(forms.CharField(required=True, label="Decorações"))
-    menu = forms.FileField(required=False, widget=forms.HiddenInput())
+    menu = forms.FileField(required=False, widget=forms.FileInput)
 
 
 

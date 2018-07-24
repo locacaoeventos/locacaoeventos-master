@@ -4,7 +4,9 @@
   * {box-sizing: border-box;}
   ul {list-style-type: none;}
   body {font-family: Verdana, sans-serif; margin:0;}
-
+  .calendar_wrapper {
+    position:relative;
+  }
   .month {
       padding: 5px 4px 5px 4px;
       width: 100%;
@@ -45,7 +47,7 @@
 
   .weekdays li {
       display: inline-block;
-      width: 12%;
+      width: 14.28%;
       font-size:11px;
       color: #666;
       text-align: center;
@@ -60,7 +62,7 @@
   .days li {
       list-style-type: none;
       display: inline-block;
-      width: 13.6%;
+      width: 14.28%;
       text-align: center;
       margin-bottom: 8px;
       font-size:12px;
@@ -80,54 +82,81 @@
     background-color:#dddddd;
     padding:5px;
     color:#eeeeee;
+    cursor:pointer;
   }
   .move {
     cursor:pointer;
   }
 
-  /* Add media queries for smaller screens */
-  @media screen and (max-width:720px) {
-      .weekdays li, .days li {width: 13.1%;}
+
+
+
+
+
+  /* Day Description */
+  .day_description {
+    /* positioning */
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    margin: 0;
+    display:none;
+    /* customize */
+    width:70%;
+    max-width:200px;
+    height:70%;
+    max-height:200px;
+    box-shadow:1px 1px 1px 1px #888888;
+    overflow-y:auto;
+    background-color:white;
+    padding:2px 5px 5px 5px;
+  }
+  #day_description_date {
+    color:#4fa7bc;
+    font-weight:bold;
+  }
+  .day_description_unavailability {
+    font-weight:bold;
   }
 
-  @media screen and (max-width: 420px) {
-      .weekdays li, .days li {width: 12.5%;}
-      .days li .active {padding: 2px;}
-  }
-
-  @media screen and (max-width: 290px) {
-      .weekdays li, .days li {width: 12.2%;}
-  }
 </style>
 
+<div class="calendar_wrapper">
+  <div class="day_description">
+    <span style="float:right; cursor:pointer;">&times;</span><br>
+    <span id="day_description_date">19 de Julho de 2018</span>
+    <div class="separador-10"> </div>
+    Indisponível das:
+    <div class="separador-10"> </div>
+    <span class="day_description_unavailability">8h00-10h00</span><br>
+    <span class="day_description_unavailability">18h00-20h00</span>
+  </div>
+  <div class="month">      
+    <ul>
+      <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
+      <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
+      <li>
+        <span id="month_ajax">{{month}}</span><br>
+        <span id="year_ajax">{{year}}</span>
+      </li>
+    </ul>
+  </div>
 
-<div class="month">      
-  <ul>
-    <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
-    <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
-    <li>
-      <span id="month_ajax">{{month}}</span><br>
-      <span id="year_ajax">{{year}}</span>
-    </li>
+  <ul class="weekdays">
+    <li>Seg</li><!--
+    --><li>Ter</li><!--
+    --><li>Qua</li><!--
+    --><li>Qui</li><!--
+    --><li>Sex</li><!--
+    --><li>Sab</li><!--
+    --><li>Dom</li>
+  </ul>
+
+  <ul class="days" id="days_ajax">  
+    {% for day in list_month %}{{day|safe}}{% endfor %}
   </ul>
 </div>
-
-<ul class="weekdays">
-  <li>Seg</li>
-  <li>Ter</li>
-  <li>Qua</li>
-  <li>Qui</li>
-  <li>Sex</li>
-  <li>Sab</li>
-  <li>Dom</li>
-</ul>
-
-<ul class="days" id="days_ajax">  
-  {% for day in list_month %}
-    {{day|safe}}
-  {% endfor %}
-</ul>
-
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
@@ -173,7 +202,28 @@
         $("#days_ajax").html(str_days)
       }
     })
-
   })
 
+  // Detail Unavailability
+  $(document).on("click", function(event){
+    if(String(event.target.className) == "occupied") {
+      $(".day_description").fadeIn(300)
+      var this_day = event.target.getAttribute("date_occupied")
+      console.log(this_day)
+      $.ajax({
+        url: "/usuario/ajax/unavailability/detail/",
+        dataType: 'json',
+        data: {
+          "pk": "{{place_pk}}",
+          "this_day": this_day
+        },
+        success: function (data) {
+        }
+      })
+    } else if(String(event.target.className) != "day_description") {
+      $(".day_description").fadeOut(300)
+    }
+
+
+  })
 </script>

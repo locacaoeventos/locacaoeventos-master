@@ -191,10 +191,9 @@
           <input name="menu_hidden" id="id_menu_hidden" value="{{menu_url}}" class="hidden"/><!-- hidden field -->
           <label style="font-size:10px; font-style:italic">(pdf ou imagem)</label>
           <div class="separador-10"> </div>
-
           <label class="btn btn-default btn-file" id="menu_click">
-              Carregar Arquivo
-          </label>&nbsp;&nbsp;&nbsp;&nbsp;{{field}} <!-- hidden field --><span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
+              Carregar Arquivo{{field}} <!-- hidden field -->
+          </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
           {% if field.errors %}
             <div class="error_message" style="display:block">
               {% for error in field.errors %}

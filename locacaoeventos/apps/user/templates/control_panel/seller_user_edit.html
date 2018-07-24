@@ -3,4 +3,46 @@
 {% block panel_title %}Conta{% endblock panel_title %}
 
 {% block user_panel_content %}
+  <section class="block listing" style="padding-top:0">
+    <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+      {% for field in form %}
+                  {{field}}
+                  {{field.label}}
+      {% endfor %}
+
+      <div class="separador-60"> </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <section>
+        <figure class="pull-left margin-top-15">
+          <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
+        </figure>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
+        </div>
+        <!-- /.form-group -->
+      </section>
+
+    </form>
+  </section>
+
 {% endblock user_panel_content %}

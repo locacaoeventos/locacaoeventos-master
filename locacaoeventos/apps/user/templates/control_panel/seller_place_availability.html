@@ -1,0 +1,109 @@
+{% extends "control_panel/seller_base.html" %}
+{% block page_title %}Disponibilidade{% endblock page_title %}
+{% block panel_title %}Disponibilidade{% endblock panel_title %}
+{% load datetime_tags %}
+
+{% block user_panel_content %}
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_availability.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
+
+    <section>
+        <div class="row">
+            <div class="col-md-6">
+                <h2 id="place_pk" pk="{{place_pk}}">{{place.name}}</h2>
+                <section class="section_availability">
+                    <span class="section_title">Quando seu buffet estará ocupado?</span>
+                    <div class="separador-15"> </div>
+                    <div class="subsection_availability">
+                        <form>
+                            <span>Início</span>
+                            <div class="separador-3"> </div>
+                            <div style="padding-left:5px">
+                                <select class="unavailability_field begin" id="id_day_begin" required>
+                                    <option value="">Dia</option>
+                                    {% for i in 31|create_monthday_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field begin" id="id_month_begin" required>
+                                    <option value="">Mês</option>
+                                    {% for i in 12|create_monthday_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field begin" id="id_year_begin" required>
+                                    <option value="">Ano</option>
+                                    {% for i in 10|create_year_set_later %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field begin" id="id_hour_begin" required>
+                                    <option value="">H</option>
+                                    {% for i in 24|create_minutehour_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field begin" id="id_minute_begin" required>
+                                    <option value="">M</option>
+                                    {% for i in 60|create_minutehour_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="separador-10"> </div>
+                            <span>Fim <span id="unavailability_sameday">(mesmo dia)</span></span>
+                            <div class="separador-3"> </div>
+                            <div style="padding-left:5px">
+                                <select class="unavailability_field end" id="id_day_end" required>
+                                    <option value="">Dia</option>
+                                    {% for i in 31|create_monthday_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field end" id="id_month_end" required>
+                                    <option value="">Mês</option>
+                                    {% for i in 12|create_monthday_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field end" id="id_year_end" required>
+                                    <option value="">Ano</option>
+                                    {% for i in 10|create_year_set_later %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field end" id="id_hour_end" required>
+                                    <option value="">H</option>
+                                    {% for i in 24|create_minutehour_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="unavailability_field end" id="id_minute_end" required>
+                                    <option value="">M</option>
+                                    {% for i in 60|create_minutehour_set %}
+                                    <option value="{{i}}">{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="separador-10"> </div>
+                            <div class="error_message" id="error_unavailability">EXEMPLO</div>
+                            <div class="separador-25"> </div>
+                            <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6">
+                {% include "calendar.html" %}
+            </div>
+        </div>
+
+    </section>
+
+
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_availability.js"></script>
+
+{% block js_select_customize %}{% endblock js_select_customize %}
+
+{% endblock user_panel_content %}

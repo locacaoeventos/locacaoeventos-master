@@ -42,7 +42,7 @@ Body code
     <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white;">
       <div class="wrapper">
         <div class="brand">
-          <a href="/"><img src="/static/img/123festas/logo_horizontal.png" style="width:150px; margin:2px 0 10px 40px" alt="logo"></a>
+          <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:150px; margin:2px 0 10px 40px" alt="logo"></a>
         </div>
         <nav class="navigation-items">
           <div class="wrapper">
@@ -241,7 +241,9 @@ JavaScript imports
 <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/icheck.min.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/before.load.js"></script>
-<script type="text/javascript" src="/static/base_template_user/assets/js/jquery-migrate-1.2.1.min.js"></script>
+{% block js_select_customize %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-migrate-1.2.1.min.js"></script>
+{% endblock js_select_customize %}
 <script type="text/javascript" src="/static/base_template_user/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/smoothscroll.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/bootstrap-select.min.js"></script>

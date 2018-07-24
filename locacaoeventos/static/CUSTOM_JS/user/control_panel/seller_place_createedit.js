@@ -119,6 +119,7 @@ $(document).on("click", ".x_option_add", function(){
 
 })
 
-$(document).on("click", "#menu_click", function(){
-	$("#id_menu").trigger("click")
-})
+// Menu
+//$(document).on("click", "#menu_click", function(){
+	//$("#id_menu").trigger("click")
+//})

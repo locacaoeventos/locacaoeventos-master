@@ -14,9 +14,9 @@ class Place(models.Model):
     relevance = models.FloatField("Relevância", default=0)
     visualization = models.IntegerField("Visualizações", default=0)
 
-    is_active = models.BooleanField(default=True)
     is_authorized_by_admin = models.BooleanField(default=False)
-    has_unavailability = models.BooleanField(default=False)
+    has_finished_basic = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     # Place Form
     name = models.CharField("Nome", max_length=64)
