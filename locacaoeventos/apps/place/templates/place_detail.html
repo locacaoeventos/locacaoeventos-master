@@ -6,7 +6,7 @@
 	<section class="container">
 	    <div class="row">
 	        <!--Item Detail Content-->
-	        <div class="col-md-9">
+	        <div class="col-md-12">
 	            <section class="block" id="main-content">
 	                <header class="page-title">
 	                    <div class="title">
@@ -32,31 +32,41 @@
 	                            <header class="pull-left" style="width:100%">
 	                            	<a href="#reviews" class="roll">
 	                            		<h3>Avaliações</h3>
-	                            		<span class="rating_place">Infraestrutura</span>
-	                            		<div class="pull-right">
-		                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
-		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-										</div><br>
-	                            		<span class="rating_place">Brinquedos</span>
-	                            		<div class="pull-right">
-		                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
-		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-										</div><br>
-	                            		<span class="rating_place">Custo-Benefício</span>
-	                            		<div class="pull-right">
-		                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
-		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-										</div><br>
-	                            		<span class="rating_place">Atendimento</span>
-	                            		<div class="pull-right">
-		                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
-		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-										</div><br>
-	                            		<span class="rating_place">Opinião das Crianças</span>
-	                            		<div class="pull-right">
-		                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
-		                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-										</div><br>
+
+			                            {% if review_rates == "None" %}
+			                                <figure class="pull-left" style="font-weight:bolder">
+			                                    Não há avaliações!
+			                                    <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			                                </figure><br>
+
+			                            {% else %}
+
+		                            		<span class="rating_place">Infraestrutura</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Brinquedos</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Custo-Benefício</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Atendimento</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Opinião das Crianças</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+										{% endif %}
 	                            	</a>
 	                            </header>
 	                        </section>
@@ -66,6 +76,16 @@
 	                        	{% include "calendar.html" %}
 	                        	<hr class="line"/>
 	                        </section>
+	                        <div class="separador-20"> </div>
+                            <ul class="bullets">
+	                        {% if additionalinformation|length > 0 %}
+                            	{% for info in additionalinformation %}
+	                            	<li>{{info.name}}</li><br>
+                                {% endfor %}
+		                    {% endif %}
+                            </ul>
+
+
 	                    </aside>
 
 
@@ -104,87 +124,57 @@
 	                                    </div>
 	                                </div>
 	                            </article>
-	                            <!-- /.item-gallery -->
-	                            <article class="block">
-	                                <header><h2>Descrição</h2></header>
-	                                <p>
-	                                    {{place.description}}
-	                                </p>
-	                            </article>
-	                            <!-- /.block -->
-	                            <article class="block">
-	                                <header><h2>Outras Informações</h2></header>
-	                                <ul class="bullets">
-			                        {% if additionalinformation|length > 0 %}
-		                            	{% for info in additionalinformation %}
-			                            	<li>{{info.name}}</li>
-		                                {% endfor %}
-				                    {% endif %}
-	                                </ul>
-	                            </article>
-	                            <!-- /.block -->
-	                        </section>
-						    <section class="block" id="reviews">
-						        <article class="clearfix overall-rating">
-						            <strong class="pull-left">Média Total</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_average}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						            <strong class="pull-left">Infraestrutura</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_infraestructure}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						            <strong class="pull-left">Brinquedos</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_rides}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						            <strong class="pull-left">Custo-Benefício</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_cost_benefit}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						            <strong class="pull-left">Atendimento</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_attendance}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						            <strong class="pull-left">Opinião das Crianças</strong>
-						                &nbsp;&nbsp; {{review_rates.rate_children_opinion}}
-						                <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-						        </article><!-- /.overall-rating-->
-						        <div class="separador-20"> </div>
-						    </section>
-						    <section class="reviews">
-						        {% for review in review_list %}
-						            <article class="review">
-						                <figure class="author">
-						                    <img src="assets/img/default-avatar.png" alt="">
-						                    <div class="date">12.05.2014</div>
-						                </figure>
-						                <div class="wrapper">
-						                    <h5>{{review.buyerprofile}} - {{review.rate}} <i class="fa fa-star"></i></h5>
-						                    <p>
-						                        {{review.comment}}
-						                    </p>
-						                    <div class="individual-rating">
-						                        <span>Infraestrutura</span>
-						                        <figure class="rating" data-rating="{{review.rate_infraestructure}}"></figure>
-						                    </div>
-						                    <div class="individual-rating">
-						                        <span>Brinquedos</span>
-						                        <figure class="rating" data-rating="{{review.rate_rides}}"></figure>
-						                    </div>
-						                    <div class="individual-rating">
-						                        <span>Custo-Benefício</span>
-						                        <figure class="rating" data-rating="{{review.rate_cost_benefit}}"></figure>
-						                    </div>
-						                    <div class="individual-rating">
-						                        <span>Atendimento</span>
-						                        <figure class="rating" data-rating="{{review.rate_attendance}}"></figure>
-						                    </div>
-						                    <div class="individual-rating">
-						                        <span>Opinião das Crianças</span>
-						                        <figure class="rating" data-rating="{{review.rate_children_opinion}}"></figure>
-						                    </div>
-						                </div>
-						            </article>
-						        {% endfor %}
-						    </section>
-						        <!-- /.reviews-->
 
+
+	                            <div class="separador-20"> </div>
+                                <header><h2>Descrição</h2></header>
+                                <p>
+                                    {{place.description}}
+                                </p>
+	                        </section>
+	                        <section>
+	                        {% if place.video %}
+	                        	<div class="separador-20"> </div>
+								<iframe width="420" height="315"
+								src="{{place.video}}">
+								</iframe>
+	                        {% endif %}
+	                        </section>
+
+                            {% if review_rates == "None" %}
+                                <figure class="pull-left" style="font-weight:bolder">
+                                    Não há avaliações!
+                                    <i style="color:#4fa7bc;" class="fa fa-star"></i>
+                                </figure><br>
+
+                            {% else %}
+
+                        		<span class="rating_place">Infraestrutura</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Brinquedos</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Custo-Benefício</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Atendimento</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Opinião das Crianças</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+							{% endif %}
 
 
 
@@ -216,88 +206,6 @@
 	                    </div>
 	                </div>
 	            </section>
-	        </div>
-	        <div class="col-md-3">
-	            <aside id="sidebar">
-	                <section>
-	                    <header><h2>New Places</h2></header>
-	                    <a href="item-detail.html" class="item-horizontal small">
-	                        <h3>3295 Valley Street</h3>
-	                        <figure>Collingswood</figure>
-	                        <div class="wrapper">
-	                            <div class="image"><img src="assets/img/items/real-estate/6.jpg" alt=""></div>
-	                            <div class="info">
-	                                <div class="type">
-	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
-	                                    <span>Apartment</span>
-	                                </div>
-	                                <div class="rating" data-rating="4"></div>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <!--/.item-horizontal small-->
-	                    <a href="item-detail.html" class="item-horizontal small">
-	                        <h3>534 Roosevelt Street</h3>
-	                        <figure>San Francisco</figure>
-	                        <div class="wrapper">
-	                            <div class="image"><img src="assets/img/items/real-estate/11.jpg" alt=""></div>
-	                            <div class="info">
-	                                <div class="type">
-	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
-	                                    <span>Apartment</span>
-	                                </div>
-	                                <div class="rating" data-rating="3"></div>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <!--/.item-horizontal small-->
-	                    <a href="item-detail.html" class="item-horizontal small">
-	                        <h3>3019 White Avenue</h3>
-	                        <figure>Corpus Christi</figure>
-	                        <div class="wrapper">
-	                            <div class="image"><img src="assets/img/items/real-estate/1.jpg" alt=""></div>
-	                            <div class="info">
-	                                <div class="type">
-	                                    <i><img src="assets/icons/real-estate/apartment-3.png" alt=""></i>
-	                                    <span>Apartment</span>
-	                                </div>
-	                                <div class="rating" data-rating="5"></div>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <!--/.item-horizontal small-->
-	                </section>
-	                <section>
-	                    <a href="#"><img src="assets/img/ad-banner-sidebar.png" alt=""></a>
-	                </section>
-	                <section>
-	                    <header><h2>Categories</h2></header>
-	                    <ul class="bullets">
-	                        <li><a href="#" >Restaurant</a></li>
-	                        <li><a href="#" >Steak House & Grill</a></li>
-	                        <li><a href="#" >Fast Food</a></li>
-	                        <li><a href="#" >Breakfast</a></li>
-	                        <li><a href="#" >Winery</a></li>
-	                        <li><a href="#" >Bar & Lounge</a></li>
-	                        <li><a href="#" >Pub</a></li>
-	                    </ul>
-	                </section>
-	                <section>
-	                    <header><h2>Events</h2></header>
-	                    <div class="form-group">
-	                        <select class="framed" name="events">
-	                            <option value="">Select Your City</option>
-	                            <option value="1">London</option>
-	                            <option value="2">New York</option>
-	                            <option value="3">Barcelona</option>
-	                            <option value="4">Moscow</option>
-	                            <option value="5">Tokyo</option>
-	                        </select>
-	                    </div>
-	                    <!-- /.form-group -->
-	                </section>
-	            </aside>
-	            <!-- /#sidebar-->
 	        </div>
 	        <!-- /.col-md-3-->
 	        <!--end Sidebar-->

@@ -7,6 +7,7 @@ import re, datetime, ast, pytz
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
 from .forms_place import *
+from .forms_user import *
 
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PhotoProvisory
 from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability, PlaceReservation
