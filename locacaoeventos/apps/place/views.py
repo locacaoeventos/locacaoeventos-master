@@ -10,7 +10,7 @@ from locacaoeventos.utils.general import *
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 
 from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation
-from .placereservation.models import PlacePrice, PlaceUnavailability, PlaceReservation
+from .placereservation.models import PlacePrice, PlaceUnavailability, PlaceReservation, PlacePrice
 from .placereview.models import PlaceReview
 
 
@@ -18,7 +18,7 @@ class ListPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         place_list = []
-        for place in Place.objects.filter(is_active=True):
+        for place in Place.objects.filter(is_active=True, has_finished_basic=True):
             place_dic = {
                 "pk": place.pk,
                 "size": place.size,
@@ -30,6 +30,16 @@ class ListPlace(View):
             photo = PlacePhoto.objects.filter(place=place)
             if photo:
                 place_dic["photo"] = photo[0].photo.photo
+
+            placeprice_min = 9999999999999
+            for placeprice in PlacePrice.objects.filter(place=place):
+                if placeprice.value < placeprice_min:
+                    placeprice_min = placeprice.value
+            if placeprice_min != 9999999999999:
+                place_dic["placeprice_min"] = "%.2f"%placeprice_min
+
+
+            place_dic["review_list"] = get_reviews_from_place(place)
             place_list.append(place_dic)
 
         # BEGIN Paginator

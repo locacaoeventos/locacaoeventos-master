@@ -26,6 +26,7 @@ class EditSeller(View):
             "name": seller.name,
             "cpf": seller.cpf,
             "cnpj": seller.cnpj,
+            #"password": seller.user.password,
         })
 
 
@@ -296,7 +297,6 @@ class CreateEditPlace(View):
         if form.is_valid():
             # Video
             video = form.cleaned_data["video"].replace('/watch?v=', '/embed/')
-            video = re.sub(r'.*youtube', 'https://www.youtube', video)
             # Coordinates
             coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
             # Children Rides
@@ -324,7 +324,7 @@ class CreateEditPlace(View):
                 place.description = form.cleaned_data["description"]
                 place.capacity = form.cleaned_data["capacity"]
                 place.size = form.cleaned_data["size"]
-                place.video = form.cleaned_data["video"]
+                place.video = video
                 place.children_rides = children_rides
                 place.decoration = decoration
                 place.menu = menu
@@ -364,7 +364,7 @@ class CreateEditPlace(View):
                     description=form.cleaned_data["description"],
                     capacity=form.cleaned_data["capacity"],
                     size=form.cleaned_data["size"],
-                    video=form.cleaned_data["video"],
+                    video=video,
                     children_rides=children_rides,
                     decoration=decoration,
                     menu=menu,

@@ -121,7 +121,18 @@
                   </a>
                   <figure>{{place.address}}</figure>
                   <div class="info">
-                    <div class="rating" data-rating="4"></div>
+                    {% if place.review_list.review_rates == "None" %}
+                      <figure style="font-size:12px">Não há avaliações</figure>
+                    {% else %}
+                      <div class="rating" data-rating="4"></div>
+                    {% endif %}
+                    <div class="separador-5"> </div>
+                    {% if place.placeprice_min %}
+                      <h4 style="display:inline">$ </h4><h3 style="display:inline">{{place.placeprice_min}}</h3>
+                    {% else %}
+                      <figure style="display:inline; font-size:12px">Consulte o preço</figure>
+                    {% endif %}
+
                   </div>
                 </div>
               </div>
@@ -198,9 +209,11 @@
       //----autocomplete start
       var input = (document.getElementById('place_id'));
       var defaultBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(-25.75083, -53.99056),
-          new google.maps.LatLng(-5.271944, -34.79278));
+        new google.maps.LatLng(-24.230623, -53.141559),
+        new google.maps.LatLng(-20.533727, -44.352497)
 
+
+      );
       var options = {
           bounds:defaultBounds
       };

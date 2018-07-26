@@ -25,7 +25,7 @@ class Place(models.Model):
 
     capacity = models.IntegerField("Capacidade")
     size = models.FloatField("Tamanho")
-    video = models.CharField("Video URL", max_length=128)
+    video = models.CharField("Video URL", max_length=128, blank=True)
     children_rides = ArrayField(models.CharField(max_length=200), blank=True)
     decoration = ArrayField(models.CharField(max_length=200), blank=True)
 
