@@ -55,7 +55,7 @@ class SellerForm(TOCForm):
     email_seller = fields.EmailField(required=True, widget=forms.EmailInput, label="E-mail")
     password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
 
-    name = fields.CharField(required=True, label="Nome do responsável")
+    name_seller = fields.CharField(required=True, label="Nome do responsável")
 
     cpf = fields.CharField(required=True, label="CPF do responsável")
     cnpj = fields.CharField(label="CNPJ do estabelecimento")

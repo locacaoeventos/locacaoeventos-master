@@ -152,7 +152,7 @@ class CreateUser(View):
                     is_active=False
                 )
                 str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
-                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' localhost:8000/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key
+                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key
                 send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_buyer.cleaned_data["email"]], fail_silently=False)
                 return redirect("/usuario/cadastro-concluido/")
             else:
@@ -176,7 +176,7 @@ class CreateUser(View):
                 key = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(23))
                 seller = SellerProfile.objects.create(
                     user=user,
-                    name=form_seller.cleaned_data["name"],
+                    name=form_seller.cleaned_data["name_seller"],
                     email=form_seller.cleaned_data["email_seller"],
                     cpf=form_seller.cleaned_data["cpf"],
                     cnpj=form_seller.cleaned_data["cnpj"],
@@ -184,8 +184,8 @@ class CreateUser(View):
                     is_active=False
                 )
                 str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
-                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' localhost:8000/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key + "&seller=true"
-                send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email"]], fail_silently=False)
+                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key + "&seller=true"
+                send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
                 return redirect("/usuario/cadastro-concluido/")
             else:
                 return render(request, "user_create.html", context)
@@ -243,7 +243,7 @@ class ForgotPassword(View):
             profile.key = key
             profile.save()
             str_titulo = ('Nova senha no LOCACAO EVENTOS')
-            str_body = ('Entrar nesse link para trocar sua senha ') + ' localhost:8000/usuario/trocar-senha/?user=' + str(profile.user.pk) + "&token=" + key
+            str_body = ('Entrar nesse link para trocar sua senha ') + ' 123festas.com/usuario/trocar-senha/?user=' + str(profile.user.pk) + "&token=" + key
             send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [request.POST["email"]], fail_silently=False)
             return render(request, "forgot_password_completed.html", context)
 
