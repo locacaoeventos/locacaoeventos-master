@@ -22,12 +22,8 @@ input, textarea {
 
 /* Center Cropped */
 .center-cropped {
-	padding:0;
-	width:40%;
-	display:inline-block;
-	overflow:hidden;
-	margin:-10px 0 -10px 0;
-	 filter: gray saturate(0%) brightness(70%) contrast(1000%);
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 .img-center {
 	 background-size:cover;
@@ -37,7 +33,6 @@ input, textarea {
 	 white-space:nowrap;
 	 display: inline-block;
 	 height: 100%;  
-
 }
 
 .form_input_text {
@@ -62,3 +57,56 @@ input, textarea {
 	border-radius:50%;
 	cursor:pointer;
 }
+
+
+
+
+
+
+
+/* Fadeout text */
+.fadeout {
+    position: relative; 
+    bottom: 4em;
+    height: 4em;
+    background: -webkit-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    ); 
+    background-image: -moz-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: -o-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    background-image: -ms-linear-gradient(
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+    );
+}
+
+
+/* justify text on element */
+.justify_text {
+    text-align: justify;
+    text-justify: inter-word;	
+}
+
+
+
+/* Align center element */
+.center_element {
+	width:100%;
+	text-align:center
+}
+
+
+
+
+

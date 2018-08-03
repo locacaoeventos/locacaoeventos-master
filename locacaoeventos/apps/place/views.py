@@ -69,52 +69,33 @@ class ListPlace(View):
 class DetailPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        context = detailplace_context(context, self.request)
+        place_obj = Place.objects.get(pk=request.GET["pk"])
+        place = place_obj.__dict__
+        context["place_seller"] = place_obj.sellerprofile.__dict__
+        context["place"] = place
+        context["place_capacity"] = place["capacity"]
+        context["place_size"] = "%.0f" % place["size"]
+        context["place_pk"] = place_obj.pk
+        context["place_obj"] = place_obj
+        context["place_photo"] = PlacePhoto.objects.filter(place=place_obj)[0].photo.photo
+        context["photo_list"] = [photo.photo for photo in PlacePhoto.objects.filter(place=place_obj)]
+
+        context["additionalinformation"] = []
+        additionalinformation = PlaceAdditionalInformation.objects.get(place=place_obj).__dict__
+        additionalinformation_attributes = get_additional_information_important_attributes()
+        for key in additionalinformation:
+            if additionalinformation[key] == True and key != "id" and key != "place_id":
+                context["additionalinformation"].append({
+                    "key_name": key,
+                    "name": get_dic_by_key(listdic=additionalinformation_attributes, key="name", value=key)["label"],
+                })
+
+
+        reviews_dic = get_reviews_from_place(place_obj)
+        context["review_list"] = reviews_dic["review_list"]
+        context["review_rates"] = reviews_dic["review_rates"]
+
         return render(request, "place_detail.html", context)
 
 
-    def post(self, request, *args, **kwargs):
-        context = base_context(request.user)
-        context = detailplace_context(context, self.request)
-        description = self.request.POST["description"]
-        rate = self.request.POST["rate"]
-        PlaceReview.objects.create(
-            user=self.request.user,
-            description=description,
-            rate=rate,
-            place=context["place_obj"]
-        )
-        return render(request, "place_detail.html", context)
-
-
-
-
-
-
-def detailplace_context(context, request):
-    place_obj = Place.objects.get(pk=request.GET["pk"])
-    place = place_obj.__dict__
-    context["place_seller"] = place_obj.sellerprofile.__dict__
-    context["place"] = place
-    context["place_pk"] = place_obj.pk
-    context["place_obj"] = place_obj
-    context["place_photo"] = PlacePhoto.objects.filter(place=place_obj)[0].photo.photo
-    context["photo_list"] = [photo.photo for photo in PlacePhoto.objects.filter(place=place_obj)]
-
-    context["additionalinformation"] = []
-    additionalinformation = PlaceAdditionalInformation.objects.get(place=place_obj).__dict__
-    additionalinformation_attributes = get_additional_information_important_attributes()
-    for key in additionalinformation:
-        if additionalinformation[key] == True and key != "id" and key != "place_id":
-            context["additionalinformation"].append({
-                "key_name": key,
-                "name": get_dic_by_key(listdic=additionalinformation_attributes, key="name", value=key)["label"],
-            })
-
-
-    reviews_dic = get_reviews_from_place(place_obj)
-    context["review_list"] = reviews_dic["review_list"]
-    context["review_rates"] = reviews_dic["review_rates"]
-
-    return context
 

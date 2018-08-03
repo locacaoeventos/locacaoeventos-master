@@ -1,172 +1,14 @@
 {% extends "_base_user.html" %}
 {% block page_title %}{{place.name}}{% endblock page_title %}
 {% block content %}
+
+<!-- =====================================================
+CSS imports
+===================================================== -->  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
-    <!--<div id="map-detail"></div>-->
-	<section class="container">
-	    <div class="row">
-	        <!--Item Detail Content-->
-	        <div class="col-md-12">
-	            <section class="block" id="main-content">
-	                <header class="page-title">
-	                    <div class="title">
-	                        <h1>{{place.name}}</h1>
-	                    </div>
-	                    <div class="separador-15"> </div>
-	                    <div class="info">
-
-				            <div class="center-cropped" style="width:100%; height:250px; position:absolute">
-				              <div id="detail_img" style="background-image: url(/media/{{place_photo}});" class="img-center"></div>
-				            </div>
-				            <div style="width:100%; height:250px; background-color:rgba(0,0,0,0); position:absolute; margin-top:-10px">
-				            </div>
-				            <div class="separador-200"> </div>
-				            <div class="separador-50"> </div>
-	                        <figure>{{place.address}}</figure>
-						</div>
-	                </header>
-	                <div class="row">
-	                    <!--Detail Sidebar-->
-	                    <aside class="col-md-4 col-sm-4" id="detail-sidebar">
-	                        <section class="clearfix">
-	                            <header class="pull-left" style="width:100%">
-	                            	<a href="#reviews" class="roll">
-
-			                            {% if review_rates == "None" %}
-			                                <figure class="pull-left" style="font-weight:bolder">
-			                                    Não há avaliações!
-			                                    <i style="color:#4fa7bc;" class="fa fa-star"></i>
-			                                </figure><br>
-
-			                            {% else %}
-	                            			<h3>Avaliações</h3>
-
-		                            		<span class="rating_place">Infraestrutura</span>
-		                            		<div class="pull-right">
-			                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
-			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-											</div><br>
-		                            		<span class="rating_place">Brinquedos</span>
-		                            		<div class="pull-right">
-			                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
-			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-											</div><br>
-		                            		<span class="rating_place">Custo-Benefício</span>
-		                            		<div class="pull-right">
-			                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
-			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-											</div><br>
-		                            		<span class="rating_place">Atendimento</span>
-		                            		<div class="pull-right">
-			                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
-			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-											</div><br>
-		                            		<span class="rating_place">Opinião das Crianças</span>
-		                            		<div class="pull-right">
-			                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
-			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-											</div><br>
-										{% endif %}
-	                            	</a>
-	                            </header>
-	                        </section>
-	                        <div class="separador-20"> </div>
-	                        <section>
-	                        	<hr class="line"/>
-	                        	{% include "calendar.html" %}
-	                        	<hr class="line"/>
-	                        </section>
-	                        <div class="separador-20"> </div>
-                            <ul class="bullets">
-	                        {% if additionalinformation|length > 0 %}
-                            	{% for info in additionalinformation %}
-	                            	<li>{{info.name}}</li><br>
-                                {% endfor %}
-		                    {% endif %}
-                            </ul>
-
-
-	                    </aside>
-
-
-
-
-
-
-
-	                    <div class="col-md-8 col-sm-8">
-	                        <section>
-	                            <article class="item-gallery">
-	                                <div class="owl-carousel item-slider">
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/12.jpg" data-hash="1"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/6.jpg" data-hash="2"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/1.jpg" data-hash="3"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/8.jpg" data-hash="4"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/9.jpg" data-hash="5"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/10.jpg" data-hash="6"></div>
-	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/7.jpg" data-hash="7"></div>
-	                                </div>
-	                                <!-- /.item-slider -->
-	                                <div class="thumbnails">
-	                                    <div class="expandable-content height collapsed show-70" id="gallery-thumbnails">
-	                                        <div class="content">
-	                                        	{% for photo in photo_list %}
-	                                        		{% if forloop.counter == 1 %}
-	                                            		<a class="active detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
-	                                            	{% else %}
-			                                            <a class="detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
-	                                            	{% endif %}
-	                                        	{% endfor %}
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                            </article>
-
-
-	                            <div class="separador-20"> </div>
-                                <header><h2>Descrição</h2></header>
-                                <p>
-                                    {{place.description}}
-                                </p>
-	                        </section>
-	                        <section>
-	                        {% if place.video %}
-	                        	<div class="separador-20"> </div>
-	                        	<div style="width:100%;text-align:center">
-									<iframe width="420" height="315" src="{{place.video}}"></iframe>
-								</div>
-	                        	<div class="separador-30"> </div>
-	                        {% endif %}
-	                        </section>
-
-                            {% if review_rates != "None" %}
-
-                        		<span class="rating_place">Infraestrutura</span>
-                        		<div class="pull-right">
-                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
-                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-								</div><br>
-                        		<span class="rating_place">Brinquedos</span>
-                        		<div class="pull-right">
-                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
-                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-								</div><br>
-                        		<span class="rating_place">Custo-Benefício</span>
-                        		<div class="pull-right">
-                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
-                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-								</div><br>
-                        		<span class="rating_place">Atendimento</span>
-                        		<div class="pull-right">
-                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
-                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-								</div><br>
-                        		<span class="rating_place">Opinião das Crianças</span>
-                        		<div class="pull-right">
-                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
-                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
-								</div><br>
-							{% endif %}
+  <style>
+  </style>
 
 
 
@@ -175,6 +17,167 @@
 
 
 
+
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+  <!-- DETAIL HEADER begin -->
+  <div class="separador-20"> </div>
+  <div class="detail_header_title">
+    <div class="detail_header_title_container">
+      <h1 style="color:#102766">{{place.name}}</h1>
+      {% if review_rates == "None" %}
+         <figure class="pull-left" style="font-weight:bolder">
+             Não há avaliações!
+             <i class="fa fa-star"></i>
+         </figure><br>
+      {% else %}
+        <span style="color:#102766" class="stars" data-rating="{{review_rates.rate_average}}" data-num-stars="5"></span>
+        <span style="color:#102766">&nbsp;({{review_rates.n_review}})</span>
+      {% endif %}
+      <div class="separador-50"> </div>
+      <div class="place_description">{{place.address}}</div>
+      <div class="place_description">Capacidade do local: {{place_capacity}} pessoas</div>
+      <div class="place_description">Tamanho do local: {{place_size}} m&#178;</div>
+    </div>
+  </div><!--
+  --><div class="detail_header_img center-cropped img-center" style="background-image: url(/media/{{place_photo}});">
+      <div class="detail_header_img_mov" style="left:0px; padding-left:10px;">
+        <span class="detail_header_img_round" type="left">&#8249;</span>
+      </div>
+      <div class="detail_header_img_mov" style="right:0px; padding-right:10px;">
+        <span class="detail_header_img_round" type="right">&#8250;</span>
+      </div>
+  </div>
+  <div class="separador-50"> </div>
+  <!-- DETAIL HEADER end -->
+
+
+
+
+
+
+
+
+
+
+  <!-- DETAIL DESCRIPTION begin -->
+  <section class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-push-9">
+        {% for photo in photo_list %}
+          <div class="img-center detail_photo {% if forloop.counter == 1 %}detail_photo_active{% endif %}" style="background-image: url(/media/{{photo}});"></div>
+        {% endfor %}
+        <div class="separador-10"> </div>
+      </div>
+      <div class="col-md-9 col-md-pull-3">
+        <h1 class="detail_wrapper_title">Sobre o Local</h1>
+        <div class="detail_description_text justify_text">
+          {{place.description}}
+        </div>
+        <div class="separador-80"> </div>
+        <!-- Additional Information -->
+        {% if additionalinformation|length > 0 %}
+          <h1 class="detail_wrapper_title">Informações Adicionais</h1>
+            <div class="separador-10"> </div>
+            <div class="center_element" style="font-weight:bold; color:#102766;">
+            {% for info in additionalinformation %}
+              {{info.name}} {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;{% endif %} 
+              {% endfor %}
+            </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <div class="separador-80"> </div>
+  <!-- DETAIL DESCRIPTION end -->
+
+
+
+  <!-- DETAIL MAP begin -->
+  <section class="container">
+    <div id="map" style="height:300px; width:100%"></div>
+  </section>
+  <div class="separador-80"> </div>
+  <!-- DETAIL MAP end -->
+
+
+
+
+
+
+
+  <!-- DETAIL CALENDAR begin -->
+  <section class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <h1 class="detail_wrapper_title">Disponibilidade</h1>
+        <div class="separador-30"> </div>
+        <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
+          <div>{% include "calendar.html" %}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        {% if place.decoration or place.children_rides %}
+          {% if place.decoration %}
+            <h1 class="detail_wrapper_title">Decorações</h1>
+            {% for decoration in place.decoration.0 %}
+              {{decoration}}{% if not forloop.last %},<br>{% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if place.children_rides %}
+            {% if place.decoration %}
+              <div class="separador-30"> </div>
+            {% endif %}
+            <h1 class="detail_wrapper_title">Brinquedos</h1>
+            {% for children_rides in place.children_rides.0 %}
+              {{children_rides}}{% if not forloop.last %},<br>{% endif %}
+            {% endfor %}
+          {% endif %}
+
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <div class="separador-80"> </div>
+  <!-- DETAIL CALENDAR end -->
+
+
+
+  <!-- DETAIL OTHER begin -->
+  <section class="container">
+    <div class="row">
+      <div class="col-md-9">
+        {% if place.video %}
+          <h1 class="detail_wrapper_title">Vídeo do Local</h1>
+          <div class="separador-30"> </div>
+          <div class="center_element">
+            <iframe src="{{place.video}}" id="place_video"></iframe>
+          </div>
+          <div class="separador-80"> </div>
+        {% endif %}
+        {% if place.menu %}
+          <h1 class="detail_wrapper_title">Menu</h1>
+          <div class="separador-30"> </div>
+          <div class="center_element">
+            <embed src="/media/{{place.menu}}" id="place_menu"/>
+          </div>
+          <div class="separador-80"> </div>
+
+          
+        {% endif %}
+
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </section>
+  <!-- DETAIL OTHER end -->
+
+                  
 
 
 
@@ -195,14 +198,6 @@
 
 
 
-	                    </div>
-	                </div>
-	            </section>
-	        </div>
-	        <!-- /.col-md-3-->
-	        <!--end Sidebar-->
-	    </div><!-- /.row-->
-	</section>
 
 
 
@@ -211,24 +206,78 @@
 
 
 
+<!-- =====================================================
+JavaScript imports
+===================================================== -->
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/place/place_detail.js"></script>
+{% block old_custom_js %}{% endblock old_custom_js %}
 
 
-
-
-{% block js_maps %}
-{% endblock js_maps %}
-
-{% endblock content %}
-{% block page_js %}
+<!-- MAPS -->
 <script>
-	$(document).on("click", ".detail_photo", function(){
-		var url_photo = $(this).attr("src")
-		$("#detail_img").attr("style", "background-image:url(" + url_photo + ");")
-		$(".detail_photoa").each(function(){
-			$(this).removeClass("active")
-		})
-		$(this).parent().addClass("active")
-	})
+  function initMap() {
+    var lat = parseFloat("{{place.lat}}".replace(',','.'))
+    var lng = parseFloat("{{place.lng}}".replace(',','.'))
+    var place_name = "{{place.name}}"
+    var place_address = "{{place.address}}"
+    var myLatLng = {lat: lat, lng: lng};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: myLatLng
+    });
+
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">' + place_name + '</h1>'+
+        '<div id="bodyContent">'+
+        '<p>' + place_address + '</p>'+
+        '</div>'+
+        '</div>'
+
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    })
+
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: 'Hello World!'
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+
+
+
+
+
+
+
+
+
+  }
 </script>
-{% endblock page_js %}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&callback=initMap"> </script>
+{% block js_maps %}{% endblock js_maps %}
+{% endblock content %}
 

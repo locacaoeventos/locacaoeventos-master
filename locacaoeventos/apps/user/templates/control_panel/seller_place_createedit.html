@@ -13,6 +13,13 @@
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_createedit.css" type="text/css">
 
+
+  
+
+
+
+
+
   <section class="block listing" style="padding-top:0">
     <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
       <input class="hidden" name="place_pk" id="id_place_pk" value="{{place_pk}}"/>
@@ -139,22 +146,7 @@
           </div>
 
 
-          <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Uploading...</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="separador-20"> </div>
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
-                  </div>
-                  <div class="separador-20"> </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           {% if field.errors %}
             <div class="error_message" style="display:block">
               {% for error in field.errors %}
@@ -264,7 +256,22 @@
 
 
 
-
+  <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Uploading...</h4>
+        </div>
+        <div class="modal-body">
+          <div class="separador-20"> </div>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+          </div>
+          <div class="separador-20"> </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

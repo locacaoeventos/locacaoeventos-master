@@ -1,4 +1,5 @@
 import googlemaps
+import math
 
 from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability
 from locacaoeventos.apps.place.placereview.models import PlaceReview
@@ -41,12 +42,13 @@ def get_reviews_from_place(place):
     response["review_list"] = review_list
     if count_review != 0:
         response["review_rates"] = {
-            "rate_infraestructure": sum_rate_infraestructure/count_review,
-            "rate_rides": sum_rate_rides/count_review,
-            "rate_cost_benefit": sum_rate_cost_benefit/count_review,
-            "rate_attendance": sum_rate_attendance/count_review,
-            "rate_children_opinion": sum_rate_children_opinion/count_review,
-            "rate_average": sum_rate_average/count_review/5,
+            "rate_infraestructure": str(math.floor(sum_rate_infraestructure/count_review*10)/10).replace(",", "."),
+            "rate_rides": str(math.floor(sum_rate_rides/count_review*10)/10).replace(",", "."),
+            "rate_cost_benefit": str(math.floor(sum_rate_cost_benefit/count_review*10)/10).replace(",", "."),
+            "rate_attendance": str(math.floor(sum_rate_attendance/count_review*10)/10).replace(",", "."),
+            "rate_children_opinion": str(math.floor(sum_rate_children_opinion/count_review*10)/10).replace(",", "."),
+            "rate_average": str(math.floor(sum_rate_average/count_review/5*10)/10).replace(",", "."),
+            "n_review": count_review
         }
     else:
         response["review_rates"] = "None"

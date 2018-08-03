@@ -38,14 +38,18 @@ Body code
 <div id="outer-wrapper">
   <!-- Inner Wrapper -->
   <div id="inner-wrapper">
-    <!-- Navigation-->
+    <!-- ========================================================================================================================== -->
+
+    <!--                                                           HEADER                                                           -->
+
+    <!-- ========================================================================================================================== -->
     <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white;">
       <div class="wrapper">
         <div class="brand">
-          <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:150px; margin:2px 0 10px 40px" alt="logo"></a>
+          <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 10px 40px" alt="logo"></a>
         </div>
         <nav class="navigation-items">
-          <div class="wrapper">
+          <div class="wrapper" style="padding-top:15px">
             <ul class="main-navigation navigation-top-header"></ul>
             <ul class="user-area">
               {% if user.is_superuser %}
@@ -74,148 +78,129 @@ Body code
         </nav>
       </div>
     </div>
-    <!-- end Navigation-->
-    <!-- Page Canvas-->
-    <div id="page-canvas">
-      <nav class="off-canvas-navigation">
-        <header>Navigation</header>
-        <div class="main-navigation navigation-off-canvas"></div>
-      </nav>
-      <div id="page-content" style="background-color:white">
-        {% block content %}{% endblock content %}
-      </div>
+
+
+
+
+
+    <!-- ========================================================================================================================== -->
+
+    <!--                                                           CONTENT                                                          -->
+
+    <!-- ========================================================================================================================== -->
+    <nav class="off-canvas-navigation">
+      <header>Navigation</header>
+      <div class="main-navigation navigation-off-canvas"></div>
+    </nav>
+    <div id="page-content" style="background-color:white">
+      {% block content %}{% endblock content %}
     </div>
-    <footer id="page-footer">
-      <div class="separador-10" style="background-color:white"> </div>
-      <div class="inner" style="background-color:white">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- ========================================================================================================================== -->
+
+    <!--                                                           FOOTER                                                           -->
+
+    <!-- ========================================================================================================================== -->
+    <footer id="footer_id">
+      <div class="inner">
+        <div class="separador-30"> </div>
         <div class="footer-top">
           <div class="container">
             <div class="row">
               <div class="col-md-4 col-sm-4">
-                <!--New Items-->
-                <section>
-                  <h2>New Items</h2>
-                  <a href="item-detail.html" class="item-horizontal small">
-                    <h3>Cash Cow Restaurante</h3>
-                    <figure>63 Birch Street</figure>
-                    <div class="wrapper">
-                      <div class="image"><img src="/static/base_template_user/assets/img/items/1.jpg" alt=""></div>
-                      <div class="info">
-                        <div class="type">
-                          <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i>
-                          <span>Restaurant</span>
-                        </div>
-                        <div class="rating" data-rating="4"></div>
-                      </div>
-                    </div>
-                  </a>
-                  <!--/.item-horizontal small-->
-                  <a href="item-detail.html" class="item-horizontal small">
-                    <h3>Blue Chilli</h3>
-                    <figure>2476 Whispering Pines Circle</figure>
-                    <div class="wrapper">
-                      <div class="image"><img src="/static/base_template_user/assets/img/items/2.jpg" alt=""></div>
-                      <div class="info">
-                        <div class="type">
-                          <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i>
-                          <span>Restaurant</span>
-                        </div>
-                        <div class="rating" data-rating="3"></div>
-                      </div>
-                    </div>
-                  </a>
-                  <!--/.item-horizontal small-->
-                </section>
-                <!--end New Items-->
+                Deseja receber ofertas exclusivas?<br>
+                Assine a nossa newsletter!
               </div>
-              <div class="col-md-4 col-sm-4">
-                <!--Recent Reviews-->
-                <section>
-                  <h2>Recent Reviews</h2>
-                  <a href="item-detail.html#reviews" class="review small">
-                    <h3>Max Five Lounge</h3>
-                    <figure>4365 Bruce Street</figure>
-                    <div class="info">
-                      <div class="rating" data-rating="4"></div>
-                      <div class="type">
-                        <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i>
-                        <span>Restaurant</span>
-                      </div>
-                    </div>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec non suscipit felis, sed sagittis tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras ac placerat mauris.
-                    </p>
-                  </a>
-                  <!--/.review-->
-                  <a href="item-detail.html#reviews" class="review small">
-                    <h3>Saguaro Tavern</h3>
-                    <figure>2476 Whispering Pines Circle</figure>
-                    <div class="info">
-                      <div class="rating" data-rating="5"></div>
-                      <div class="type">
-                        <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/restaurant.png" alt=""></i>
-                        <span>Restaurant</span>
-                      </div>
-                    </div>
-                    <p>
-                      Pellentesque mauris. Proin sit amet scelerisque risus. Donec semper semper erat ut mollis curabitur
-                    </p>
-                  </a>
-                  <!--/.review-->
-                </section>
-                <!--end Recent Reviews-->
+              <div class="col-md-8 col-sm-8">
+               <div id ="base_newsletter_input_container">
+                <input type="text" id="base_newsletter_input" class="form_input_text">
+               </div>
+               <div id="base_newsletter_send_container">
+                <div id="base_newsletter_send">
+                  <span id="base_newsletter_send_span">
+                    INSCREVA-SE!
+                  </span>
+                </div>
+               </div>
               </div>
-              <div class="col-md-4 col-sm-4">
-                <section>
-                  <h2>About Us</h2>
-                  <address>
-                    <div>Max Five Lounge</div>
-                    <div>63 Birch Street</div>
-                    <div>Granada Hills, CA 91344</div>
-                    <figure>
-                      <div class="info">
-                        <i class="fa fa-mobile"></i>
-                        <span>818-832-5258</span>
-                      </div>
-                      <div class="info">
-                        <i class="fa fa-phone"></i>
-                        <span>+1 123 456 789</span>
-                      </div>
-                      <div class="info">
-                        <i class="fa fa-globe"></i>
-                        <a href="#">www.maxfivelounge.com</a>
-                      </div>
-                    </figure>
-                  </address>
-                  <div class="social">
-                    <a href="#" class="social-button"><i class="fa fa-twitter"></i></a>
-                    <a href="#" class="social-button"><i class="fa fa-facebook"></i></a>
-                    <a href="#" class="social-button"><i class="fa fa-pinterest"></i></a>
-                  </div>
-                  <a href="contact.html" class="btn framed icon">Contact Us<i class="fa fa-angle-right"></i></a>
-                </section>
-              </div>
-              <!--/.col-md-4-->
             </div>
-            <!--/.row-->
+            <div class="separador-30"> </div>
+            <div class="row">
+              <div class="col-xs-6">
+                  <a style="color:white" href="#">Sobre Nós</a><br>
+                  <a style="color:white" href="#">Fale Conosco</a><br>
+                  <a style="color:white" href="#">FAQ</a><br>
+                  <a style="color:white" href="#">Cadastre seu Buffet</a><br>
+                  <a style="color:white" href="#">Mapa</a><br>
+              </div>
+              <div class="col-xs-6">
+                <div id="base_social_wrapper">
+                  Acesse nossas redes sociais<br>
+                  <div style="display: table; float:right">
+                    <div class="base_social_button_wrapper">
+                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-2px;right:7px"><i class="fa fa-twitter"></i></a></div>
+                    </div><!--
+                    --><div class="base_social_button_wrapper">
+                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:0px;right:13px"><i class="fa fa-facebook"></i></a></div>
+                    </div><!--
+                    --><div class="base_social_button_wrapper">
+                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-1px;right:8px"><i class="fa fa-pinterest"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <!--/.container-->
         </div>
-        <!--/.footer-top-->
-        <div class="footer-bottom">
+        <div class="separador-30"> </div>
+        <div class="footer_bottom">
+          <div class="separador-30"> </div>
           <div class="container">
-            <span class="left">(C) ThemeStarz, All rights reserved</span>
-            <span class="right">
-            <a href="#page-top" class="to-top roll"><i class="fa fa-angle-up"></i></a>
+            <img src="/static/img/123festas/logo_horizontal_branco.png" style="height:40px"/><br>
+            <div class="separador-10"> </div>
+            <span style="font-size:11px">Direitos autorais 2018 123Festas | Todos os direitos reservados.</span>
             </span>
           </div>
+          <div class="separador-30"> </div>
         </div>
-        <!--/.footer-bottom-->
       </div>
     </footer>
   </div>
 </div>
 <!-- end Outer Wrapper-->
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -235,7 +220,7 @@ JavaScript imports
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
 {% block js_maps %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt" defer></script>
     <script type="text/javascript" src="/static/base_template_user/assets/js/maps.js"></script>
 {% endblock js_maps %}
 <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-ui.min.js"></script>

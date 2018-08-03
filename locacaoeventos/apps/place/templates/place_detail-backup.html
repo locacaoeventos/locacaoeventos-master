@@ -1,0 +1,234 @@
+{% extends "_base_user.html" %}
+{% block page_title %}{{place.name}}{% endblock page_title %}
+{% block content %}
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
+    <!--<div id="map-detail"></div>-->
+	<section class="container">
+	    <div class="row">
+	        <!--Item Detail Content-->
+	        <div class="col-md-12">
+	            <section class="block" id="main-content">
+	                <header class="page-title">
+	                    <div class="title">
+	                        <h1>{{place.name}}</h1>
+	                    </div>
+	                    <div class="separador-15"> </div>
+	                    <div class="info">
+
+				            <div class="center-cropped" style="width:100%; height:250px; position:absolute">
+				              <div id="detail_img" style="background-image: url(/media/{{place_photo}});" class="img-center"></div>
+				            </div>
+				            <div style="width:100%; height:250px; background-color:rgba(0,0,0,0); position:absolute; margin-top:-10px">
+				            </div>
+				            <div class="separador-200"> </div>
+				            <div class="separador-50"> </div>
+	                        <figure>{{place.address}}</figure>
+						</div>
+	                </header>
+	                <div class="row">
+	                    <!--Detail Sidebar-->
+	                    <aside class="col-md-4 col-sm-4" id="detail-sidebar">
+	                        <section class="clearfix">
+	                            <header class="pull-left" style="width:100%">
+	                            	<a href="#reviews" class="roll">
+
+			                            {% if review_rates == "None" %}
+			                                <figure class="pull-left" style="font-weight:bolder">
+			                                    Não há avaliações!
+			                                    <i style="color:#4fa7bc;" class="fa fa-star"></i>
+			                                </figure><br>
+
+			                            {% else %}
+	                            			<h3>Avaliações</h3>
+
+		                            		<span class="rating_place">Infraestrutura</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Brinquedos</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Custo-Benefício</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Atendimento</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+		                            		<span class="rating_place">Opinião das Crianças</span>
+		                            		<div class="pull-right">
+			                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+			                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+											</div><br>
+										{% endif %}
+	                            	</a>
+	                            </header>
+	                        </section>
+	                        <div class="separador-20"> </div>
+	                        <section>
+	                        	<hr class="line"/>
+	                        	{% include "calendar.html" %}
+	                        	<hr class="line"/>
+	                        </section>
+	                        <div class="separador-20"> </div>
+                            <ul class="bullets">
+	                        {% if additionalinformation|length > 0 %}
+                            	{% for info in additionalinformation %}
+	                            	<li>{{info.name}}</li><br>
+                                {% endfor %}
+		                    {% endif %}
+                            </ul>
+
+
+	                    </aside>
+
+
+
+
+
+
+
+	                    <div class="col-md-8 col-sm-8">
+	                        <section>
+	                            <article class="item-gallery">
+	                                <div class="owl-carousel item-slider">
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/12.jpg" data-hash="1"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/6.jpg" data-hash="2"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/1.jpg" data-hash="3"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/8.jpg" data-hash="4"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/9.jpg" data-hash="5"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/10.jpg" data-hash="6"></div>
+	                                    <div class="slide"><img alt="" src="assets/img/items/real-estate/7.jpg" data-hash="7"></div>
+	                                </div>
+	                                <!-- /.item-slider -->
+	                                <div class="thumbnails">
+	                                    <div class="expandable-content height collapsed show-70" id="gallery-thumbnails">
+	                                        <div class="content">
+	                                        	{% for photo in photo_list %}
+	                                        		{% if forloop.counter == 1 %}
+	                                            		<a class="active detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
+	                                            	{% else %}
+			                                            <a class="detail_photoa"><img class="detail_photo" alt="" src="/media/{{photo}}"></a>
+	                                            	{% endif %}
+	                                        	{% endfor %}
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </article>
+
+
+	                            <div class="separador-20"> </div>
+                                <header><h2>Descrição</h2></header>
+                                <p>
+                                    {{place.description}}
+                                </p>
+	                        </section>
+	                        <section>
+	                        {% if place.video %}
+	                        	<div class="separador-20"> </div>
+	                        	<div style="width:100%;text-align:center">
+									<iframe width="420" height="315" src="{{place.video}}"></iframe>
+								</div>
+	                        	<div class="separador-30"> </div>
+	                        {% endif %}
+	                        </section>
+
+                            {% if review_rates != "None" %}
+
+                        		<span class="rating_place">Infraestrutura</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Brinquedos</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Custo-Benefício</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Atendimento</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+                        		<span class="rating_place">Opinião das Crianças</span>
+                        		<div class="pull-right">
+                            		<span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+                            		<i style="color:#4fa7bc" class="fa fa-star"></i><br>
+								</div><br>
+							{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	                    </div>
+	                </div>
+	            </section>
+	        </div>
+	        <!-- /.col-md-3-->
+	        <!--end Sidebar-->
+	    </div><!-- /.row-->
+	</section>
+
+
+
+
+
+
+
+
+
+
+
+
+{% block js_maps %}
+{% endblock js_maps %}
+
+{% endblock content %}
+{% block page_js %}
+<script>
+	$(document).on("click", ".detail_photo", function(){
+		var url_photo = $(this).attr("src")
+		$("#detail_img").attr("style", "background-image:url(" + url_photo + ");")
+		$(".detail_photoa").each(function(){
+			$(this).removeClass("active")
+		})
+		$(this).parent().addClass("active")
+	})
+</script>
+{% endblock page_js %}
+

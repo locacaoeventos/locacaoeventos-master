@@ -10,3 +10,104 @@
 	border-bottom:2px solid #4fa7bc;
 	padding: 0 5px 0 5px
 }
+
+
+
+
+
+
+
+
+
+
+
+/* ==============================================
+Footer 
+================================================ */
+#footer_id > .inner {
+	background-color:#41b3bd !important;
+	padding-top:20px !important;
+	color:white !important;
+}
+
+/* Newsletter */
+#base_newsletter_input_container {
+	width:80%; 
+	float:left
+}
+#base_newsletter_input {
+	width: 100%;
+	height:40px;
+	border-radius:5px 0 0 5px;
+	box-shadow:none
+}
+#base_newsletter_send_container {
+	width:20%; 
+	float:left
+}
+#base_newsletter_send {
+	width: 100%;
+	background-color: #94d600;
+	height:40px;
+	border-radius:0 5px 5px 0;
+	font-weight:bold;
+	display: table;
+}
+#base_newsletter_send_span {
+    height: 40px;
+    width:100%;
+    display: table-cell;
+    vertical-align: middle;
+	text-align:center;
+	font-size:13px;
+}
+@media(max-width:991px) and (min-width:494px){
+	#base_newsletter_send_span {
+		font-size:11px;
+	}
+}
+@media(max-width:493px){
+	#base_newsletter_send_span {
+		font-size:10px;
+	}
+}
+
+
+
+/* Social Button */
+#base_social_wrapper {
+	text-align:right;
+}
+.base_social_button_wrapper {
+    display: table-cell;
+	width:55px;
+	height:40px;
+	text-align:center;
+    vertical-align: middle;
+    padding:5px;
+}
+.base_social_inside {
+	background-color:white;
+	width:100%;
+	height:100%;
+	border-radius:50%;
+	position:relative;
+	height:40px;
+}
+.base_social_button {
+	color:#41b3bd;
+	font-size:32px;
+	position:absolute;
+}
+
+/* Bottom of Footer */
+.footer_bottom {
+	margin:0 60px 0 60px;
+	border-top: 1px solid white;
+	text-align:center;
+}
+@media(max-width:493px){
+	.footer_bottom {
+		margin:0 20px 0 20px;
+	}
+}
