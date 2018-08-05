@@ -3,6 +3,9 @@ General
 =============================== */
 .detail_wrapper_title {
 	color:#102766;
+	font-size:28px;
+	text-transform:none;
+	margin-bottom:24px;
 }
 
 

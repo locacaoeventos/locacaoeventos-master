@@ -297,6 +297,8 @@ class CreateEditPlace(View):
         if form.is_valid():
             # Video
             video = form.cleaned_data["video"].replace('/watch?v=', '/embed/')
+            if "http" not in video:
+                video = "https://" + video
             # Coordinates
             # coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
             coordinates = [-23.5500827, -46.6540044]
