@@ -22,15 +22,16 @@ def get_reviews_from_place(place):
             if review:
                 review = review[0]
                 review_list.append({
-                    "buyerprofile": review.buyerprofile.name,
-                    "creation": review.creation,
+                    "buyerprofile": review.buyerprofile,
+                    "creation": review.creation.date(),
                     "comment": review.comment,
+                    "pk": review.pk,
                     "rate_infraestructure": review.rate_infraestructure,
                     "rate_rides": review.rate_rides,
                     "rate_cost_benefit": review.rate_cost_benefit,
                     "rate_attendance": review.rate_attendance,
                     "rate_children_opinion": review.rate_children_opinion,
-                    "rate": review.get_average_rate()
+                    "rate": str(review.get_average_rate()).replace(",", ".")
                 })
                 sum_rate_infraestructure += review.rate_infraestructure
                 sum_rate_rides += review.rate_rides

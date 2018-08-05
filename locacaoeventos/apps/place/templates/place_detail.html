@@ -7,8 +7,7 @@ CSS imports
 ===================================================== -->  
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
-  <style>
-  </style>
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
 
 
 
@@ -145,45 +144,46 @@ Body code
   <!-- DETAIL REVIEW begin -->
   {% if review_rates != "None" %}
     <section class="container">
-      <h1 class="detail_wrapper_title">Avaliações do Local</h1>
+      <h1 class="detail_wrapper_title">Avaliações</h1>
+      <div style="width:100%; text-align:center;">
+        {% for review in review_list %}
+          <div class="review_container">
+            <div style="width:20%; display:inline-block; text-align:center; vertical-align:top">
+              <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if review.buyerprofile.photo %}/media/{{review.buyerprofile.photo}}{% else %}/static/img/icon/person.png{% endif %});"></div>
+            </div><!--
 
 
-        <h1>=========== A FAZER ===========</h1>
-        <h1>=========== A FAZER ===========</h1>
+            --><div style="width:80%; display:inline-block; padding:10px 0 10px; color:#102766">
+              <span class="review_text_bold">{{review.buyerprofile.name}}</span>
+              <span style="color:#102766" class="stars" data-rating="{{review.rate}}" data-num-stars="5"></span> 
+              ({{review.rate}})<br>
+              {{review.creation}}
+              <div class="separador-10"> </div>
+              <span class="review_text_bold">Comentário</span><br>
+              {{review.comment}}
+              <div class="separador-10"> </div>
+              <span class="review_text_bold see_more_reviews" pk="{{review.pk}}">(Ver mais Notas)</span><br>
 
 
 
-
-
-
-                                    <span class="rating_place">Infraestrutura</span>
-                                    <div class="pull-right">
-                                      <span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
-                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-                      </div><br>
-                                    <span class="rating_place">Brinquedos</span>
-                                    <div class="pull-right">
-                                      <span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
-                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-                      </div><br>
-                                    <span class="rating_place">Custo-Benefício</span>
-                                    <div class="pull-right">
-                                      <span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
-                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-                      </div><br>
-                                    <span class="rating_place">Atendimento</span>
-                                    <div class="pull-right">
-                                      <span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
-                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-                      </div><br>
-                                    <span class="rating_place">Opinião das Crianças</span>
-                                    <div class="pull-right">
-                                      <span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
-                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
-                      </div><br>
-      
-      <div class="separador-30"> </div>
+              <div class="more_rating more_rating_{{review.pk}}">
+                Infraestrutura - 
+                <span style="color:#102766" class="stars" data-rating="{{review.rate_infraestructure}}" data-num-stars="5"></span> ({{review.rate_infraestructure}})<br> 
+                Brinquedos - 
+                <span style="color:#102766" class="stars" data-rating="{{review.rate_rides}}" data-num-stars="5"></span> ({{review.rate_rides}})<br>
+                Custo-Benefício - 
+                <span style="color:#102766" class="stars" data-rating="{{review.rate_cost_benefit}}" data-num-stars="5"></span> ({{review.rate_cost_benefit}})<br>
+                Atendimento - 
+                <span style="color:#102766" class="stars" data-rating="{{review.rate_attendance}}" data-num-stars="5"></span> ({{review.rate_attendance}})<br>
+                Opinião das Crianças - 
+                <span style="color:#102766" class="stars" data-rating="{{review.rate_children_opinion}}" data-num-stars="5"></span> ({{review.rate_children_opinion}})<br>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </section>
+    <div class="separador-30"> </div>
   {% endif %}
   <!-- DETAIL REVIEW end -->
 
@@ -289,6 +289,7 @@ JavaScript imports
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
 <script type="text/javascript" src="/static/CUSTOM_JS/place/place_detail.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/core/review.js"></script>
 {% block old_custom_js %}{% endblock old_custom_js %}
 
 
