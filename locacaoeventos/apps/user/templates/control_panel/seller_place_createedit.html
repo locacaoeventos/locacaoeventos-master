@@ -180,21 +180,9 @@
 
         {% elif field.name == "menu" %}
           <label>Menu do Buffet (opcional)</label>
-          <input name="menu_hidden" id="id_menu_hidden" value="{{menu_url}}" class="hidden"/><!-- hidden field -->
-          <label style="font-size:10px; font-style:italic">(pdf ou imagem)</label>
-          <div class="separador-10"> </div>
           <label class="btn btn-default btn-file" id="menu_click">
               Carregar Arquivo{{field}} <!-- hidden field -->
           </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
-          {% if field.errors %}
-            <div class="error_message" style="display:block">
-              {% for error in field.errors %}
-                {{error}}
-              {% endfor %}
-            </div>
-          {% endif %}
-          <div class="separador-40"> </div>
-          <label>Informações Adicionais (opcional)</label>
 
       {% else %}
         {% if not forloop.counter|divisibleby:2 %}

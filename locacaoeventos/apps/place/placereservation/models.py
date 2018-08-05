@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class PlacePrice(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     value = models.FloatField("Valor")
-    number_people = models.IntegerField("Número de pessoas")
+    number_people = models.IntegerField("Número de pessoas", default=0)
 
 
 

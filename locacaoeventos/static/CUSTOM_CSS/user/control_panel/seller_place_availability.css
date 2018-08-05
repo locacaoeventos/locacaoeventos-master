@@ -10,15 +10,7 @@
 
 
 /* Forms */
-select {
-    background-color: white;
-    border: 1px solid #cccccc;
-    padding:5px 2px 5px 2px;
-    font-weight:normal;
-}
-option {
-    background-color: white
-}
+
 #unavailability_sameday {
     cursor:pointer;
     font-style:italic;

@@ -31,7 +31,7 @@ Body code
     <div class="detail_header_title_container">
       <h1 style="color:#102766">{{place.name}}</h1>
       {% if review_rates == "None" %}
-         <figure class="pull-left" style="font-weight:bolder">
+         <figure class="pull-left" style="font-weight:bolder; color:#102766">
              Não há avaliações!
              <i class="fa fa-star"></i>
          </figure><br>
@@ -83,17 +83,51 @@ Body code
         <!-- Additional Information -->
         {% if additionalinformation|length > 0 %}
           <h1 class="detail_wrapper_title">Informações Adicionais</h1>
-            <div class="separador-10"> </div>
-            <div class="center_element" style="font-weight:bold; color:#102766;">
+          <div class="separador-10"> </div>
+          <div class="center_element">
             {% for info in additionalinformation %}
-              {{info.name}} {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;{% endif %} 
-              {% endfor %}
-            </div>
+              {% if not forloop.first %}-->{% endif %}
+              <div class="detail_description_card">{{info.name}}</div>
+              {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+            {% endfor %}<span style="display:none">--></span>
+          </div>
+          <div class="separador-80"> </div>
+        {% endif %}
+        {% if place.decoration or place.children_rides %}
+          <div class="row">
+            {% if place.decoration %}
+              <div class="col-md-6">
+                <h1 class="detail_wrapper_title">Decorações</h1>
+                <div class="separador-10"> </div>
+                <div class="center_element">
+                  {% for decoration in place.decoration.0 %}
+                    {% if not forloop.first %}-->{% endif %}
+                    <div class="detail_description_card">{{decoration}}</div>
+                    {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+                  {% endfor %}<span style="display:none">--></span>
+                </div>
+                <div class="separador-80"> </div>
+              </div>
+            {% endif %}
+            {% if place.children_rides %}
+              <div class="col-md-6">
+                <h1 class="detail_wrapper_title">Brinquedos</h1>
+                <div class="separador-10"> </div>
+                <div class="center_element">
+                  {% for children_rides in place.children_rides.0 %}
+                    {% if not forloop.first %}-->{% endif %}
+                    <div class="detail_description_card">{{children_rides}}</div>
+                    {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+                  {% endfor %}<span style="display:none">--></span>
+                </div>
+                <div class="separador-80"> </div>
+              </div>
+            {% endif %}
+          </div>
         {% endif %}
       </div>
     </div>
   </section>
-  <div class="separador-80"> </div>
   <!-- DETAIL DESCRIPTION end -->
 
 
@@ -108,43 +142,83 @@ Body code
 
 
 
+  <!-- DETAIL REVIEW begin -->
+  {% if review_rates != "None" %}
+    <section class="container">
+      <h1 class="detail_wrapper_title">Avaliações do Local</h1>
+
+
+
+
+
+
+
+
+                                    <span class="rating_place">Infraestrutura</span>
+                                    <div class="pull-right">
+                                      <span style="color:#4fa7bc">{{review_rates.rate_infraestructure}}</span>&nbsp;
+                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+                      </div><br>
+                                    <span class="rating_place">Brinquedos</span>
+                                    <div class="pull-right">
+                                      <span style="color:#4fa7bc">{{review_rates.rate_rides}}</span>&nbsp;
+                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+                      </div><br>
+                                    <span class="rating_place">Custo-Benefício</span>
+                                    <div class="pull-right">
+                                      <span style="color:#4fa7bc">{{review_rates.rate_cost_benefit}}</span>&nbsp;
+                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+                      </div><br>
+                                    <span class="rating_place">Atendimento</span>
+                                    <div class="pull-right">
+                                      <span style="color:#4fa7bc">{{review_rates.rate_attendance}}</span>&nbsp;
+                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+                      </div><br>
+                                    <span class="rating_place">Opinião das Crianças</span>
+                                    <div class="pull-right">
+                                      <span style="color:#4fa7bc">{{review_rates.rate_children_opinion}}</span>&nbsp;
+                                      <i style="color:#4fa7bc" class="fa fa-star"></i><br>
+                      </div><br>
+      
+      <div class="separador-30"> </div>
+    </section>
+  {% endif %}
+  <!-- DETAIL REVIEW end -->
+
+
+
 
 
 
   <!-- DETAIL CALENDAR begin -->
   <section class="container">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-6">
         <h1 class="detail_wrapper_title">Disponibilidade</h1>
         <div class="separador-30"> </div>
         <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
           <div>{% include "calendar.html" %}</div>
         </div>
       </div>
-      <div class="col-md-3">
-        {% if place.decoration or place.children_rides %}
-          {% if place.decoration %}
-            <h1 class="detail_wrapper_title">Decorações</h1>
-            {% for decoration in place.decoration.0 %}
-              {{decoration}}{% if not forloop.last %},<br>{% endif %}
-            {% endfor %}
-          {% endif %}
-          {% if place.children_rides %}
-            {% if place.decoration %}
-              <div class="separador-30"> </div>
-            {% endif %}
-            <h1 class="detail_wrapper_title">Brinquedos</h1>
-            {% for children_rides in place.children_rides.0 %}
-              {{children_rides}}{% if not forloop.last %},<br>{% endif %}
-            {% endfor %}
-          {% endif %}
-
-        {% endif %}
+      <div class="col-md-6" style="text-align:center">
+        <h1 class="detail_wrapper_title" style="text-align:right">Preços</h1>
+        <h1>=========== A FAZER ===========</h1>
+        {% for price in price_list %}
+          {{price}}
+        {% endfor %}
+        <h1>=========== A FAZER ===========</h1>
       </div>
     </div>
   </section>
   <div class="separador-80"> </div>
   <!-- DETAIL CALENDAR end -->
+
+
+
+
+
+
+
 
 
 
@@ -251,20 +325,9 @@ JavaScript imports
     })
 
 
-
-
-
-
-
-
-
-
-
-
-
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
 
 
 

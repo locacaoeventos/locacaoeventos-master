@@ -9,16 +9,18 @@ from locacaoeventos.utils.forms import *
 
 class BuyerForm(TOCForm):
 
+    name = fields.CharField(required=True, label="Nome")
     email = fields.CharField(required=True, widget=forms.EmailInput, label="E-mail")
     password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
 
-    name = fields.CharField(required=True, label="Nome")
     day = fields.CharField(required=True, label="Data de Nascimento")
     month = fields.CharField(required=True, label="Data de Nascimento")
     year = fields.CharField(required=True, label="Data de Nascimento")
     cellphone = fields.CharField(required=True, label="Celular")
     gender = fields.CharField(required=True, label="Gênero")
     civil_status = fields.CharField(required=True, label="Status Civil")
+    
+    photo = forms.FileField(required=False, widget=forms.FileInput)
 
     def __init__(self, *args, **kwargs):
         super(BuyerForm, self).__init__(*args, **kwargs)
@@ -54,6 +56,7 @@ class BuyerForm(TOCForm):
 class SellerForm(TOCForm):
     email_seller = fields.EmailField(required=True, widget=forms.EmailInput, label="E-mail")
     password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
+    cellphone_seller = fields.CharField(required=True, label="Celular")
 
     name_seller = fields.CharField(required=True, label="Nome do responsável")
 

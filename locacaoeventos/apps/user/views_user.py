@@ -152,7 +152,7 @@ class CreateUser(View):
                     is_active=False
                 )
                 str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
-                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key
+                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user.pk) + "&token=" + key
                 send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_buyer.cleaned_data["email"]], fail_silently=False)
                 return redirect("/usuario/cadastro-concluido/")
             else:
@@ -180,11 +180,13 @@ class CreateUser(View):
                     email=form_seller.cleaned_data["email_seller"],
                     cpf=form_seller.cleaned_data["cpf"],
                     cnpj=form_seller.cleaned_data["cnpj"],
+                    cellphone=form_seller.cleaned_data["cellphone_seller"],
+
                     key=key,
                     is_active=False
                 )
                 str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
-                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email-comprador/?user=' + str(user.pk) + "&token=" + key + "&seller=true"
+                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user.pk) + "&token=" + key + "&seller=true"
                 send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
                 return redirect("/usuario/cadastro-concluido/")
             else:
@@ -193,11 +195,11 @@ class CreateUser(View):
 
 class CreateUserCompleted(View):
     def get(self, request, *args, **kwargs):
-        context = {"form": BuyerForm()}
+        context = base_context(request.user)
         return render(request, "user_create_completed.html", context)
 
 
-class ConfirmEmailBuyer(View):
+class ConfirmEmail(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         user = User.objects.get(pk=request.GET["user"])
@@ -208,6 +210,7 @@ class ConfirmEmailBuyer(View):
                 context["token_valid"] = True
                 seller.is_active = True
                 seller.save()
+                login(request, user)
             else:
                 context["token_valid"] = False
 
@@ -218,6 +221,7 @@ class ConfirmEmailBuyer(View):
                 context["token_valid"] = True
                 buyer.is_active = True
                 buyer.save()
+                login(request, user)
             else:
                 context["token_valid"] = False
         return render(request, "user_create_token.html", context)

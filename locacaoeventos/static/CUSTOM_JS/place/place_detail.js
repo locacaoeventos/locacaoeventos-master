@@ -5,10 +5,8 @@ $(document).ready(function(){
     $.fn.stars = function() {
         return $(this).each(function() {
 
-            var rating = $(this).data("rating");
-
-            var numStars = $(this).data("numStars");
-
+            var rating = parseFloat($(this).data("rating"));
+            var numStars = parseFloat($(this).data("numStars"));
             var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
 
             var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty"></i>': '';

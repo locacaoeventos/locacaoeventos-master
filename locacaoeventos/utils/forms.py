@@ -7,7 +7,7 @@ class TOCForm(forms.Form):
         super(forms.Form, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = "form-control"
-
+            field.widget.attrs['autocomplete'] = "none-google"
 
 class PhotoProvisoryForm(forms.ModelForm):
     class Meta:

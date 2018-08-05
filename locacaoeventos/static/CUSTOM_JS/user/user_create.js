@@ -1,6 +1,20 @@
+/* ===========================================
+General
+=========================================== */
+$("input").each(function(){
+  $(this).attr("oninvalid", "this.setCustomValidity('Por favor, preencher este campo corretamente')")
+})
+
+
+
+
+
+
+
+/* ===========================================
+Buyer
+=========================================== */
 $('#id_cellphone').mask('(00)00000-0000');
-$('#id_cpf').mask('000.000.000-00');
-$('#id_cnpj').mask('00.000.000/0000-00');
 $('#id_cellphone').keyup(function(){
   if($(this).val().length < 14) {
     $("#cellphone_error").html("O número de celular é curto demais")
@@ -9,10 +23,8 @@ $('#id_cellphone').keyup(function(){
   } else {
     $("#cellphone_error").css("display", "none")
      document.getElementById("send").disabled = false;
-
   }
 });
-
 function validarSenha(){
  password = document.getElementById("id_password").value
  confirm = document.getElementById("confirm").value
@@ -31,9 +43,41 @@ function validarSenha(){
  } else {
      document.getElementById('tooshort').style.display = 'inline-block';
      document.getElementById("send").disabled = true;
-
  }
 }
+$("#buyer_button").click(function(){
+  $("#buyer_wrapper").fadeIn(300)
+  $("#seller_wrapper").css("display", "none")
+  $(this).css("background-color", "#98d000")
+  $("#seller_button").css("background-color", "#4fa7bc")
+})
+
+
+
+
+
+
+
+
+
+
+
+/* ===========================================
+Seller
+=========================================== */
+$('#id_cpf').mask('000.000.000-00');
+$('#id_cnpj').mask('00.000.000/0000-00');
+$('#id_cellphone_seller').mask('(00)00000-0000');
+$('#id_cellphone_seller').keyup(function(){
+  if($(this).val().length < 14) {
+    $("#cellphone_seller_error").html("O número de celular é curto demais")
+    $("#cellphone_seller_error").css("display", "block")
+     document.getElementById("send").disabled = true;
+  } else {
+    $("#cellphone_seller_error").css("display", "none")
+     document.getElementById("send").disabled = false;
+  }
+});
 function validarSenhaSeller(){
  password = document.getElementById("id_password_seller").value
  confirm = document.getElementById("confirm_seller").value
@@ -55,21 +99,19 @@ function validarSenhaSeller(){
 
  }
 }
-$("input").each(function(){
-  $(this).attr("oninvalid", "this.setCustomValidity('Por favor, preencher este campo corretamente')")
-})
-
-
-$("#buyer_button").click(function(){
-  $("#buyer_wrapper").fadeIn(300)
-  $("#seller_wrapper").css("display", "none")
-  $(this).css("background-color", "#0094e0")
-  $("#seller_button").css("background-color", "#411859")
-  
-})
 $("#seller_button").click(function(){
   $("#buyer_wrapper").css("display", "none")
   $("#seller_wrapper").fadeIn(300)
-  $(this).css("background-color", "#0094e0")
-  $("#buyer_button").css("background-color", "#411859")
+  $(this).css("background-color", "#98d000")
+  $("#buyer_button").css("background-color", "#4fa7bc")
 })
+
+
+
+
+
+
+
+
+
+

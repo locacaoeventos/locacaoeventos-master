@@ -15,6 +15,7 @@ class BuyerProfile(models.Model):
     is_active = models.BooleanField(default=True)
     key = models.CharField("Secret Key", max_length=64, null=True, blank=True)
     email = models.CharField("E-mail", max_length=64)
+    photo = models.FileField('Foto', upload_to='buyerprofile/photo', null=True, blank=True)
 
     creation = models.DateTimeField(auto_now_add=True)
 

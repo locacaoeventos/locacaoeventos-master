@@ -7,6 +7,7 @@ class SellerProfile(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
     name = models.CharField("Nome", max_length=64)
     email = models.CharField("E-mail", max_length=64)
+    cellphone = models.CharField("Celular", max_length=64)
 
     cpf = models.CharField("CPF", max_length=32)
     cnpj = models.CharField("CNPJ", max_length=32)

@@ -95,6 +95,7 @@ class DetailPlace(View):
         context["review_list"] = reviews_dic["review_list"]
         context["review_rates"] = reviews_dic["review_rates"]
 
+        context["price_list"] = PlacePrice.objects.filter(place=place_obj)
         return render(request, "place_detail.html", context)
 
 
