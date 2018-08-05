@@ -47,7 +47,7 @@ class CalendarExample(View):
 
 class CalendarAjax(View):
     def get(self, request):
-        locale.setlocale(locale.LC_TIME, "pt")
+        locale.setlocale(locale.LC_TIME, "Portuguese_Brazil")
 
         # Declaring Variables - Unavailability
         place = Place.objects.get(pk=request.GET.get("pk"))
