@@ -11,12 +11,15 @@ class PlaceReview(models.Model):
     buyerprofile = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
     creation = models.DateTimeField(auto_now=True)
     comment = models.CharField("Description", max_length=256, blank=True, null=True)
-    rate_infraestructure = models.IntegerField(blank=True, null=True)
-    rate_rides = models.IntegerField(blank=True, null=True)
-    rate_cost_benefit = models.IntegerField(blank=True, null=True)
-    rate_attendance = models.IntegerField(blank=True, null=True)
-    rate_children_opinion = models.IntegerField(blank=True, null=True)
+    rate_infraestructure = models.IntegerField()
+    rate_rides = models.IntegerField()
+    rate_cost_benefit = models.IntegerField()
+    rate_attendance = models.IntegerField()
+    rate_children_opinion = models.IntegerField()
 
     def get_average_rate(self):
         average_rate = (self.rate_infraestructure + self.rate_rides + self.rate_cost_benefit + self.rate_attendance + self.rate_children_opinion)/5
         return average_rate
+
+    def __str__(self):
+        return "Review de " + self.reservation.unavailability.place.name

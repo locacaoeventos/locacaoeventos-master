@@ -119,7 +119,7 @@ class CreateUser(View):
         context["basemenu"] = "register"
 
         if "buyer_form" in request.POST:
-            form_buyer = BuyerForm(request.POST)
+            form_buyer = BuyerForm(request.POST, request.FILES)
             context["form_buyer"] = form_buyer 
             context["form_seller"] = SellerForm()
             context["form_type"] = "buyer"
@@ -148,6 +148,7 @@ class CreateUser(View):
                     gender=form_buyer.cleaned_data["gender"],
                     civil_status=form_buyer.cleaned_data["civil_status"],
                     email=form_buyer.cleaned_data["email"],
+                    accepts_newsletter=form_buyer.cleaned_data["accepts_newsletter"],
                     key=key,
                     is_active=False
                 )
@@ -181,6 +182,7 @@ class CreateUser(View):
                     cpf=form_seller.cleaned_data["cpf"],
                     cnpj=form_seller.cleaned_data["cnpj"],
                     cellphone=form_seller.cleaned_data["cellphone_seller"],
+                    accepts_newsletter=form_buyer.cleaned_data["accepts_newsletter"],
 
                     key=key,
                     is_active=False

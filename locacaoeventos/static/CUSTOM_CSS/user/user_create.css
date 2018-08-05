@@ -15,7 +15,7 @@ General
 
 }
 #buyer_wrapper, #seller_wrapper, #accept {
-	/*display:none*/
+	display:none
 }
 select {
     padding:5px 13px 5px 13px !important;

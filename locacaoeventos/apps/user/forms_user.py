@@ -20,8 +20,8 @@ class BuyerForm(TOCForm):
     gender = fields.CharField(required=True, label="Gênero")
     civil_status = fields.CharField(required=True, label="Status Civil")
     
-    photo = forms.FileField(required=False, widget=forms.FileInput)
-
+    photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
+    accepts_newsletter = forms.BooleanField(required=True, initial="checked")
     def __init__(self, *args, **kwargs):
         super(BuyerForm, self).__init__(*args, **kwargs)
     def clean(self):
@@ -49,6 +49,15 @@ class BuyerForm(TOCForm):
             self.add_error('email', error_message)
 
 
+        # Photo
+        photo = cleaned_data.get('photo')
+        print(photo)
+        if photo:
+            if not any(string in str(photo) for string in [".png", ".jpeg", ".jpg"]) and photo is not None:
+                error_message = forms.ValidationError(
+                    "Utilize um arquivo de imagem")
+                self.add_error('photo', error_message)
+
 
 
 
@@ -63,6 +72,7 @@ class SellerForm(TOCForm):
     cpf = fields.CharField(required=True, label="CPF do responsável")
     cnpj = fields.CharField(label="CNPJ do estabelecimento")
 
+    accepts_newsletter_seller = forms.BooleanField(required=True, initial="checked", label="Aceita receber Newsletter")
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()
 

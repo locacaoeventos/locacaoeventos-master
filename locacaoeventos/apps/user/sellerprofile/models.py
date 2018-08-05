@@ -15,3 +15,6 @@ class SellerProfile(models.Model):
 
     is_active = models.BooleanField(default=True)
     key = models.CharField("Secret Key", max_length=64, null=True, blank=True)
+    accepts_newsletter = models.BooleanField()
+    def __str__(self):
+        return self.name

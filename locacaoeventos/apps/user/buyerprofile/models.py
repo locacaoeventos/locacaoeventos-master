@@ -18,6 +18,10 @@ class BuyerProfile(models.Model):
     photo = models.FileField('Foto', upload_to='buyerprofile/photo', null=True, blank=True)
 
     creation = models.DateTimeField(auto_now_add=True)
+    accepts_newsletter = models.BooleanField()
+
+    def __str__(self):
+        return self.name
 
 class FamilyMember(models.Model):
     gender = models.CharField("Sexo", max_length=64)
