@@ -36,7 +36,9 @@ Body code
          </figure><br>
       {% else %}
         <span style="color:#102766" class="stars" data-rating="{{review_rates.rate_average}}" data-num-stars="5"></span>
-        <span style="color:#102766">&nbsp;({{review_rates.n_review}})</span>
+        <span style="color:#102766">
+          &nbsp;({{review_rates.n_review}} {% if review_rates.n_review %}Avaliação{% else %}Avaliações{% endif %})
+        </span>
       {% endif %}
       <div class="separador-50"> </div>
       <div class="place_description">{{place.address}}</div>
