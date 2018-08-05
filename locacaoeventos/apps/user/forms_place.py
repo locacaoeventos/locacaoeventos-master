@@ -48,11 +48,11 @@ class PlaceForm(TOCForm):
 
     def clean(self):
         cleaned_data = super(PlaceForm, self).clean()
-        address = cleaned_data.get('address')
-        try:
-            coordinates = get_latlng_from_address_str(address)
-        except:
-            self.add_error('address', forms.ValidationError("Endereço inválido"))
+        # address = cleaned_data.get('address')
+        # try:
+        #     coordinates = get_latlng_from_address_str(address)
+        # except:
+        #     self.add_error('address', forms.ValidationError("Endereço inválido"))
 
 
         # Youtube Video

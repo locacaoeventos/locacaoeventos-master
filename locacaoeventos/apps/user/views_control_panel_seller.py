@@ -298,7 +298,8 @@ class CreateEditPlace(View):
             # Video
             video = form.cleaned_data["video"].replace('/watch?v=', '/embed/')
             # Coordinates
-            coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
+            # coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
+            coordinates = [-23.5500827, -46.6540044]
             # Children Rides
             children_rides = str(form.cleaned_data["children_rides"]).replace("[","").replace("]","")
             children_rides = "{" + children_rides + "}"
