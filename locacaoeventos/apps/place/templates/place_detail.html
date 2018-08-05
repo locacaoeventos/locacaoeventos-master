@@ -103,7 +103,7 @@ Body code
                   {% for decoration in place.decoration.0 %}
                     {% if not forloop.first %}-->{% endif %}
                     <div class="detail_description_card">{{decoration}}</div>
-                    {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+                    {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
                   {% endfor %}<span style="display:none">--></span>
                 </div>
                 <div class="separador-80"> </div>
@@ -117,7 +117,7 @@ Body code
                   {% for children_rides in place.children_rides.0 %}
                     {% if not forloop.first %}-->{% endif %}
                     <div class="detail_description_card">{{children_rides}}</div>
-                    {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+                    {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
                   {% endfor %}<span style="display:none">--></span>
                 </div>
                 <div class="separador-80"> </div>
