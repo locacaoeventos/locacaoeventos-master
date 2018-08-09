@@ -77,7 +77,7 @@ def get_additional_information_important_attributes():
         {
             "name": "has_entertainment",
             "id_name": "id_has_entertainment",
-            "label": "Enterteinimento"
+            "label": "Entretenimento"
         },
         {
             "name": "has_thematicdecoration",

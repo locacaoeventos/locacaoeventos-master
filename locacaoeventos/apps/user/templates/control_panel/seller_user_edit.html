@@ -1,48 +1,82 @@
 {% extends "control_panel/seller_base.html" %}
-{% block page_title %}Home{% endblock page_title %}
+{% block page_title %}Editar Perfil{% endblock page_title %}
 {% block panel_title %}Conta{% endblock panel_title %}
 
 {% block user_panel_content %}
-  <section class="block listing" style="padding-top:0">
-    <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
-<!--      {% for field in form %}
-                  {{field}}
-                  {{field.label}}
-      {% endfor %}-->
-{{form.as_p}}
-      <div class="separador-60"> </div>
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <section>
-        <figure class="pull-left margin-top-15">
-          <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
-        </figure>
+<section class="block listing" style="padding-top:0">
+  <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+    {% for field in form %}
+      {% if field.name != "email_seller" %}
         <div class="form-group">
-          <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
+          {% if field.name == "password_seller" %}
+            <label>Nova senha</label>
+            <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller" onblur="validarSenhaSeller()">
+            <div class="separador-15"> </div>
+            <label>Confirme a senha</label>
+            <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+            <div id="tooshort_seller" class="error_message">
+              A senha deve conter no mínimo 6 dígitos
+            </div>
+            <div id="nomatchpswd_seller" class="error_message">
+              As senhas não são correspondentes
+            </div>
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% elif field.name == "accepts_newsletter_seller" %}
+            <div class="separador-10"> </div>
+            <div class="center_element">
+              <label style="display:inline">{{field.label}}</label><br>
+              <div class="separador-5"> </div>
+              <label class="container_checkbox" style="display:inline">
+                <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+                <span class="checkmark_checkbox"></span>
+              </label>
+            </div>
+          {% else %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endif %}
         </div>
-        <!-- /.form-group -->
-      </section>
+        <div class="separador-10"> </div>
+        {% endif %}
+    {% endfor %}
+    <section>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+      </div>
+      <!-- /.form-group -->
+    </section>
 
-    </form>
-  </section>
+  </form>
+</section>
+
+
+
+
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_user_edit.js"></script>
+
+
 
 {% endblock user_panel_content %}

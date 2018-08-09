@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
 
+from .forms_user import *
+
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto
 from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability
 from locacaoeventos.apps.place.placereview.models import PlaceReview
@@ -14,6 +16,18 @@ class EditBuyer(View):
         context = base_context(request.user)
         context["panel_type"] = "user"
         context["basemenu"] = "myaccount"
+        buyer = context["buyer"]
+        context["form"] = BuyerForm(initial={
+            "name": buyer.name,
+            "day": buyer.birthday.day,
+            "month": buyer.birthday.month,
+            "year": buyer.birthday.year,
+            "cellphone": buyer.cellphone,
+            "gender": buyer.gender,
+            "civil_status": buyer.civil_status,
+            "photo": str(buyer.photo).replace("buyerprofile/photo/",""),
+
+        }, field_order = ['name'])
         return render(request, "control_panel/buyer_user_edit.html", context)
 
 

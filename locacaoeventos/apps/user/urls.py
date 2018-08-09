@@ -35,5 +35,7 @@ urlpatterns = [
     # General
     url(r'^calendarioexemplo/$', CalendarExample.as_view()),
     url(r'^ajax/calendario/$', CalendarAjax.as_view()),
+    url(r'^ajax/familymember/create-delete/$', CreateDeleteFamilyMemberAjax.as_view()),
+    
 
 ]

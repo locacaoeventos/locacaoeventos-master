@@ -23,17 +23,36 @@ class EditSeller(View):
         seller = context["seller"]
         context["form"] = SellerForm(initial={
             "email_seller": seller.email,
-            "name": seller.name,
+            "name_seller": seller.name,
+            "password_seller": "aaaa",
             "cpf": seller.cpf,
             "cnpj": seller.cnpj,
-            #"password": seller.user.password,
-        })
-
-
+            "cellphone_seller": seller.cellphone,
+            "name_seller": seller.name,
+            "accepts_newsletter_seller": seller.accepts_newsletter
+        }, field_order = ['name_seller'])
         return render(request, "control_panel/seller_user_edit.html", context)
+    def post(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        seller = context["seller"]
+        form = SellerForm(request.POST)
+        form.is_valid()
+        seller.name = form.cleaned_data["name_seller"]
+        seller.cpf = form.cleaned_data["cpf"]
+        seller.cnpj = form.cleaned_data["cnpj"]
+        seller.cellphone = form.cleaned_data["cellphone_seller"]
+        if "accepts_newsletter_seller" in form.cleaned_data:
+            seller.accepts_newsletter = True
+            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True}, field_order=['name_seller'])
+        else:
+            seller.accepts_newsletter = False
+            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False}, field_order=['name_seller'])
 
-
-
+        if "password_seller" in form.cleaned_data:
+            seller.user.set_password(form.cleaned_data["password_seller"])
+            seller.user.save()
+        seller.save()
+        return render(request, "control_panel/seller_user_edit.html", context)
 
 
 

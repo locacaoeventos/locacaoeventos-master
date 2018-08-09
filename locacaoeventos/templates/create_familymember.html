@@ -1,0 +1,293 @@
+{% load datetime_tags %}
+<!-- =====================================================
+CSS imports
+===================================================== -->  
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+<style>
+    #page-content {
+        padding-bottom:0;
+    }
+
+    .familymember_birthday {
+        width:30%;   
+    }
+
+    /* AJAX */
+    .familymember_card {
+        border:1px solid #f2f2f2;
+        padding:20px;
+        position:relative;
+        margin-bottom:20px;
+    }
+    .x_familymember {
+        width:22px;
+        text-align:center;
+        position:absolute;
+        top:5px;
+        right:5px;
+    }
+    .edit_familymember {
+        width:22px;
+        /*height:22px;*/
+        padding:4px 0 4px 5px;
+        position:absolute;
+        font-size:13px;
+        top:5px;
+        right:30px;
+    }
+
+    .familymember_data {
+        font-size:16px;
+        font-weight:bold;
+    }
+
+
+</style>
+
+
+
+
+
+
+
+<!-- =====================================================
+Body code
+===================================================== -->
+Nome
+<div class="separador-5"> </div>
+<input class="familymember_input" type="text" id="familymember_name"/><br>
+<div class="separador-5"> </div>
+<div class="error_message" id="familymember_name_error">Preencha esse campo</div>
+<div class="separador-20"> </div>
+
+
+Gênero
+<div class="separador-5"> </div>
+<div class="radio">
+    <label class="container_radio">Masculino
+      <input class="familymember_input" id="male" type="radio" name="gender" value="Masculino">
+      <span class="checkmark_radio"></span>
+    </label>&nbsp;&nbsp;&nbsp;
+    <label class="container_radio">Feminino
+      <input class="familymember_input" id="female" type="radio" name="gender" value="Feminino">
+      <span class="checkmark_radio"></span>
+    </label>
+</div>
+<div class="separador-5"> </div>
+<div class="error_message" id="familymember_gender_error">Preencha esse campo</div>
+<div class="separador-20"> </div>
+
+
+Data de Aniversário
+<div class="separador-10"> </div>
+<select class="familymember_input familymember_birthday" id="day_id" name="day" required>
+    <option value="">Dia</option>
+    {% for i in 31|create_monthday_set %}
+        <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+</select>
+<select class="familymember_input familymember_birthday" id="month_id" name="month" required>
+    <option value="">Mês</option>
+    {% for i in 12|create_monthday_set %}
+        <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+</select>
+<select class="familymember_input familymember_birthday" id="year_id" name="year" required>
+    <option value="">Ano</option>
+    {% for i in 120|create_year_set %}
+        <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+</select>
+<div class="separador-5"> </div>
+<div class="error_message" id="familymember_birthday_error_fill">Preencha esse campo</div>
+<div class="error_message" id="familymember_birthday_error_wrongdata">A data é inválida</div>
+<div class="separador-30"> </div>
+
+
+Relação
+<div class="separador-5"> </div>
+<input class="familymember_input" type="text" id="familymember_relation"/><br>
+<div class="separador-5"> </div>
+<div class="error_message" id="familymember_relation_error">Preencha esse campo</div>
+<div class="separador-40"> </div>
+
+
+<div class="btn btn-default pull-right" id="submit" disabled="true">Cadastrar</div>
+<div class="separador-60"> </div>
+<div id="familymember_card_container">
+    {% for familymember in familymember_list %}
+        <div class="familymember_card">
+            {# <div class="x_option edit_familymember" pk="{{familymember.pk}}">&#9998;</div> #}
+            <div class="x_option x_familymember" pk="{{familymember.pk}}">&times;</div>
+            <span class="familymember_data">{{familymember.name}}</span>, <span class="familymember_data">{{familymember.relation}}</span>
+            <div class="separador-15"> </div>
+            Gênero - <span class="familymember_data">{{familymember.gender}}</span>
+            <div class="separador-5"> </div>
+            Data de Aniversário - <span class="familymember_data">{{familymember.birthday}}</span>
+            <div class="separador-5"> </div>
+        </div>  
+    {% endfor %}
+</div>
+
+
+<div class="separador-80"> </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- =====================================================
+JavaScript imports
+===================================================== -->
+<script>
+
+    // ========================================== TESTs
+    // TEST for radio and select
+    $(".familymember_input").change(function(){
+        check_familymember_input()
+    })
+    // TEST for focus text
+    $(".familymember_input").focus(function(){
+        check_familymember_input()
+        test_this_text($(this))
+    })
+    // TEST for blur text
+    $(".familymember_input").on("input", function(){
+        check_familymember_input()
+        test_this_text($(this))
+    })
+
+
+    function check_familymember_input(){ // Verifies every field to allow or block submit
+        var count_empty_radio = 0
+        var count_empty_field = 0
+        $("#familymember_birthday_error_wrongdata").fadeOut(500)
+        $(".familymember_input").each(function(){
+            if($(this).attr("type")=="radio"){
+                if(!$(this).is(":checked")){
+                    count_empty_radio += 1
+                }
+            } else {
+                if(!$(this).val()==""){
+                    count_empty_field += 1
+                }
+            }
+        })
+        if(count_empty_field+count_empty_radio == 6) {
+            $("#submit").removeAttr("disabled")
+            return true
+        } else {
+            $("#submit").attr("disabled", "")
+            return false
+        }
+    }
+
+    function test_this_text(element) {
+        var div_id = element.attr("id")
+        if(element.val()=="") {
+            $("#"+div_id+"_error").fadeIn(500)
+        } else {
+            $("#"+div_id+"_error").fadeOut(500)
+        }
+    }
+
+
+
+
+    // ========================================== AJAX - Create
+    $("#submit").click(function(){
+        var familymember_gender = $('input[name=gender]:checked').val()
+        var familymember_birthday = $("#year_id").val() + "-" + $("#month_id").val() + "-" + $("#day_id").val()
+        var familymember_name = $("#familymember_name").val()
+        var familymember_relation = $("#familymember_relation").val()
+
+        $.ajax({
+            url: "/usuario/ajax/familymember/create-delete/",
+            dataType: 'json',
+            data: {
+                "familymember_gender": familymember_gender,
+                "familymember_birthday": familymember_birthday,
+                "familymember_name": familymember_name,
+                "familymember_relation": familymember_relation
+            },
+            success: function (data) {
+                console.log(data)
+                console.log(data.error)
+                if (data.error==true) {
+                    $("#familymember_birthday_error_wrongdata").css("display", "block")
+                } else {
+                    $(".familymember_input").val("")
+                    $(".familymember_input").val("").change()
+                    div_card = ""
+                    div_card += '<div class="familymember_card">'
+                        // div_card += '<div class="x_option edit_familymember" pk="' + data.pk + '">&#9998;</div>'
+                        div_card += '<div class="x_option x_familymember" pk="' + data.pk + '">&times;</div>'
+                        div_card += '<span class="familymember_data">' + data.familymember_name + '</span>, <span class="familymember_data">' + data.familymember_relation + '</span>'
+                        div_card += '<div class="separador-15"> </div>'
+                        div_card += 'Gênero - <span class="familymember_data">' + data.familymember_gender + '</span>'
+                        div_card += '<div class="separador-5"> </div>'
+                        div_card += 'Data de Aniversário - <span class="familymember_data">' + data.familymember_birthday + '</span>'
+                        div_card += '<div class="separador-5"> </div>'
+                    div_card += '</div>'   
+                    $("#familymember_card_container").append(div_card)
+                }
+            }
+        })
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ========================================== AJAX - Delete
+    $(document).on("click", ".x_familymember", function(){
+        var familymember_pk = $(this).attr("pk")
+        $.ajax({
+            url: "/usuario/ajax/familymember/create-delete/",
+            dataType: 'json',
+            data: {
+                "familymember_pk": familymember_pk
+            },
+            success: function (data) {
+                $(".x_familymember").each(function(){
+                    if($(this).attr("pk")==data.familymember_pk) {
+                        $(this).parent().fadeOut(500)
+                    }
+                })
+            }
+        })
+    })
+</script>

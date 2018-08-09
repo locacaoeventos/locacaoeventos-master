@@ -6,19 +6,7 @@
 	display:inline-block;
 	padding:5px
 }
-.buyerprofile_photo {
-	width:80px;
-	height:80px;
-	border-radius:50%;
-	margin-top:10px
-}
 
-@media(max-width: 496px){
-	.buyerprofile_photo {
-		width:50px;
-		height:50px;
-	}
-}
 
 .review_text_bold {
 	font-weight:bold

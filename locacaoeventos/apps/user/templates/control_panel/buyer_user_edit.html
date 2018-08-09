@@ -1,6 +1,92 @@
 {% extends "control_panel/buyer_base.html" %}
-{% block page_title %}Home{% endblock page_title %}
+{% block page_title %}Editar Perfil{% endblock page_title %}
 {% block panel_title %}Conta{% endblock panel_title %}
 
 {% block user_panel_content %}
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+
+
+
+
+
+<section class="block listing" style="padding-top:0">
+  <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+    {% for field in form %}
+      {% if field.name != "email" %}
+        <div class="form-group">
+          {% if field.name == "password" %}
+            <label>Nova senha</label>
+            <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password" onblur="validarSenhaSeller()">
+            <div class="separador-15"> </div>
+            <label>Confirme a senha</label>
+            <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm" onblur="validarSenhaSeller()">
+            <div id="tooshort" class="error_message">
+              A senha deve conter no mínimo 6 dígitos
+            </div>
+            <div id="nomatchpswd" class="error_message">
+              As senhas não são correspondentes
+            </div>
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% elif field.name == "accepts_newsletter" %}
+            <div class="separador-10"> </div>
+            <div class="center_element">
+              <label style="display:inline">{{field.label}}</label><br>
+              <div class="separador-5"> </div>
+              <label class="container_checkbox" style="display:inline">
+                <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked{% endif %}>
+                <span class="checkmark_checkbox"></span>
+              </label>
+            </div>
+          {% elif field.name == "photo" %}
+
+	          <label>Foto (opcional)</label>
+	          <label class="btn btn-default btn-file" id="menu_click">
+	              Carregar Arquivo{{field}} <!-- hidden field -->
+	          </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{field.value}}</span>
+
+
+          {% else %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endif %}
+        </div>
+        <div class="separador-10"> </div>
+        {% endif %}
+    {% endfor %}
+    <section>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+      </div>
+      <!-- /.form-group -->
+    </section>
+
+  </form>
+</section>
+
+
+
+
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/buyer_user_edit.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/core/upload_single_file.js"></script>
+
+
+
 {% endblock user_panel_content %}

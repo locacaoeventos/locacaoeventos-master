@@ -15,14 +15,4 @@ def base_context(user):
 			profile = buyers[0]
 			context["user_type"] = "buyer"
 		context["profile"] = profile
-
-
-
-
-
-
-
-
-
-
 	return context

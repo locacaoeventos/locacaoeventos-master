@@ -151,7 +151,7 @@ Body code
         {% for review in review_list %}
           <div class="review_container">
             <div style="width:20%; display:inline-block; text-align:center; vertical-align:top">
-              <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if review.buyerprofile.photo %}/media/{{review.buyerprofile.photo}}{% else %}/static/img/icon/person.png{% endif %});"></div>
+              <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if review.buyerprofile.photo %}/media/{{review.buyerprofile.photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
             </div><!--
 
 
@@ -182,6 +182,7 @@ Body code
               </div>
             </div>
           </div>
+          <div class="separador-10"> </div>
         {% endfor %}
       </div>
     </section>

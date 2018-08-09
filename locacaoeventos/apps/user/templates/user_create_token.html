@@ -1,33 +1,47 @@
-
-
-
-
-
-
-
-
-
 {% extends "_base_user.html" %}
 
 {% block page_title %}Cadastrar{% endblock page_title %}
+{% block js_select_customize %}{% endblock js_select_customize %}
 {% block content %}
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/user_create_token.css" type="text/css">
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+
+
 
 <section class="container">
   <div class="block">
     <div class="row">
       <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
         <header>
-          <div class="separador-40"> </div>
+          {% if not create_family_member %}
+            <div class="separador-40"> </div>
+          {% endif %}
           <h1 class="page-title" style="text-align:center">
-			{% if token_valid %}
-			E-mail confirmado.
-          	<div class="separador-10"> </div>
-          	<i class="fa fa-check"> </i>
+          {% if token_valid %}
+            E-mail confirmado
+            <div class="separador-10"> </div>
+            <i class="fa fa-check"> </i>
+            {% if create_family_member %}
+              <hr class="line"/>
+              <div class="family_member_wrapper">
+                <div class="center_element">
+                  <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if buyer_photo %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
+                  <div class="separador-10"> </div>
+                  Cadastre seus filhos, netos, sobrinhos, para receber as melhores novidades, <strong>{{buyer_name}}</strong> !
+                </div>
+                <div class="separador-20"> </div>
+                {% include "create_familymember.html" %}
 
-			{% else %}
-			Ocorreu algum problema:<br><br>a URL não se encaixa com o usuário; favor contactar o administrador do site.
+              </div>
+            {% endif %}
 
-			{% endif %}
+
+
+          {% else %}
+            Ocorreu algum problema:<br><br>a URL não se encaixa com o usuário; favor contactar o administrador do site
+          {% endif %}
           </h1>
         </header>
       </div>
@@ -37,8 +51,7 @@
 
 
 
-{% block jquery %}
-    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
-{% endblock jquery %}
+
+<script type="text/javascript" src="/static/CUSTOM_JS/user/user_create_token.js"></script>
 
 {% endblock content %}

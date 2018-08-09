@@ -21,7 +21,7 @@ class BuyerForm(TOCForm):
     civil_status = fields.CharField(required=True, label="Status Civil")
     
     photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
-    accepts_newsletter = forms.BooleanField(required=True, initial="checked")
+    accepts_newsletter = forms.BooleanField(required=False, initial="checked")
     def __init__(self, *args, **kwargs):
         super(BuyerForm, self).__init__(*args, **kwargs)
     def clean(self):
@@ -72,7 +72,7 @@ class SellerForm(TOCForm):
     cpf = fields.CharField(required=True, label="CPF do responsável")
     cnpj = fields.CharField(label="CNPJ do estabelecimento")
 
-    accepts_newsletter_seller = forms.BooleanField(required=True, initial="checked", label="Aceita receber Newsletter")
+    accepts_newsletter_seller = forms.BooleanField(required=False, initial="checked", label="Aceita receber Newsletter")
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()
 

@@ -6,8 +6,10 @@ from django.views import View
 
 from locacaoeventos.utils.forms import PhotoProvisoryForm
 from locacaoeventos.utils.main import base_context
+from locacaoeventos.utils.datetime import test_date
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PhotoProvisory
 from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability
+from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile, FamilyMember
 class UploadFile(View):
     def post(self, request):
         form = PhotoProvisoryForm(self.request.POST, self.request.FILES)
@@ -123,6 +125,53 @@ class CalendarAjax(View):
             "list_month": list_month,
         }
         return JsonResponse(data)
+
+
+
+
+
+
+class CreateDeleteFamilyMemberAjax(View):
+    def get(self, request):
+        data = {}
+
+
+        familymember_pk = request.GET.get("familymember_pk", None)
+        if familymember_pk: # Deletes
+            data = {"familymember_pk":familymember_pk}
+            familymember = FamilyMember.objects.get(pk=familymember_pk)
+            familymember.delete()
+
+        else: # Creates
+            familymember_gender = request.GET.get("familymember_gender")
+            familymember_birthday = request.GET.get("familymember_birthday")
+            familymember_name = request.GET.get("familymember_name")
+            familymember_relation = request.GET.get("familymember_relation")
+
+            if not test_date(familymember_birthday):
+                data["error"] = True
+
+            else:
+                familymember = FamilyMember.objects.create(
+                    name = familymember_name,
+                    gender = familymember_gender,
+                    birthday = familymember_birthday,
+                    relation = familymember_relation,
+                    related_to = BuyerProfile.objects.get(user=request.user)
+                )
+                data = {
+                    "familymember_gender": familymember_gender,
+                    "familymember_birthday": familymember_birthday,
+                    "familymember_name": familymember_name,
+                    "familymember_relation": familymember_relation,
+                    "pk": familymember.pk
+                }
+
+        return JsonResponse(data)
+
+
+
+
 
 
 

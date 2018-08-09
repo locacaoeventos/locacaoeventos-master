@@ -24,9 +24,8 @@ class BuyerProfile(models.Model):
         return self.name
 
 class FamilyMember(models.Model):
-    gender = models.CharField("Sexo", max_length=64)
     name = models.CharField("Nome", max_length=64)
-
+    gender = models.CharField("Sexo", max_length=64)
     birthday = models.DateField()
-
+    relation = models.CharField("Relation", max_length=64)
     related_to = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE, related_name="Parentesco com+")
