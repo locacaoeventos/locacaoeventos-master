@@ -26,13 +26,7 @@
             <div id="nomatchpswd_seller" class="error_message">
               As senhas não são correspondentes
             </div>
-            {% if field.errors %}
-              <div class="error_message" style="display:block">
-                {% for error in field.errors %}
-                {{error}}
-                {% endfor %}
-              </div>
-            {% endif %}
+
           {% elif field.name == "accepts_newsletter_seller" %}
             <div class="separador-10"> </div>
             <div class="center_element">

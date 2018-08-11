@@ -28,6 +28,7 @@ urlpatterns = [
 
     # Buyer
     url(r'^conta/$', EditBuyer.as_view()),
+    # url(r'^familia/$', FamilyMemberEdit.as_view()),
     url(r'^buffets-agendados/$', ListPlaceBought.as_view()),
     url(r'^avaliar-buffet/$', ReviewPlaceBought.as_view()),
 

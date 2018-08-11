@@ -50,7 +50,7 @@ class Login(View):
         context["basemenu"] = "login"
         if not request.user.is_authenticated:
             return render(request, "login.html", context)
-        return redirect('/')
+        return redirect('/home')
     def post(self, request):
         context = base_context(request.user)
         context["basemenu"] = "login"
@@ -72,7 +72,7 @@ class Login(View):
                 profile = SellerProfile.objects.filter(user=user)[0]
             if profile.is_active:
                 login(request, user)
-                return redirect('/')
+                return redirect('/home')
             else:
                 context = {
                     'not_active': True
@@ -90,7 +90,7 @@ class Logout(View):
         context = base_context(request.user)
         if request.user.is_authenticated:
             auth.logout(request)
-        return redirect('/')
+        return redirect('/home')
 
 
 class TermsConditions(View):

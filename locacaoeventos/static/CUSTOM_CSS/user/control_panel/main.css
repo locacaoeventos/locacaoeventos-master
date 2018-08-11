@@ -1,0 +1,29 @@
+/* TOGLER */
+.toggle_buyer_seller_base {
+	position:relative;
+}
+@media(max-width:767px){
+	.buyer_seller_base_menu {
+		display:none;
+	}
+	.option_container_buyer_seller {
+		display:block;
+	}
+}
+@media(min-width:768px){
+	.buyer_seller_base_menu {
+		display:block;
+	}
+	.option_container_buyer_seller {
+		display:none;
+	}
+
+
+}
+.toggle_sign {
+	position:absolute;
+	top:-7px;
+	right:10px;
+	font-size:24px !important;
+	color:#4fa7bc
+}

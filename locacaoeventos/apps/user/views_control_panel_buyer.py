@@ -2,6 +2,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 
 from locacaoeventos.utils.main import *
+from locacaoeventos.utils.datetime import *
 from locacaoeventos.utils.place import *
 
 from .forms_user import *
@@ -19,17 +20,66 @@ class EditBuyer(View):
         buyer = context["buyer"]
         context["form"] = BuyerForm(initial={
             "name": buyer.name,
+            "password": "aaaa",
             "day": buyer.birthday.day,
             "month": buyer.birthday.month,
             "year": buyer.birthday.year,
             "cellphone": buyer.cellphone,
             "gender": buyer.gender,
             "civil_status": buyer.civil_status,
-            "photo": str(buyer.photo).replace("buyerprofile/photo/",""),
-
+            "photo": buyer.photo,
         }, field_order = ['name'])
-        return render(request, "control_panel/buyer_user_edit.html", context)
 
+        context["is_valid_date"] = True
+        if buyer.photo:
+            context["buyer_photo_str"] = str(str(buyer.photo).replace("buyerprofile/photo/",""))
+            context["buyer_photo"] = buyer.photo
+
+        return render(request, "control_panel/buyer_user_edit.html", context)
+    def post(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["panel_type"] = "user"
+        context["basemenu"] = "myaccount"
+
+        buyer = context["buyer"]
+        form = BuyerForm(request.POST, request.FILES)
+        form.is_valid()
+        buyer.civil_status = form.cleaned_data["civil_status"]
+        buyer.name = form.cleaned_data["name"]
+        buyer.cellphone = form.cleaned_data["cellphone"]
+        buyer.photo = form.cleaned_data["photo"]
+        if "accepts_newsletter" in form.cleaned_data:
+            buyer.accepts_newsletter = True
+            context["form"] = BuyerForm(request.POST, initial={"accepts_newsletter": True}, field_order=['name'])
+        else:
+            buyer.accepts_newsletter = False
+            context["form"] = BuyerForm(request.POST, initial={"accepts_newsletter": False}, field_order=['name'])
+
+        if "password" in form.cleaned_data:
+            buyer.user.set_password(form.cleaned_data["password"])
+            buyer.user.save()
+        context["buyer_photo_str"] = str(str(form.cleaned_data["photo"]).replace("buyerprofile/photo/",""))
+
+        if "day" in form.cleaned_data:
+            context["is_valid_date"] = True
+            day = str(form.cleaned_data["day"])
+            month = str(form.cleaned_data["month"])
+            year = str(form.cleaned_data["year"])
+            buyer.birthday = year + "-" + month + "-" + day
+
+        else:
+            context["is_valid_date"] = False
+
+
+        buyer.save()
+
+
+
+        if buyer.photo:
+            context["buyer_photo_str"] = str(str(buyer.photo).replace("buyerprofile/photo/",""))
+            context["buyer_photo"] = buyer.photo
+        
+        return render(request, "control_panel/buyer_user_edit.html", context)
 
 
 class ListPlaceBought(View):

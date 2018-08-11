@@ -1,10 +1,13 @@
 {% extends "control_panel/buyer_base.html" %}
+{% load datetime_tags %}
 {% block page_title %}Editar Perfil{% endblock page_title %}
 {% block panel_title %}Conta{% endblock panel_title %}
-
+{% block js_select_customize %}{% endblock js_select_customize %}
+{% block old_custom_js %}{% endblock old_custom_js %}
 {% block user_panel_content %}
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
-  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/buyer_user_edit.css" type="text/css">
 
 
 
@@ -14,57 +17,168 @@
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
       {% if field.name != "email" %}
-        <div class="form-group">
           {% if field.name == "password" %}
-            <label>Nova senha</label>
-            <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password" onblur="validarSenhaSeller()">
-            <div class="separador-15"> </div>
-            <label>Confirme a senha</label>
-            <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm" onblur="validarSenhaSeller()">
-            <div id="tooshort" class="error_message">
-              A senha deve conter no mínimo 6 dígitos
+            <div class="form-group">
+              <label>Nova senha</label>
+              <input type="password" name="password" minlength="6" class="form-control" id="id_password" onblur="validarSenhaSeller()">
+              <div class="separador-15"> </div>
+              <label>Confirme a senha</label>
+              <input type="password" name="confirm" minlength="6" class="form-control" id="confirm" onblur="validarSenhaSeller()">
+              <div id="tooshort" class="error_message">
+                A senha deve conter no mínimo 6 dígitos
+              </div>
+              <div id="nomatchpswd" class="error_message">
+                As senhas não são correspondentes
+              </div>
             </div>
-            <div id="nomatchpswd" class="error_message">
-              As senhas não são correspondentes
-            </div>
-            {% if field.errors %}
-              <div class="error_message" style="display:block">
-                {% for error in field.errors %}
-                {{error}}
-                {% endfor %}
+
+
+
+
+
+
+          {% elif field.name == "day" or field.name == "month" or field.name == "year" %}
+            {% if field.name == "day" %}
+              <div class="form-group">
+                <label>Data de Nascimento</label>
+                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required>
+                  <option value="">Dia</option>
+                  {% for i in 31|create_monthday_set_int_str %}
+                    {% if request.method == "POST" %}
+                      <option value="{{i.str}}" {% if field.value == i.str %}selected{% endif %}>{{i.str}}</option>
+                    {% else %}
+                      <option value="{{i.str}}" {% if field.value == i.int %}selected{% endif %}>{{i.str}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+            {% elif field.name == "month" %}
+                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required>
+                  <option value="">Mês</option>
+                  {% for i in 12|create_monthday_set_int_str %}
+                    {% if request.method == "POST" %}
+                      <option value="{{i.str}}" {% if field.value == i.str %}selected{% endif %}>{{i.str}}</option>
+                    {% else %}
+                      <option value="{{i.str}}" {% if field.value == i.int %}selected{% endif %}>{{i.str}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+            {% elif field.name == "year" %}
+                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required>
+                  <option value="">Ano</option>
+                  {% for i in 120|create_year_set_int_str %}
+                    {% if request.method == "POST" %}
+                      <option value="{{i.int}}" {% if field.value == i.str %}selected{% endif %}>{{i.int}}</option>
+                    {% else %}
+                      <option value="{{i.int}}" {% if field.value == i.int %}selected{% endif %}>{{i.int}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+                {% if is_valid_date == False %}
+                  <div class="error_message" style="display:inline; float:none">
+                    &nbsp;&nbsp; Data inválida
+                  </div>
+                {% endif %}
               </div>
             {% endif %}
-          {% elif field.name == "accepts_newsletter" %}
+
+
+          {% elif field.name == "gender" %}
             <div class="separador-10"> </div>
-            <div class="center_element">
-              <label style="display:inline">{{field.label}}</label><br>
-              <div class="separador-5"> </div>
-              <label class="container_checkbox" style="display:inline">
-                <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked{% endif %}>
-                <span class="checkmark_checkbox"></span>
+            <div class="form-group">
+              <label>Gênero do Usuário</label>
+              <label class="container_radio" style="font-weight:bold">Masculino
+                <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
+              </label>
+              <label class="container_radio" style="font-weight:bold">Feminino
+                <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
               </label>
             </div>
+            <div class="separador-10"> </div>
+
+
+
+
+
+
+
+
+
+
+          {% elif field.name == "civil_status" %}
+            <div class="separador-10"> </div>
+            <div class="form-group">
+              <label>Status Civil</label>
+              <label class="container_radio" style="font-weight:bold">Solteiro(a)
+                <input id="id_solteiro" type="radio" name="civil_status" value="solteiro" {% if field.value == "solteiro" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
+              </label>
+              <label class="container_radio" style="font-weight:bold">Casado(a)
+                <input id="id_casado" type="radio" name="civil_status" value="casado" {% if field.value == "casado" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
+              </label>
+              <label class="container_radio" style="font-weight:bold">Viúvo(a)
+                <input id="id_viuvo" type="radio" name="civil_status" value="viuvo" {% if field.value == "viuvo" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
+              </label>
+              <label class="container_radio" style="font-weight:bold">Divorciado(a)
+                <input id="id_divorciado" type="radio" name="civil_status" value="divorciado" {% if field.value == "divorciado" %}checked{% endif %}>
+                <span class="checkmark_radio"></span>
+              </label>
+            </div>
+            <div class="separador-10"> </div>
+
           {% elif field.name == "photo" %}
+            <div class="form-group">
+                <label>Foto (opcional)</label>
+              <div class="row">
+                <div class="col-md-2" style="text-align:center; vertical-align:middle">
+                  <div class="center-cropped img-center" style="background-image: url({% if buyer_photo_str %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %}); width:50px; height:50px; border-radius:50%; margin-top:10px"></div>
+                  &nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-md-10" style="padding-top:15px">
+                  <label class="btn btn-default btn-file" id="menu_click">
+                      Carregar Arquivo{{field}} <!-- hidden field -->
+                  </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_photo_path" style="color:#999999">{{buyer_photo_str}}</span>
+                </div>
+              </div>
+            </div>
 
-	          <label>Foto (opcional)</label>
-	          <label class="btn btn-default btn-file" id="menu_click">
-	              Carregar Arquivo{{field}} <!-- hidden field -->
-	          </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{field.value}}</span>
 
+          {% elif field.name == "accepts_newsletter" %}
+            <div class="form-group">
+              <div class="separador-10"> </div>
+              <div class="center_element">
+                <label style="display:inline">Aceita Newsletter</label><br>
+                <div class="separador-5"> </div>
+                <label class="container_checkbox" style="display:inline">
+                  <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked{% endif %}>
+                  <span class="checkmark_checkbox"></span>
+                </label>
+              </div>
+            </div>
 
           {% else %}
-            <label>{{field.label}}</label>
-            {{field}}
-            {% if field.errors %}
-              <div class="error_message" style="display:block">
-                {% for error in field.errors %}
-                {{error}}
-                {% endfor %}
-              </div>
-            {% endif %}
+            <div class="form-group">
+              <label>{{field.label}}</label>
+              {{field}}
+              {% if field.errors %}
+                <div class="error_message" style="display:block">
+                  {% for error in field.errors %}
+                  {{error}}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
           {% endif %}
-        </div>
-        <div class="separador-10"> </div>
+
+
+
+
+
+
+
         {% endif %}
     {% endfor %}
     <section>

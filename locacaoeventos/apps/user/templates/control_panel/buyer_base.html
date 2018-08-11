@@ -22,13 +22,29 @@ Body code
       <div class="row">
           <div class="col-md-3 col-sm-3">
               <aside id="sidebar">
-                  <ul class="navigation-sidebar list-unstyled">
+                  <ul class="navigation-sidebar list-unstyled option_container_buyer_seller">
+                    <div class="toggle_buyer_seller_base">
+                      <h1 style="color:#4fa7bc">OPÇÕES</h1>
+                      <span class="toggle_sign">+</span>
+                      <div class="separador-15"> </div>
+                      <hr class="line" style="margin:0; -webkit-box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.05)"/>
+                    </div>
+                  </ul>
+
+                  <ul class="navigation-sidebar list-unstyled buyer_seller_base_menu">
                       <li {% if panel_type == "user" %}class="active"{% endif %}>
                           <a href="/usuario/conta/">
                               <i class="icon_menu fa fa-user"></i>
                               <span>Perfil</span>
                           </a>
                       </li>
+                      <li {% if panel_type == "family_member" %}class="active"{% endif %}>
+                          <a href="/usuario/familia/">
+                              <i class="icon_menu fa fa-child" style="font-size:16px"></i>
+                              <span>Família</span>
+                          </a>
+                      </li>
+
                       <li {% if panel_type == "listbought" %}class="active"{% endif %}>
                           <a href="/usuario/buffets-agendados/">
                               <i class="icon_menu fa fa-book"></i>
@@ -37,6 +53,7 @@ Body code
                       </li>
 
                   </ul>
+                  <div class="separador-20"> </div>
               </aside>
           </div>
           <div class="col-md-9 col-sm-9">
@@ -78,5 +95,22 @@ Body code
 <!-- =====================================================
 JavaScript imports
 ===================================================== -->
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+{% block js_maps %}{% endblock js_maps %}
+<script>
+$(document).ready(function(){
+  $(".toggle_buyer_seller_base").click(function() {
+    if($(".toggle_sign").html() == "+"){
+      $(".toggle_sign").html("&minus;")
+    } else {
+      $(".toggle_sign").html("+")
+    }
 
+    $(".buyer_seller_base_menu").toggle("slow", function() {
+    });
+  });
+})
+</script>
 {% endblock content %}
