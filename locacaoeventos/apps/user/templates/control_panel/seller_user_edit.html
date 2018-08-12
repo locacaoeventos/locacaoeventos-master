@@ -16,10 +16,10 @@
         <div class="form-group">
           {% if field.name == "password_seller" %}
             <label>Nova senha</label>
-            <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller" onblur="validarSenhaSeller()">
+            <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
             <div class="separador-15"> </div>
             <label>Confirme a senha</label>
-            <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+            <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
             <div id="tooshort_seller" class="error_message">
               A senha deve conter no mínimo 6 dígitos
             </div>
