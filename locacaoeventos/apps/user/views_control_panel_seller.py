@@ -33,9 +33,9 @@ class EditSeller(View):
         }, field_order = ['name_seller'])
         return render(request, "control_panel/seller_user_edit.html", context)
     def post(self, request, *args, **kwargs):
+        context = base_context(request.user)
         context["panel_type"] = "user"
         context["basemenu"] = "myaccount"
-        context = base_context(request.user)
         seller = context["seller"]
         form = SellerForm(request.POST)
         form.is_valid()
