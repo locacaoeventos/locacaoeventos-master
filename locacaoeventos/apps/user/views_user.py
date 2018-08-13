@@ -304,11 +304,11 @@ class ConfirmEmail(View):
             buyer = BuyerProfile.objects.get(user=user)
             token = request.GET["token"]
             if buyer.key == token:
-                context["token_valid"] = True
                 buyer.is_active = True
                 buyer.save()
                 login(request, user)
-
+                context = base_context(request.user)
+                context["token_valid"] = True
                 context["create_family_member"] = True
                 context["buyer_photo"] = buyer.photo
                 context["buyer_name"] = buyer.name
