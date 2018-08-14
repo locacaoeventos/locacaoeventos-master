@@ -150,7 +150,6 @@ option {
 .feature_image {
 	border-radius:8px 8px 0px 0px;
 	height:300px;
-	min-width:100%;
 	vertical-align:bottom;
 }
 .feature_wrapper {
