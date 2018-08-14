@@ -20,3 +20,9 @@ First Block
 	font-weight:bold;
 	position:relative;	
 }
+#home_arrow_symbol {
+	font-size:18px;
+	position:absolute;
+	top:2px;
+	right:5px
+}
