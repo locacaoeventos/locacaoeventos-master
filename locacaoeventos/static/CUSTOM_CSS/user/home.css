@@ -1,11 +1,15 @@
 /* ================================================
-Forms
+First Block
 ================================================ */
+@media(max-width:650px) {
+	#home_title {
+		font-size:14px !important;
+	}
+}
 .form_label {
 	padding:3px 6px 3px 6px;
 	background-color:rgba(0,0,0,0.5) !important;
 }
-
 #home_send {
 	position:absolute;
 	float:right;
