@@ -21,8 +21,8 @@ Body code
         <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
           <div class="input-row">
             <div style="width:100%">
-              <label class="form_label" for="place" style="width:100%">Localização de Preferência</label>
-              <div class="input-group location" style="width:100%; padding-right:40px;">
+              <label class="form_label" for="place" style="width:100%">Localização ou Nome do Buffet</label>
+              <div class="input-group location" style="width:100%; padding-right:37px;">
                 <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização" style="width:100%">
                 <button type="submit" class="btn btn-default" id="home_send"><i class="fa fa-search"></i></button>
               </div>
@@ -69,7 +69,7 @@ Body code
       {% for i in "xxxx" %}
         <div class="col-md-3 col-sm-3">
           <div class="item" style="margin-bottom:20px; cursor:pointer;">
-            <div class="img-center center-cropped" style="background-image: url(/static/img/background/FESTAS1-2.jpg); height:300px; vertical-align:bottom; "></div><!--
+            <div class="img-center center-cropped feature_image" style="background-image: url(/static/img/background/FESTAS1-2.jpg);"></div><!--
             --><div class="feature_wrapper">
                 <h3 style="margin:0">Benny’s Cafeteria</h3>
                 <span style="color:white" class="stars" data-rating="3.8" data-num-stars="5"></span>

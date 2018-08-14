@@ -148,13 +148,12 @@ option {
 
 /* Feature Items */
 .feature_image {
-	border-radius:8px 8px 0px 0px;
+	height:300px;
 	vertical-align:bottom;
 }
 .feature_wrapper {
 	background-color:#94d600;
 	color:white;
-	border-radius:0px 0px 8px 8px;
 	text-align:center;
 	padding:15px 0 15px 0;
 	vertical-align:top;
