@@ -24,6 +24,10 @@ CSS imports
   <link rel="stylesheet" href="/static/CUSTOM_CSS/icheck/purple.css" type="text/css">
   <link rel="shortcut icon" href="/static/img/123festas/favicon.png"/>
   <title>123Festas | {% block page_title %}Buffets{% endblock page_title %}</title>
+<style>
+html {overflow: hidden; overflow-y: auto;}
+</style>
+
 </head>
 
 
@@ -33,18 +37,19 @@ CSS imports
 <!-- =====================================================
 Body code
 ===================================================== -->
-<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top">
+
+<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top" style="">
 <!-- Outer Wrapper-->
-<div id="outer-wrapper">
+<div id="outer-wrapper" style="">
   <!-- Inner Wrapper -->
-  <div id="inner-wrapper">
+  <div id="inner-wrapper" style="">
     <!-- ========================================================================================================================== -->
 
     <!--                                                           HEADER                                                           -->
 
     <!-- ========================================================================================================================== -->
-    <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white;">
-      <div class="wrapper">
+    <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white; ">
+      <div class="wrapper" style="">
         <div class="brand">
           <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 10px 40px" alt="logo"></a>
         </div>
@@ -90,7 +95,9 @@ Body code
     <!-- ========================================================================================================================== -->
     <nav class="off-canvas-navigation" style="position:fixed !important; height:100vh">
       <header style="border-bottom:none;">
-
+              <!-- ============== -->
+              <!-- COPY OF HEADER -->
+              <!-- ============== -->
               {% if user.is_superuser %}
                 <a style="color:white" href="/administrador/home/">Administrador</a><br>
               {% endif %}

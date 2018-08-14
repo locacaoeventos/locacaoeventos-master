@@ -20,32 +20,40 @@ Body code
       <div class="search-bar horizontal">
         <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
           <div class="input-row">
-            <div class="form-group">
-              <label class="form_label" for="place">Localização de Preferência</label>
-              <div class="input-group location">
-                <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização">
+            <div style="width:100%">
+              <label class="form_label" for="place" style="width:100%">Localização de Preferência</label>
+              <div class="input-group location" style="width:100%; padding-right:40px;">
+                <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização" style="width:100%">
+                <button type="submit" class="btn btn-default" id="home_send"><i class="fa fa-search"></i></button>
               </div>
             </div>
-            <div class="form-group">
-              <label class="form_label" for="date">Data da Comemoração</label>
-              <input type="text" class="form-control" id="date_id" name="date" autocomplete="off">
-            </div>
-            <div class="form-group">
-              <label class="form_label" for="capacity">Quantidade de Convidados</label>
-              <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados">
-            </div>
-            <div class="form-group">
-              <div style="margin-top:6px">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            <br>
+
+            <div style="width:100%">
+              <div style="display:inline-block; width:50%; padding-right:5px">
+                <label class="form_label" for="date">Data da Comemoração</label>
+                <input type="text" class="form-control" id="date_id" name="date" autocomplete="off">
+              </div><!--
+              --><div style="display:inline-block; width:50%; padding-left:5px">
+                <label class="form_label" for="capacity">Quantidade de Convidados</label>
+                <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados">
               </div>
+              <div class="separador-20"> </div>
             </div>
+            <div class="form_label" id="home_arrow" for="date">
+              Mais procura
+              <span style="font-size:18px; position:absolute; top:2px; right:5px">&#709;</span>
+            </div>
+
+
+
           </div>
         </form>
       </div>
     </div>
   </div>
   <div class="background">
-    <img src="/static/img/background/balloonscropped.jpg" alt="">
+    <img src="/static/img/background/FESTAS5-2.jpg" alt="">
   </div>
 </section>
 
@@ -54,37 +62,17 @@ Body code
 <section id="featured" class="block equal-height">
   <div class="container">
     <header>
-      <h2>Destaques da Semana</h2>
+      <h2><span style="border-bottom:2px solid #94d600;">Destaques da Semana</span></h2>
     </header>
     <div class="row">
       {% for i in "xxxx" %}
         <div class="col-md-3 col-sm-3">
-          <div class="item">
-            <div class="image">
-              <a href="item-detail.html">
-                <div class="overlay">
-                  <div class="inner">
-                    <div class="content">
-                      <h4>Description</h4>
-                      <p>Curabitur odio nibh, luctus non pulvinar a, ultricies ac diam. Donec neque massa</p>
-                    </div>
-                  </div>
-                </div>
-                <img src="/static/img/background/FESTAS1-2.jpg" alt="">
-              </a>
-            </div>
-            <div class="wrapper">
-              <a href="item-detail.html">
-                <h3>Benny’s Cafeteria</h3>
-              </a>
-              <figure>63 Birch Street</figure>
-              <div class="info">
-                <div class="type">
-                  <i><img src="/static/base_template_user/assets/icons/restaurants-bars/restaurants/cafetaria.png" alt=""></i>
-                  <span>Cafeteria</span>
-                </div>
-                <div class="rating" data-rating="4"></div>
-              </div>
+          <div class="item" style="margin-bottom:20px; cursor:pointer;">
+            <div class="detail_header_img center-cropped img-center feature_image" style="background-image: url(/static/img/background/FESTAS1-2.jpg);" style="width:100%"></div><!--
+            --><div class="feature_wrapper">
+                <h3 style="margin:0">Benny’s Cafeteria</h3>
+                <span style="color:white" class="stars" data-rating="3.8" data-num-stars="5"></span>
+
             </div>
           </div>
         </div>
@@ -112,6 +100,7 @@ JavaScript imports
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="/static/CUSTOM_JS/user/home.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
 <script>
   function initAutocomplete() {
     //----autocomplete start

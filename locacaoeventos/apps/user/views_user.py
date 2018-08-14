@@ -294,10 +294,12 @@ class ConfirmEmail(View):
             seller = SellerProfile.objects.get(user=user)
             token = request.GET["token"]
             if seller.key == token:
-                context["token_valid"] = True
                 seller.is_active = True
                 seller.save()
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
+                context = base_context(request.user)
+                context["token_valid"] = True
             else:
                 context["token_valid"] = False
         else:
@@ -306,6 +308,7 @@ class ConfirmEmail(View):
             if buyer.key == token:
                 buyer.is_active = True
                 buyer.save()
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
                 context = base_context(request.user)
                 context["token_valid"] = True
