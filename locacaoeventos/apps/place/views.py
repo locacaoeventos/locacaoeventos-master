@@ -53,7 +53,10 @@ class ListPlace(View):
 
         # Left Panel
         context["place_additional_information"] = get_additional_information_important_attributes()
-        context["capacity"] = request.GET.get("capacity")
+        capacity = request.GET.get("capacity")
+        if capacity == "":
+            capacity = 500
+        context["capacity"] = capacity
         context["address"] = request.GET.get("place")
         try:
             print(get_latlng_with_address_str(context["address"]))

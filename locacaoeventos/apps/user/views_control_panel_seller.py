@@ -144,6 +144,9 @@ class AvailabilityPlace(View):
         return render(request, "control_panel/seller_place_availability.html", context)
 
 
+
+
+
 class UnavailabilityCreateAjax(View):
     def get(self, request, *args, **kwargs):
         data = {}
@@ -200,51 +203,6 @@ class UnavailabilityCreateAjax(View):
             )
             data["place_pk"] = place_pk
         return JsonResponse(data)
-
-
-
-
-class UnavailabilityDetailAjax(View):
-    def get(self, request, *args, **kwargs):
-        utc = pytz.UTC
-        data = {}
-
-        pk = request.GET.get("pk")
-        this_day = request.GET.get("this_day")
-        datetime_this_day = datetime.datetime.strptime(this_day, '%Y-%m-%d').replace(tzinfo=utc)
-        place = Place.objects.get(pk=pk)
-
-        unavailability_this_day = []
-        for unavailability in PlaceUnavailability.objects.filter(place=place):
-            begin = unavailability.datetime_begin
-            begin_str = begin.strftime("%Hh%M")
-            end = unavailability.datetime_end
-            end_str = end.strftime("%Hh%M")
-            if begin > datetime_this_day and end < datetime_this_day: # theres an exception
-                if begin < datetime_this_day and end > datetime_this_day:
-                    unavailability_this_day.append("00h00-23h59")
-
-                elif begin < datetime_this_day:
-                    unavailability_this_day.append("00h00-" + end_str)
-
-                elif end > datetime_this_day:
-                    unavailability_this_day.append(begin_str + "-23h59")
-
-                else:
-                    unavailability_this_day.append(begin_str + "-" + end_str)
-            else:
-                unavailability_this_day.append(begin_str + "-" + end_str)
-
-        unavailability_this_day = list(set(unavailability_this_day))
-        data["unavailability_this_day"] = unavailability_this_day
-        this_day = datetime_this_day.strftime('%d')
-        this_month = datetime_this_day.strftime('%b')
-        this_year = datetime_this_day.strftime('%Y')
-        data["this_day"] = this_day + " de " + this_month + " de " + this_year
-        print(data)
-        return JsonResponse(data)
-
-
 
 
 

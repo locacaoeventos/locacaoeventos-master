@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 
 from locacaoeventos.apps.user.views_user import *
+from locacaoeventos.apps.user.views_calendar import *
 from locacaoeventos.apps.user.views_control_panel_seller import *
 from locacaoeventos.apps.user.views_control_panel_buyer import *
 from locacaoeventos.apps.user.views_admin import *
@@ -36,6 +37,7 @@ urlpatterns = [
     # General
     url(r'^calendarioexemplo/$', CalendarExample.as_view()),
     url(r'^ajax/calendario/$', CalendarAjax.as_view()),
+    url(r'^ajax/calendario-input/$', CalendarInputAjax.as_view()),
     url(r'^ajax/familymember/create-delete/$', CreateDeleteFamilyMemberAjax.as_view()),
     
 

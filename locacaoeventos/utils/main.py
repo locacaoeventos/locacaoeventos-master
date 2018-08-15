@@ -1,6 +1,7 @@
 from locacaoeventos.apps.user.sellerprofile.models import SellerProfile
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 
+
 def base_context(user):
 	context = {}
 	if not user.is_anonymous:

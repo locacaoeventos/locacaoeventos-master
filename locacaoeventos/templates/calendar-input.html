@@ -1,11 +1,17 @@
 {% load general_tags %}
 {% load i18n %}
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         CSS                                               -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
 <style>
   * {box-sizing: border-box;}
   ul {list-style-type: none;}
   body {font-family: Verdana, sans-serif; margin:0;}
   .calendar_wrapper {
     position:relative;
+    display:none;
   }
   .month {
       padding: 5px 4px 5px 4px;
@@ -28,12 +34,12 @@
 
   .month .prev {
       float: left;
-      padding-top: 10px;
+      padding-top: 0px;
   }
 
   .month .next {
       float: right;
-      padding-top: 10px;
+      padding-top: 0px;
   }
   .next a, .prev a {
     color: 484848;
@@ -41,7 +47,7 @@
   }
   .weekdays {
       margin: 0;
-      padding: 10px 0;
+      padding: 2px 0;
       background-color: white;
   }
 
@@ -54,9 +60,10 @@
   }
 
   .days {
-      padding: 10px 0;
+      padding: 5px 0;
       background: white;
       margin: 0;
+      text-align:left;
   }
 
   .days li {
@@ -64,7 +71,7 @@
       display: inline-block;
       width: 14.28%;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 3px;
       font-size:12px;
       color: #777;
   }
@@ -73,6 +80,9 @@
       padding: 5px;
       background: #4fa7bc;
       color: white !important
+  }
+  .calendar_class_day {
+    cursor:pointer;
   }
   .pass {
     text-decoration: line-through
@@ -119,44 +129,86 @@
   .day_description_unavailability {
     font-weight:bold;
   }
-
 </style>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         Body                                              -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
 <div class="calendar_wrapper">
-  <div class="day_description">
-    <span style="float:right; cursor:pointer;">&times;</span><br>
-    <span id="day_description_date"></span>
-    <div class="separador-10"> </div>
-    Ocupado:
-    <div class="separador-10"> </div>
-    <div class="unavailability_container">
-    </div>
-  </div>
   <div class="month">      
     <ul>
       <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
       <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
-      <li>
-        <span id="month_ajax">{{month}}</span><br>
-        <span id="year_ajax">{{year}}</span>
+      <li class="calendar_class">
+        <span class="calendar_class" id="month_ajax"></span> - <span class="calendar_class" id="year_ajax"></span>
       </li>
     </ul>
   </div>
 
   <ul class="weekdays">
-    <li>Seg</li><!--
-    --><li>Ter</li><!--
-    --><li>Qua</li><!--
-    --><li>Qui</li><!--
-    --><li>Sex</li><!--
-    --><li>Sab</li><!--
-    --><li>Dom</li>
+    <li class="calendar_class">Seg</li><!--
+    --><li class="calendar_class">Ter</li><!--
+    --><li class="calendar_class">Qua</li><!--
+    --><li class="calendar_class">Qui</li><!--
+    --><li class="calendar_class">Sex</li><!--
+    --><li class="calendar_class">Sab</li><!--
+    --><li class="calendar_class">Dom</li>
   </ul>
 
   <ul class="days" id="days_ajax">  
-    {% for day in list_month %}{{day|safe}}{% endfor %}
   </ul>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         JQuery                                            -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
@@ -165,13 +217,14 @@
   // Load Calendar
   $(document).ready(function(){
     $.ajax({
-      url: "/usuario/ajax/calendario/",
+      url: "/usuario/ajax/calendario-input/",
       dataType: 'json',
       data: {
         "pk": "{{place_pk}}"
       },
       success: function (data) {
         $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("datemonth", data["month_int"])
         $("#year_ajax").html(data["year"])
         str_days = ""
         for(i=0;i<data["list_month"].length;i++){
@@ -205,7 +258,7 @@
     }
 
     $.ajax({
-      url: "/usuario/ajax/calendario/",
+      url: "/usuario/ajax/calendario-input/",
       dataType: 'json',
       data: {
         "pk": "{{place_pk}}",
@@ -213,6 +266,7 @@
       },
       success: function (data) {
         $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("datemonth", data["month_int"])
         $("#year_ajax").html(data["year"])
         str_days = ""
         for(i=0;i<data["list_month"].length;i++){
@@ -231,30 +285,38 @@
     })
   })
 
-  // Detail Unavailability
-  $(document).on("click", function(event){
-    if(String(event.target.className) == "occupied") {
-      var this_day = event.target.getAttribute("date_occupied")
-      $(".unavailability_container").html()
-      $.ajax({
-        url: "/usuario/ajax/unavailability/detail/",
-        dataType: 'json',
-        data: {
-          "pk": "{{place_pk}}",
-          "this_day": this_day
-        },
-        success: function (data) {
-          $("#day_description_date").html(data.this_day)
-          $(".day_description").fadeIn(300)
-          div_str = ""
-          for(i=0;i<data.unavailability_this_day.length;i++){
-            div_str += '<span class="day_description_unavailability">' + data.unavailability_this_day[i] + '</span><br>'
-          } 
-          $(".unavailability_container").html(div_str)
+
+  // Hide or Show Calendar
+  $(document).click(function(event){
+    var class_clicked = $(event.target).attr('class')
+    var display_style = $(".calendar_wrapper").css("display")
+    if(class_clicked != undefined) {
+      if(class_clicked!="move" && class_clicked!="move" && class_clicked!="month" && class_clicked!="weekdays" && class_clicked!="days" && class_clicked!="pass" && class_clicked!="active" && class_clicked!="calendar_class" && class_clicked!="calendar_class_day"){
+        if(class_clicked.indexOf("calendar_input")>=0){
+          if(display_style!="block") {
+            $(".calendar_wrapper").slideToggle()
+          }
+        } else if(display_style=="block") {
+          $(".calendar_wrapper").slideToggle()
         }
-      })
-    } else if(String(event.target.className) != "day_description") {
-      $(".day_description").fadeOut(300)
+      }
+    } else if(display_style=="block") {
+          $(".calendar_wrapper").slideToggle()
     }
+  })
+
+  $(document).on("click", ".calendar_class_day", function(){
+    var today_day = $(this).children(1).html()
+    if(today_day==undefined) {
+      today_day = $(this).html()
+    }
+    today_day = String(today_day)
+
+    var today_month = String($("#month_ajax").attr("datemonth"))
+    if(today_month.length==1) {
+      today_month = "0" + today_month
+    }
+    var today_year = String($("#year_ajax").html())
+    $(".calendar_input").val(today_day + " / " + today_month + " / " + today_year)
   })
 </script>

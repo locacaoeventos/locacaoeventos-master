@@ -1,10 +1,85 @@
+/* ===========================================
+Panel Left 
+=========================================== */
 .pnleft_label {
 	color:#747474; 
 	font-weight:bold;
+	width:100%;
+	display:inline-block;
+	padding-right:10px;
 }
-
+.pnleft_card {
+	background-color: #f4f4f4;
+	padding:15px 10px 25px 10px;
+	border-radius:10px;
+}
 .pnleft_input {
-	margin-left:15px; 
 	font-size:12px !important;
 	font-weight:normal;
 }
+
+/* Toggler */
+.toggle_pnleft {
+	position:relative;
+	top:50px;
+	display:inline-block;
+}
+.toggle_pnleft_sign {
+	position:absolute;
+	top:13px;
+	right:25px;
+	font-size:24px !important;
+	color:#4fa7bc;
+	font-weight:bold;
+}
+@media(max-width:767px){
+	.toggle_menu {
+		display:none;
+	}
+	.toggle_button {
+		display:block;
+	}
+}
+@media(min-width:768px){
+	.toggle_menu {
+		display:block;
+	}
+	.toggle_button {
+		display:none;
+	}
+}
+/* Capacity */
+.noUi-connect {
+	background:#4fa7bc !important;
+}
+.noUi-connects {
+	border-radius:0 !important;
+}
+
+
+
+
+
+
+
+/* ===========================================
+List Items
+=========================================== */
+.place_list_line {
+	width:80%;
+	margin:center;
+	margin-top:0;
+	margin-bottom:0;
+}
+.place_description_wrapper {
+	display:table;
+	width:100%;
+	padding-top:0px;
+}
+.place_description_cell {
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+	width:100%;
+}
+

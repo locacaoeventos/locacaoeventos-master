@@ -6,6 +6,7 @@ CSS imports
 ===================================================== -->
 <link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css" type="text/css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
 
 
 
@@ -32,7 +33,8 @@ Body code
             <div id="home_advanced" class="row" style="display:none">
               <div class="col-md-6">
                 <label class="form_label" for="date">Data da Comemoração</label>
-                <input type="text" class="form-control" id="date_id" name="date" autocomplete="off">
+                <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off">
+                {% include "calendar-input.html" %}
                 <div class="separador-10"> </div>
               </div>
               <div class="col-md-6">

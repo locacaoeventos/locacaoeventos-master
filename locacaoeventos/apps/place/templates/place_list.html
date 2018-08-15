@@ -2,49 +2,113 @@
 {% load general_tags %}
 {% block page_title %}Buffets{% endblock page_title %}
 {% block content %}
+
+
+<!-- ==================================================================================================== -->
+<!--                                                                                                      -->
+<!--                                               CSS                                                    -->
+<!--                                                                                                      -->
+<!-- ==================================================================================================== -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_list.css" type="text/css">
+<link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+
+
+
+
+
+
+
 
 
 <section class="container">
   <div class="row">
-    <!--Sidebar-->
+
+
+
+
+
+<!-- ==================================================================================================== -->
+<!--                                                                                                      -->
+<!--                                          Panel Left                                                  -->
+<!--                                                                                                      -->
+<!-- ==================================================================================================== -->
     <div class="col-md-3 col-sm-4">
       <aside id="sidebar">
-        <section>
-          <label class="pnleft_label">Localização
-          <div class="separador-5"> </div>
-          <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px"/>
+        <div class="toggle_buyer_seller_base toggle_button" style="cursor:pointer">
+          <div class="separador-20"> </div>
+          <h1 style="color:#4fa7bc">OPÇÕES</h1>
+          <span class="toggle_pnleft_sign">+</span>
+          <div class="separador-15"> </div>
+        </div>
+
+        <section class="toggle_menu">
+          <h1 style="color:#747474; text-transform:none">Refine sua Busca</h1>
+          <div class="separador-10"> </div>
+
+          <div class="pnleft_card">
+            <label class="pnleft_label">Localização</label>
+            <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px"/>
+          </div>
           <div class="separador-20"> </div>
 
-          <label class="pnleft_label">Data
-          <div class="separador-5"> </div>
-          <input class="pnleft_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center"/>
+          <div class="pnleft_card">
+            <label class="pnleft_label">Data do Evento</label>
+            <div class="center_element">
+              <input class="pnleft_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center; max-width:150px" id="date_id"/>
+            </div>
+          </div>
           <div class="separador-20"> </div>
 
-          <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
-          <div class="separador-5"> </div>
-          <div id="search_price" class="pnleft_input" style="width:75%; border-radius:0"></div>
-          <div class="separador-20"> </div>
-
-
-
-          <label class="pnleft_label">Outros</label>
-          <div class="pnleft_input">
-            {% for info in place_additional_information %}
-              <div class="checkbox" style="margin-bottom:13px;"><label><input type="checkbox" name="features[]" value="1">{{info.label}}</label></div>
-            {% endfor %}
+          <div class="pnleft_card">
+            <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
+            <div class="separador-5"> </div>
+            <div id="search_capacity" class="pnleft_input" style="width:100%; border-radius:0"></div>
+          </div>
+          <div class="separador-10"> </div>
+          
+          <div class="pnleft_card" style="background-color:white">
+            <label class="pnleft_label">Informações Adicionais</label>
+            <div class="separador-10"> </div>
+            <div class="pnleft_input">
+              {% for info in place_additional_information %}
+                <label class="container_checkbox" style="display:inline;">
+                  <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+                  <span class="checkmark_checkbox"></span>
+                </label>
+                <label style="display:inline; color:#747474">{{info.label}}</label><br>
+              {% endfor %}
+            </div>
           </div>
         </section>
+        <hr class="line" style="margin:0; -webkit-box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.05)"/>
       </aside>
-      <!-- /#sidebar-->
     </div>
-    <!-- /.col-md-3-->
-    <!--end Sidebar-->
-    <!--Content-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================================================================================================== -->
+<!--                                                                                                      -->
+<!--                                           List Item                                                  -->
+<!--                                                                                                      -->
+<!-- ==================================================================================================== -->
     <div class="col-md-9 col-sm-8">
       <div class="separador-20"> </div>
-      <figure class="filter clearfix">
+      <figure class="filter clearfix" style="margin:0">
         <div class="pull-right">
           <aside class="sorting">
             <span>Ordenar</span>
@@ -58,48 +122,44 @@
                 <option value="1">Nome - Z-A</option>
               </select>
             </div>
-            <!-- /.form-group -->
           </aside>
         </div>
       </figure>
-      <!--Listing Grid-->
-      <nav>
+      <section class="block equal-height" style="padding-top:0">
         <ul class="pagination pull-left">
           {% if place_list.has_previous %}
-              <li><a href="?page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
+              <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
           {% endif %}
           {% for page_number in place_list.paginator.place_range %}
               {% if page_number == place_list.number %}
-                <li class="active"><a href="?page={{page_number}}">{{page_number}}</a></li>
+                <li class="active"><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{page_number}}">{{page_number}}</a></li>
               {% else %}
-                <li><a href="?page={{page_number}}">{{page_number}}</a></li>
+                <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{page_number}}">{{page_number}}</a></li>
               {% endif %}
           {% endfor %}
           {% if place_list.has_next %}
-            <li><a href="?page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
+            <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
           {% endif %}
         </ul>
-      </nav><br><br><br>
-
-      <section class="block equal-height">
-
-
-
+        <div class="separador-70"> </div>
         <div class="row">
 
 
+
+
+
+
           {% for place in place_list %}
+            <!-- ====================================================== -->
+            <!--                       Each Item                        -->
+            <!-- ====================================================== -->
             <div class="col-md-4 col-sm-6">
-              <div class="item " style="border:1px solid #f9f9f9">
+              <div class="item " style="border:1px solid #f9f9f9; margin-bottom:30px">
                 <div class="image">
-                  <!--
-                    <div class="quick-view" data-toggle="modal" data-target="#modal-bar"><i class="fa fa-eye"></i><span>Quick View</span></div>
-                    -->
                   <a href="/buffet/detalhar/?pk={{place.pk}}">
                     <div class="overlay">
                       <div class="inner">
                         <div class="content">
-                          <!--<h4>Descrição</h4>-->
                           <p>{{place.description}}</p>
                         </div>
                       </div>
@@ -108,49 +168,65 @@
                       <span title="Area"><img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup></span>
                       <span title="Capacity"><img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas</span>
                     </div>
-                    <div class="icon">
-                      <i class="fa fa-thumbs-up"></i>
+                    <div class="icon" style="background-color:#f74234">
+                      <img src="/static/img/123festas/logo_white_squared.png">
                     </div>
-
-                    <img src="{% if place.photo %}/media/{{place.photo}}{% else %}/static/base_template_user/assets/img/blog-1.jpg{% endif %}" alt="">
+                    <div class="img-center center-cropped" style="background-image: url(/media/{{place.photo}}); height:200px; width:100%; vertical-align:bottom;"></div>
                   </a>
                 </div>
-                <div class="wrapper">
-                  <a href="/buffet/detalhar/?pk={{place.pk}}">
-                    <h3>{{place.name}}</h3>
-                  </a>
-                  <figure>{{place.address}}</figure>
-                  <div class="info">
+                <div class="wrapper place_description_wrapper">
+                  <div class="place_description_cell" style="height:60px; padding:0 !important">
+                    <a href="/buffet/detalhar/?pk={{place.pk}}">
+                      <h3>{{place.name}}</h3>
+                    </a>
+                    <figure>{{place.address}}</figure>
+                  </div>
+                </div>
+                <hr class="line place_list_line">
+                <div class="place_description_wrapper">
+                  <div class="place_description_cell" style="height:50px;"/>
                     {% if place.review_list.review_rates == "None" %}
+                      <div class="separador-5"> </div>
                       <figure style="font-size:12px">Não há avaliações</figure>
                     {% else %}
-                      <div class="rating" data-rating="4"></div>
+                      <div class="center_element" style="display:block">
+                        <div class="rating" data-rating="4" style="margin-bottom:-5px; display:inline-block"></div>
+                      </div>
                     {% endif %}
-                    <div class="separador-5"> </div>
                     {% if place.placeprice_min %}
                       <h4 style="display:inline">$ </h4><h3 style="display:inline">{{place.placeprice_min}}</h3>
                     {% else %}
                       <figure style="display:inline; font-size:12px">Consulte o preço</figure>
                     {% endif %}
-
                   </div>
                 </div>
               </div>
-              <!-- /.item-->
             </div>
           {% endfor %}
         </div>
-
-
-
-
-
-
-
-        <!--/.row-->
       </section>
-      <!--end Listing Grid-->
-      <!--Pagination-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================================================================================================== -->
+<!--                                                                                                      -->
+<!--                                            End Page                                                  -->
+<!--                                                                                                      -->
+<!-- ==================================================================================================== -->
       <nav>
         <ul class="pagination pull-right">
           {% if place_list.has_previous %}
@@ -168,43 +244,94 @@
           {% endif %}
         </ul>
       </nav>        
-      <!--end Pagination-->
+
+
+
+
+
+
+
+
     </div>
   </div>
 </section>
 
 
 
-{% endblock content %}
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ==================================================================================================== -->
+<!--                                                                                                      -->
+<!--                                          Javascript                                                  -->
+<!--                                                                                                      -->
+<!-- ==================================================================================================== -->
 {% block jquery %}
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  {% block page_js %}
-    <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
-  {% endblock page_js %}
+  <script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+{% endblock jquery %}
 
   <script>
-    $( function() {
-      var capacity = {{capacity}}
-      $("#search_price").slider({
-        min: 0,
-        max: 5000,
-        value: capacity,
-        create: function() {
-        },
-        slide: function( event, ui ) {
-          val = ui.value
-          $("#capacity_val").html(val)
 
-        }
-      });
+
+    // ==================== 
+    // LEFT PANEL
+    // ==================== 
+    // Toggler
+    $(".toggle_buyer_seller_base").click(function() {
+      if($(".toggle_pnleft_sign").html() == "+"){
+        $(".toggle_pnleft_sign").html("&minus;")
+      } else {
+        $(".toggle_pnleft_sign").html("+")
+      }
+      $(".toggle_menu").slideToggle();
     });
-  </script>
-  <script>
+
+    // Date
+    $(document).ready(function(){
+      $('#date_id').mask("00 / 00 / 0000",{placeholder:"dd / mm / aaaa"});
+    })
+    
+    // Capacity
+    // source: https://refreshless.com/nouislider/
+    var slider_page = document.getElementById('search_capacity');
+    var start_value = parseInt("{{capacity}}")
+    noUiSlider.create(slider_page, {
+      start: [start_value],
+      range: {
+        'min': [0],
+        'max': [5000]
+      },
+      step: 1,
+      connect: [true, false],
+    });
+    slider_page.noUiSlider.on("slide", function(values){
+      $("#capacity_val").html(parseInt(values))
+    })
+
+
+
+
+
+
+
     function initAutocomplete() {
       //----autocomplete start
       var input = (document.getElementById('place_id'));
@@ -224,5 +351,11 @@
 {% block js_maps %}
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
 {% endblock js_maps %}
-{% endblock jquery %}
+
+{% block js_select_customize %}
+{% endblock js_select_customize %}
+{% endblock content %}
+
+
+
 
