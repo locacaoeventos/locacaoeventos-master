@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_list.css" type="text/css">
 <link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
 
 
 
@@ -56,10 +57,12 @@
           <div class="pnleft_card">
             <label class="pnleft_label">Data do Evento</label>
             <div class="center_element">
-              <input class="pnleft_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center; max-width:150px" id="date_id"/>
+              <input class="pnleft_input calendar_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center;" id="date_id"/>
+              {% include "calendar-input.html" %}
             </div>
           </div>
           <div class="separador-20"> </div>
+
 
           <div class="pnleft_card">
             <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
@@ -68,6 +71,8 @@
           </div>
           <div class="separador-10"> </div>
           
+
+
           <div class="pnleft_card" style="background-color:white">
             <label class="pnleft_label">Informações Adicionais</label>
             <div class="separador-10"> </div>
