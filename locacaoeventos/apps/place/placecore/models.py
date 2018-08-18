@@ -101,3 +101,5 @@ class PhotoProvisory(models.Model):
 class PlacePhoto(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     photo = models.OneToOneField(PhotoProvisory, on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.place.name)
