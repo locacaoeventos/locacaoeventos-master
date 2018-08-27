@@ -15,7 +15,7 @@ Body code
   <section class="container">
       <header>
           <ul class="nav nav-pills">
-              <li><a href="/usuario/anunciante/conta/"><h1 class="page-title">{{profile.name}}</h1></a></li>
+              <li id="control_panel_username"><a href="/usuario/anunciante/conta/"><h1 class="page-title">{{profile.name}}</h1></a></li>
               <li class="active"><a><h1 class="page-title">{% block panel_title %}{% endblock panel_title %}</h1></a></li>
           </ul>
       </header>
@@ -49,6 +49,13 @@ Body code
                           <a href="/usuario/buffets-agendados/">
                               <i class="icon_menu fa fa-book"></i>
                               <span>Buffets Agendados</span>
+                          </a>
+                      </li>
+                      
+                      <li {% if panel_type == "chat" %}class="active"{% endif %}>
+                          <a href="#">
+                              <i class="icon_menu fa fa-envelope"></i>
+                              <span>Mensagens</span>
                           </a>
                       </li>
 

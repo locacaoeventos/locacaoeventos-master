@@ -37,8 +37,6 @@ class ListPlace(View):
                     placeprice_min = placeprice.value
             if placeprice_min != 9999999999999:
                 place_dic["placeprice_min"] = "%.2f"%placeprice_min
-
-
             place_dic["review_list"] = get_reviews_from_place(place)
             place_list.append(place_dic)
 

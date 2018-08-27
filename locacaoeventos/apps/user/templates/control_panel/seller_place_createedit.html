@@ -81,10 +81,11 @@
                 {% endfor %}
               </div>
             {% endif %}
-
-
           </div>
           <div class="separador-20"> </div>
+
+
+
 
         {% elif field.name == "decoration" %}
           <div class="form-group medium">
@@ -143,9 +144,6 @@
               <br>
             </div>
           </div>
-
-
-
           {% if field.errors %}
             <div class="error_message" style="display:block">
               {% for error in field.errors %}
@@ -153,7 +151,6 @@
               {% endfor %}
             </div>
           {% endif %}
-
           <div class="separador-30"> </div>
 
 
@@ -163,8 +160,8 @@
 
         {% elif field.name == "name" or field.name == "description" or field.name == "video" or field.name == "address" %}
           <div class="form-group medium">
-            <label for="title">{{ field.label }}</label>
-            {{ field }}
+            <label for="title">{{field.label}}</label>
+            {{field}}
           </div>
           {% if field.errors %}
             <div class="error_message" style="display:block">
@@ -173,7 +170,6 @@
               {% endfor %}
             </div>
           {% endif %}
-
           <div class="separador-15"> </div>
 
 
@@ -182,10 +178,15 @@
           <label class="btn btn-default btn-file" id="menu_click">
               Carregar Arquivo{{field}} <!-- hidden field -->
           </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
+          <div class="separador-30"> </div>
+
 
       {% else %}
+        {% if field.name == "alcoholic_drink" %}
+          <label>Informações Adiconais</label>
+        {% endif %}
         {% if not forloop.counter|divisibleby:2 %}
-        <div class="row">
+          <div class="row">
         {% endif %}
           <div class="col-md-6">
             <ul class="list-unstyled checkboxes">
@@ -274,8 +275,6 @@
     var defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(-24.230623, -53.141559),
         new google.maps.LatLng(-20.533727, -44.352497)
-
-
     );
 
     var options = {
@@ -289,7 +288,9 @@
 
 </script>
 
-
+{% block js_maps %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
+{% endblock js_maps %}
 
 
 

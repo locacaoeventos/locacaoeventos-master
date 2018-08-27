@@ -6,16 +6,21 @@
 {% block user_panel_content %}
     <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_availability.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
 
     <section>
         <div class="row">
             <div class="col-md-6">
-                <h2 id="place_pk" pk="{{place_pk}}">{{place.name}}</h2>
+                {% include "calendar.html" %}
+                <div class="separador-20"> </div>
+            </div>
+
+            <div class="col-md-6">
                 <section class="section_availability">
-                    <span class="section_title">Quando seu buffet estará ocupado?</span>
-                    <div class="separador-15"> </div>
+                    <h2 id="place_pk" pk="{{place_pk}}" style="margin-top:0">{{place.name}}</h2>
+                    <span class="section_title">Quando seu buffet estará ocupado?</span><br>
+                    <span class="section_title">(selecione no calendário)</span>
                     <div class="subsection_availability">
-                        <form>
                             <span>Início</span>
                             <div class="separador-3"> </div>
                             <div style="padding-left:5px">
@@ -90,20 +95,20 @@
                             <div class="error_message" id="error_unavailability">EXEMPLO</div>
                             <div class="separador-25"> </div>
                             <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
-                        </form>
                     </div>
                 </section>
             </div>
-            <div class="col-md-6">
-                {% include "calendar.html" %}
-            </div>
+
         </div>
 
     </section>
 
-
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+{% block old_custom_js %}
+{% endblock old_custom_js %}
 <script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_availability.js"></script>
-
 {% block js_select_customize %}{% endblock js_select_customize %}
 
 {% endblock user_panel_content %}

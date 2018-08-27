@@ -6,80 +6,111 @@
 {% block panel_title %}Buffets{% endblock panel_title %}
 
 {% block user_panel_content %}
-    <section class="block listing">
-    	{% for place in place_list %}
-	        <div class="item list" style="border: 1px solid #f9f9f9">
-	            <div class="image">
-	                <div class="quick-view"><i class="fa fa-eye"></i><span>Quick View</span></div>
-	                <a href="/buffet/detalhar/?pk={{place.pk}}">
-	                    <div class="overlay">
-	                        <div class="inner">
-	                            <div class="content">
-	                                <h4>Description</h4>
-	                                <p>{{place.description}}</p>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="item-specific">
-							<span title="Area">
-								<img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup>
-							</span>
-							<span title="Capacity">
-								<img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
-							</span>
-	                    </div>
-	                    <div class="icon">
-	                        <i class="fa fa-thumbs-up"></i>
-	                    </div>
-	                    <img src="/media/{{place.photo}}" alt="">
-	                </a>
-	            </div>
-	            <div class="wrapper">
-	                <a href="/buffet/detalhar/?pk={{place.pk}}"><h3>{{place.name}}</h3></a>
-	                <figure>
-						Data do Evento: 
-						{% language 'pt-br' %}
-							{{place.datetime_begin}}
-						{% endlanguage %}
-	                </figure>
-	                <hr class="line" style=""/>
-	                <div class="info" style="border:none; margin-top:5px;">
-	                	{% if place.review %}
-	                            <span>
-	                            	<span style="color:#4fa7bc">
-	                            		{{place.review.rate_infraestructure}} <i style="color:#4fa7bc" class="fa fa-star"></i>
-	                            	</span>Infraestrutura
-	                            </span><br>
-	                            <span>
-	                            	<span style="color:#4fa7bc">
-		                            	{{place.review.rate_rides}} <i style="color:#4fa7bc" class="fa fa-star"></i>
-	                            	</span>Brinquedos
-	                            </span><br>
-	                            <span>
-	                            	<span style="color:#4fa7bc">
-		                            	{{place.review.rate_cost_benefit}} <i style="color:#4fa7bc" class="fa fa-star"></i>
-	                            	</span>Custo-Benefício
-	                            </span><br>
-	                            <span>
-	                            	<span style="color:#4fa7bc">
-		                            	{{place.review.rate_attendance}} <i style="color:#4fa7bc" class="fa fa-star"></i>
-	                            	</span>Atendimento
-	                            </span><br>
-	                            <span>
-	                            	<span style="color:#4fa7bc">
-		                            	{{place.review.rate_children_opinion}}  <i style="color:#4fa7bc" class="fa fa-star"></i>
-	                            	</span>Opinião das Crianças
-	                            </span>
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/buyer_buffet_bought.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
 
-					    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px;" class="btn btn-default pull-right">Editar</a>
-	                	{% else %}
-					    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px;" class="btn btn-default pull-right">Avalie o Estabelecimento</a>
-	                	{% endif %}
-	                </div>
-	            </div>
-	        </div>
-	    {% endfor %}
+    <section class="listing">
+        {% for place in place_list %}
+            <div class="item list" style="border: 1px solid #f9f9f9">
+                <div class="image" style="padding:0 !important">
+                    <div class="quick-view"><i class="fa fa-eye"></i><span>Visualizar</span></div>
+                    <a href="/buffet/detalhar/?pk={{place.pk}}">
+                        <div class="item-specific">
+                            <span title="Area">
+                                <img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup>
+                            </span>
+                            <span title="Capacity">
+                                <img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
+                            </span>
+                        </div>
+
+						<div class="center-cropped img-center" style="background-image: url(/media/{{place.photo}}); height:150px; width:100%" alt=""></div>
+                    </a>
+                </div>
+                <div class="wrapper wrapper_buffetbought" style="vertical-align:top">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <a href="/buffet/detalhar/?pk={{place.pk}}">
+                                <h3>{{place.name}}</h3>
+                            </a>
+                            <figure>{{place.address}}</figure>
+
+			                <figure>
+								Data do Evento: 
+								{% language 'pt-br' %}
+									{{place.datetime_begin}}
+								{% endlanguage %}
+			                </figure>
+
+			                <figure>
+								Valor pago: R$ {{place.price}}
+			                </figure>
+
+
+                        </div>
+                            <div class="col-md-5" style="padding-right:0">
+						    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px;{% if not place.has_passed %} background-color:#f74235{% endif %}" class="btn btn-default pull-right" {% if not place.has_passed %}disabled{% endif %}>
+						    		{% if place.has_passed %}
+						    			{% if place.review_rates != "None" %}
+						    				Editar Avaliação
+						    			{% else %}
+						    				Avalie o Estabelecimento
+						    			{% endif %}
+						    		{% else %}
+						    			O Evento está chegando!
+						    		{% endif %}
+						    	</a>
+                            </div>
+                    </div>
+                    <div class="info">
+                        <div class="separador-10"> </div>
+                        <!-- ========================= Block Avaliação ========================= -->
+                        {% if place.review_rates != "None" %}
+                            <figure class="pull-left" style="vertical-align:top; font-weight:bold">
+                                Avaliação ({{place.review_rates.rate_average}})
+                            </figure>
+                            <span class="review_plussign pull-right" place-pk="{{place.pk}}" style="color:#4fa7bc">+</span>
+                            <div class="separador-25"> </div>
+                            <div class="review_wrapper" id="review_wrapper_{{place.pk}}">
+                                <figure style="display:inline-block;">
+                                    Infraestrutura ({{place.review_rates.rate_infraestructure}})
+                                </figure>
+                                <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
+                                <div class="separador-10"> </div>
+                                <figure style="display:inline-block;">
+                                    Brinquedos ({{place.review_rates.rate_rides}})
+                                </figure>
+                                <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_rides}}" data-num-stars="5"></span>
+                                <div class="separador-10"> </div>
+                                <figure style="display:inline-block;">
+                                    Custo-Benefício ({{place.review_rates.rate_cost_benefit}})
+                                </figure>
+                                <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
+                                <div class="separador-10"> </div>
+                                <figure style="display:inline-block;">
+                                    Atendimento ({{place.review_rates.rate_attendance}})
+                                </figure>
+                                <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_attendance}}" data-num-stars="5"></span>
+                                <div class="separador-10"> </div>
+                                <figure style="display:inline-block;">
+                                    Opinião das Crianças ({{place.review_rates.rate_children_opinion}})
+                                </figure>
+                                <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
+                                <div class="separador-50"> </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </section>
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/buyer_buffet_bought.js"></script>
+{% block old_custom_js %}{% endblock old_custom_js %}
 
 
 {% endblock user_panel_content %}

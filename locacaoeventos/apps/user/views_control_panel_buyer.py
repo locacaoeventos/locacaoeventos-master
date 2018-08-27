@@ -1,3 +1,5 @@
+import datetime, pytz
+
 from django.views.generic import View
 from django.shortcuts import render, redirect
 
@@ -101,24 +103,25 @@ class ListPlaceBought(View):
                 "description": place.description,
                 "address": place.address,
                 "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
-
-                "datetime_begin": reservation.unavailability.datetime_begin,
             }
 
+            reviews_dic = get_reviews_from_place(place)
+            place_dic["review_list"] = reviews_dic["review_list"]
+            place_dic["review_rates"] = reviews_dic["review_rates"]
+            
+            place_dic["price"] = "%.2f"%reservation.placeprice.value
 
-            placreview = PlaceReview.objects.filter(reservation=reservation, buyerprofile=buyer)
-            if placreview.exists():
-                placreview = placreview[0]
-                review = {
-                    "exists": True,
-                    "rate_infraestructure": placreview.rate_infraestructure,
-                    "rate_rides": placreview.rate_rides,
-                    "rate_cost_benefit": placreview.rate_cost_benefit,
-                    "rate_attendance": placreview.rate_attendance,
-                    "rate_children_opinion": placreview.rate_children_opinion,
-                }
-                place_dic["review"] = review
+            datetime_begin = reservation.unavailability.datetime_begin
+            utc = pytz.UTC
+            if datetime_begin.replace(tzinfo=utc) < datetime.datetime.now().replace(tzinfo=utc):
+                place_dic["has_passed"] = True
+            place_dic["datetime_begin"] = reservation.unavailability.datetime_begin
+
+
+
+
             place_list.append(place_dic)
+        place_list = sorted(place_list, key=lambda k: k['datetime_begin'], reverse=True) 
         context["place_list"] = place_list
 
         return render(request, "control_panel/buyer_buffet_bought.html", context)
@@ -151,57 +154,23 @@ class ListPlaceBought(View):
 class ReviewPlaceBought(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        context["panel_type"] = "buffet_review"
-        buyerprofile = context["buyer"]
+        context["panel_type"] = "listbought"
+        context["basemenu"] = "listbought"
+
         reservation_pk = request.GET.get("reservation")
-        reservation = PlaceReservation.objects.get(pk=reservation_pk)
-        place = reservation.unavailability.place
-        context["place"] = {
-            "pk": place.pk,
-            "reservation_pk": reservation.pk,
-            "name": place.name,
-            "capacity": int(place.capacity),
-            "size": int(place.size),
-            "description": place.description,
-            "address": place.address,
-            "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
-            "datetime_begin": reservation.unavailability.datetime_begin,
-            "datetime_end": reservation.unavailability.datetime_end,
-        }
-
-        review = PlaceReview.objects.filter(reservation=reservation, buyerprofile=buyerprofile)
-        if review.exists():
-            review = review[0]
-            context["review"] = {
-                "comment": review.comment,
-                "rate_infraestructure": review.rate_infraestructure,
-                "rate_rides": review.rate_rides,
-                "rate_cost_benefit": review.rate_cost_benefit,
-                "rate_attendance": review.rate_attendance,
-                "rate_children_opinion": review.rate_children_opinion,
-            }
-        if request.GET.get("just_reviewed", None):
-            context["just_reviewed"] = True
-
-
-
-        reviews_dic = get_reviews_from_place(place)
-        context["review_list"] = reviews_dic["review_list"]
-        context["review_rates"] = reviews_dic["review_rates"]
-
-
-
-
-
+        context_review_placebought(reservation_pk, context, request)
 
         return render(request, "control_panel/buyer_buffet_review.html", context)
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)
-        reservation_pk = request.POST.get("reservation_pk")
+        context["panel_type"] = "listbought"
+        context["basemenu"] = "listbought"
 
-        reservation = PlaceReservation.objects.get(pk=reservation_pk)
+        reservation_pk = request.POST.get("reservation_pk")
+        context_review_placebought(reservation_pk, context, request)
         buyerprofile = context["buyer"]
 
+        reservation = PlaceReservation.objects.get(pk=reservation_pk)
         comment = request.POST.get("comment")
         rate_infraestructure = request.POST.get("rate_infraestructure")
         rate_rides = request.POST.get("rate_rides")
@@ -235,4 +204,45 @@ class ReviewPlaceBought(View):
 
 
         return redirect("/usuario/avaliar-buffet/?reservation=" + reservation_pk + "&just_reviewed=True")
+
+
+
+
+
+def context_review_placebought(reservation_pk, context, request):
+    buyerprofile = context["buyer"]
+    reservation = PlaceReservation.objects.get(pk=reservation_pk)
+    place = reservation.unavailability.place
+    context["place"] = {
+        "pk": place.pk,
+        "reservation_pk": reservation.pk,
+        "name": place.name,
+        "capacity": int(place.capacity),
+        "size": int(place.size),
+        "description": place.description,
+        "address": place.address,
+        "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
+        "datetime_begin": reservation.unavailability.datetime_begin,
+        "datetime_end": reservation.unavailability.datetime_end,
+    }
+
+    review = PlaceReview.objects.filter(reservation=reservation, buyerprofile=buyerprofile)
+    if review.exists():
+        review = review[0]
+        context["review"] = {
+            "comment": review.comment,
+            "rate_infraestructure": review.rate_infraestructure,
+            "rate_rides": review.rate_rides,
+            "rate_cost_benefit": review.rate_cost_benefit,
+            "rate_attendance": review.rate_attendance,
+            "rate_children_opinion": review.rate_children_opinion,
+        }
+    if request.GET.get("just_reviewed", None):
+        context["just_reviewed"] = True
+
+
+
+    reviews_dic = get_reviews_from_place(place)
+    context["review_list"] = reviews_dic["review_list"]
+    context["review_rates"] = reviews_dic["review_rates"]
 

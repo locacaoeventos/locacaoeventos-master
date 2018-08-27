@@ -17,8 +17,6 @@
 	.option_container_buyer_seller {
 		display:none;
 	}
-
-
 }
 .toggle_sign {
 	position:absolute;
@@ -26,4 +24,16 @@
 	right:10px;
 	font-size:24px !important;
 	color:#4fa7bc
+}
+
+
+
+/* Username and page title */
+@media(max-width:766px){
+	#control_panel_username {
+		display:none;
+	}
+}
+.page-title {
+	padding-bottom:5px !important;
 }

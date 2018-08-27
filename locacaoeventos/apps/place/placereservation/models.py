@@ -21,6 +21,7 @@ class PlaceUnavailability(models.Model):
 
 
 class PlaceReservation(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
     placeprice = models.ForeignKey(PlacePrice, on_delete=models.CASCADE)
     buyer = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
     unavailability= models.OneToOneField(PlaceUnavailability, on_delete=models.CASCADE)

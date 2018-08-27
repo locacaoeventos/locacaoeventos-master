@@ -1,21 +1,18 @@
-.wrapper_placeowned {
+.wrapper_buffetbought {
 	padding-bottom:0 !important;
 }
 @media(min-width:768px) {
-	.wrapper_placeowned {
+	.wrapper_buffetbought {
 		padding-top:10px !important;
 	}
 }
 @media(max-width:767px) {
-	.wrapper_placeowned {
+	.wrapper_buffetbought {
 		padding:10px 10px 0 10px !important;
 	}
 }
 
 
-.listowned_button {
-	font-size:12px;
-}
 .review_plussign {
 	cursor:pointer;
 	font-weight:bold;

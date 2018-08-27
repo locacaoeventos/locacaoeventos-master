@@ -54,26 +54,23 @@ $("#send_new_unavailability").click(function(e){
 	  				$("#error_unavailability").html(data.error)
 					$("#error_unavailability").css("display", "block")
 	  			}
-
-
 	  		}
 	  	})
-
-
-
-
-		
-
 	}
-
-
 })
+
+
+
+
+
+
+
+// Same day
 $("#unavailability_sameday").click(function(){
 	var unavailability_begin = []
 	$(".begin").each(function(){
 		unavailability_begin.push($(this).val())
 	})
-
 	var i = 0
 	$(".end").each(function(){
 		$(this).val(unavailability_begin[i])
@@ -81,3 +78,32 @@ $("#unavailability_sameday").click(function(){
 	})
 
 })
+
+
+
+
+
+
+
+// Select day
+$(document).on("click", ".day_select", function() {
+	var day = String($(this).html())
+	if(day.length==1) {
+		day = "0" + day
+	}
+	$("#id_day_begin").val(day)
+
+	var month = String($("#month_ajax").attr("month"))
+	if(month.length==1) {
+		month = "0" + month
+	}
+	$("#id_month_begin").val(month)
+
+	var year = $("#year_ajax").html()
+	$("#id_year_begin").val(year)
+
+})
+
+
+
+

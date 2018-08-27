@@ -10,7 +10,7 @@ from .forms_place import *
 from .forms_user import *
 
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PhotoProvisory
-from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability, PlaceReservation
+from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability, PlaceReservation, PlacePrice
 
 # =========================================================
 # EDIT SELLER
@@ -91,6 +91,14 @@ class ListPlaceOwned(View):
             reviews_dic = get_reviews_from_place(place)
             place_dic["review_list"] = reviews_dic["review_list"]
             place_dic["review_rates"] = reviews_dic["review_rates"]
+
+            count_reservation = 0
+            total_profit = 0
+            for placereservation in PlaceReservation.objects.filter(place=place):
+                total_profit += placereservation.placeprice.value
+                count_reservation += 1
+            place_dic["total_profit"] = "%.2f"%total_profit
+            place_dic["count_reservation"] = count_reservation
         place_list = sorted(place_list, key=lambda k: k['creation']) 
         context["place_list"] = place_list
         return render(request, "control_panel/seller_place_list_owned.html", context)
@@ -131,6 +139,8 @@ class AvailabilityPlace(View):
         context["place_pk"] = place_pk
         place = Place.objects.get(pk=place_pk)
         context["place"] = place
+
+        # Unavailabilites
         unavailabilities = []
         unavailabilities_byus = []
         for placeunavailability in PlaceUnavailability.objects.filter(place=place):
@@ -141,6 +151,9 @@ class AvailabilityPlace(View):
                 unavailabilities.append(placeunavailability)
         context["unavailabilities"] = unavailabilities
         context["unavailabilities_byus"] = unavailabilities_byus
+
+
+
         return render(request, "control_panel/seller_place_availability.html", context)
 
 

@@ -53,7 +53,7 @@ class CalendarAjax(View):
 
         # Correct size of month
         count_day = calendar.monthrange(today_year, today_month)
-        list_month = ["<li>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
+        list_month = ["<li class='day_select'>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
         
 
         # Seting colors and markers
@@ -63,7 +63,7 @@ class CalendarAjax(View):
             # We are in the current month
             if today_day:
                 if day == today_day:
-                    list_month[i] = "<li><span class='active'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li><span class='active day_select'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
                     list_month[i] = "<li><span class='pass'>" + str(i+1) + "</span></li>"
                 elif day > today_day and this_day in place_unavailability_list:
@@ -91,6 +91,7 @@ class CalendarAjax(View):
         data = {
             "today": today,
             "month": translate_month(calendar.month_name[today_month]),
+            "month_int": today_month,
             "year": today_year,
             "list_month": list_month,
         }

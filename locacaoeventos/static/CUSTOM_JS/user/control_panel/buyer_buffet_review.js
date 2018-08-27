@@ -54,14 +54,38 @@ function rating(element){
         // Checking if all the inputs are filled
         $("#send_button").prop("disabled", false)
         $(".rate").each(function(){
-            console.log($(this).val())
             if($(this).val() == ""){
                 $("#send_button").prop("disabled", true)
             }
         })
+
+        check_average()
+
         return false;
     });
 
 }
 
+$("#comment_id").keyup(function(){
+    console.log("a")
+    check_average()
+})
 
+// Calculate average
+function check_average() {
+    console.log("b")
+    var rate_sum = 0
+    $(".rate").each(function(){
+        rate_sum += parseInt($(this).attr("value"))
+    })
+    rate_average = rate_sum/5
+    if(rate_average<3.5 && $("#comment_id").val() == "") {
+        if($("#comment_obligatory").css("display")=="none") {
+            $("#comment_obligatory").fadeIn(500)   
+            $("#send_button").attr("disabled", "disabled")            
+        }
+    } else {
+        $("#comment_obligatory").fadeOut(500)    
+        $("#send_button").removeAttr("disabled") 
+    }  
+}

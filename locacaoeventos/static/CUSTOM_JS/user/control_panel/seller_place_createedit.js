@@ -6,10 +6,13 @@ $(document).ready(function(){
 	var re = new RegExp(find, 'g'); // Yup, we have to do this to replace all
 	var current_input = $("#id_children_rides").val().replace(/\'/g, "\"").replace(re, "").replace("[", "{").replace("]", "}")
 	current_input = current_input.replace("[", "").replace("]", "")
-	if(current_input=="{}"){current_input=""}
 	$("#id_children_rides").val(current_input)
 	var children_rides_current = $("#id_children_rides").val().replace(/\'/g, "\"").replace(re, "").replace("{", "").replace("}", "")
-	var children_rides_list = children_rides_current.split(",")
+	if(children_rides_current==""){
+		var children_rides_list = []	
+	} else {
+		var children_rides_list = children_rides_current.split(",")
+	}
 	var div_str = ""
 	for(i=0;i<children_rides_list.length;i++) {
 		div_str += '<div class="add_option" input_val="' + children_rides_list[i] + '" type="children_rides">'
@@ -25,7 +28,11 @@ $(document).ready(function(){
 	if(current_input=="{}"){current_input=""}
 	$("#id_decoration").val(current_input)
 	var decoration_current = $("#id_decoration").val().replace(/\'/g, "\"").replace(re, "").replace("{", "").replace("}", "")
-	var decoration_list = decoration_current.split(",")
+	if(decoration_current==""){
+		var decoration_list = []	
+	} else {
+		var decoration_list = decoration_current.split(",")
+	}
 	var div_str = ""
 	for(i=0;i<decoration_list.length;i++) {
 		div_str += '<div class="add_option" input_val="' + decoration_list[i] + '" type="decoration">'
@@ -50,7 +57,7 @@ $(document).ready(function(){
   				photo = data.photos[i]
 		        div_str += '<div class="upload_image">'
 		        div_str +=    '<span class="x_option x_option_upload" pk="' + photo.pk + '">&times;</span>'
-		        div_str +=    '<img class="img_gallery" src="/media/' + photo.url + '">'
+		        div_str +=    '<img class="img_gallery center-cropped img-center" src="/media/' + photo.url + '">'
 		        div_str += '</div>'
   			}
   			if(data.photos.length>0) {

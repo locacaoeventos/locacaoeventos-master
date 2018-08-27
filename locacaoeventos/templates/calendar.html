@@ -74,6 +74,9 @@
       background: #4fa7bc;
       color: white !important
   }
+  .day_select {
+    cursor:pointer;
+  }
   .pass {
     text-decoration: line-through
 
@@ -172,6 +175,7 @@
       },
       success: function (data) {
         $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("month", data["month_int"])
         $("#year_ajax").html(data["year"])
         str_days = ""
         for(i=0;i<data["list_month"].length;i++){
@@ -213,6 +217,7 @@
       },
       success: function (data) {
         $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("month", data["month_int"])
         $("#year_ajax").html(data["year"])
         str_days = ""
         for(i=0;i<data["list_month"].length;i++){
