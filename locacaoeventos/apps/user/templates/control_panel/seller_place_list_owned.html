@@ -16,7 +16,7 @@
             <div class="item list" style="border: 1px solid #f9f9f9">
                 <div class="image" style="padding:0 !important">
                     <div class="quick-view"><i class="fa fa-eye"></i><span>Visualizar</span></div>
-                    <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %}>
+                    <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %} style="line-height:0">
                         <div class="item-specific">
                             <span title="Area">
                                 <img src="/static/base_template_user/assets/img/area.png" alt="">{{place.size|only_integer}}m<sup>2</sup>
