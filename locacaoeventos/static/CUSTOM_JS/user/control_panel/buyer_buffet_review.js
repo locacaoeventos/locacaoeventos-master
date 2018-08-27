@@ -67,19 +67,17 @@ function rating(element){
 }
 
 $("#comment_id").keyup(function(){
-    console.log("a")
     check_average()
 })
 
 // Calculate average
 function check_average() {
-    console.log("b")
     var rate_sum = 0
     $(".rate").each(function(){
         rate_sum += parseInt($(this).attr("value"))
     })
     rate_average = rate_sum/5
-    if(rate_average<3.5 && $("#comment_id").val() == "") {
+    if(rate_average<2.5 && $("#comment_id").val() == "") {
         if($("#comment_obligatory").css("display")=="none") {
             $("#comment_obligatory").fadeIn(500)   
             $("#send_button").attr("disabled", "disabled")            
