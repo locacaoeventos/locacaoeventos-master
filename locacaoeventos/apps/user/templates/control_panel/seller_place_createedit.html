@@ -23,41 +23,25 @@
     <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
       <input class="hidden" name="place_pk" id="id_place_pk" value="{{place_pk}}"/>
       {% for field in form %}
-        {% if forloop.counter == 4 or forloop.counter == 5 %}
-          {% if forloop.counter == 4 %}
-            <div class="form-group medium">
-              <div class="row">
-                <div class="col-md-6 col-sm-6">
-                  <div class="form-group">
-                    <label>Capacidade</label>
-                    {{field}}
-                  </div>
-                  {% if field.errors %}
-                    <div class="error_message" style="display:block">
-                      {% for error in field.errors %}
-                        {{error}}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
+        {% if field.name == "capacity" %}
+          <div class="form-group medium">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Capacidade</label>
+                  {{field}}
                 </div>
-          {% elif forloop.counter == 5 %}
-                <div class="col-md-6 col-sm-6">
-                  <div class="form-group">
-                    <label>Tamanho</label>
-                    {{field}}
+                {% if field.errors %}
+                  <div class="error_message" style="display:block">
+                    {% for error in field.errors %}
+                      {{error}}
+                    {% endfor %}
                   </div>
-                  {% if field.errors %}
-                    <div class="error_message" style="display:block">
-                      {% for error in field.errors %}
-                        {{error}}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
+                {% endif %}
               </div>
             </div>
-            <div class="separador-5"> </div>
-          {% endif %}
+          </div>
+          <div class="separador-5"> </div>
         {% elif field.name == "children_rides" %}
           <div class="form-group medium">
             {{field.as_hidden}}<!-- hidden field -->

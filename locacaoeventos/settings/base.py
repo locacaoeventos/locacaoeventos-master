@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'locacaoeventos.apps.place.placereview',
 
     'locacaoeventos.apps.user',
+    'locacaoeventos.apps.user.chat',
     'locacaoeventos.apps.user.buyerprofile',
     'locacaoeventos.apps.user.sellerprofile',
 ]

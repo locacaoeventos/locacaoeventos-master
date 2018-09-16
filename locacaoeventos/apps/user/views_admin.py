@@ -7,24 +7,37 @@ import xlwt
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.excel import *
 
+from locacaoeventos.apps.place.placecore.models import Place
 
 class AdminHome(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+        verify_place = False
+        for place in Place.objects.all():
+            if not place.is_authorized_by_admin:
+                verify_place = True
+        context["verify_place"] = verify_place
         return render(request, "admin/home.html", context)
 
 
-class AdminLocacao(View):
+class AdminListBuffet(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        return render(request, "admin/home.html", context)
+        context["place_list"] = Place.objects.all()
+        return render(request, "admin/buffet_list.html", context)
+
+class AdminVerifyBuffet(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["place_list"] = Place.objects.all()
+        return render(request, "admin/buffet_verify.html", context)
 
 
 
 class UploadBuffet(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        return render(request, "admin/upload_buffet.html", context)
+        return render(request, "admin/buffet_upload.html", context)
 
 
 

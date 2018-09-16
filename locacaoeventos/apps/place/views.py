@@ -44,8 +44,10 @@ class ListPlace(View):
         paginator = Paginator(place_list, 6)
         page = request.GET.get('page')
         places = paginator.get_page(page)
+        
         places.paginator.place_range = [item+1 for item in range(places.paginator.num_pages)]
         context["place_list"] = places
+        context["place_list_dict"] = places.paginator.__dict__
         # END Paginator
 
 
@@ -97,6 +99,8 @@ class DetailPlace(View):
         context["review_rates"] = reviews_dic["review_rates"]
 
         context["price_list"] = PlacePrice.objects.filter(place=place_obj)
+
+
         return render(request, "place_detail.html", context)
 
 

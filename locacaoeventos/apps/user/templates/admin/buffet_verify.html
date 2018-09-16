@@ -1,0 +1,101 @@
+{% extends "admin/_base_admin.html" %}
+{% block page_title %}Verificar Buffet{% endblock page_title %}
+
+
+{% block content %}
+<style>
+  .center {
+    text-align:center !important
+  }
+  .authorized {
+    padding:3px 0;
+    color:white;
+    border-radius:10px;
+    font-size:10px !important;
+    width:110px;
+    display:inline-block !important;
+    cursor:pointer;
+  }
+  .not_authorized {
+    background-color:#98d000 !important;
+  }
+  .is_authorized {
+    background-color:#f74335 !important;
+  }
+</style>
+<h4>Verificar Buffet</h4>
+
+<div class="separador-20"> </div>
+<div class="adv-table">
+  <table  class="display table table-bordered table-striped" id="dynamic-table">
+    <thead>
+      <tr>
+        <th class="center">Nome</th>
+        <th class="center">pk</th>
+        <th class="center">Data de Entrada</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in place_list %}
+        <tr id="row_{{place.pk}}">
+          <td><a href="/buffet/detalhar/?pk={{place.pk}}">{{place.name}}</a></td>
+          <td class="center">pk={{place.pk}}</td>
+          <td class="center">{{place.creation}}</td>
+          <td class="center">
+            <div pk="{{place.pk}}" id="place_{{place.pk}}" class="center authorized {% if place.is_authorized_by_admin %}not_authorized{% else %}is_authorized{% endif %}" is-authorized="{{place.is_authorized_by_admin}}">
+              {% if place.is_authorized_by_admin %}Autorizado{% else %}Não Autorizado{% endif %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<div class="separador-100"> </div>
+
+
+
+
+
+
+
+
+
+{% block jquery %}<script src="/static/base_template_admin/js/jquery-1.10.2.js"></script>{% endblock jquery %}
+<script>
+  $(document).on("click", ".authorized", function(){
+    var pk = $(this).attr("pk")
+    var is_authorized = $(this).attr("is-authorized")
+    $.ajax({
+      url: "/administrador/verificar-buffet-ajax/",
+      dataType: 'json',
+      data: {
+        "pk": pk,
+        "is_authorized": is_authorized,
+      },
+      success: function (data) {
+        var this_element = $("#place_" + String(data.pk))
+        var is_authorized_by_admin = data.is_authorized
+        if(is_authorized_by_admin==true){
+          this_element.html("Autorizado")
+          this_element.attr("is-authorized", "True")
+          this_element.removeClass("is_authorized")
+          this_element.addClass("not_authorized")
+        } else {
+          this_element.html("Não Autorizado")
+          this_element.attr("is-authorized", "False")
+          this_element.removeClass("not_authorized")
+          this_element.addClass("is_authorized")
+        }
+      }
+    })  
+  })
+
+
+</script>
+
+
+{% endblock content %}

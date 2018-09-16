@@ -266,10 +266,192 @@ Body code
 
 
 
+  {% block jquery %}
+      <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+  {% endblock jquery %}
+
+
+
+  <!-- CHAT begin -->
+  {% if user_type == "buyer" %}
+    <style>
+      #chat_container {
+        position:fixed; 
+        bottom:0;
+        right:0;
+        border-right:none;
+        z-index:999999999999999999999;
+        border-radius:15px 15px 0 0;
+        width:280px;
+
+      }
+      #chat_opener {
+        border-radius:13px 13px 0 0;
+        background-color:#50a7bc;
+        padding:13px 10px;
+        font-size:16px;
+        color:white;
+        cursor:pointer
+      }
+      #chat_conversation {
+        background-color: white;
+        padding:10px;
+        max-height:400px;
+        overflow-y:scroll;
+        padding-bottom:45px;
+        display:none;
+      }
+      .chat_message {
+        padding:7px 0;
+      }
+      .chat_photo {
+        width:35px; 
+        display:inline-block;
+        padding-top:2px;
+      }
+      .chat_text_container {
+        width:205px;
+        display:inline-block;
+        vertical-align:top
+      }
+      .chat_author {
+        color:#011a5d;
+        font-weight:bold;
+        font-size:13px;
+      }
+      #message_text {
+        padding-left:5px;
+        vertical-align:middle;
+      }
+      #message_send {
+        width:20%;
+        display:inline-block;
+        background-color:#50a7bc;
+        text-align:center;
+        height:40px;
+        vertical-align:top;
+        cursor:pointer;
+      }
+    </style>
+    <div id="chat_container">
+      <div id="chat_opener"><i class="fa fa-comment"></i>&nbsp;&nbsp;Conversa</div>
+      <div id="chat_conversation">
+
+        <div id="chat_conversation_container">
+        </div>
+
+        <div style="width:100%; position:fixed; bottom:0; right:0; width:280px;">
+          <input id="message_text" placeholder="Digite..." style="width:80%; display:inline-block; height:40px;"><!--
+          --><div id="message_send">
+            <div style="height:100%; vertical-align:middle; line-height:40px; color:white;">
+              <i class="fa fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
 
 
 
 
+      </div>
+    </div>
+
+
+
+
+
+<script>
+    // =========================================
+    // CHAT
+    // =========================================
+
+    $(document).ready(function(){
+
+      setInterval(function(){
+        var objDiv = document.getElementById("chat_conversation")
+        objDiv.scrollTop = objDiv.scrollHeight
+      }, 1100)
+
+      $("#chat_opener").click(function(){
+        $("#chat_conversation").slideToggle()
+      })      
+      var place_pk = {{place_pk}}
+
+
+      // ==============================
+      // Get Messages
+      // ==============================
+      setInterval(function(){
+        $.ajax({
+          url: "/usuario/chat/get-place-detail/",
+          dataType: 'json',
+          data: {
+            "place_pk":place_pk,
+          },
+          success: function (data) {
+            if(data.messages.length>0) {
+              var div_str = ''
+              for(i=0;i<data.messages.length;i++) {
+                var message = data.messages[i]
+                div_str += '<div class="chat_message">'
+                div_str +=   '<div class="chat_photo">'
+                div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:30px; height:30px; border-radius:50%"></div>'
+                div_str +=   '</div>'
+                div_str +=   '<div class="chat_text_container">'
+                div_str +=     '<div class="chat_author">'
+                div_str +=       message.from
+                div_str +=     '</div>'
+                div_str +=     '<div class="chat_text">'
+                for(j=0;j<message.message_text.length;j++){
+                  div_str += message.message_text[j] + "<br>"
+                }
+                div_str +=     '</div>'
+                div_str +=   '</div>'
+                div_str += '</div>'
+              }
+              $("#chat_conversation_container").html(div_str)              
+            } else {
+              $("#chat_conversation_container").html("Envie uma mensagem!<br><br>")              
+            }
+
+          }
+        })
+      }, 1000);
+
+
+      // ==============================
+      // Send Messages
+      // ==============================
+      $("#message_send").click(function(){
+        $.ajax({
+          url: "/usuario/chat/contact/",
+          dataType: 'json',
+          data: {
+            "place_pk":place_pk,
+            "message_text":$("#message_text").val(),
+          },
+          success: function (data) {
+            $("#message_text").val("")
+          }
+        })
+      })
+
+
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  {% endif %}
+  <!-- CHAT end -->
 
 
 
@@ -288,9 +470,6 @@ Body code
 <!-- =====================================================
 JavaScript imports
 ===================================================== -->
-{% block jquery %}
-    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
-{% endblock jquery %}
 <script type="text/javascript" src="/static/CUSTOM_JS/place/place_detail.js"></script>
 <script type="text/javascript" src="/static/CUSTOM_JS/core/review.js"></script>
 {% block old_custom_js %}{% endblock old_custom_js %}
@@ -345,6 +524,7 @@ JavaScript imports
 
 
   }
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&callback=initMap"> </script>
 {% block js_maps %}{% endblock js_maps %}

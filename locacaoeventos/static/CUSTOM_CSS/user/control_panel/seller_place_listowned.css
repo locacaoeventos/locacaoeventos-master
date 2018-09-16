@@ -1,14 +1,15 @@
 .wrapper_placeowned {
-	padding-bottom:0 !important;
+	position:relative
 }
 @media(min-width:768px) {
 	.wrapper_placeowned {
 		padding-top:10px !important;
+		padding-bottom:0 !important;
 	}
 }
 @media(max-width:767px) {
 	.wrapper_placeowned {
-		padding:10px 10px 0 10px !important;
+		padding:10px 10px 60px 10px !important;
 	}
 }
 

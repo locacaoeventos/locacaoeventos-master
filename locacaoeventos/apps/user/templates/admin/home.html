@@ -3,4 +3,12 @@
 {% block content %}
 	<h4>Painel do Administrador do Sistema de Informação <strong>Locação Eventos</strong>.</h4>
 	<h5>Selecione os itens ao lado para efetuar alguma ação.</h5>
+	<hr class="line">
+	<div class="separador-10"> </div>
+	{% if verify_place %}
+		<h5 style="font-weight:bold; color:red">
+			Existem novos buffets cadastrados!<br>
+			<a href="/administrador/verificar-buffet/" style="color:red; text-decoration:underline">Clique aqui para verificá-los</a>
+		</h5>
+	{% endif %}
 {% endblock content %}

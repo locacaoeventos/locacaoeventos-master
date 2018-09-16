@@ -1,8 +1,12 @@
 import googlemaps
 import math
 
+from locacaoeventos.utils.general import get_dic_by_key
+
 from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability
 from locacaoeventos.apps.place.placereview.models import PlaceReview
+from locacaoeventos.apps.place.placecore.models import PlacePhoto
+from locacaoeventos.apps.user.chat.models import Message
 
 def get_reviews_from_place(place):
     response = {}
@@ -120,3 +124,55 @@ def get_additional_information_important_attributes():
             "label": "Fraldário"
         },
     ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def get_messages_to_chat(user, is_seller):
+    messages_from = [{
+        "user_contacted": message.user_to,
+        "text": message.text,
+        "datetime": message.datetime,
+        "place": message.place,
+        } for message in Message.objects.filter(user_from=user)
+    ]
+    messages_to = [{
+        "user_contacted": message.user_from,
+        "text": message.text,
+        "datetime": message.datetime,
+        "place": message.place,
+        } for message in Message.objects.filter(user_to=user)
+    ]
+
+    messages = messages_from + messages_to
+    if is_seller == True:
+        for message in messages:
+            message["photo"] = BuyerProfile.objects.get(user=message["user_contacted"]).photo
+
+    else:
+        for message in messages:
+            message["photo"] = PlacePhoto.objects.filter(place=message["place"], is_first=True)[0].photo
+
+        
+    messages = sorted(messages, key=lambda k: k['datetime'], reverse=True) 
+    return messages

@@ -38,7 +38,7 @@ html {overflow: hidden; overflow-y: auto;}
 Body code
 ===================================================== -->
 
-<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top" style="">
+<body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top" style="position:relative">
 <!-- Outer Wrapper-->
 <div id="outer-wrapper" style="">
   <!-- Inner Wrapper -->
@@ -60,7 +60,7 @@ Body code
               {% if user.is_superuser %}
                 <li><a href="/administrador/home/">Administrador</a></li>
               {% endif %}
-              <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/sobre-nos/">Sobre Nós</a></li>
+              <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
               {% if user.is_authenticated %}
                 {% if buyer %}
                   <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
@@ -182,10 +182,9 @@ Body code
             <div class="separador-30"> </div>
             <div class="row">
               <div class="col-xs-6">
-                  <a style="color:white" href="#">Sobre Nós</a><br>
-                  <a style="color:white" href="#">Fale Conosco</a><br>
-                  <a style="color:white" href="#">FAQ</a><br>
-                  <a style="color:white" href="#">Cadastre seu Buffet</a><br>
+                  <a style="color:white" href="/usuario/sobre-nos">Sobre Nós</a><br>
+                  <a style="color:white" href="/usuario/fale-conosco">Fale Conosco</a><br>
+                  <a style="color:white" href="/usuario/faq">FAQ</a><br>
                   <a style="color:white" href="#">Mapa</a><br>
               </div>
               <div class="col-xs-6">
@@ -193,13 +192,13 @@ Body code
                   Acesse nossas redes sociais<br>
                   <div style="display: table; float:right">
                     <div class="base_social_button_wrapper">
+                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-2px;right:14px"><i class="fa fa-facebook"></i></a></div>
+                    </div><!--
+                    --><div class="base_social_button_wrapper">
+                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-3px;right:8px"><i class="fa fa-instagram"></i></a></div>
+                    </div><!--
+                    --><div class="base_social_button_wrapper">
                       <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-2px;right:7px"><i class="fa fa-twitter"></i></a></div>
-                    </div><!--
-                    --><div class="base_social_button_wrapper">
-                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:0px;right:13px"><i class="fa fa-facebook"></i></a></div>
-                    </div><!--
-                    --><div class="base_social_button_wrapper">
-                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-1px;right:8px"><i class="fa fa-pinterest"></i></a></div>
                     </div>
                   </div>
                 </div>

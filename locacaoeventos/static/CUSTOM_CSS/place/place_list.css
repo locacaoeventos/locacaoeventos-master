@@ -65,6 +65,48 @@ Panel Left
 /* ===========================================
 List Items
 =========================================== */
+.place_item {
+	position:relative;
+	margin-bottom:30px;
+	height:320px;
+	cursor:pointer;
+}
+.overlay {
+	background-color:rgba(0,0,0,0.5);
+	height:200px;
+	border-radius:5px;
+	color:white;
+	padding:40px 5px 0 5px;
+	display:none;
+	position:absolute;
+	width:100%;
+
+}
+.content {
+    overflow: hidden;
+    display:-webkit-box;
+    height:60px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  	
+}
+.place_featured {
+	background-color:#f74234;
+	position:absolute;
+	top:-5px;
+	right:5px;
+	width:35px;
+	height:35px;
+	z-index:2;
+}
+.place_image {
+	height:200px;
+	width:100%;
+	vertical-align:bottom;
+	border-radius:5px;
+	position:absolute;
+	top:0;
+	z-index:-1;
+}
 .place_list_line {
 	width:80%;
 	margin:center;
@@ -72,14 +114,37 @@ List Items
 	margin-bottom:0;
 }
 .place_description_wrapper {
-	display:table;
 	width:100%;
-	padding-top:0px;
+	padding-top:20px;
+	position:absolute;
+	top:200px;
 }
 .place_description_cell {
-	display:table-cell;
-	vertical-align:middle;
-	text-align:center;
+	vertical-align:top;
+	text-align:left;
 	width:100%;
 }
+.place_name {
+	font-size:16px;
+	color:#00195c;
+	font-weight:bold;
+	font-family: "Arial", Helvetica;
+}
+.place_address {
+	font-size:14px;
+	color:#383838;
+	font-family: "Arial", Helvetica;
+	font-weight:600;
+	line-height:14px;
+
+}
+.place_price {
+	font-family: "Arial", Helvetica;
+	font-size:12px;
+	color:#383838;
+	display:inline;
+	font-weight:normal;
+	font-weight:bold;
+}
+
 

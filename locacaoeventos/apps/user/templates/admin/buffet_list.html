@@ -1,0 +1,101 @@
+{% extends "admin/_base_admin.html" %}
+{% block page_title %}Listar Buffets{% endblock page_title %}
+
+
+{% block content %}
+<style>
+  .center {
+    text-align:center !important
+  }
+  .banned {
+    padding:3px 0;
+    color:white;
+    border-radius:10px;
+    font-size:10px !important;
+    width:70px;
+    display:inline-block !important;
+    cursor:pointer;
+  }
+  .not_banned {
+    background-color:#98d000 !important;
+  }
+  .is_banned {
+    background-color:#f74335 !important;
+  }
+</style>
+<h4>Buffets Cadastrados</h4>
+
+<div class="separador-20"> </div>
+<div class="adv-table">
+  <table  class="display table table-bordered table-striped" id="dynamic-table">
+    <thead>
+      <tr>
+        <th class="center">Nome</th>
+        <th class="center">PK</th>
+        <th class="center">Dono</th>
+        <th class="center">Endereço</th>
+        <th class="center">Capacidade</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in place_list %}
+        <tr id="row_{{place.pk}}">
+          <td><a href="/buffet/detalhar/?pk={{place.pk}}">{{place.name}}</a></td>
+          <td class="center">pk={{place.pk}}</td>
+          <td>{{place.sellerprofile}}</td>
+          <td>{{place.address}}</td>
+          <td class="center">{{place.capacity}}</td>
+          <td style="text-align:center">
+            <div pk="{{place.pk}}" id="place_{{place.pk}}" class="center banned {% if place.is_active %}not_banned{% else %}is_banned{% endif %}">
+              {% if place.is_active %}Ativo{% else %}Banido{% endif %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<div class="separador-100"> </div>
+
+
+
+
+
+
+
+
+
+{% block jquery %}<script src="/static/base_template_admin/js/jquery-1.10.2.js"></script>{% endblock jquery %}
+<script>
+  $(document).on("click", ".banned", function(){
+    var pk = $(this).attr("pk")
+    $.ajax({
+      url: "/administrador/ban-buffet/",
+      dataType: 'json',
+      data: {
+        "pk": pk,
+      },
+      success: function (data) {
+        var this_element = $("#place_" + String(data.pk))
+        var is_active = data.is_active
+        if(is_active==true){
+          this_element.html("Ativo")
+          this_element.removeClass("is_banned")
+          this_element.addClass("not_banned")
+        } else {
+          this_element.html("Banido")
+          this_element.removeClass("not_banned")
+          this_element.addClass("is_banned")
+        }
+      }
+    })  
+  })
+
+
+</script>
+
+
+{% endblock content %}

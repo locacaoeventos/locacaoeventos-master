@@ -24,12 +24,12 @@ class Place(models.Model):
     description = models.CharField("Descrição", max_length=512)
 
     capacity = models.IntegerField("Capacidade")
-    size = models.FloatField("Tamanho")
     video = models.CharField("Video URL", max_length=128, blank=True)
     children_rides = ArrayField(models.CharField(max_length=200), blank=True)
     decoration = ArrayField(models.CharField(max_length=200), blank=True)
 
     menu = models.FileField('Menu', upload_to='place/menu', blank=True)
+    
     # Auto-Fill
     sellerprofile = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="SellerProfile")
     lat = models.FloatField("Latitude")
@@ -101,5 +101,6 @@ class PhotoProvisory(models.Model):
 class PlacePhoto(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     photo = models.OneToOneField(PhotoProvisory, on_delete=models.CASCADE)
+    is_first = models.BooleanField(default=False)
     def __str__(self):
         return str(self.place.name)

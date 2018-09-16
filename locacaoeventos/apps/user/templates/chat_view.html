@@ -1,0 +1,118 @@
+{% extends template_base %}
+{% block panel_title %}Mensagens{% endblock panel_title %}
+{% block user_panel_content %}
+<style>
+  #chat_container {
+    width:100%;
+    height: 450px;
+    border:1px solid #ebebeb;
+    position:relative;
+  }
+  #send_container {
+    position:absolute;
+    bottom:0;    
+    width:100%;
+    padding-right:40px;
+  }
+  #message_text {
+    width:100%;
+    display:inline-block;
+    height:40px;
+    border-left:none !important;
+    border-bottom:none !important;
+    padding-left:5px;
+
+  }
+  #message_send {
+    background-color: #50a7bc;
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:40px;
+    text-align:center;
+  }
+
+</style>
+
+
+
+
+
+<div id="chat_container">
+  <div id="send_container">
+
+
+
+
+        <div id="chat_conversation_container">
+        </div>
+
+
+
+
+
+
+
+    <input id="message_text" placeholder="Digite...">
+    <div id="message_send">
+      <div style="height:100%; vertical-align:middle; line-height:40px; color:white;">
+        <i class="fa fa-chevron-right"></i>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+
+<script>
+  $(document).ready(function(){
+    var place_pk = {{place_pk}}
+    // setInterval(function(){
+      $.ajax({
+        url: "/usuario/chat/get-visualizar/",
+        dataType: 'json',
+        data: {
+          "place_pk":place_pk,
+        },
+        success: function (data) {
+          if(data.messages.length>0) {
+            var div_str = ''
+            for(i=0;i<data.messages.length;i++) {
+              var message = data.messages[i]
+              div_str += '<div class="chat_message">'
+              div_str +=   '<div class="chat_photo">'
+              div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:30px; height:30px; border-radius:50%"></div>'
+              div_str +=   '</div>'
+              div_str +=   '<div class="chat_text_container">'
+              div_str +=     '<div class="chat_author">'
+              div_str +=       message.from
+              div_str +=     '</div>'
+              div_str +=     '<div class="chat_text">'
+              for(j=0;j<message.message_text.length;j++){
+                div_str += message.message_text[j] + "<br>"
+              }
+              div_str +=     '</div>'
+              div_str +=   '</div>'
+              div_str += '</div>'
+            }
+            $("#chat_conversation_container").html(div_str)              
+          } else {
+            $("#chat_conversation_container").html("Envie uma mensagem!<br><br>")              
+          }
+
+        }
+      })
+    // }, 1000);
+  })
+</script>
+
+{% endblock user_panel_content %}

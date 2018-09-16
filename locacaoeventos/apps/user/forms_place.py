@@ -15,7 +15,6 @@ class PlaceForm(TOCForm):
     description = fields.CharField(required=True, widget=forms.Textarea, label="Descrição")
 
     capacity = fields.CharField(required=True, widget=forms.NumberInput, label="Capacidade")
-    size = fields.CharField(required=True, widget=forms.NumberInput, label="Tamanho")
 
     video = fields.CharField(
         required=False,

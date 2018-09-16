@@ -26,3 +26,69 @@ First Block
 	top:2px;
 	right:5px
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* Feature Items */
+.feature_image {
+	height:200px;
+	vertical-align:bottom;
+}
+.feature_wrapper {
+	background-color:#94d600;
+	color:white;
+	text-align:center;
+	padding:15px 0 15px 0;
+	vertical-align:top;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* How does it work */
+#seller_row {
+	display:none;
+}
+.howworks_title {
+	font-size:22px;
+	color:#00195c;
+	font-weight:bold;
+}
+.howworks_option {
+	font-weight:bold;
+	padding-bottom:5px;
+	cursor:pointer;
+}
+.buyer {
+	color:#98d000;
+	border-bottom:2px solid #98d000;
+}
+.seller {
+	color:#4fa7bc;
+}
+.howworks_col {
+	padding:0 25px;
+}
+.option_title {
+	font-size:18px;
+	color:#00195c;
+
+}

@@ -7,6 +7,14 @@ from locacaoeventos.utils.main import base_context
 from locacaoeventos.utils.datetime import test_date
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PhotoProvisory
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile, FamilyMember
+
+
+
+
+
+
+
+
 class UploadFile(View):
     def post(self, request):
         form = PhotoProvisoryForm(self.request.POST, self.request.FILES)

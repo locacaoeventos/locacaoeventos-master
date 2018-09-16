@@ -63,7 +63,7 @@
 	background-color:white;
 	cursor:pointer;
 	left: 50%;
-	transform: translateX(-50%);
+	/*transform: translateX(-50%);*/
 
 }
 #upload_frame:hover {

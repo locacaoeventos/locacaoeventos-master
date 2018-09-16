@@ -33,7 +33,8 @@ Footer
 /* Newsletter */
 #base_newsletter_input_container {
 	width:80%; 
-	float:left
+	float:left;
+	z-index:1
 }
 #base_newsletter_input {
 	width: 100%;
