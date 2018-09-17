@@ -8,7 +8,7 @@
                 <!--Content-->
                 <div class="col-md-9">
                     <section>
-                        <form id="contact-form" role="form" method="post" action="?" class="background-color-white">
+                        <form id="contact-form" role="form" method="post" action="?" class="background-color-white">{%csrf_token%}
                             <div class="form-group">
                                 <label for="company-form-email">Email</label>
                                 <input type="email" class="form-control" id="company-form-email" name="company-form-email" required="">
