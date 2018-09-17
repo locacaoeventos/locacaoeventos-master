@@ -8,21 +8,26 @@
                 <!--Content-->
                 <div class="col-md-9">
                     <section>
-                        <form id="contact-form" role="form" method="post" action="?" class="background-color-white">{%csrf_token%}
+
+
+
+                        <form role="form" action="?" method="post">{% csrf_token %}
                             <div class="form-group">
-                                <label for="company-form-email">Email</label>
-                                <input type="email" class="form-control" id="company-form-email" name="company-form-email" required="">
-                            </div>
-                            <div class="form-group">
-                                <label for="company-form-message">Message</label>
-                                <textarea class="form-control" id="company-form-message" name="company-form-message"  rows="3" required=""></textarea>
+                                <label for="faq-form-email">Email</label>
+                                <input type="email" class="form-control" id="faq-form-email" name="faq-form-email" required="">
                             </div>
                             <!-- /.form-group -->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default icon">Send a Message<i class="fa fa-angle-right"></i></button>
+                                <label for="faq-form-question">Question</label>
+                                <textarea class="form-control" id="faq-form-question" name="faq-form-question" name="faq-form-question"  rows="3" required=""></textarea>
+                            </div>
+                            <!-- /.form-group -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Submit Question</button>
                             </div>
                             <!-- /.form-group -->
                         </form>
+                        
                         <!--/#contact-form-->
                     </section>
 
