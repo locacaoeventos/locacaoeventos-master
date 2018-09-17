@@ -48,8 +48,8 @@ class ContactUs(View):
 
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)
-        email = request.POST.get("company-form-email")
-        text = request.POST.get("company-form-question")
+        email = request.POST.get("faq-form-email")
+        text = request.POST.get("faq-form-question")
 
 
         str_titulo = ('Pergunta de USUÁRIO')
