@@ -3,7 +3,7 @@ General
 =============================== */
 .detail_wrapper_title {
 	color:#102766;
-	font-size:28px;
+	font-size:22px;
 	text-transform:none;
 	margin-bottom:24px;
 }
@@ -21,6 +21,7 @@ General
 /* ===============================
 Detail Header
 =============================== */
+
 .place_description {
 	margin-bottom:8px;
 	line-height:14px;
@@ -29,7 +30,8 @@ Detail Header
 .detail_header_title {
 	width:30%;
 	display:inline-block;
-	background-color:#f0f0f0;
+	background-color:#4fa7bc;
+	color:white;
 	vertical-align:top;
 	height:400px;
 	padding:0 50px 0 50px;
@@ -42,7 +44,8 @@ Detail Header
 
 .detail_header_img {
 	height:400px;
-	width:70%;
+	/*width:70%;*/
+	width:100%;
 	display:inline-block;
 	vertical-align:top;
 	position: relative;
@@ -64,9 +67,11 @@ Detail Header
 }
 .detail_description_card {
 	display:inline-block;
-	background-color:#f0f0f0;
+	background-color:#4fa7bc;
+	color:white;
 	line-height:50px;
-	padding:0 5px 0 5px;
+	font-size:13px;
+	padding:0 10px;
 	border-radius:10px;
 	font-weight:bold;
 	margin-bottom:5px;
@@ -103,9 +108,9 @@ Description Header
 	width:100%;
 	text-align:center;
 	cursor:pointer;
-	font-size:20px;
-	color:#7f7f7f;
-	margin-top:-60px;
+	font-size:16px;
+	color:#102766;
+	margin-top:-40px;
 }
 
 

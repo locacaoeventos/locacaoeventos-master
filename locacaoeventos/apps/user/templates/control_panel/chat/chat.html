@@ -36,8 +36,6 @@
     <div style="width:20%; min-height:120px; display:inline-block; text-align:center; padding-top:10px; vertical-align:top; position:relative;">
       <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if message.photo %}/media/{{message.photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
     </div><!--
-
-
     --><div style="width:80%; display:inline-block; color:#102766; position:relative">
       <span class="color_lightgray" style="position:absolute; top:10px; right:10px">{{message.datetime|date:'d/m/y'}}</span>
       <span class="color_black" style="position:absolute; top:10px;">{{message.place.name}}</span>

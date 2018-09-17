@@ -23,7 +23,8 @@
 
 
 
-
+<div id="places_pk" style="display:none">{{places_pk}}</div>
+<div id="places_container"></div>
 <section class="container">
   <div class="row">
 
@@ -50,8 +51,8 @@
           <div class="separador-10"> </div>
 
           <div class="pnleft_card">
-            <label class="pnleft_label">Localização</label>
-            <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px"/>
+            <label class="pnleft_label">Localização ou Nome</label>
+            <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px" placeholder="Localização ou Nome"/>
           </div>
           <div class="separador-20"> </div>
 
@@ -64,12 +65,13 @@
           </div>
           <div class="separador-20"> </div>
 
-
           <div class="pnleft_card">
             <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
             <div class="separador-5"> </div>
             <div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0"></div>
           </div>
+          <div class="separador-20"> </div>
+          <button type="submit" class="btn btn-default" id="pnleft_update">Atualizar</button>
           <div class="separador-10"> </div>
           
 
@@ -80,13 +82,14 @@
             <div class="pnleft_input">
               {% for info in place_additional_information %}
                 <label class="container_checkbox" style="display:inline;">
-                  <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+                  <input type="checkbox" class="additional_information_checkbox" name="{{info.name}}">
                   <span class="checkmark_checkbox"></span>
                 </label>
                 <label style="display:inline; color:#747474">{{info.label}}</label><br>
               {% endfor %}
             </div>
           </div>
+
         </section>
         <hr class="line" style="margin:0; -webkit-box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.05)"/>
       </aside>
@@ -119,13 +122,13 @@
           <aside class="sorting">
             <span>Ordenar</span>
             <div class="form-group">
-              <select class="framed" name="sort">
-                <option value="">Relevância</option>
+              <select class="framed" name="sort" id="order_by">
+                <option value="1">Relevância</option>
                 <option value="2">Preço - Maior</option>
-                <option value="2">Preço - Menor</option>
-                <option value="2">Avaliação - Maior</option>
-                <option value="1">Nome - A-Z</option>
-                <option value="1">Nome - Z-A</option>
+                <option value="3">Preço - Menor</option>
+                <option value="4">Avaliação - Maior</option>
+                <option value="5">Nome - A-Z</option>
+                <option value="6">Nome - Z-A</option>
               </select>
             </div>
           </aside>
@@ -205,7 +208,6 @@
                         <span style="font-size:12px; color:#888888">{{place.review_list.review_rates.n_review}} Avaliações</span>
                       </div>
                     {% endif %}
-
                   </div>
                 </div>
               </div>
@@ -336,24 +338,114 @@
     })
 
 
+    $("#pnleft_update").click(function(){
+      var search = $("#place_id").val()
+      var date = $("#date_id").val()
+      var capacity = $("#capacity_val").html()
+      $.ajax({
+        url: "/buffet/ajax/get/",
+        dataType: 'json',
+        data: {
+          search:search,
+          date:date,
+          capacity:capacity,
+        },
+        success: function (data) {
+          console.log(data)
+        }
+      })
+    })
+
+    $(".additional_information_checkbox").on("change", function(){
+      if($(this).attr("checked")=="checked"){
+        $(this).removeAttr("checked")
+      } else {
+        $(this).attr("checked", "checked")
+      }
+      var pnleft = get_pnleft()
+      console.log(pnleft)
+      $.ajax({
+        url: "/buffet/ajax/get-additional-information/",
+        dataType: 'json',
+        data: {
+          "search":pnleft["search"],
+          "date":pnleft["date"],
+          "capacity":pnleft["capacity"],
+          "additional_informations":String(pnleft["additional_informations"]),
+
+        },
+        success: function (data) {
+          console.log(data)
+        }
+      })
+    })
+
+
+
+    // Get all information from Panel Left
+    function get_pnleft(){
+      var search = $("#place_id").val()
+      var date = $("#date_id").val()
+      var capacity = $("#capacity_val").html()
+
+      var additional_informations = []
+      $(".additional_information_checkbox").each(function(){
+        if($(this).attr("checked")=="checked"){
+          additional_informations.push($(this).attr("name"))
+        }
+      })
+      return {
+        "search":search,
+        "date":date,
+        "capacity":capacity,
+        "additional_informations":additional_informations,
+      }
+    }
 
 
 
 
 
 
-// ==================== 
-// LIST ITEMS
-// ==================== 
-  // Description
-  $(document).on("mouseenter", ".place_item", function(){
-    var pk = $(this).attr("pk")
-    $("#overlay_" + pk).fadeIn(300)
-  })
-  $(document).on("mouseleave", ".place_item", function(){
-    var pk = $(this).attr("pk")
-    $("#overlay_" + pk).fadeOut(300)
-  })
+    // ==================== 
+    // Order By
+    // ====================    
+    $("#order_by").on("change", function(){
+      var current_pks = $("#places_pk").html()
+      $.ajax({
+        url: "/buffet/ajax/order-by/",
+        dataType: 'json',
+        data: {
+          "current_pks":String(current_pks),
+          "option":$("#order_by").val(),
+        },
+        success: function (data) {
+          console.log(data)
+        }
+      })
+    })
+
+
+
+
+
+
+
+
+
+
+    // ==================== 
+    // LIST ITEMS
+    // ==================== 
+    // Description
+    $(document).on("mouseenter", ".place_item", function(){
+      var pk = $(this).attr("pk")
+      $("#overlay_" + pk).fadeIn(300)
+    })
+    $(document).on("mouseleave", ".place_item", function(){
+      var pk = $(this).attr("pk")
+      $("#overlay_" + pk).fadeOut(300)
+    })
 
 
 

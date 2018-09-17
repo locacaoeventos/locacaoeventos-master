@@ -42,6 +42,7 @@ First Block
 .feature_image {
 	height:200px;
 	vertical-align:bottom;
+	border-radius:10px 10px 0 0;
 }
 .feature_wrapper {
 	background-color:#94d600;
@@ -49,6 +50,7 @@ First Block
 	text-align:center;
 	padding:15px 0 15px 0;
 	vertical-align:top;
+	border-radius:0 0 10px 10px;
 }
 
 

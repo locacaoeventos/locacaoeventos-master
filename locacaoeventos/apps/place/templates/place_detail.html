@@ -8,7 +8,7 @@ CSS imports
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
-
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css" type="text/css">
 
 
 
@@ -26,33 +26,13 @@ Body code
 ===================================================== -->
   <!-- DETAIL HEADER begin -->
   <div class="separador-20"> </div>
-  <div class="detail_header_title">
-    <div class="detail_header_title_container">
-      <h1 style="color:#102766">{{place.name}}</h1>
-      {% if review_rates == "None" %}
-         <figure class="pull-left" style="font-weight:bolder; color:#102766">
-             Não há avaliações!
-             <i class="fa fa-star"></i>
-         </figure><br>
-      {% else %}
-        <span style="color:#102766" class="stars" data-rating="{{review_rates.rate_average}}" data-num-stars="5"></span>
-        <span style="color:#102766">
-          &nbsp;({{review_rates.n_review}} {% if review_rates.n_review %}Avaliação{% else %}Avaliações{% endif %})
-        </span>
-      {% endif %}
-      <div class="separador-50"> </div>
-      <div class="place_description">{{place.address}}</div>
-      <div class="place_description">Capacidade do local: {{place_capacity}} pessoas</div>
-      <div class="place_description">Tamanho do local: {{place_size}} m&#178;</div>
+  <div class="detail_header_img center-cropped img-center" style="background-image: url(/media/{{photo_list.0}});">
+    <div class="detail_header_img_mov" style="left:0px; padding-left:10px;">
+      <span class="detail_header_img_round" type="left">&#8249;</span>
     </div>
-  </div><!--
-  --><div class="detail_header_img center-cropped img-center" style="background-image: url(/media/{{photo_list.0}});">
-      <div class="detail_header_img_mov" style="left:0px; padding-left:10px;">
-        <span class="detail_header_img_round" type="left">&#8249;</span>
-      </div>
-      <div class="detail_header_img_mov" style="right:0px; padding-right:10px;">
-        <span class="detail_header_img_round" type="right">&#8250;</span>
-      </div>
+    <div class="detail_header_img_mov" style="right:0px; padding-right:10px;">
+      <span class="detail_header_img_round" type="right">&#8250;</span>
+    </div>
   </div>
   <div class="separador-50"> </div>
   <!-- DETAIL HEADER end -->
@@ -70,12 +50,27 @@ Body code
   <section class="container">
     <div class="row">
       <div class="col-md-3 col-md-push-9">
-        {% for photo in photo_list %}
-          <div class="img-center detail_photo {% if forloop.counter == 1 %}detail_photo_active{% endif %}" style="background-image: url(/media/{{photo}});"></div>
-        {% endfor %}
-        <div class="separador-10"> </div>
+        <div id="buying_flux">
+          <h1 class="detail_wrapper_title" style="text-align:left">Preços</h1>
+          <h1>=========== A FAZER ===========</h1>
+          {% for price in price_list %}
+            {{price}}
+          {% endfor %}
+          <h1>=========== A FAZER ===========</h1>
+        </div>
       </div>
+
+
+
+
+
+
       <div class="col-md-9 col-md-pull-3">
+
+
+
+
+
         <h1 class="detail_wrapper_title">Sobre o Local</h1>
         <div class="detail_description_text justify_text">
           {{place.description}}
@@ -89,7 +84,7 @@ Body code
             {% for info in additionalinformation %}
               {% if not forloop.first %}-->{% endif %}
               <div class="detail_description_card">{{info.name}}</div>
-              {% if not forloop.last %}&nbsp;&nbsp;&nbsp;&nbsp;<!--{% endif %}
+              {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
             {% endfor %}<span style="display:none">--></span>
           </div>
           <div class="separador-80"> </div>
@@ -126,97 +121,135 @@ Body code
             {% endif %}
           </div>
         {% endif %}
+
+
+
+
+        <!-- DETAIL MAP begin -->
+        <div id="map" style="height:300px; width:100%"></div>
+        <div class="separador-80"> </div>
+        <!-- DETAIL MAP end -->
+
+
+
+        <!-- DETAIL REVIEW begin -->
+        {% if review_rates != "None" %}
+          <h1 class="detail_wrapper_title">Avaliações</h1>
+          <div style="width:100%; text-align:center;">
+            {% for review in review_list %}
+              <div class="review_container">
+                <div style="width:20%; display:inline-block; text-align:center; vertical-align:top">
+                  <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if review.buyerprofile.photo %}/media/{{review.buyerprofile.photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
+                </div><!--
+
+
+                --><div style="width:80%; display:inline-block; padding:10px 0 10px; color:#102766">
+                  <span class="review_text_bold">{{review.buyerprofile.name}}</span>
+                  <span style="color:#102766" class="stars" data-rating="{{review.rate}}" data-num-stars="5"></span>
+                  <span class="review_text_bold see_more_reviews" pk="{{review.pk}}" style="font-weight:bold; font-size:16px">+</span><br>
+                  {{review.creation}}
+                  <div class="separador-10"> </div>
+                  <span class="review_text_bold">Comentário</span><br>
+                  {{review.comment}}
+                  <div class="separador-10"> </div>
+
+
+
+                  <div class="more_rating more_rating_{{review.pk}}">
+                    <span style="color:#102766" class="stars" data-rating="{{review.rate_infraestructure}}" data-num-stars="5"></span> - Infraestrutura
+                    <br>
+                    <span style="color:#102766" class="stars" data-rating="{{review.rate_rides}}" data-num-stars="5"></span> - Brinquedos
+                    <br>
+                    <span style="color:#102766" class="stars" data-rating="{{review.rate_cost_benefit}}" data-num-stars="5"></span> - Custo-Benefício
+                    <br>
+                    <span style="color:#102766" class="stars" data-rating="{{review.rate_attendance}}" data-num-stars="5"></span> - Atendimento
+                    <br>
+                    <span style="color:#102766" class="stars" data-rating="{{review.rate_children_opinion}}" data-num-stars="5"></span> - Opinião das Crianças
+                    <br>
+                  </div>
+                </div>
+              </div>
+              <div class="separador-10"> </div>
+            {% endfor %}
+          </div>
+          <div class="separador-80"> </div>
+        {% endif %}
+        <!-- DETAIL REVIEW end -->
+
+
+
+
+
+
+
+
+        <!-- DETAIL CALENDAR begin -->
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="detail_wrapper_title">Disponibilidade do Local</h1>
+            <div class="separador-30"> </div>
+            <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
+              <div>{% include "calendar.html" %}</div>
+            </div>
+          </div>
+          <div class="col-md-6" style="text-align:center">
+            <!-- DETAIL VIDEO begin -->
+              {% if place.video %}
+                <h1 class="detail_wrapper_title">Vídeo do Local</h1>
+                <div class="separador-30"> </div>
+                <div class="center_element">
+                  <iframe src="{{place.video}}" id="place_video"></iframe>
+                </div>
+                <div class="separador-80"> </div>
+              {% endif %}
+              {% if place.menu %}
+                <h1 class="detail_wrapper_title">Menu</h1>
+                <div class="separador-30"> </div>
+                <div class="center_element">
+                  <embed src="/media/{{place.menu}}" id="place_menu"/>
+                </div>
+                <div class="separador-80"> </div>
+
+                
+              {% endif %}
+
+            <!-- DETAIL VIDEO end -->
+
+          </div>
+        </div>
+        <!-- DETAIL CALENDAR end -->
+
       </div>
     </div>
   </section>
   <!-- DETAIL DESCRIPTION end -->
 
 
-
-  <!-- DETAIL MAP begin -->
-  <section class="container">
-    <div id="map" style="height:300px; width:100%"></div>
-  </section>
-  <div class="separador-80"> </div>
-  <!-- DETAIL MAP end -->
-
-
-
-
-  <!-- DETAIL REVIEW begin -->
-  {% if review_rates != "None" %}
-    <section class="container">
-      <h1 class="detail_wrapper_title">Avaliações</h1>
-      <div style="width:100%; text-align:center;">
-        {% for review in review_list %}
-          <div class="review_container">
-            <div style="width:20%; display:inline-block; text-align:center; vertical-align:top">
-              <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if review.buyerprofile.photo %}/media/{{review.buyerprofile.photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
-            </div><!--
-
-
-            --><div style="width:80%; display:inline-block; padding:10px 0 10px; color:#102766">
-              <span class="review_text_bold">{{review.buyerprofile.name}}</span>
-              <span style="color:#102766" class="stars" data-rating="{{review.rate}}" data-num-stars="5"></span> 
-              ({{review.rate}})<br>
-              {{review.creation}}
-              <div class="separador-10"> </div>
-              <span class="review_text_bold">Comentário</span><br>
-              {{review.comment}}
-              <div class="separador-10"> </div>
-              <span class="review_text_bold see_more_reviews" pk="{{review.pk}}">(Ver mais Notas)</span><br>
-
-
-
-              <div class="more_rating more_rating_{{review.pk}}">
-                Infraestrutura - 
-                <span style="color:#102766" class="stars" data-rating="{{review.rate_infraestructure}}" data-num-stars="5"></span> ({{review.rate_infraestructure}})<br> 
-                Brinquedos - 
-                <span style="color:#102766" class="stars" data-rating="{{review.rate_rides}}" data-num-stars="5"></span> ({{review.rate_rides}})<br>
-                Custo-Benefício - 
-                <span style="color:#102766" class="stars" data-rating="{{review.rate_cost_benefit}}" data-num-stars="5"></span> ({{review.rate_cost_benefit}})<br>
-                Atendimento - 
-                <span style="color:#102766" class="stars" data-rating="{{review.rate_attendance}}" data-num-stars="5"></span> ({{review.rate_attendance}})<br>
-                Opinião das Crianças - 
-                <span style="color:#102766" class="stars" data-rating="{{review.rate_children_opinion}}" data-num-stars="5"></span> ({{review.rate_children_opinion}})<br>
+  <section id="featured" class="block equal-height">
+    <div class="container">
+      <header>
+        <h2><span style="border-bottom:2px solid #94d600;">Buffets Semelhantes</span></h2>
+      </header>
+      <div class="row">
+        {% for i in "xxxx" %}
+          <div class="col-md-3 col-sm-3">
+            <div class="item" style="margin-bottom:20px; cursor:pointer;">
+              <div class="img-center center-cropped feature_image" style="background-image: url(/static/img/background/FESTAS1-2.jpg);"></div><!--
+              --><div class="feature_wrapper">
+                  <h3 style="margin:0">Benny’s Cafeteria</h3>
+                  <span style="color:white" class="stars" data-rating="3.8" data-num-stars="5"></span>
               </div>
             </div>
           </div>
-          <div class="separador-10"> </div>
         {% endfor %}
       </div>
-    </section>
-    <div class="separador-80"> </div>
-  {% endif %}
-  <!-- DETAIL REVIEW end -->
-
-
-
-
-
-
-  <!-- DETAIL CALENDAR begin -->
-  <section class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h1 class="detail_wrapper_title">Disponibilidade</h1>
-        <div class="separador-30"> </div>
-        <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
-          <div>{% include "calendar.html" %}</div>
-        </div>
-      </div>
-      <div class="col-md-6" style="text-align:center">
-        <h1 class="detail_wrapper_title" style="text-align:right">Preços</h1>
-        <h1>=========== A FAZER ===========</h1>
-        {% for price in price_list %}
-          {{price}}
-        {% endfor %}
-        <h1>=========== A FAZER ===========</h1>
-      </div>
+      <!--/.row-->
+    </div>
+    <!--/.container-->
+    <div class="background opacity-5">
+      <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
     </div>
   </section>
-  <div class="separador-80"> </div>
-  <!-- DETAIL CALENDAR end -->
 
 
 
@@ -227,34 +260,16 @@ Body code
 
 
 
-  <!-- DETAIL OTHER begin -->
-  <section class="container">
-    <div class="row">
-      <div class="col-md-9">
-        {% if place.video %}
-          <h1 class="detail_wrapper_title">Vídeo do Local</h1>
-          <div class="separador-30"> </div>
-          <div class="center_element">
-            <iframe src="{{place.video}}" id="place_video"></iframe>
-          </div>
-          <div class="separador-80"> </div>
-        {% endif %}
-        {% if place.menu %}
-          <h1 class="detail_wrapper_title">Menu</h1>
-          <div class="separador-30"> </div>
-          <div class="center_element">
-            <embed src="/media/{{place.menu}}" id="place_menu"/>
-          </div>
-          <div class="separador-80"> </div>
 
-          
-        {% endif %}
 
-      </div>
-      <div class="col-md-3"></div>
-    </div>
-  </section>
-  <!-- DETAIL OTHER end -->
+
+
+
+
+
+
+
+
 
                   
 
@@ -369,7 +384,7 @@ Body code
       setInterval(function(){
         var objDiv = document.getElementById("chat_conversation")
         objDiv.scrollTop = objDiv.scrollHeight
-      }, 1100)
+      }, 800)
 
       $("#chat_opener").click(function(){
         $("#chat_conversation").slideToggle()
@@ -415,25 +430,44 @@ Body code
 
           }
         })
-      }, 1000);
+      }, 800);
 
 
       // ==============================
       // Send Messages
       // ==============================
       $("#message_send").click(function(){
-        $.ajax({
-          url: "/usuario/chat/contact/",
-          dataType: 'json',
-          data: {
-            "place_pk":place_pk,
-            "message_text":$("#message_text").val(),
-          },
-          success: function (data) {
-            $("#message_text").val("")
-          }
-        })
+        if($("#message_text").val()!=""){
+          $.ajax({
+            url: "/usuario/chat/contact/",
+            dataType: 'json',
+            data: {
+              "place_pk":place_pk,
+              "message_text":$("#message_text").val(),
+            },
+            success: function (data) {
+              $("#message_text").val("")
+            }
+          })  
+        }
       })
+
+       $('#message_text').on('keypress', function (e) {
+         if(e.which === 13){
+          $.ajax({
+            url: "/usuario/chat/contact/",
+            dataType: 'json',
+            data: {
+              "place_pk":place_pk,
+              "message_text":$("#message_text").val(),
+            },
+            success: function (data) {
+              $("#message_text").val("")
+            }
+          })  
+         }
+       });
+
 
 
     })

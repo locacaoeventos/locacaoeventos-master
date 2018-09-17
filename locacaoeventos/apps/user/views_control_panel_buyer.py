@@ -84,6 +84,16 @@ class EditBuyer(View):
         return render(request, "control_panel/buyer_user_edit.html", context)
 
 
+
+
+
+
+
+
+
+
+
+
 class ListPlaceBought(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
@@ -99,7 +109,6 @@ class ListPlaceBought(View):
                 "pk_reservation": reservation.pk,
                 "name": place.name,
                 "capacity": place.capacity,
-                "size": place.size,
                 "description": place.description,
                 "address": place.address,
                 "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
@@ -109,7 +118,6 @@ class ListPlaceBought(View):
             place_dic["review_list"] = reviews_dic["review_list"]
             place_dic["review_rates"] = reviews_dic["review_rates"]
             
-            place_dic["price"] = "%.2f"%reservation.placeprice.value
 
             datetime_begin = reservation.unavailability.datetime_begin
             utc = pytz.UTC
@@ -218,7 +226,6 @@ def context_review_placebought(reservation_pk, context, request):
         "reservation_pk": reservation.pk,
         "name": place.name,
         "capacity": int(place.capacity),
-        "size": int(place.size),
         "description": place.description,
         "address": place.address,
         "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,

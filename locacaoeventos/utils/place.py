@@ -3,7 +3,7 @@ import math
 
 from locacaoeventos.utils.general import get_dic_by_key
 
-from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability
+from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability, PlacePrice
 from locacaoeventos.apps.place.placereview.models import PlaceReview
 from locacaoeventos.apps.place.placecore.models import PlacePhoto
 from locacaoeventos.apps.user.chat.models import Message
@@ -176,3 +176,41 @@ def get_messages_to_chat(user, is_seller):
         
     messages = sorted(messages, key=lambda k: k['datetime'], reverse=True) 
     return messages
+
+
+
+
+
+
+
+
+
+
+
+def get_place_information(places):
+    place_list = []
+    for place in places:
+        place_dic = {
+            "pk": place.pk,
+            "name": place.name,
+            "capacity": place.capacity,
+            "address": place.address,
+            "description": place.description,
+        }
+        photo = PlacePhoto.objects.filter(place=place)
+        if photo:
+            place_dic["photo"] = str(photo[0].photo.photo)
+
+        placeprice_min = 9999999999999
+        for placeprice in PlacePrice.objects.filter(place=place):
+            if placeprice.value < placeprice_min:
+                placeprice_min = placeprice.value
+        if placeprice_min != 9999999999999:
+            place_dic["placeprice_min"] = "%.2f"%placeprice_min
+        # No objects allowed
+        review_list = get_reviews_from_place(place)
+        for i in range(len(review_list["review_list"])):
+            review_list["review_list"][i]["buyerprofile"] = ""
+        place_dic["review_list"] = review_list
+        place_list.append(place_dic)
+    return place_list

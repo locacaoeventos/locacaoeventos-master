@@ -79,7 +79,6 @@ class ListPlaceOwned(View):
                 "name": place.name,
                 "address": place.address,
                 "description": place.description,
-                "size": place.size,
                 "capacity": place.capacity,
                 "creation": place.creation,
                 "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
@@ -255,7 +254,6 @@ class CreateEditPlace(View):
                     "address": place.address,
                     "description": place.description,
                     "capacity": place.capacity,
-                    "size": place.size,
                     "video": place.video,
                     "children_rides": place.children_rides,
                     "decoration": place.decoration,
@@ -318,7 +316,6 @@ class CreateEditPlace(View):
                 place.address = form.cleaned_data["address"]
                 place.description = form.cleaned_data["description"]
                 place.capacity = form.cleaned_data["capacity"]
-                place.size = form.cleaned_data["size"]
                 place.video = video
                 place.children_rides = children_rides
                 place.decoration = decoration
@@ -358,7 +355,6 @@ class CreateEditPlace(View):
                     address=form.cleaned_data["address"],
                     description=form.cleaned_data["description"],
                     capacity=form.cleaned_data["capacity"],
-                    size=form.cleaned_data["size"],
                     video=video,
                     children_rides=children_rides,
                     decoration=decoration,

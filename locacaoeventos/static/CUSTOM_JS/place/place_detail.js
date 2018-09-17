@@ -58,12 +58,32 @@ $(".detail_header_img_round").click(function() {
 // ==========================================
 // Detail Description
 // ==========================================
+// Sticky
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+	var buying_flux = document.getElementById("buying_flux");
+	var sticky = buying_flux.offsetTop;
+
+  console.log("======================")
+  console.log(window.pageYOffset)
+  console.log(sticky)
+  console.log("======================")
+  if (window.pageYOffset >= sticky) {
+    buying_flux.classList.add("sticky")
+  } else {
+    buying_flux.classList.remove("sticky");
+  }
+}
+
+
+
 $(document).ready(function(){
 	var div_height = $(".detail_description_text").height()
 	if(div_height>70) {
 		var fadeout_str = ""
         fadeout_str += '<div class="fadeout" id="detail_description_text_fadeout"></div>'
-        fadeout_str += '<div id="detail_description_text_expand">&hellip;</div>'
+        fadeout_str += '<div id="detail_description_text_expand">Leia mais sobre este Espaço</div>'
         $(".detail_description_text").after(fadeout_str)
         $(".detail_description_text").css("height", "63")
 	}

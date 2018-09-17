@@ -58,10 +58,11 @@ class Chat(View):
             if not get_dic_by_key(messages_compiled, "place", message["place"]):
                 messages_compiled.append(message)
         # =================
-
+        
+        messages_compiled.reverse()
         context["messages"] = messages_compiled
 
-        return render(request, "chat.html", context)
+        return render(request, "control_panel/chat/chat.html", context)
 
 
 
@@ -80,7 +81,7 @@ class ChatView(View):
         context["panel_type"] = "chat"
 
         context["place_pk"] = request.GET.get("place_pk")
-        return render(request, "chat_view.html", context)
+        return render(request, "control_panel/chat/chat_view.html", context)
 
 
 
@@ -102,6 +103,9 @@ class ChatGetViewAjax(View):
     def get(self, request, *args, **kwargs):
         user = request.user
         buyerprofille = BuyerProfile.objects.get(user=user)
+        buyerprofile_photo = str(buyerprofille.photo)
+        if "media" in buyerprofile_photo:
+            buyerprofile_photo = buyerprofile_photo.replace("/media/", "")
 
         place_pk = request.GET.get("place_pk")
         place = Place.objects.get(pk=place_pk)
@@ -112,7 +116,7 @@ class ChatGetViewAjax(View):
             "message_text": message.text,
             "datetime": message.datetime,
             "from": buyerprofille.name,
-            "photo": "/media/" + str(buyerprofille.photo),
+            "photo": buyerprofile_photo,
             } for message in Message.objects.filter(user_from=user, user_to=user_seller, place=place)
         ] + [{
             "message_text": message.text,
@@ -271,6 +275,11 @@ class ChatSendAjax(View):
 
         now = datetime.datetime.now()
 
+        print(text)
+        print(user)
+        print(place.sellerprofile.user)
+        print(now)
+        print(place)
         
         message = Message.objects.create(
             text = text,

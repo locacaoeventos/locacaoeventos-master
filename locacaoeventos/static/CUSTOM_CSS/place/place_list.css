@@ -17,6 +17,10 @@ Panel Left
 	font-size:12px !important;
 	font-weight:normal;
 }
+#pnleft_update {
+	line-height:10px;
+	border-radius:10px;
+}
 
 /* Toggler */
 .toggle_pnleft {

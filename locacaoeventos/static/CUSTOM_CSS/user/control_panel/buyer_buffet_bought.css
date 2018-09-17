@@ -16,6 +16,9 @@
 .review_plussign {
 	cursor:pointer;
 	font-weight:bold;
+	font-size:18px;
+	vertical-align:middle;
+	color:#4fa7bc;
 }
 .review_wrapper {
 	display:none;

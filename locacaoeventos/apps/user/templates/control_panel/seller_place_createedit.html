@@ -26,7 +26,7 @@
         {% if field.name == "capacity" %}
           <div class="form-group medium">
             <div class="row">
-              <div class="col-md-6 col-sm-6">
+              <div class="col-md-12 col-sm-12">
                 <div class="form-group">
                   <label>Capacidade</label>
                   {{field}}
@@ -165,51 +165,33 @@
           <div class="separador-30"> </div>
 
 
-      {% else %}
-        {% if field.name == "alcoholic_drink" %}
-          <label>Informações Adiconais</label>
-        {% endif %}
-        {% if not forloop.counter|divisibleby:2 %}
-          <div class="row">
-        {% endif %}
-          <div class="col-md-6">
-            <ul class="list-unstyled checkboxes">
-              <li>
-                <div class="checkbox"><label>
-                  {{field}}
-                  {{field.label}}
-                </label></div>
-              </li>
-            </ul>
+        {% else %}
+          {% if field.name == "alcoholic_drink" %}
+            <label>Informações Adiconais</label>
+          {% endif %}
+          {% if forloop.counter|divisibleby:2 %}
+            <div class="row">
+          {% endif %}
+            <div class="col-md-6">
+              <ul class="list-unstyled checkboxes">
+                <li>
+                  <div class="checkbox">
+                    <label>
+                      {{field}}
+                      {{field.label}}
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          {% if not forloop.counter|divisibleby:2 %}
           </div>
-        {% if forloop.counter|divisibleby:2 %}
-        </div>
-        {% endif %}
+          {% endif %}
 
         {% endif %}
       {% endfor %}
 
       <div class="separador-60"> </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <section>
         <figure class="pull-left margin-top-15">
@@ -218,7 +200,6 @@
         <div class="form-group">
           <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
         </div>
-        <!-- /.form-group -->
       </section>
 
     </form>
@@ -228,22 +209,22 @@
 
 
 
-  <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Uploading...</h4>
-        </div>
-        <div class="modal-body">
-          <div class="separador-20"> </div>
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Uploading...</h4>
           </div>
-          <div class="separador-20"> </div>
+          <div class="modal-body">
+            <div class="separador-20"> </div>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+            </div>
+            <div class="separador-20"> </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
 
 

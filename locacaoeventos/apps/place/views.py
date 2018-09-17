@@ -17,28 +17,13 @@ from .placereview.models import PlaceReview
 class ListPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        place_list = []
-        for place in Place.objects.filter(is_active=True, has_finished_basic=True):
-            place_dic = {
-                "pk": place.pk,
-                "size": place.size,
-                "name": place.name,
-                "capacity": place.capacity,
-                "address": place.address,
-                "description": place.description,
-            }
-            photo = PlacePhoto.objects.filter(place=place)
-            if photo:
-                place_dic["photo"] = photo[0].photo.photo
+        place_list = get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True))
 
-            placeprice_min = 9999999999999
-            for placeprice in PlacePrice.objects.filter(place=place):
-                if placeprice.value < placeprice_min:
-                    placeprice_min = placeprice.value
-            if placeprice_min != 9999999999999:
-                place_dic["placeprice_min"] = "%.2f"%placeprice_min
-            place_dic["review_list"] = get_reviews_from_place(place)
-            place_list.append(place_dic)
+        places_pk = []
+        for place in place_list:
+            places_pk.append(place["pk"])
+        context["places_pk"] = places_pk
+
 
         # BEGIN Paginator
         paginator = Paginator(place_list, 6)
@@ -77,7 +62,6 @@ class DetailPlace(View):
         context["place_seller"] = place_obj.sellerprofile.__dict__
         context["place"] = place
         context["place_capacity"] = place["capacity"]
-        context["place_size"] = "%.0f" % place["size"]
         context["place_pk"] = place_obj.pk
         context["place_obj"] = place_obj
         context["place_photo"] = PlacePhoto.objects.filter(place=place_obj)[0].photo.photo
