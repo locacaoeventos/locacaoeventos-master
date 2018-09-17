@@ -231,39 +231,6 @@
 
 
 
-
-<!-- ==================================================================================================== -->
-<!--                                                                                                      -->
-<!--                                            End Page                                                  -->
-<!--                                                                                                      -->
-<!-- ==================================================================================================== -->
-      {% if place_list.paginator.num_pages > 1 %}
-        <nav>
-          <ul class="paginatio/ pull-right">
-            {% if place_list.has_previous %}
-                <li><a class="paginator_common" href="?page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
-            {% endif %}
-            {% for page_number in place_list.paginator.place_range %}
-                {% if page_number == place_list.number %}
-                  <li class="active"><a class="paginator_common" href="?page={{page_number}}">{{page_number}}</a></li>
-                {% else %}
-                  <li><a class="paginator_common" href="?page={{page_number}}">{{page_number}}</a></li>
-                {% endif %}
-            {% endfor %}
-            {% if place_list.has_next %}
-              <li><a class="paginator_common" href="?page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
-            {% endif %}
-          </ul>
-        </nav>     
-      {% endif %}   
-
-
-
-
-
-
-
-
     </div>
   </div>
 </section>
