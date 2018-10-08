@@ -86,6 +86,7 @@ Detail Header
 	height:50px;	
 	text-align:center;
 	position:static;
+	background-color:#98d000 !important;
 }
 .decoration_childrenrides div {
     display: table-cell;
