@@ -89,6 +89,9 @@ First Block
 .howworks_col {
 	padding:0 25px;
 }
+.option_title_container {
+	height:50px;
+}
 .option_title {
 	font-size:18px;
 	color:#00195c;
