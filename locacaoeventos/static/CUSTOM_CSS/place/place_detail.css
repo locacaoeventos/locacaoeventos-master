@@ -109,7 +109,6 @@ Detail Header
 }
 .absolute {
   position:absolute;
-  top:1500px;
   z-index:99999;
 }
 #buying_flux {

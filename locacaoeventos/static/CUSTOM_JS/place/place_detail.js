@@ -11,25 +11,32 @@
 // Price Sticky
 // ==========================================
   var window_width  = $(window).width();
-  console.log(window_width)
+
   if(window_width>=992){
     var top_offset = $('#buying_flux').offset().top - 86;
+	var featured_offset = $('#featured').offset().top -250;
+
 
     $(window).scroll(function (event) {
       var y = $(this).scrollTop();
+
       if (y >= top_offset){
-        if(y>2000){
+        if(y>featured_offset){
 
           $('#buying_flux').removeClass('fixed');
           $('#buying_flux').addClass('absolute');
+          $('#buying_flux').css('top', featured_offset-500);
+
         }
         else {
+          $('#buying_flux').css('top', "");
           $('#buying_flux').addClass('fixed');
           $('#buying_flux').removeClass('absolute');
 
         }
       }
       else{
+          $('#buying_flux').css('top', "");
         $('#buying_flux').removeClass('fixed');
         $('#buying_flux').removeClass('absolute');
       }
