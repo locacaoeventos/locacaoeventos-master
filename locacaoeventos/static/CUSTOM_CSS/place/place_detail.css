@@ -51,21 +51,7 @@ Detail Header
 	position: relative;
 	cursor:pointer;
 }
-.detail_header_img_mov {
-	position: absolute;
-	font-size:50px;
-	z-index:10000000;
-	height:450px;
-	padding-top:190px;
-}
-.detail_header_img_round {
-	cursor:pointer;
-	display:none;
-	border-radius:50%;
-	padding:0px 21px 6px 21px;
-	background-color:rgba(0, 0, 0, 0.4);
-	color:#c7c7c7;
-}
+
 .detail_description_card {
 	display:inline-block;
 	background-color:#4fa7bc;
@@ -83,11 +69,12 @@ Detail Header
 	height:200px;
 	vertical-align:bottom;
 }
-.detail_additionalinformation span {
+.detail_additionalinformation div {
     display: table-cell;
     vertical-align: bottom;
 	height:200px;
-	padding-bottom:5px;
+	width:150px;
+	padding-bottom:15px;
 }
 .detail_additionalinformation img {
 	position:absolute;
@@ -137,21 +124,44 @@ Gallery
 .detail_gallery {
 	position:absolute;
 	top:20px;
-	width:80%;
-	min-width:1000px;
-	height:50%;
+	width:90%;
+	max-width:1000px;
+	height:350px;
 	left: 0; 
 	right: 0; 
 	margin-left: auto; 
 	margin-right: auto; 
 }
 .detail_gallery_other {
-	position:absolute;
-	bottom:20px;
-	width:150px;
-	height:150px;
+	margin-top:500px;
+	margin-left:10px;
+	width:80px;
+	height:80px;
+	cursor:pointer;
+	-webkit-filter: opacity(.5);
+	filter: opacity(.5);
+
+}
+.detail_photo_active {
+	-webkit-filter: opacity(1);
+	filter: opacity(1);
 }
 
+.detail_header_img_mov {
+	position: absolute;
+	font-size:50px;
+	z-index:10000000;
+	height:350px;
+	padding-top:120px;
+}
+.detail_header_img_round {
+	cursor:pointer;
+	display:none;
+	border-radius:50%;
+	padding:0px 21px 6px 21px;
+	background-color:rgba(0, 0, 0, 0.4);
+	color:#c7c7c7;
+}
 
 
 
@@ -162,15 +172,6 @@ Gallery
 /* ===============================
 Description Header
 =============================== */
-.detail_photo {
-	width:80px;
-	height:60px;
-	opacity:0.2;
-    cursor:pointer;
-}
-.detail_photo_active {
-	opacity:1
-}
 .detail_description_text {
 	font-size:16px;
 	position:relative;
@@ -189,10 +190,28 @@ Description Header
 
 
 
-
-
-
-
+/* ===============================
+Rates
+=============================== */
+.rate_title {
+	/*color:#4fa7bc;*/
+	display:inline-block;
+	font-size:15px;
+}
+.review_stars {
+	/*color:#4fa7bc;*/
+	font-size:14px
+}
+#review_read_more {
+	float:right;
+	margin-right:20px;
+	cursor:pointer;
+}
+#reviews_wrapper {
+	width:100%;
+	text-align:center;
+	display:none;
+}
 
 
 /* ===============================

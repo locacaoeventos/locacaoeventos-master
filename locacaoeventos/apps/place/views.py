@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.serializers.json import DjangoJSONEncoder
 
-import datetime, calendar
+import datetime, calendar, json
 
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
@@ -64,8 +65,8 @@ class DetailPlace(View):
         context["place_capacity"] = place["capacity"]
         context["place_pk"] = place_obj.pk
         context["place_obj"] = place_obj
-        context["place_photo"] = PlacePhoto.objects.filter(place=place_obj)[0].photo.photo
-        context["photo_list"] = [photo.photo for photo in PlacePhoto.objects.filter(place=place_obj)]
+        context["photo_list_html"] = [str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj)]
+        context["photo_list_js"] = json.dumps([str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj)], cls=DjangoJSONEncoder)
 
         context["additionalinformation"] = []
         additionalinformation = PlaceAdditionalInformation.objects.get(place=place_obj).__dict__
