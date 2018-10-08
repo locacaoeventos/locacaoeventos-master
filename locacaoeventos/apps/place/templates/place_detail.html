@@ -85,44 +85,38 @@ Body code
           <div class="separador-40"> </div>
         {% endif %}
         {% if place.decoration or place.children_rides %}
-          <div class="row">
-            {% if place.decoration %}
-              <div class="col-md-6">
-                <h1 class="detail_wrapper_title">Decorações</h1>
-                <div class="separador-10"> </div>
-                <div>
-                  {% for decoration in place.decoration.0 %}
-                    {% if not forloop.first %}-->{% endif %}
-                    <div class="detail_description_card decoration_childrenrides">
-                      <div>{{decoration}}</div>
-                    </div>
-                    {% if not forloop.last %}&nbsp;<!--{% endif %}
-                  {% endfor %}<span style="display:none">--></span>
+          {% if place.decoration %}
+            <h1 class="detail_wrapper_title">Decorações</h1>
+            <div class="separador-10"> </div>
+            <div>
+              {% for decoration in place.decoration.0 %}
+                {% if not forloop.first %}-->{% endif %}
+                <div class="detail_description_card decoration_childrenrides">
+                  <div>{{decoration}}</div>
                 </div>
-                <div class="separador-40"> </div>
-                <hr class="line"/>
-                <div class="separador-40"> </div>
-              </div>
-            {% endif %}
-            {% if place.children_rides %}
-              <div class="col-md-6">
-                <h1 class="detail_wrapper_title">Brinquedos</h1>
-                <div class="separador-10"> </div>
-                <div>
-                  {% for children_rides in place.children_rides.0 %}
-                    {% if not forloop.first %}-->{% endif %}
-                    <div class="detail_description_card decoration_childrenrides">
-                      <div>{{children_rides}}</div>
-                    </div>
-                    {% if not forloop.last %}&nbsp;<!--{% endif %}
-                  {% endfor %}<span style="display:none">--></span>
+                {% if not forloop.last %}&nbsp;<!--{% endif %}
+              {% endfor %}<span style="display:none">--></span>
+            </div>
+            <div class="separador-40"> </div>
+            <hr class="line"/>
+            <div class="separador-40"> </div>
+          {% endif %}
+          {% if place.children_rides %}
+            <h1 class="detail_wrapper_title">Brinquedos</h1>
+            <div class="separador-10"> </div>
+            <div>
+              {% for children_rides in place.children_rides.0 %}
+                {% if not forloop.first %}-->{% endif %}
+                <div class="detail_description_card decoration_childrenrides">
+                  <div>{{children_rides}}</div>
                 </div>
-                <div class="separador-40"> </div>
-                <hr class="line"/>
-                <div class="separador-40"> </div>
-              </div>
-            {% endif %}
-          </div>
+                {% if not forloop.last %}&nbsp;<!--{% endif %}
+              {% endfor %}<span style="display:none">--></span>
+            </div>
+            <div class="separador-40"> </div>
+            <hr class="line"/>
+            <div class="separador-40"> </div>
+          {% endif %}
         {% endif %}
 
 
