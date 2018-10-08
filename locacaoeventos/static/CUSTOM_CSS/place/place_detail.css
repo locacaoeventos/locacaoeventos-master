@@ -33,29 +33,30 @@ Detail Header
 	background-color:#4fa7bc;
 	color:white;
 	vertical-align:top;
-	height:400px;
+	height:450px;
 	padding:0 50px 0 50px;
 }
 .detail_header_title_container {
-	height:400px;
+	height:450px;
 	display: table-cell;
 	vertical-align: middle;
 }
 
 .detail_header_img {
-	height:400px;
+	height:450px;
 	/*width:70%;*/
 	width:100%;
 	display:inline-block;
 	vertical-align:top;
 	position: relative;
+	cursor:pointer;
 }
 .detail_header_img_mov {
 	position: absolute;
 	font-size:50px;
 	z-index:10000000;
-	height:400px;
-	padding-top:150px;
+	height:450px;
+	padding-top:190px;
 }
 .detail_header_img_round {
 	cursor:pointer;
@@ -69,16 +70,87 @@ Detail Header
 	display:inline-block;
 	background-color:#4fa7bc;
 	color:white;
-	line-height:50px;
 	font-size:13px;
 	padding:0 10px;
 	border-radius:10px;
 	font-weight:bold;
 	margin-bottom:5px;
+	width:150px;
+	text-align:center;
+	position:relative;
+}
+.detail_additionalinformation {
+	height:200px;
+	vertical-align:bottom;
+}
+.detail_additionalinformation span {
+    display: table-cell;
+    vertical-align: bottom;
+	height:200px;
+	padding-bottom:5px;
+}
+.detail_additionalinformation img {
+	position:absolute;
+	height:120px;
+	top:10px;
+	left:9px;
+}
+.decoration_childrenrides {
+	height:30px;
+	text-align:center;
+	position:static;
+}
+.decoration_childrenrides div {
+    display: table-cell;
+    vertical-align: middle;
+	height:30px;	
+	width:150px;
+	text-align:center
 }
 
 
 
+
+
+
+
+/* STICKY */
+.fixed {
+  position:fixed;
+  top:90px;
+  z-index:99999;
+}
+.absolute {
+  position:absolute;
+  top:1500px;
+  z-index:99999;
+}
+#buying_flux {
+  width:200px;
+
+}
+
+
+/* ===============================
+Gallery
+=============================== */
+.detail_gallery {
+	position:absolute;
+	top:20px;
+	width:80%;
+	min-width:1000px;
+	height:50%;
+	left: 0; 
+	right: 0; 
+	margin-left: auto; 
+	margin-right: auto; 
+}
+.detail_gallery_other {
+	position:absolute;
+	bottom:20px;
+	width:150px;
+	height:150px;
+}
 
 
 

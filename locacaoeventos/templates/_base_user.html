@@ -39,6 +39,8 @@ Body code
 ===================================================== -->
 
 <body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top" style="position:relative">
+<div id="black_layer">
+</div>
 <!-- Outer Wrapper-->
 <div id="outer-wrapper" style="">
   <!-- Inner Wrapper -->
@@ -57,6 +59,7 @@ Body code
           <div class="wrapper" style="padding-top:15px">
             <ul class="main-navigation navigation-top-header"></ul>
             <ul class="user-area">
+
               {% if user.is_superuser %}
                 <li><a href="/administrador/home/">Administrador</a></li>
               {% endif %}
@@ -65,12 +68,15 @@ Body code
                 {% if buyer %}
                   <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
                 {% endif %}
-                <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
-                <li><a href="/logout/">Logout</a></li>
-                {% else %}
+              <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
+              <li><a href="/logout/">Mensagens</a></li>
+              <li><a href="/logout/">Logout</a></li>
+              {% else %}
                 <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
                 <li><a {% if basemenu == "register" %}class="menu_selected"{% endif %} href="/usuario/cadastrar/"><strong>Cadastrar</strong></a></li>
+                  <li><a href="/logout/">Cadastre seu Espaço</a></li>
               {% endif %}
+
             </ul>
             <div class="toggle-navigation">
               <div class="icon">

@@ -8,15 +8,8 @@ CSS imports
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_detail.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/custom_container.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/user/home.css" type="text/css">
-
-
-
-
-
-
-
-
 
 
 
@@ -75,7 +68,9 @@ Body code
         <div class="detail_description_text justify_text">
           {{place.description}}
         </div>
-        <div class="separador-80"> </div>
+        <div class="separador-40"> </div>
+        <hr class="line"/>
+        <div class="separador-40"> </div>
         <!-- Additional Information -->
         {% if additionalinformation|length > 0 %}
           <h1 class="detail_wrapper_title">Informações Adicionais</h1>
@@ -83,11 +78,16 @@ Body code
           <div class="center_element">
             {% for info in additionalinformation %}
               {% if not forloop.first %}-->{% endif %}
-              <div class="detail_description_card">{{info.name}}</div>
+              <div class="detail_description_card detail_additionalinformation">
+                <img src="/static/img/123festas/logo.png"/>
+                <span>{{info.name}}</span>
+              </div>
               {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
             {% endfor %}<span style="display:none">--></span>
           </div>
-          <div class="separador-80"> </div>
+          <div class="separador-40"> </div>
+          <hr class="line"/>
+          <div class="separador-40"> </div>
         {% endif %}
         {% if place.decoration or place.children_rides %}
           <div class="row">
@@ -98,11 +98,15 @@ Body code
                 <div>
                   {% for decoration in place.decoration.0 %}
                     {% if not forloop.first %}-->{% endif %}
-                    <div class="detail_description_card">{{decoration}}</div>
+                    <div class="detail_description_card decoration_childrenrides">
+                      <div>{{decoration}}</div>
+                    </div>
                     {% if not forloop.last %}&nbsp;<!--{% endif %}
                   {% endfor %}<span style="display:none">--></span>
                 </div>
-                <div class="separador-80"> </div>
+                <div class="separador-40"> </div>
+                <hr class="line"/>
+                <div class="separador-40"> </div>
               </div>
             {% endif %}
             {% if place.children_rides %}
@@ -112,11 +116,15 @@ Body code
                 <div>
                   {% for children_rides in place.children_rides.0 %}
                     {% if not forloop.first %}-->{% endif %}
-                    <div class="detail_description_card">{{children_rides}}</div>
+                    <div class="detail_description_card decoration_childrenrides">
+                      <div>{{children_rides}}</div>
+                    </div>
                     {% if not forloop.last %}&nbsp;<!--{% endif %}
                   {% endfor %}<span style="display:none">--></span>
                 </div>
-                <div class="separador-80"> </div>
+                <div class="separador-40"> </div>
+                <hr class="line"/>
+                <div class="separador-40"> </div>
               </div>
             {% endif %}
           </div>
@@ -127,7 +135,9 @@ Body code
 
         <!-- DETAIL MAP begin -->
         <div id="map" style="height:300px; width:100%"></div>
-        <div class="separador-80"> </div>
+        <div class="separador-40"> </div>
+        <hr class="line"/>
+        <div class="separador-40"> </div>
         <!-- DETAIL MAP end -->
 
 
@@ -172,7 +182,9 @@ Body code
               <div class="separador-10"> </div>
             {% endfor %}
           </div>
-          <div class="separador-80"> </div>
+          <div class="separador-40"> </div>
+          <hr class="line"/>
+          <div class="separador-40"> </div>
         {% endif %}
         <!-- DETAIL REVIEW end -->
 
@@ -200,7 +212,6 @@ Body code
                 <div class="center_element">
                   <iframe src="{{place.video}}" id="place_video"></iframe>
                 </div>
-                <div class="separador-80"> </div>
               {% endif %}
               {% if place.menu %}
                 <h1 class="detail_wrapper_title">Menu</h1>
@@ -208,15 +219,17 @@ Body code
                 <div class="center_element">
                   <embed src="/media/{{place.menu}}" id="place_menu"/>
                 </div>
-                <div class="separador-80"> </div>
 
                 
               {% endif %}
-
             <!-- DETAIL VIDEO end -->
 
           </div>
         </div>
+        <div class="separador-40"> </div>
+        <hr class="line"/>
+        <div class="separador-40"> </div>
+        
         <!-- DETAIL CALENDAR end -->
 
       </div>
@@ -548,16 +561,72 @@ JavaScript imports
       infowindow.open(map, marker);
     });
 
-
-
-
-
-
-
-
-
-
   }
+
+
+
+
+
+
+
+
+  // STICKY
+  var window_width  = $(window).width();
+  if(window_width>=992){
+    var top_offset = $('#buying_flux').offset().top - 86;
+
+    $(window).scroll(function (event) {
+      var y = $(this).scrollTop();
+      if (y >= top_offset){
+        if(y>2000){
+
+          $('#buying_flux').removeClass('fixed');
+          $('#buying_flux').addClass('absolute');
+        }
+        else {
+          $('#buying_flux').addClass('fixed');
+          $('#buying_flux').removeClass('absolute');
+
+        }
+      }
+      else{
+        $('#buying_flux').removeClass('fixed');
+        $('#buying_flux').removeClass('absolute');
+      }
+    });    
+  }
+
+
+
+
+
+
+
+  // Galery
+  $(".detail_header_img").click(function(){
+    $("#black_layer").fadeIn(800)
+    $("#black_layer").append(
+      '<div class="detail_gallery center-cropped img-center" style="background-image: url(/media/{{photo_list.0}});">' +
+      '</div>' 
+    )
+    console.log("{{photo_list}}")
+    var photo_list = JSON.parse("{{photo_list}}")
+    for(i=0;i<photo_list.length;i++){
+      $("#black_layer").append(
+        '<div class="detail_gallery_other center-cropped img-center" style="background-image: url(/media/{{photo_list.0}});">' +
+        '</div>'
+      ) 
+    }
+
+
+  })
+
+  $(document).click(function(e) {
+     var classname = e.target.className;
+     // alert(classname);
+  });
+
+
 
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&callback=initMap"> </script>

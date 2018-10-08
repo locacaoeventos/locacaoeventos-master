@@ -22,17 +22,21 @@ Body code
       <div style="max-width:650px; display:inline-block"><h1 id="home_title">Encontre o melhor local para a sua festa</h1></div>
       <div class="search-bar horizontal">
         <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
-          <div class="input-row">
+          <div class="input-row" style="min-height:230px">
             <div style="width:100%">
               <label class="form_label" for="place" style="width:100%">Localização ou Nome do Buffet</label>
               <div class="input-group location" style="width:100%; padding-right:37px;">
-                <input type="text" class="form-control" id="place_id" name="place" placeholder="Localizaçã ou Nome" style="width:100%">
+                <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização ou Nome" style="width:100%">
                 <button type="submit" class="btn btn-default" id="home_send"><i class="fa fa-search"></i></button>
               </div>
             </div>
             <br>
 
-
+            <div class="form_label" id="home_arrow" for="date">
+              Busca Avançada
+              <span id="home_arrow_symbol">&#709;</span>
+            </div>
+            <div class="separador-20"> </div>
             <div id="home_advanced" class="row" style="display:none">
               <div class="col-md-6">
                 <label class="form_label" for="date">Data da Comemoração</label>
@@ -46,10 +50,7 @@ Body code
               </div>
               <div class="separador-20"> </div>
             </div>
-            <div class="form_label" id="home_arrow" for="date">
-              Busca Avançada
-              <span id="home_arrow_symbol">&#709;</span>
-            </div>
+
 
 
 
@@ -73,7 +74,7 @@ Body code
     <div class="row">
       {% for i in "xxxx" %}
         <div class="col-md-3 col-sm-3">
-          <div class="item" style="margin-bottom:20px; cursor:pointer;">
+          <div class="item" style="margin:auto; margin-bottom:20px; cursor:pointer; max-width:300px">
             <div class="img-center center-cropped feature_image" style="background-image: url(/static/img/background/FESTAS1-2.jpg);"></div><!--
             --><div class="feature_wrapper">
                 <h3 style="margin:0">Benny’s Cafeteria</h3>
@@ -94,7 +95,7 @@ Body code
 
 <section class="block">
   <div class="container" style="text-align:center">
-    <span class="howworks_title">Como o 123Festas funciona?</span>
+    <span class="howworks_title" style="cursor:default">Como o <img src="/static/img/123festas/logo_horizontal.png" style="width:135px; margin-bottom:10px;" alt="logo"> funciona?</span>
     <div class="separador-10"> </div>
     <span class="howworks_option buyer">PARA ANIVERSARIANTE</span>&nbsp;&nbsp;&nbsp;&nbsp;
     <span class="howworks_option seller">PARA BUFFET</span>

@@ -7,14 +7,12 @@ $(function() {
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
     input.trigger('fileselect', [numFiles, label]);
-    console.log("1")
   });
   $(document).on('change', '#id_photo', function() {
     var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
     input.trigger('fileselect', [numFiles, label]);
-    console.log("1")
   });
 
 
@@ -38,7 +36,6 @@ $(function() {
               $("#id_menu_path").removeClass("hidden")
               $("#id_menu_path").html(log)
           }
-    console.log("2")
       });
       $('#id_photo').on('fileselect', function(event, numFiles, label) {
           var input = $(this).parents('.input-group').find(':text'),
@@ -49,7 +46,6 @@ $(function() {
               $("#id_photo_path").removeClass("hidden")
               $("#id_photo_path").html(log)
           }
-    console.log("2")
       });
 
   });

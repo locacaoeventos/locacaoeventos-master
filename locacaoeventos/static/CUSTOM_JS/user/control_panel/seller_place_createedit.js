@@ -10,6 +10,7 @@ $(document).ready(function(){
 	var children_rides_current = $("#id_children_rides").val().replace(/\'/g, "\"").replace(re, "").replace("{", "").replace("}", "")
 	if(children_rides_current==""){
 		var children_rides_list = []	
+		$("#id_children_rides").val("")
 	} else {
 		var children_rides_list = children_rides_current.split(",")
 	}
@@ -29,6 +30,7 @@ $(document).ready(function(){
 	$("#id_decoration").val(current_input)
 	var decoration_current = $("#id_decoration").val().replace(/\'/g, "\"").replace(re, "").replace("{", "").replace("}", "")
 	if(decoration_current==""){
+		$("#id_decoration").val("")
 		var decoration_list = []	
 	} else {
 		var decoration_list = decoration_current.split(",")
