@@ -221,40 +221,44 @@ Body code
 
 
 
-        <!-- DETAIL CALENDAR begin -->
-            <h1 class="detail_wrapper_title">Disponibilidade do Local</h1>
-            <div class="separador-30"> </div>
-            <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
-              <div>{% include "calendar.html" %}</div>
-            </div>
-          <div class="separador-40"> </div>
-          <hr class="line"/>
-          <div class="separador-40"> </div>
-
-        <!-- DETAIL VIDEO begin -->
-          {% if place.video %}
-            <h1 class="detail_wrapper_title">Vídeo do Local</h1>
-            <div class="separador-30"> </div>
-            <div class="center_element">
-              <iframe src="{{place.video}}" id="place_video"></iframe>
-            </div>
-          {% endif %}
-          {% if place.menu %}
-            <h1 class="detail_wrapper_title">Menu</h1>
-            <div class="separador-30"> </div>
-            <div class="center_element">
-              <embed src="/media/{{place.menu}}" id="place_menu"/>
-            </div>
-
-            
-          {% endif %}
-        <!-- DETAIL VIDEO end -->
-
+        <!-- DETAIL CALENDAR -->
+        <h1 class="detail_wrapper_title">Disponibilidade do Local</h1>
+        <div class="separador-30"> </div>
+        <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
+          <div>{% include "calendar.html" %}</div>
+        </div>
         <div class="separador-40"> </div>
         <hr class="line"/>
         <div class="separador-40"> </div>
-        
-        <!-- DETAIL CALENDAR end -->
+
+        <!-- DETAIL VIDEO -->
+        {% if place.video %}
+          <h1 class="detail_wrapper_title">Vídeo do Local</h1>
+          <div class="separador-30"> </div>
+          <div class="center_element">
+            <iframe src="{{place.video}}" id="place_video"></iframe>
+          </div>
+          <div class="separador-40"> </div>
+          <hr class="line"/>
+          <div class="separador-40"> </div>
+        {% endif %}
+
+
+        <!-- DETAIL MENU -->
+        {% if place.menu %}
+          <h1 class="detail_wrapper_title">Menu</h1>
+          <div class="separador-30"> </div>
+          <div class="center_element">
+            <embed src="/media/{{place.menu}}" id="place_menu"/>
+          </div>
+
+          <div class="separador-40"> </div>
+          <hr class="line"/>
+          <div class="separador-40"> </div>            
+        {% endif %}
+
+
+
 
       </div>
     </div>
