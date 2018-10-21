@@ -69,7 +69,7 @@ Body code
                   <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
                 {% endif %}
               <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
-              <li><a href="/logout/">Mensagens</a></li>
+              <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
               <li><a href="/logout/">Logout</a></li>
               {% else %}
                 <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>

@@ -2,22 +2,84 @@
 {% block panel_title %}Mensagens{% endblock panel_title %}
 {% block user_panel_content %}
 <style>
+  .header_container {
+    vertical-align:bottom;
+    display:inline-block;
+    letter-spacing:2px;
+    font-weight:bold;
+    text-transform:uppercase;
+    padding-bottom:5px;
+  }
+  .header_buffet {
+    width:20%;
+    text-align:center;
+
+  }
+  .header_message {
+    width:80%;
+    text-align:left;
+
+  }
+
+
+
+
+
+
   .message_container {
-    max-width:700px;
+    width:100%;
     background-color:white;
     border:1px solid #ebebeb;
-    cursor:pointer;
+    border-left:none;
+    border-right:none;
+    height:66px;
   }
-  .message_container:hover {
+
+
+  .message_author_container {
+    width:20%;
+    display:inline-block;
+    text-align:center;
+    vertical-align:top;
+    height:66px;
+    line-height:66px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding:0 6px;
+    cursor:pointer;
+
+  }
+  .message_author_container:hover {
+    background-color:#fafafa;
+  }
+  
+
+  .message_author_text {
+    display:inline-block;
+    vertical-align:middle;
+    line-height:14px;
+  }
+
+
+  .message_text_container {
+    width:80%;
+    display:inline-block;
+    color:#102766;
+    padding-left:5px;
+    position:relative;
+    cursor:pointer;
+    height:66px;
+  }
+  .message_text_container:hover {
     background-color:#fafafa;
   }
 
+
   .message_text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
-    height:60px;
-    overflow:hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .color_black {
     color:black;
@@ -30,17 +92,20 @@
   }
 
 </style>
-
+  <div class="header_container header_buffet" style="">
+    Buffet
+  </div><!--
+  --><div class="header_container header_message">
+    Mensagem
+  </div>
 {% for message in messages %}
-  <div class="message_container" {% if not forloop.last %}style="border-bottom:none"{% endif %} onclick="javascript:location.href='/usuario/chat/visualizar/?place_pk={{message.place.pk}}'">
-    <div style="width:20%; min-height:120px; display:inline-block; text-align:center; padding-top:10px; vertical-align:top; position:relative;">
-      <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if message.photo %}/media/{{message.photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
+  <div class="message_container" style="{% if not forloop.last %}border-bottom:none{% endif %}">
+    <div class="message_author_container" onclick="javascript:location.href='/buffet/detalhar/?pk={{message.place.pk}}'">
+      <span class="message_author_text color_black">{{message.place.name}}</span>
     </div><!--
-    --><div style="width:80%; display:inline-block; color:#102766; position:relative">
-      <span class="color_lightgray" style="position:absolute; top:10px; right:10px">{{message.datetime|date:'d/m/y'}}</span>
-      <span class="color_black" style="position:absolute; top:10px;">{{message.place.name}}</span>
-      <span class="color_black" style="position:absolute; top:30px;">{{message.place.address}}</span>
-      <div class="separador-60"> </div>
+    --><div class="message_text_container" onclick="javascript:location.href='/usuario/chat/visualizar/?place_pk={{message.place.pk}}{% if user_type == "seller" %}&buyerprofile_pk={{message.buyerprofile_pk}}{% endif %}'">
+      <span class="color_lightgray" style="position:absolute; top:5px; right:10px">{{message.datetime|date:'d/m/y'}}</span>
+      <div class="separador-25"> </div>
       <div class="message_text color_gray">
         {{message.text}}
       </div>

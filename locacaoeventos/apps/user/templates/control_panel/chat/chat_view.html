@@ -46,10 +46,12 @@
   }
   .chat_text {
     background-color:#fbfbfb;
-    line-height:35px;
-    padding:0 7px;
+    line-height:20px;
+    padding:5px 7px;
     margin-bottom:5px;
     border-radius:10px 10px 10px 0;
+    display: inline-block;
+    min-width:80px;
   }
 
 
@@ -153,19 +155,21 @@
 
 
     var place_pk = {{place_pk}}
-    setInterval(function(){
+    var buyerprofile_pk = "{{buyerprofile_pk}}"
+    // setInterval(function(){
+    setTimeout(function(){
       $.ajax({
         url: "/usuario/chat/get-visualizar/",
         dataType: 'json',
         data: {
           "place_pk":place_pk,
+          "buyerprofile_pk":buyerprofile_pk,
         },
         success: function (data) {
           if(data.messages.length>0) {
             var div_str = ''
             for(i=0;i<data.messages.length;i++) {
               var message = data.messages[i]
-              console.log(message.photo)
               div_str += '<div class="chat_message">'
               div_str +=   '<div class="chat_photo">'
               div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:40px; height:40px; border-radius:50%"></div>'
@@ -176,7 +180,7 @@
               div_str +=     '</div>'
               div_str +=     '<div class="chat_text_container">'
               for(j=0;j<message.message_text.length;j++){
-                div_str +=     '<div class="chat_text">' + message.message_text[j] + "</div>"
+                div_str +=     '<div class="chat_text">' + message.message_text[j] + "</div><br>"
               }
               div_str +=     '</div>'
               div_str +=   '</div>'
@@ -197,7 +201,7 @@
     // Send Messages
     // ==============================
     $("#message_send").click(function(){
-      console.log($("#message_input").val())
+      var buyerprofile_pk = "{{buyerprofile_pk}}"
       if($("#message_input").val()!=""){
         $.ajax({
           url: "/usuario/chat/contact/",
@@ -205,6 +209,7 @@
           data: {
             "place_pk":place_pk,
             "message_text":$("#message_input").val(),
+            "buyerprofile_pk":buyerprofile_pk,
           },
           success: function (data) {
             $("#message_input").val("")

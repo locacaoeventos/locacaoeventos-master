@@ -27,20 +27,35 @@ class Chat(View):
 
         # =================
         # Geting Messages
-        messages_from = [{
-            "user_contacted": message.user_to,
-            "text": message.text,
-            "datetime": message.datetime,
-            "place": message.place,
-            } for message in Message.objects.filter(user_from=user)
-        ]
-        messages_to = [{
-            "user_contacted": message.user_from,
-            "text": message.text,
-            "datetime": message.datetime,
-            "place": message.place,
-            } for message in Message.objects.filter(user_to=user)
-        ]
+        messages_from = []
+        for message in Message.objects.filter(user_from=user):
+            message_dic = {
+                "user_contacted": message.user_to,
+                "text": message.text,
+                "datetime": message.datetime,
+                "place": message.place,
+            }
+
+            if BuyerProfile.objects.filter(user=message.user_to):
+                message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_to)[0].pk
+            else:
+                message_dic["buyerprofile_pk"] = SellerProfile.objects.filter(user=message.user_from)[0].pk
+            messages_from.append(message_dic)
+
+        messages_to = []    
+        for message in Message.objects.filter(user_to=user):
+            message_dic = {
+                "user_contacted": message.user_from,
+                "text": message.text,
+                "datetime": message.datetime,
+                "place": message.place,
+            }
+
+            if BuyerProfile.objects.filter(user=message.user_from):
+                message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_from)[0].pk
+            else:
+                message_dic["buyerprofile_pk"] = SellerProfile.objects.filter(user=message.user_to)[0].pk
+            messages_to.append(message_dic)
 
         messages = messages_from + messages_to
         if is_seller == True:
@@ -59,7 +74,7 @@ class Chat(View):
                 messages_compiled.append(message)
         # =================
         
-        messages_compiled.reverse()
+        messages_compiled
         context["messages"] = messages_compiled
 
         return render(request, "control_panel/chat/chat.html", context)
@@ -81,6 +96,7 @@ class ChatView(View):
         context["panel_type"] = "chat"
 
         context["place_pk"] = request.GET.get("place_pk")
+        context["buyerprofile_pk"] = request.GET.get("buyerprofile_pk")
         return render(request, "control_panel/chat/chat_view.html", context)
 
 
@@ -102,28 +118,46 @@ class ChatView(View):
 class ChatGetViewAjax(View):
     def get(self, request, *args, **kwargs):
         user = request.user
-        buyerprofille = BuyerProfile.objects.get(user=user)
-        buyerprofile_photo = str(buyerprofille.photo)
-        if "media" in buyerprofile_photo:
-            buyerprofile_photo = buyerprofile_photo.replace("/media/", "")
-
         place_pk = request.GET.get("place_pk")
         place = Place.objects.get(pk=place_pk)
         sellerprofile = place.sellerprofile
+
+        # Geting Buyer
+        if BuyerProfile.objects.filter(user=user):
+            buyerprofile = BuyerProfile.objects.filter(user=user)[0]
+            user_name = buyerprofile.name
+        else:
+            buyerprofile_pk = request.GET.get("buyerprofile_pk")
+            buyerprofile = BuyerProfile.objects.get(pk=buyerprofile_pk)
+            user_name = sellerprofile.name
+        user_buyer = buyerprofile.user
+
+        buyerprofile_photo = "/media/" + str(buyerprofile.photo)
+
+        # Geting Seller
         user_seller = sellerprofile.user
+        print(buyerprofile_photo)
+
+
+
+
+
+
+
+
 
         messages = [{
             "message_text": message.text,
             "datetime": message.datetime,
-            "from": buyerprofille.name,
+            "from": buyerprofile.name,
             "photo": buyerprofile_photo,
-            } for message in Message.objects.filter(user_from=user, user_to=user_seller, place=place)
+            } for message in Message.objects.filter(user_from=user_buyer, user_to=user_seller, place=place)
         ] + [{
             "message_text": message.text,
             "datetime": message.datetime,
             "from": place.name,
             "place": place,
-            } for message in Message.objects.filter(user_from=user_seller, user_to=user, place=place)
+            } for message in Message.objects.filter(user_from=user_seller, user_to=user_buyer, place=place)
         ]
         if len(messages) > 0:
             messages = sorted(messages, key=lambda k: k['datetime'])
@@ -160,9 +194,14 @@ class ChatGetViewAjax(View):
                         "message_text": [message["message_text"]],
                         "datetime": message["datetime"],
                         "from": message["from"],
-                        "photo": "/media/" + message["photo"],
                     }
+
+                    if "media" not in message["photo"]:
+                        message["photo"] = "/media/" + message["photo"]
+                    message_dic["photo"] = message["photo"]
                     previous_from = message["from"]
+                    if message["from"] != user_name:
+                        message_dic["is_to"] = True
                 else:
                     message_dic["message_text"].append(message["message_text"])
 
@@ -188,7 +227,7 @@ class ChatGetViewAjax(View):
 class ChatGetDetailPlaceAjax(View):
     def get(self, request, *args, **kwargs):
         user = request.user
-        buyerprofille = BuyerProfile.objects.get(user=user)
+        buyerprofile = BuyerProfile.objects.get(user=user)
 
         place_pk = request.GET.get("place_pk")
         place = Place.objects.get(pk=place_pk)
@@ -198,8 +237,8 @@ class ChatGetDetailPlaceAjax(View):
         messages = [{
             "message_text": message.text,
             "datetime": message.datetime,
-            "from": buyerprofille.name,
-            "photo": "/media/" + str(buyerprofille.photo),
+            "from": buyerprofile.name,
+            "photo": "/media/" + str(buyerprofile.photo),
             } for message in Message.objects.filter(user_from=user, user_to=user_seller, place=place)
         ] + [{
             "message_text": message.text,
@@ -270,21 +309,24 @@ class ChatSendAjax(View):
     def get(self, request, *args, **kwargs):
         text = request.GET.get("message_text")
         place_pk = request.GET.get("place_pk")
+        buyerprofile_pk = request.GET.get("buyerprofile_pk")
         place = Place.objects.get(pk=place_pk)
-        user = request.user
 
+        user = request.user
         now = datetime.datetime.now()
 
-        print(text)
-        print(user)
-        print(place.sellerprofile.user)
-        print(now)
-        print(place)
-        
+        if BuyerProfile.objects.filter(user=user):
+            user_from = user
+            user_to = place.sellerprofile.user
+        else:        
+            user_from = user
+            user_to = BuyerProfile.objects.get(pk=buyerprofile_pk).user
+
+
         message = Message.objects.create(
             text = text,
-            user_from = user,
-            user_to = place.sellerprofile.user,
+            user_from = user_from,
+            user_to = user_to,
             datetime = now,
             place = place
         )
