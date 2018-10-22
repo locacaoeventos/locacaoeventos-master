@@ -38,8 +38,6 @@ class Chat(View):
 
             if BuyerProfile.objects.filter(user=message.user_to):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_to)[0].pk
-            else:
-                message_dic["buyerprofile_pk"] = SellerProfile.objects.filter(user=message.user_from)[0].pk
             messages_from.append(message_dic)
 
         messages_to = []    
@@ -53,8 +51,6 @@ class Chat(View):
 
             if BuyerProfile.objects.filter(user=message.user_from):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_from)[0].pk
-            else:
-                message_dic["buyerprofile_pk"] = SellerProfile.objects.filter(user=message.user_to)[0].pk
             messages_to.append(message_dic)
 
         messages = messages_from + messages_to
@@ -136,7 +132,6 @@ class ChatGetViewAjax(View):
 
         # Geting Seller
         user_seller = sellerprofile.user
-        print(buyerprofile_photo)
 
 
 

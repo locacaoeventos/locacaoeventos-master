@@ -141,59 +141,41 @@
 {% block jquery %}
   <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
+  <script type="text/javascript" src="/static/CUSTOM_JS/core/chat_general.js"></script>
 
 <script>
+
+
+
+
+
+
+
+
+
+
   $(document).ready(function(){
+    var place_pk = {{place_pk}}
+    var buyerprofile_pk = "{{buyerprofile_pk}}"
+
+
+    // Loading message first time
+    load_messages_visualize(place_pk, buyerprofile_pk)
 
     // Pull messages to bottom
     setTimeout(function(){
       var objDiv = document.getElementById("chat_conversation_container")
       objDiv.scrollTop = objDiv.scrollHeight
-    }, 1200)
-
-
-
-
-    var place_pk = {{place_pk}}
-    var buyerprofile_pk = "{{buyerprofile_pk}}"
-    // setInterval(function(){
-    setTimeout(function(){
-      $.ajax({
-        url: "/usuario/chat/get-visualizar/",
-        dataType: 'json',
-        data: {
-          "place_pk":place_pk,
-          "buyerprofile_pk":buyerprofile_pk,
-        },
-        success: function (data) {
-          if(data.messages.length>0) {
-            var div_str = ''
-            for(i=0;i<data.messages.length;i++) {
-              var message = data.messages[i]
-              div_str += '<div class="chat_message">'
-              div_str +=   '<div class="chat_photo">'
-              div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:40px; height:40px; border-radius:50%"></div>'
-              div_str +=   '</div>'
-              div_str +=    '<div class="chat_info">'
-              div_str +=     '<div class="chat_author">'
-              div_str +=       message.from
-              div_str +=     '</div>'
-              div_str +=     '<div class="chat_text_container">'
-              for(j=0;j<message.message_text.length;j++){
-                div_str +=     '<div class="chat_text">' + message.message_text[j] + "</div><br>"
-              }
-              div_str +=     '</div>'
-              div_str +=   '</div>'
-              div_str += '</div>'
-            }
-            $("#chat_conversation_container").html(div_str)              
-          } else {
-            $("#chat_conversation_container").html("Envie uma mensagem!<br><br>")              
-          }
-
-        }
-      })
     }, 800)
+
+
+
+
+
+    setInterval(function(){
+    // setTimeout(function(){
+      load_messages_visualize(place_pk, buyerprofile_pk)
+    }, 2000)
 
 
 
@@ -201,45 +183,15 @@
     // Send Messages
     // ==============================
     $("#message_send").click(function(){
-      var buyerprofile_pk = "{{buyerprofile_pk}}"
       if($("#message_input").val()!=""){
-        $.ajax({
-          url: "/usuario/chat/contact/",
-          dataType: 'json',
-          data: {
-            "place_pk":place_pk,
-            "message_text":$("#message_input").val(),
-            "buyerprofile_pk":buyerprofile_pk,
-          },
-          success: function (data) {
-            $("#message_input").val("")
-            setTimeout(function(){
-              var objDiv = document.getElementById("chat_conversation_container")
-              objDiv.scrollTop = objDiv.scrollHeight
-            }, 800)
-          }
-        })  
+        send_message_visualize(place_pk, buyerprofile_pk)
       }
     })
 
+
     $('#message_input').on('keypress', function (e) {
       if(e.which === 13){
-       $.ajax({
-         url: "/usuario/chat/contact/",
-         dataType: 'json',
-         data: {
-           "place_pk":place_pk,
-           "message_text":$("#message_input").val(),
-         },
-         success: function (data) {
-           $("#message_input").val("")
-           setTimeout(function(){
-             var objDiv = document.getElementById("chat_conversation_container")
-             objDiv.scrollTop = objDiv.scrollHeight
-           }, 800)
-
-         }
-       })  
+        send_message_visualize(place_pk, buyerprofile_pk)
       }
     });
 
