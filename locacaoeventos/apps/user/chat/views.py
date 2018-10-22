@@ -128,8 +128,10 @@ class ChatGetViewAjax(View):
             user_name = sellerprofile.name
         user_buyer = buyerprofile.user
 
-        buyerprofile_photo = "/media/" + str(buyerprofile.photo)
-
+        if buyerprofile.photo:
+            buyerprofile_photo = "/media/" + str(buyerprofile.photo)
+        else:
+            buyerprofile_photo = "/static/img/icon/user.png"
         # Geting Seller
         user_seller = sellerprofile.user
 
@@ -191,7 +193,7 @@ class ChatGetViewAjax(View):
                         "from": message["from"],
                     }
 
-                    if "media" not in message["photo"]:
+                    if "media" not in message["photo"] and "static" not in message["photo"]:
                         message["photo"] = "/media/" + message["photo"]
                     message_dic["photo"] = message["photo"]
                     previous_from = message["from"]
@@ -219,80 +221,80 @@ class ChatGetViewAjax(View):
 
 
 
-class ChatGetDetailPlaceAjax(View):
-    def get(self, request, *args, **kwargs):
-        user = request.user
-        buyerprofile = BuyerProfile.objects.get(user=user)
+# class ChatGetDetailPlaceAjax(View):
+#     def get(self, request, *args, **kwargs):
+#         user = request.user
+#         buyerprofile = BuyerProfile.objects.get(user=user)
 
-        place_pk = request.GET.get("place_pk")
-        place = Place.objects.get(pk=place_pk)
-        sellerprofile = place.sellerprofile
-        user_seller = sellerprofile.user
+#         place_pk = request.GET.get("place_pk")
+#         place = Place.objects.get(pk=place_pk)
+#         sellerprofile = place.sellerprofile
+#         user_seller = sellerprofile.user
 
-        messages = [{
-            "message_text": message.text,
-            "datetime": message.datetime,
-            "from": buyerprofile.name,
-            "photo": "/media/" + str(buyerprofile.photo),
-            } for message in Message.objects.filter(user_from=user, user_to=user_seller, place=place)
-        ] + [{
-            "message_text": message.text,
-            "datetime": message.datetime,
-            "from": place.name,
-            "place": place,
-            } for message in Message.objects.filter(user_from=user_seller, user_to=user, place=place)
-        ]
-        if len(messages) > 0:
-            messages = sorted(messages, key=lambda k: k['datetime'])
-
-
-
-            # Sorting messages by groups
-            messages_compiled = []
-            message_dic = {
-                "message_text": [messages[0]["message_text"]],
-                "datetime": messages[0]["datetime"],
-                "from": messages[0]["from"],
-            }
-            if "photo" in messages[0]:
-                message_dic["photo"] = messages[0]["photo"]
-            else:
-                message_dic["photo"] = "/media/" + str(PlacePhoto.objects.filter(place=messages[0]["place"], is_first=True)[0].photo)
-            if len(messages) == 1:
-                messages_compiled.append(message_dic)
+#         messages = [{
+#             "message_text": message.text,
+#             "datetime": message.datetime,
+#             "from": buyerprofile.name,
+#             "photo": "/media/" + str(buyerprofile.photo),
+#             } for message in Message.objects.filter(user_from=user, user_to=user_seller, place=place)
+#         ] + [{
+#             "message_text": message.text,
+#             "datetime": message.datetime,
+#             "from": place.name,
+#             "place": place,
+#             } for message in Message.objects.filter(user_from=user_seller, user_to=user, place=place)
+#         ]
+#         if len(messages) > 0:
+#             messages = sorted(messages, key=lambda k: k['datetime'])
 
 
-            previous_from = messages[0]["from"]
-            count = 0
-            for message in messages[1:]:
-                if "photo" not in message:
-                    message["photo"] = str(PlacePhoto.objects.filter(place=message["place"], is_first=True)[0].photo)
-                if message["photo"] == None:
-                    message["photo"] = "/static/img/icon/user.png"
+
+#             # Sorting messages by groups
+#             messages_compiled = []
+#             message_dic = {
+#                 "message_text": [messages[0]["message_text"]],
+#                 "datetime": messages[0]["datetime"],
+#                 "from": messages[0]["from"],
+#             }
+#             if "photo" in messages[0]:
+#                 message_dic["photo"] = messages[0]["photo"]
+#             else:
+#                 message_dic["photo"] = "/media/" + str(PlacePhoto.objects.filter(place=messages[0]["place"], is_first=True)[0].photo)
+#             if len(messages) == 1:
+#                 messages_compiled.append(message_dic)
 
 
-                if previous_from != message["from"]:
-                    messages_compiled.append(message_dic)
-                    message_dic = {
-                        "message_text": [message["message_text"]],
-                        "datetime": message["datetime"],
-                        "from": message["from"],
-                        "photo": "/media/" + message["photo"],
-                    }
-                    previous_from = message["from"]
-                else:
-                    message_dic["message_text"].append(message["message_text"])
-
-                    if count == len(messages[1:])-1:
-                        messages_compiled.append(message_dic)
+#             previous_from = messages[0]["from"]
+#             count = 0
+#             for message in messages[1:]:
+#                 if "photo" not in message:
+#                     message["photo"] = str(PlacePhoto.objects.filter(place=message["place"], is_first=True)[0].photo)
+#                 if message["photo"] == None:
+#                     message["photo"] = "/static/img/icon/user.png"
 
 
-                count += 1
-            data = {"messages":messages_compiled}
-        else:
-            data = {"messages": []}
+#                 if previous_from != message["from"]:
+#                     messages_compiled.append(message_dic)
+#                     message_dic = {
+#                         "message_text": [message["message_text"]],
+#                         "datetime": message["datetime"],
+#                         "from": message["from"],
+#                         "photo": "/media/" + message["photo"],
+#                     }
+#                     previous_from = message["from"]
+#                 else:
+#                     message_dic["message_text"].append(message["message_text"])
 
-        return JsonResponse(data)
+#                     if count == len(messages[1:])-1:
+#                         messages_compiled.append(message_dic)
+
+
+#                 count += 1
+#             data = {"messages":messages_compiled}
+#         else:
+#             data = {"messages": []}
+
+#         return JsonResponse(data)
 
 
 

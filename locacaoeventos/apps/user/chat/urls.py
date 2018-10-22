@@ -10,6 +10,6 @@ urlpatterns = [
 
     
     url(r'^chat/contact/$', ChatSendAjax.as_view()),
-    url(r'^chat/get-place-detail/$', ChatGetDetailPlaceAjax.as_view()),
+    # url(r'^chat/get-place-detail/$', ChatGetDetailPlaceAjax.as_view()),
     url(r'^chat/get-visualizar/$', ChatGetViewAjax.as_view()),
 ]

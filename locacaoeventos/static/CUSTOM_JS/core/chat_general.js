@@ -67,7 +67,7 @@
   }
   function load_messages_detail(place_pk, buyerprofile_pk){
     $.ajax({
-      url: "/usuario/chat/get-place-detail/",
+      url: "/usuario/chat/get-visualizar/",
       dataType: 'json',
       data: {
         "place_pk":place_pk,
