@@ -156,6 +156,7 @@ class ChatGetViewAjax(View):
             "place": place,
             } for message in Message.objects.filter(user_from=user_seller, user_to=user_buyer, place=place)
         ]
+
         if len(messages) > 0:
             messages = sorted(messages, key=lambda k: k['datetime'])
 
@@ -199,6 +200,8 @@ class ChatGetViewAjax(View):
                     previous_from = message["from"]
                     if message["from"] != user_name:
                         message_dic["is_to"] = True
+                    if count == len(messages[1:])-1:
+                        messages_compiled.append(message_dic)
                 else:
                     message_dic["message_text"].append(message["message_text"])
 
@@ -207,6 +210,8 @@ class ChatGetViewAjax(View):
 
 
                 count += 1
+
+
             data = {"messages":messages_compiled}
         else:
             data = {"messages": []}
