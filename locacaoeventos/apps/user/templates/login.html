@@ -27,6 +27,8 @@
                 <hr>
                 <div class="separador-10"> </div>
                 <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+                    <div onclick="userLogin()" style="width:100%; background-color:#4267b2; color:white; text-align:center; font-weight:bold; padding:7px 0; border-radius:5px; cursor:pointer">Login pelo Facebook</div>
+                    <div class="separador-20"> </div>
                     <div class="form-group">
                         <label for="form-sign-in-email">Email:</label>
                         <input type="text" class="form-control form_input_text" id="username_id" name="username" required>
@@ -50,4 +52,115 @@
     <div class="separador-100"> </div>
 </section>
 
+
+
+
+
+
+
+
+
+<script>
+
+
+
+  function userLogin()
+      {
+          FB.login(function(response) 
+          {
+             if (response.authResponse) 
+             {
+        testAPI();
+             } 
+             else 
+             {
+               console.log('User cancelled login or did not fully authorize.');
+             }
+           });
+      }   
+  // Cadastrar para o Facebook
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '196296940903582',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.9'
+    });
+    
+    // FB.getLoginStatus(function(response) {
+    //   statusChangeCallback(response);
+    // });
+
+    FB.AppEvents.logPageView();
+
+
+    // FB.Event.subscribe('auth.login', function(resp) {
+    //   testAPI();
+    // });
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  
+  function statusChangeCallback(response){
+    console.log(response.status)
+    if (response.status === 'connected') {
+        testAPI();
+        
+        // window.location = '/user/cadastrarfb';
+      } else if (response.status === 'not_authorized') {
+        console.log('We are not logged in.');
+      } else {
+        console.log('You are not logged into Facebook.');
+      }
+  };  
+
+  function checkLoginStatus() {
+    FB.getLoginStatus(function(response){
+      statusChangeCallback(response);
+    });
+  } 
+
+  function testAPI(){
+    FB.api('/me?fields=id,email,name,age_range,gender,locale,picture', function(response){
+    str_data =  "?id=" + response.id
+    str_data += "&email=" + response.email
+    str_data += "&name=" + response.name
+    str_data += "&gender=" + response.gender
+    str_data += "&locale=" + response.locale
+    str_data += "&picture=" + String(response.picture.data.url)
+    str_data += "&age=" + String(response.age_range.min) 
+
+    window.location = '/usuario/cadastrar-facebook/' + str_data
+
+
+
+
+
+    });
+  };
+
+  function buildProfile(user){
+    let profile = `
+      <h3>${user.name}</h3>
+      <ul class="list-group">
+        <li class="list-group-item">User ID: ${user.id}</li>
+        <li class="list-group-item">Email: ${user.email}</li>
+      </ul>
+    `;
+    document.getElementById('profile').innerHTML = profile;
+  }
+
+
+  function logout(){
+    FB.logout(function(response){
+    });
+  };
+</script>
 {% endblock content %}

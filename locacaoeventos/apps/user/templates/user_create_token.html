@@ -1,4 +1,6 @@
 {% extends "_base_user.html" %}
+{% load user_tags %}
+
 
 {% block page_title %}Cadastrar{% endblock page_title %}
 {% block js_select_customize %}{% endblock js_select_customize %}
@@ -9,6 +11,7 @@
 {% endblock jquery %}
 
 
+{% photo_from_fb buyer_photo|stringformat:"s" as is_fb %}
 
 <section class="container">
   <div class="block">
@@ -20,14 +23,19 @@
           {% endif %}
           <h1 class="page-title" style="text-align:center">
           {% if token_valid %}
-            E-mail confirmado
-            <div class="separador-10"> </div>
-            <i class="fa fa-check"> </i>
+            {% if not is_fb %}
+              E-mail confirmado
+              <div class="separador-10"> </div>
+              <i class="fa fa-check"> </i>
+            {% endif %}
             {% if create_family_member %}
-              <hr class="line"/>
+              {% if not is_fb %}
+                <hr class="line"/>
+              {% endif %}
               <div class="family_member_wrapper">
                 <div class="center_element">
-                  <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if buyer_photo %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
+
+                  <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if is_fb %}{{buyer_photo}}{% elif buyer_photo %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
                   <div class="separador-10"> </div>
                   Cadastre seus filhos, netos, sobrinhos, para receber as melhores novidades, <strong>{{buyer_name}}</strong> !
                 </div>

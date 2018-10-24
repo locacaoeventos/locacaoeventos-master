@@ -15,6 +15,7 @@ urlpatterns = [
     # User General
     url(r'^cadastrar/$', CreateUser.as_view()),
     url(r'^cadastro-concluido/$', CreateUserCompleted.as_view()),
+    url(r'^cadastrar-facebook/$', CreateUserFacebook.as_view()),
     url(r'^esqueceu-senha/$', ForgotPassword.as_view()),
     url(r'^confirmar-email/$', ConfirmEmail.as_view()),
     url(r'^trocar-senha/$', ChangePassword.as_view()),

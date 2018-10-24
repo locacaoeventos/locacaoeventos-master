@@ -6,6 +6,7 @@ from django.contrib import auth
 import datetime
 import random
 import string
+import os
 
 from locacaoeventos.utils.main import *
 from django.contrib.auth.models import User
@@ -17,8 +18,9 @@ from .sellerprofile.models import SellerProfile
 from django.core.mail import send_mail
 
 
-
-
+# Image from FB
+import urllib, io
+from PIL import Image
 
 
 class ForgotPassword(View):
@@ -188,6 +190,79 @@ class CreateUserCompleted(View):
 
 
 
+class CreateUserFacebook(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context = {
+            "form_buyer": BuyerFormFB(), 
+        }
+
+
+
+        fb_id = str(request.GET.get("id"))
+        fb_email = str(request.GET.get("email"))
+        username = "FACEBOOKUSER" + fb_email + fb_id
+
+        user_list = User.objects.filter(username=username)
+        if user_list:
+            user = user_list[0]
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, user)
+            return render(request, "home.html", context)
+        return render(request, "user_create_fb.html", context)
+    def post(self, request, *args, **kwargs):
+        context = {}
+        form_buyer = BuyerFormFB(request.POST, initial={"accepts_newsletter":True})
+        context["form_buyer"] = form_buyer 
+
+        fb_id = str(request.GET.get("id"))
+        fb_email = str(request.GET.get("email"))
+        fb_name = str(request.GET.get("name").replace("%20", " "))
+        fb_gender = str(request.GET.get("gender"))
+        fb_picture = str(request.GET.get("picture"))
+        fb_age = str(request.GET.get("age"))
+
+
+
+
+        if form_buyer.is_valid():
+            user = User.objects.create(
+                username="FACEBOOKUSER"+fb_email+fb_id,
+                password="rawrawraw"
+            )
+            user.set_password(fb_email+fb_id)
+            user.save()
+
+            day = str(form_buyer.cleaned_data["day"])
+            month = str(form_buyer.cleaned_data["month"])
+            year = str(form_buyer.cleaned_data["year"])
+            birthday = year + "-" + month + "-" + day
+
+
+
+
+            buyer = BuyerProfile.objects.create(
+                user=user,
+                name=fb_name,
+                birthday=birthday,
+                cellphone=form_buyer.cleaned_data["cellphone"],
+                gender=fb_gender,
+                civil_status=form_buyer.cleaned_data["civil_status"],
+                email=fb_email,
+                is_active=True,
+                key=fb_id,
+                accepts_newsletter=False,
+                photo="http://graph.facebook.com/" + fb_id + "/picture?type=normal"
+            )
+
+
+            if "accepts_newsletter" in form_buyer.cleaned_data:
+                buyer.accepts_newsletter = True
+                buyer.save()
+            user_pk = str(User.objects.get(username="FACEBOOKUSER"+fb_email+fb_id).pk)
+            return redirect("/usuario/confirmar-email/?key_FB=" + fb_id + "&user_pk=" + user_pk)
+        else:
+            return render(request, "user_create_fb.html", context)
 
 
 
@@ -208,25 +283,14 @@ class CreateUserCompleted(View):
 class ConfirmEmail(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        user = User.objects.get(pk=request.GET["user"])
-        if "seller" in request.GET:
-            seller = SellerProfile.objects.get(user=user)
-            token = request.GET["token"]
-            if seller.key == token:
-                seller.is_active = True
-                seller.save()
-                user.backend = 'django.contrib.auth.backends.ModelBackend'
-                login(request, user)
-                context = base_context(request.user)
-                context["token_valid"] = True
-            else:
-                context["token_valid"] = False
-        else:
+
+        # FB Create
+        if "key_FB" in request.GET:
+            key_FB = request.GET.get("key_FB")
+            user_pk = request.GET.get("user_pk")
+            user = User.objects.get(pk=user_pk)
             buyer = BuyerProfile.objects.get(user=user)
-            token = request.GET["token"]
-            if buyer.key == token:
-                buyer.is_active = True
-                buyer.save()
+            if buyer.key == key_FB:
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
                 context = base_context(request.user)
@@ -236,9 +300,43 @@ class ConfirmEmail(View):
                 context["buyer_name"] = buyer.name
 
                 # Family Member
-                context["familymember_list"] = FamilyMember.objects.filter(related_to=buyer)
+                context["familymember_list"] = FamilyMember.objects.filter(related_to=buyer)        
             else:
                 context["token_valid"] = False
+        # Normal Create
+
+        else:
+            user = User.objects.get(pk=request.GET["user"])
+            if "seller" in request.GET:
+                seller = SellerProfile.objects.get(user=user)
+                token = request.GET["token"]
+                if seller.key == token:
+                    seller.is_active = True
+                    seller.save()
+                    user.backend = 'django.contrib.auth.backends.ModelBackend'
+                    login(request, user)
+                    context = base_context(request.user)
+                    context["token_valid"] = True
+                else:
+                    context["token_valid"] = False
+            else:
+                buyer = BuyerProfile.objects.get(user=user)
+                token = request.GET["token"]
+                if buyer.key == token:
+                    buyer.is_active = True
+                    buyer.save()
+                    user.backend = 'django.contrib.auth.backends.ModelBackend'
+                    login(request, user)
+                    context = base_context(request.user)
+                    context["token_valid"] = True
+                    context["create_family_member"] = True
+                    context["buyer_photo"] = buyer.photo
+                    context["buyer_name"] = buyer.name
+
+                    # Family Member
+                    context["familymember_list"] = FamilyMember.objects.filter(related_to=buyer)
+                else:
+                    context["token_valid"] = False
         return render(request, "user_create_token.html", context)
 
 

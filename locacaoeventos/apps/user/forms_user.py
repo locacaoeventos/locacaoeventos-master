@@ -51,7 +51,6 @@ class BuyerForm(TOCForm):
 
         # Photo
         photo = cleaned_data.get('photo')
-        print(photo)
         if photo:
             if not any(string in str(photo) for string in [".png", ".jpeg", ".jpg"]) and photo is not None:
                 error_message = forms.ValidationError(
@@ -59,6 +58,36 @@ class BuyerForm(TOCForm):
                 self.add_error('photo', error_message)
 
 
+
+
+class BuyerFormFB(TOCForm):
+    day = fields.CharField(required=True, label="Data de Nascimento")
+    month = fields.CharField(required=True, label="Data de Nascimento")
+    year = fields.CharField(required=True, label="Data de Nascimento")
+    cellphone = fields.CharField(required=True, label="Celular")
+    civil_status = fields.CharField(required=True, label="Status Civil")
+    accepts_newsletter = forms.BooleanField(required=False, initial="checked")
+
+    def __init__(self, *args, **kwargs):
+        super(BuyerFormFB, self).__init__(*args, **kwargs)
+
+
+    def clean(self):
+        cleaned_data = super(BuyerFormFB, self).clean()
+        # Birthday
+        day = str(cleaned_data.get('day'))
+        month = str(cleaned_data.get('month'))
+        year = str(cleaned_data.get('year'))
+        if len(month) == 1:
+            month = "0" + month
+        if len(day) == 1:
+            day = "0" + day
+        birthday = year + "-" + month + "-" + day
+        try:
+            datetime.datetime.strptime(birthday, '%Y-%m-%d')
+        except:
+            error_message = forms.ValidationError("ERROR")
+            self.add_error('day', error_message)
 
 
 

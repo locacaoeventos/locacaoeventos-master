@@ -1,0 +1,167 @@
+{% extends "_base_user.html" %}
+{% load user_tags %}
+{% load datetime_tags %}
+{% block page_title %}Cadastrar{% endblock page_title %}
+{% block js_select_customize %}{% endblock js_select_customize %}
+{% block old_custom_js %}{% endblock old_custom_js %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/user_create_fb.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+
+
+<section class="container">
+<div class="checkbox" style="margin-bottom:13px; display:none"><input type="checkbox" name="features[]" value="1"></div>
+  <div class="block">
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+        <header>
+          <h1 class="page-title" style="padding-bottom:10px">Cadastrar</h1>
+        </header>
+        <hr>
+        <div class="separador-10"> </div>
+        <div style="text-align:center; width:100%">
+          <span style="font-weight:bold; float:left">EU QUERO</span><br>
+          <div class="btn btn-default" style="background-color:#98d000">Procurar</div>
+        </div>
+
+        <div class="separador-20"> </div>
+
+
+
+          <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+            {% for field in form_buyer %}
+                {% if field.name != "month" and field.name != "year" and field.name != "accepts_newsletter"  and field.name != "name" and field.name != "email" and field.name != "password" and field.name != "gender" and field.name != "photo"%}
+                <div class="form-group">
+                  <label>{{field.label}}</label>
+                {% endif %}
+
+                {% if field.name == "day" %}
+                  <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required>
+                    <option value="">Dia</option>
+                    {% for i in 31|create_monthday_set %}
+                      <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                  </select>
+                  <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required>
+                    <option value="">Mês</option>
+                    {% for i in 12|create_monthday_set %}
+                      <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                  </select>
+                  <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required>
+                    <option value="">Ano</option>
+                    {% for i in 120|create_year_set %}
+                      <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                  </select>
+                  <div class="separador-5"> </div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      Data inválida
+                    </div>
+                  {% endif %}
+
+                {% elif field.name == "civil_status" %}
+                  <div class="row-100">
+                    <div class="row-50">
+
+                      <label class="container_radio" style="font-weight:bold">Solteiro(a)
+                        <input id="id_solteiro" type="radio" name="civil_status" value="solteiro">
+                        <span class="checkmark_radio"></span>
+                      </label>
+                    </div><!--
+                    --><div class="row-50">
+                      <label class="container_radio" style="font-weight:bold">Casado(a)
+                        <input id="id_casado" type="radio" name="civil_status" value="casado">
+                        <span class="checkmark_radio"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row-100">
+                    <div class="row-50">
+                      <label class="container_radio" style="font-weight:bold">Viúvo(a)
+                        <input id="id_viuvo" type="radio" name="civil_status" value="viuvo">
+                        <span class="checkmark_radio"></span>
+                      </label>
+                    </div><!--
+                    --><div class="row-50">
+                      <label class="container_radio" style="font-weight:bold">Divorciado(a)
+                        <input id="id_divorciado" type="radio" name="civil_status" value="divorciado">
+                        <span class="checkmark_radio"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row-100">
+                    <div class="row-50">
+                      <label class="container_radio" style="font-weight:bold">Outro
+                        <input id="id_outro" type="radio" name="civil_status" value="outro">
+                        <span class="checkmark_radio"></span>
+                      </label>
+                    </div>
+                  </div>
+
+
+                {% elif field.name == "accepts_newsletter" %}
+                  <label>Aceita receber Newsletter</label>
+                  <div class="separador-5"> </div>
+                  <div class="center_element">
+                    <label class="container_checkbox" style="font-weight:bold; display:inline">
+                      <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked{% endif %}>
+                      <span class="checkmark_checkbox"></span>
+                    </label>
+                  </div>
+                  <div class="separador-30"> </div>
+
+
+
+                {% elif field.name != "month" and field.name != "year"  and field.name != "accepts_newsletter" and field.name != "name" and field.name != "email" and field.name != "password" and field.name != "gender" and field.name != "photo" %}
+                  {{field}}
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                      {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+
+                {% endif %}
+              {% if field.name != "month" and field.name != "year"  and field.name != "accepts_newsletter" and  field.name != "name" and field.name != "email" and field.name != "password" and field.name != "gender" and field.name != "photo" %}
+              </div>
+              <div class="separador-20"> </div>
+              {% endif %}
+            {% endfor %}
+            <!--<div class="checkbox pull-left">
+              <label><input type="checkbox" name="newsletter">&nbsp;&nbsp;Concordo e Aceito com os Termos e Condições</label>
+            </div>-->
+            <div class="form-group clearfix">
+              <input type="submit" method="post" class="btn pull-right btn-default" id="send" name="buyer_form" value="Criar Conta"/>
+            </div>
+          </form>
+          <div class="separador-10"> </div>
+          <hr>
+          <div class="center">
+            <figure class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
+          </div>          
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="/static/CUSTOM_JS/user/user_create.js"></script>
+  <script type="text/javascript" src="/static/CUSTOM_JS/core/upload_single_file.js"></script>
+  <script>
+  </script>
+  
+{% endblock content %}

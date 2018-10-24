@@ -3,3 +3,4 @@ psycopg2
 pillow
 googlemaps
 xlwt
+social-auth-app-django
