@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
+from django.http import HttpResponseRedirect
 
 from locacaoeventos.utils.main import *
 from django.contrib.auth.models import User
@@ -62,6 +63,8 @@ class Login(View):
                 profile = SellerProfile.objects.filter(user=user)[0]
             if profile.is_active:
                 login(request, user)
+                if "next" in request.GET:
+                    return HttpResponseRedirect(request.GET['next'])
                 return redirect('/home')
             else:
                 context = {
