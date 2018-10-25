@@ -27,15 +27,23 @@ class ListBuffetAdditionalInformationAjax(View):
         places = []
         for placeadditionalinformation in PlaceAdditionalInformation.objects.all():
             has_all = True
-            for i in range(len(additional_informations)):
-                if getattr(placeadditionalinformation, additional_informations[i]) == False:
-                    has_all = False
-            if has_all:
-                places.append(placeadditionalinformation.place)
+            if len(additional_informations) > 1:
+                for i in range(len(additional_informations)):
+                    if getattr(placeadditionalinformation, additional_informations[i]) == False:
+                        has_all = False
+                if has_all:
+                    places.append(placeadditionalinformation.place)
 
-        place_list = get_place_information(places)
-        if len(place_list) > 0:
-            data = { "place_list":place_list }
+
+        # Filter by Name/Location, Capacity and Date
+        if len(additional_informations) == 1:
+            places = [place for place in Place.objects.filter(is_active=True, has_finished_basic=True)]
+
+        items_pk = []
+        for place in places:
+            items_pk.append(place.pk)
+        if len(items_pk) > 0:
+            data = { "items_pk":items_pk }
         else:
             data = { "none": "True" }
         return JsonResponse(data)
@@ -51,14 +59,6 @@ class ListBuffetAdditionalInformationAjax(View):
 class OrderByBuffetAjax(View):
     def get(self, request, *args, **kwargs):
 
-
-
-        # <option value="1">Relevância</option>
-        # <option value="2">Preço - Maior</option>
-        # <option value="3">Preço - Menor</option>
-        # <option value="4">Avaliação - Maior</option>
-        # <option value="5">Nome - A-Z</option>
-        # <option value="6">Nome - Z-A</option>
 
         current_pks = ast.literal_eval(request.GET.get("current_pks"))
         option = int(request.GET.get("option"))
@@ -127,10 +127,40 @@ class OrderByBuffetAjax(View):
             for i in range(len(place_list_sorted)):
                 place_list_sorted[i]["placeprice_min"] = "%.2f"%place_list_sorted[i]["placeprice_min"]
 
+            items_pk = []
+            for i in range(len(place_list_sorted)):
+                items_pk.append(place_list_sorted[i]["pk"])
 
-            data = { "place_list":place_list_sorted }
+            data = { "items_pk":items_pk }
         else:
             data = { "none": "True" }
         return JsonResponse(data)
+
+
+
+
+
+
+
+class GetPlaceInformation(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            items_pk = ast.literal_eval(request.GET.get("items_pk"))
+            list_places_obj = []
+            for i in range(len(items_pk)):
+                place = Place.objects.get(pk=items_pk[i])
+                list_places_obj.append(place)
+            list_places = get_place_information(list_places_obj)
+
+            data = { "list_places": list_places }
+        except:
+            data = { "none": True }
+        return JsonResponse(data)
+
+
+
+
+
+
 
 

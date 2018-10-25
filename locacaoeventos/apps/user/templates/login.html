@@ -129,15 +129,19 @@
 
   function testAPI(){
     FB.api('/me?fields=id,email,name,age_range,gender,locale,picture', function(response){
-    str_data =  "?id=" + response.id
-    str_data += "&email=" + response.email
-    str_data += "&name=" + response.name
-    str_data += "&gender=" + response.gender
-    str_data += "&locale=" + response.locale
-    str_data += "&picture=" + String(response.picture.data.url)
-    str_data += "&age=" + String(response.age_range.min) 
+      console.log("aaa")
+      console.log("aaa")
+      console.log("aaa")
+      console.log("aaa")
+      str_data =  "?id=" + response.id
+      str_data += "&email=" + response.email
+      str_data += "&name=" + response.name
+      str_data += "&gender=" + response.gender
+      str_data += "&locale=" + response.locale
+      str_data += "&picture=" + String(response.picture.data.url)
+      str_data += "&age=" + String(response.age_range.min) 
 
-    window.location = '/usuario/cadastrar-facebook/' + str_data
+      window.location = '/usuario/cadastrar-facebook/' + str_data
 
 
 
