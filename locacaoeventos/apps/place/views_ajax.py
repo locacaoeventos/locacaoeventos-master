@@ -24,24 +24,30 @@ class ListBuffetAjax(View):
 class ListBuffetAdditionalInformationAjax(View):
     def get(self, request, *args, **kwargs):
         additional_informations = request.GET.get("additional_informations").split(",")
+        places_pk = ast.literal_eval(ast.literal_eval(request.GET.get("places_pk")))
+        places_option = Place.objects.filter(pk__in=places_pk)
+
         places = []
         for placeadditionalinformation in PlaceAdditionalInformation.objects.all():
             has_all = True
-            if len(additional_informations) > 1:
+            if len(additional_informations) >= 1 and additional_informations[0] != "":
                 for i in range(len(additional_informations)):
                     if getattr(placeadditionalinformation, additional_informations[i]) == False:
                         has_all = False
                 if has_all:
-                    places.append(placeadditionalinformation.place)
+                    if placeadditionalinformation.place in places_option:
+                        places.append(placeadditionalinformation.place)
 
 
         # Filter by Name/Location, Capacity and Date
-        if len(additional_informations) == 1:
-            places = [place for place in Place.objects.filter(is_active=True, has_finished_basic=True)]
+
+        if len(additional_informations) == 1 and additional_informations[0] == "":
+            places = [place for place in places_option]
 
         items_pk = []
         for place in places:
             items_pk.append(place.pk)
+        print(items_pk)
         if len(items_pk) > 0:
             data = { "items_pk":items_pk }
         else:

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 import xlwt
 
 from locacaoeventos.utils.main import *
+from locacaoeventos.utils.feature import *
 from locacaoeventos.utils.excel import *
 
 from locacaoeventos.apps.place.placecore.models import Place
@@ -40,6 +41,11 @@ class UploadBuffet(View):
         return render(request, "admin/buffet_upload.html", context)
 
 
+class AdminFeaturedBuffet(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        update_feature_places()
+        return render(request, "admin/buffet_featured.html", context)
 
 
 

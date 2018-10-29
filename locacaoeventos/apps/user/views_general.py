@@ -26,7 +26,7 @@ class Home(View):
         place = request.POST["place"]
         date = request.POST["date"]
         capacity = request.POST["capacity"]
-        url_str = "/buffet/listar/?place=" + place + "&date=" + date + "&capacity=" + capacity
+        url_str = "/buffet/listar/?buffet=" + place + "&date=" + date + "&capacity=" + capacity
         return redirect(url_str)
 
 class AboutUs(View):
@@ -118,7 +118,9 @@ class Teste(View):
 
 
 
-
+class GoDaddyVerification(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "static/godaddy.html", context)
 
 
 

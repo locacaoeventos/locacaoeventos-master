@@ -12,7 +12,7 @@ class Place(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     relevance = models.FloatField("Relevância", default=0)
-    visualization = models.IntegerField("Visualizações", default=0)
+    feature = models.FloatField("Visualizações", default=0)
 
     is_authorized_by_admin = models.BooleanField(default=False)
     has_finished_basic = models.BooleanField(default=False)
@@ -104,3 +104,19 @@ class PlacePhoto(models.Model):
     is_first = models.BooleanField(default=False)
     def __str__(self):
         return str(self.place.name)
+
+
+
+
+
+class PlaceFeature(models.Model):
+    str_algorithm = models.CharField(max_length=1028, null=True, blank=True)
+    view_factor = models.FloatField(default=0)
+    view_factor_firstday = models.FloatField(default=0)
+
+    reservation_factor = models.FloatField(default=0)
+    reservation_factor_firstday = models.FloatField(default=0)
+
+    review_factor = models.FloatField(default=0)
+    review_factor_firstday = models.FloatField(default=0)
+

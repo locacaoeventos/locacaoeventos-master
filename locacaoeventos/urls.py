@@ -4,7 +4,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
 
-from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs
+from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs, GoDaddyVerification
 from locacaoeventos.apps.user.views import UploadFile, GetPhoto
 
 import locacaoeventos.apps.user.urls
@@ -31,6 +31,9 @@ urlpatterns = [
 
     url(r'^upload_file/$', UploadFile.as_view()),
     url(r'^get_photo/$', GetPhoto.as_view()),
+
+
+    url(r'^.well-known/pki-validation/$', GoDaddyVerification.as_view()),
     
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

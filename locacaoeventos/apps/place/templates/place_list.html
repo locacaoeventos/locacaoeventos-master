@@ -23,6 +23,7 @@
 
 
 
+<div id="places_pk_original" style="display:none">{{places_pk}}</div>
 <div id="places_pk" style="display:none">{{places_pk}}</div>
 <div id="places_container"></div>
 <section class="container">
@@ -306,9 +307,7 @@ $(".additional_information_checkbox").on("change", function(){
     url: "/buffet/ajax/get-additional-information/",
     dataType: 'json',
     data: {
-      "search":pnleft["search"],
-      "date":pnleft["date"],
-      "capacity":pnleft["capacity"],
+      "places_pk":JSON.stringify($("#places_pk").html()),
       "additional_informations":String(pnleft["additional_informations"]),
 
     },
@@ -332,7 +331,6 @@ function get_pnleft(){
       additional_informations.push($(this).attr("name"))
     }
   })
-  console.log(additional_informations)
   return {
     "search":search,
     "date":date,

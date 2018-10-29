@@ -10,7 +10,7 @@ from locacaoeventos.utils.place import *
 from locacaoeventos.utils.general import *
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 
-from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation
+from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceVisualization
 from .placereservation.models import PlacePrice, PlaceUnavailability, PlaceReservation, PlacePrice
 from .placereview.models import PlaceReview
 
@@ -18,38 +18,46 @@ from .placereview.models import PlaceReview
 class ListPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        place_list = get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True))
+        place_list_not_filtered = get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True))
 
-        places_pk = []
-        for place in place_list:
-            places_pk.append(place["pk"])
-        context["places_pk"] = places_pk
+
+
 
 
         # BEGIN Paginator
-        paginator = Paginator(place_list, 6)
-        page = request.GET.get('page')
-        places = paginator.get_page(page)
+        # paginator = Paginator(place_list, 6)
+        # page = request.GET.get('page')
+        # places = paginator.get_page(page)
         
-        places.paginator.place_range = [item+1 for item in range(places.paginator.num_pages)]
-        context["place_list"] = places
-        context["place_list_dict"] = places.paginator.__dict__
+        # places.paginator.place_range = [item+1 for item in range(places.paginator.num_pages)]
+        # context["place_list"] = places_pk
+        # context["place_list_dict"] = places.paginator.__dict__
         # END Paginator
 
 
         # Left Panel
         context["place_additional_information"] = get_additional_information_important_attributes()
         capacity = request.GET.get("capacity")
-        if capacity == "":
-            capacity = 500
         context["capacity"] = capacity
-        context["address"] = request.GET.get("place")
-        try:
-            print(get_latlng_with_address_str(context["address"]))
-        except:
-            pass
-        context["date"] = request.GET.get("date")
+        buffet = request.GET.get("buffet")
+        date = request.GET.get("date")
+        context["buffet"] = buffet
+        context["date"] = date
 
+
+
+
+
+
+
+
+        # filter
+        place_list = filter_place_information(place_list_not_filtered, capacity, buffet, date)
+        places_pk = []
+        for place in place_list:
+            places_pk.append(place["pk"])
+        context["places_pk"] = places_pk
+        
         return render(request, "place_list.html", context)
 
 
@@ -59,6 +67,10 @@ class DetailPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         place_obj = Place.objects.get(pk=request.GET["pk"])
+
+        # Place Visualization
+        PlaceVisualization.objects.create(place=place_obj)
+
         place = place_obj.__dict__
         context["place_seller"] = place_obj.sellerprofile.__dict__
         context["place"] = place
@@ -84,6 +96,18 @@ class DetailPlace(View):
         context["review_rates"] = reviews_dic["review_rates"]
 
         context["price_list"] = PlacePrice.objects.filter(place=place_obj)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         return render(request, "place_detail.html", context)

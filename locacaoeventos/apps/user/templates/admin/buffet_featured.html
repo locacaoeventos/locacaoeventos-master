@@ -1,0 +1,171 @@
+{% extends "admin/_base_admin.html" %}
+{% block page_title %}Listar Buffets{% endblock page_title %}
+
+
+{% block content %}
+<style>
+.variable_title {
+  font-weight:bold
+}
+.variable_description_container {
+  margin-left:10px;
+}
+.visualize_altered {
+  font-weight:bold;
+}
+.margin_left {
+  margin-left:10px;
+}
+</style>
+<h4>Buffets em Destaque</h4>
+
+<div class="separador-20"> </div>
+<hr class="line"/>
+<h4>Algoritmo</h4>
+<br>
+
+<h5 class="variable_title">+ - * / ^ e</h5>
+<div class="variable_description_container">
+  <h6>Operações com adição, subtração, multiplicação, divisão, potência, número de euler</h6>
+</div>
+
+<br>
+<h5 class="variable_title">data_criacao</h5>
+<div class="variable_description_container">
+  <h6>Quantidade de dias entre agora e depois</h6>
+</div>
+
+<br>
+<h5 class="variable_title">qtdade_visualizacao</h5>
+<div class="variable_description_container">
+
+  <h6 style="display:inline; vertical-align:middle">Fator Data:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>O fator data pondera dias mais recentes para serem mais valorizados; fórmula logarítmica 1/(e^(x*fator)) tal que e=2.71828, x=diferença de datas em dia, fator=Fator Data.</h6>
+  <h6 style="display:inline; vertical-align:middle">Fator Um Dia antes:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>Valor de visualizações com um dia anterior (estes não seguirão o fator anterior).</h6>
+  <!--<div style="width:100%; text-align:center">
+    <h6 style="display:inline; font-weight:bold">Depois de 1 dia: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 10 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 30 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 90 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 360 dias: <span class="visualize_altered">123</span></h5>
+  </div>,-->
+</div>
+
+<br>
+<h5 class="variable_title">reservation</h5>
+<div class="variable_description_container">
+
+  <h6 style="display:inline; vertical-align:middle">Fator Data:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>O fator data pondera dias mais recentes para serem mais valorizados; fórmula logarítmica 1/(e^(x*fator)) tal que e=2.71828, x=diferença de datas em dia, fator=Fator Data.</h6>
+  <h6 style="display:inline; vertical-align:middle">Fator Um Dia antes:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>Valor de visualizações com um dia anterior (estes não seguirão o fator anterior).</h6>
+  <!--<div style="width:100%; text-align:center">
+    <h6 style="display:inline; font-weight:bold">Depois de 1 dia: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 10 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 30 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 90 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 360 dias: <span class="visualize_altered">123</span></h5>
+  </div>-->
+</div>
+
+
+
+
+
+<br>
+<h5 class="variable_title">review</h5>
+<div class="variable_description_container">
+
+  <h6 style="display:inline; vertical-align:middle">Fator Data:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>O fator data pondera dias mais recentes para serem mais valorizados; fórmula logarítmica 1/(e^(x*fator)) tal que e=2.71828, x=diferença de datas em dia, fator=Fator Data.</h6>
+  <h6 style="display:inline; vertical-align:middle">Fator Um Dia antes:</h6>&nbsp;&nbsp;<input type="text"><br>
+  <h6>Valor de visualizações com um dia anterior (estes não seguirão o fator anterior).</h6>
+  <!--<div style="width:100%; text-align:center">
+    <h6 style="display:inline; font-weight:bold">Depois de 1 dia: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 10 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 30 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 90 dias: <span class="visualize_altered">123</span> // </h5>
+    <h6 style="display:inline">Depois de 360 dias: <span class="visualize_altered">123</span></h5>
+  </div>-->
+</div>
+
+
+
+<div class="separador-100"> </div>
+<hr class="line"/>
+<h4>Tabela</h4>
+<div class="separador-30"> </div>
+<div class="adv-table">
+  <table  class="display table table-bordered table-striped" id="dynamic-table">
+    <thead>
+      <tr>
+        <th class="center">Nome</th>
+        <th class="center">PK</th>
+        <th class="center">Dono</th>
+        <th class="center">Endereço</th>
+        <th class="center">Capacidade</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for place in place_list %}
+        <tr id="row_{{place.pk}}">
+          <td><a href="/buffet/detalhar/?pk={{place.pk}}">{{place.name}}</a></td>
+          <td class="center">pk={{place.pk}}</td>
+          <td>{{place.sellerprofile}}</td>
+          <td>{{place.address}}</td>
+          <td class="center">{{place.capacity}}</td>
+          <td style="text-align:center">
+            <div pk="{{place.pk}}" id="place_{{place.pk}}" class="center banned {% if place.is_active %}not_banned{% else %}is_banned{% endif %}">
+              {% if place.is_active %}Ativo{% else %}Banido{% endif %}
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="separador-100"> </div>
+
+
+
+
+
+
+
+
+
+
+
+{% block jquery %}<script src="/static/base_template_admin/js/jquery-1.10.2.js"></script>{% endblock jquery %}
+<script>
+  $(document).on("click", ".banned", function(){
+    var pk = $(this).attr("pk")
+    $.ajax({
+      url: "/administrador/ban-buffet/",
+      dataType: 'json',
+      data: {
+        "pk": pk,
+      },
+      success: function (data) {
+        var this_element = $("#place_" + String(data.pk))
+        var is_active = data.is_active
+        if(is_active==true){
+          this_element.html("Ativo")
+          this_element.removeClass("is_banned")
+          this_element.addClass("not_banned")
+        } else {
+          this_element.html("Banido")
+          this_element.removeClass("not_banned")
+          this_element.addClass("is_banned")
+        }
+      }
+    })  
+  })
+
+
+</script>
+
+
+{% endblock content %}

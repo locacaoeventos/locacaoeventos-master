@@ -112,6 +112,7 @@
                             <a {% if place.is_active %}href="/usuario/anunciante/buffet/cadastrar/?pk={{place.pk}}"{% endif %} class="btn btn-default listowned_button" style="margin-bottom:5px; vertical-align:top">{% if not place.has_finished_basic %}Terminar Anúncio{% else %}Editar{% endif %}</a>
                             {% if place.has_finished_basic %}
                                 <a {% if place.is_active %}href="/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}"{% endif %} style="vertical-align:top" class="btn btn-default listowned_button">Disponibilidades</a>
+                                <a {% if place.is_active %}href="/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}"{% endif %} style="vertical-align:top" class="btn btn-default listowned_button">Preços</a>
                             {% endif %}
                     {% endif %}
                 </div>

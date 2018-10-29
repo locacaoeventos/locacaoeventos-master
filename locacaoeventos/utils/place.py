@@ -1,11 +1,13 @@
-import googlemaps
 import math
 
-from locacaoeventos.utils.general import get_dic_by_key
+from datetime import datetime
+import pytz
+
+from locacaoeventos.utils.general import *
 
 from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability, PlacePrice
 from locacaoeventos.apps.place.placereview.models import PlaceReview
-from locacaoeventos.apps.place.placecore.models import PlacePhoto
+from locacaoeventos.apps.place.placecore.models import PlacePhoto, Place
 from locacaoeventos.apps.user.chat.models import Message
 
 def get_reviews_from_place(place):
@@ -61,10 +63,6 @@ def get_reviews_from_place(place):
 
 
 
-def get_latlng_from_address_str(address_str):
-    gmaps = googlemaps.Client(key ='AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw')
-    geocode_result = gmaps.geocode(address_str)
-    return [geocode_result[0]['geometry']['location']['lat'], geocode_result[0]['geometry']['location']['lng']]
 
 
 
@@ -196,6 +194,8 @@ def get_place_information(places):
             "capacity": place.capacity,
             "address": place.address,
             "description": place.description,
+            "lat": place.lat,
+            "lng": place.lng,
         }
         photo = PlacePhoto.objects.filter(place=place)
         if photo:
@@ -214,3 +214,91 @@ def get_place_information(places):
         place_dic["review_list"] = review_list
         place_list.append(place_dic)
     return place_list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def filter_place_information(place_list_not_filtered, capacity, buffet, date):
+    place_list = []
+    if capacity == "" and buffet == "" and date == "":
+        return place_list_not_filtered
+    else:
+        if buffet != "":
+            try:
+                latlng = get_latlng_from_address_str(buffet)
+            except:
+                latlng = None
+
+
+            # Filter by Location
+            if latlng is not None:
+                lat_difference = 0.003
+                lng_difference = 0.06
+
+                lat = get_positive(latlng[0])
+                lng = get_positive(latlng[1])
+
+                for i in range(len(place_list_not_filtered)):
+                    place = place_list_not_filtered[i]
+
+                    lat_place = get_positive(place["lat"])
+                    lng_place = get_positive(place["lng"])
+
+                    if get_positive(lat_place - lat) <= lat_difference and get_positive(lng_place - lng) <= lng_difference:
+                        place_list.append(place)
+
+            # Filter by Name
+            for i in range(len(place_list_not_filtered)):
+                place = place_list_not_filtered[i]
+
+                if compare_strings(buffet, place["name"]):
+                    if get_dic_by_key(place_list, "pk", place["pk"]) is None:
+                        place_list.append(place)
+        else:
+            place_list = place_list_not_filtered
+
+
+        # Filter by Capacity
+        if capacity != "":
+            place_list_filtered_capacity = []
+            capacity_tolerance = 100
+            capacity_analyse = int(capacity)
+            for i in range(len(place_list)):
+                place = place_list[i]
+                if place["capacity"]+capacity_tolerance >= capacity_analyse and place["capacity"]-capacity_tolerance <= capacity_analyse:
+                    place_list_filtered_capacity.append(place)
+
+
+        # Filter by Date
+        place_list_filtered_date = []
+        if date != "":
+            date_analyse_prep = date.replace(" ", "")
+            date_analyse = datetime.strptime(date.replace(" ", "") + " 16", '%d/%m/%Y %H')
+
+            for i in range(len(place_list)):
+                place_obj = Place.objects.get(pk=place_list[i]["pk"])
+                place_dic = place_list[i]
+                unavailabilities = PlaceUnavailability.objects.filter(place=place_obj)
+                is_occupied = False
+                for unavailability in unavailabilities:
+                    utc=pytz.UTC
+                    if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
+                        is_occupied = True
+                
+                if not is_occupied:
+                    place_list_filtered_date.append(place_dic)
+
+        else:
+            place_list_filtered_date = place_list_filtered_capacity
+
+        return place_list_filtered_date

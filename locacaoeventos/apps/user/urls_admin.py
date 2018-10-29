@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^listar-buffet/$', user_passes_test(lambda u: u.has_perm('perm'))(AdminListBuffet.as_view())),
     url(r'^verificar-buffet/$', user_passes_test(lambda u: u.has_perm('perm'))(AdminVerifyBuffet.as_view())),
+    url(r'^destaque-buffet/$', user_passes_test(lambda u: u.has_perm('perm'))(AdminFeaturedBuffet.as_view())),
 
     url(r'^upload-buffet/$', user_passes_test(lambda u: u.has_perm('perm'))(UploadBuffet.as_view())),
 

@@ -7,6 +7,7 @@ import datetime
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 from locacaoeventos.utils.forms import *
 from locacaoeventos.utils.place import *
+from locacaoeventos.utils.general import *
 
 class PlaceForm(TOCForm):
 
@@ -47,11 +48,13 @@ class PlaceForm(TOCForm):
 
     def clean(self):
         cleaned_data = super(PlaceForm, self).clean()
-        # address = cleaned_data.get('address')
-        # try:
-        #     coordinates = get_latlng_from_address_str(address)
-        # except:
-        #     self.add_error('address', forms.ValidationError("Endereço inválido"))
+        address = cleaned_data.get('address')
+        print(address)
+        coordinates = get_latlng_from_address_str(address)
+        try:
+            coordinates = get_latlng_from_address_str(address)
+        except:
+            self.add_error('address', forms.ValidationError("Endereço inválido"))
 
 
         # Youtube Video
