@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^get_photo/$', GetPhoto.as_view()),
 
 
-    url(r'^.well-known/pki-validation/$', GoDaddyVerification.as_view()),
+    url(r'^.well-known/pki-validation/godaddy.html$', GoDaddyVerification.as_view()),
     
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
