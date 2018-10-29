@@ -120,7 +120,7 @@ class Teste(View):
 
 class GoDaddyVerification(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "static/godaddy.html", context)
+        return render(request, "static/godaddy.html")
 
 
 
