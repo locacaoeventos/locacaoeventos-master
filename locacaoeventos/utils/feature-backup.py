@@ -18,6 +18,7 @@ def update_feature_places():
         place_dic = get_single_place_dic(place)
 
 
+        print(" ===================== BEGIN PLACE =====================")
         data_criacao = place.creation
 
         # Visuaization
@@ -26,19 +27,28 @@ def update_feature_places():
         visualization_factor = placefeature.visualization_factor
         place_visualization_list = []
         for placevisualization in PlaceVisualization.objects.filter(place=place):
+            print("----- BEGIN VISUALIZATION -----")
             delta_time = (now.replace(tzinfo=utc)-placevisualization.creation.replace(tzinfo=utc)).days
             # First-day-Factor for Revisualization
             if delta_time <= 1:
                 value = visualization_factor_firstday
+                print("firstday")
             else:
                 value = 1*(1/(e**(delta_time*visualization_factor)))
+                print(delta_time)
             visualization_value += value
+            print(value)
+            print("----- END VISUALIZATION -----")
             place_visualization_list.append({
                 "delta_time": delta_time,
                 "value": value,
             })
         place_dic["visualization_list"] = place_visualization_list
         place_dic["visualization_value"] = visualization_value
+
+        print(visualization_value)
+        print(" ====== END VIEW =====")
+
 
 
         # Review
@@ -49,23 +59,31 @@ def update_feature_places():
 
 
         for i in range(len(place_dic["review_list"]["review_list"])):
+            print("----- BEGIN REVIEW -----")
             placereview_dic = place_dic["review_list"]["review_list"][i]
             placereview = PlaceReview.objects.get(pk=placereview_dic["pk"])
             placereview_average = (placereview_dic["rate_infraestructure"] + placereview_dic["rate_rides"] + placereview_dic["rate_cost_benefit"] + placereview_dic["rate_attendance"] + placereview_dic["rate_children_opinion"])/5
+            print(placereview_average)
 
             delta_time = (now.replace(tzinfo=utc)-placereview.creation.replace(tzinfo=utc)).days
             
             # First-day-Factor for Review
             if delta_time <= 1:
                 value = review_factor_firstday*placereview_average
+                print("firstday")
             else:
                 value = placereview_average*1/(e**(delta_time*review_factor))
+                print(delta_time)
+            print(value)
             place_dic["review_list"]["review_list"][i]["delta_time"] = delta_time
             place_dic["review_list"]["review_list"][i]["value"] = value
             review_value += value
+            print("----- END REVIEW -----")
         place_dic["review_list"]["review_value"] = review_value
-        place_list.append(place_dic)
+        print(review_value)
 
-        place.feature = visualization_value + review_value
-        place.save()
+        print("=========================")
+        print(place_dic)
+        print(" ===================== END PLACE =====================")
+        place_list.append(place_dic)
     return place_list

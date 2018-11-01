@@ -38,7 +38,6 @@ class ListPlace(View):
         # Left Panel
         context["place_additional_information"] = get_additional_information_important_attributes()
         capacity = request.GET.get("capacity")
-        context["capacity"] = capacity
         buffet = request.GET.get("buffet")
         date = request.GET.get("date")
         context["buffet"] = buffet
@@ -52,12 +51,21 @@ class ListPlace(View):
 
 
         # filter
-        place_list = filter_place_information(place_list_not_filtered, capacity, buffet, date)
+        place_list = sorted(filter_place_information(place_list_not_filtered, capacity, buffet, date), key=lambda k: k['feature'], reverse=True) 
+
         places_pk = []
         for place in place_list:
             places_pk.append(place["pk"])
         context["places_pk"] = places_pk
         
+
+        # Capacity
+        if capacity == "":
+            context["capacity"] = 0
+            context["capacity_exists"] = True
+        else:
+            context["capacity"] = capacity
+
         return render(request, "place_list.html", context)
 
 
@@ -69,7 +77,8 @@ class DetailPlace(View):
         place_obj = Place.objects.get(pk=request.GET["pk"])
 
         # Place Visualization
-        PlaceVisualization.objects.create(place=place_obj)
+        now = datetime.now()
+        PlaceVisualization.objects.create(place=place_obj, creation=now)
 
         place = place_obj.__dict__
         context["place_seller"] = place_obj.sellerprofile.__dict__

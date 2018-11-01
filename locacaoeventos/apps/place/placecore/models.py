@@ -63,8 +63,9 @@ class PlaceAdditionalInformation(models.Model):
 
 class PlaceVisualization(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    creation = models.DateTimeField(auto_now=True)
-
+    creation = models.DateTimeField()
+    def __str__(self):
+        return "Visualização de " + self.place.name + " - " + str(self.creation)
 
 
 
@@ -111,11 +112,8 @@ class PlacePhoto(models.Model):
 
 class PlaceFeature(models.Model):
     str_algorithm = models.CharField(max_length=1028, null=True, blank=True)
-    view_factor = models.FloatField(default=0)
-    view_factor_firstday = models.FloatField(default=0)
-
-    reservation_factor = models.FloatField(default=0)
-    reservation_factor_firstday = models.FloatField(default=0)
+    visualization_factor = models.FloatField(default=0)
+    visualization_factor_firstday = models.FloatField(default=0)
 
     review_factor = models.FloatField(default=0)
     review_factor_firstday = models.FloatField(default=0)

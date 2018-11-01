@@ -70,11 +70,13 @@ Body code
                 {% endif %}
               <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
               <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
-              <li><a href="/logout/">Logout</a></li>
+              {% if user_type == "buyer" %}
+                <li><a href="/usuario/chat/?is_seller=/"><i class="fa fa-shopping-cart" style="font-size:16px; padding:10px; border-width:1px"> </i></a></li>
+              {% endif %}
               {% else %}
                 <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
                 <li><a {% if basemenu == "register" %}class="menu_selected"{% endif %} href="/usuario/cadastrar/"><strong>Cadastrar</strong></a></li>
-                  <li><a href="/logout/">Cadastre seu Espaço</a></li>
+                <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
               {% endif %}
 
             </ul>

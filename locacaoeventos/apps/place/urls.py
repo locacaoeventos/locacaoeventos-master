@@ -8,7 +8,6 @@ urlpatterns = [
     url(r'^detalhar/$', DetailPlace.as_view()),
 
     url(r'^ajax/get/$', ListBuffetAjax.as_view()),
-    url(r'^ajax/get-additional-information/$', ListBuffetAdditionalInformationAjax.as_view()),
     url(r'^ajax/order-by/$', OrderByBuffetAjax.as_view()),
     url(r'^ajax/get-place/$', GetPlaceInformation.as_view()),
     

@@ -23,6 +23,7 @@
 
 
 
+<div id="places_pk_original" style="display:none">{{places_pk}}</div>
 <div id="places_pk" style="display:none">{{places_pk}}</div>
 <div id="places_container"></div>
 <section class="container">
@@ -134,86 +135,15 @@
           </aside>
         </div>
       </figure>
-      <section class="block equal-height" style="padding-top:0">
-        {% if place_list.paginator.num_pages > 1 %}
-          <ul class="pagination pull-left">
-            {% if place_list.has_previous %}
-                <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{ place_list.previous_page_number }}" class="previous"><i class="fa fa-angle-left"></i></a></li>
-            {% endif %}
-            {% for page_number in place_list.paginator.place_range %}
-                {% if page_number == place_list.number %}
-                  <li class="active"><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{page_number}}">{{page_number}}</a></li>
-                {% else %}
-                  <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{page_number}}">{{page_number}}</a></li>
-                {% endif %}
-            {% endfor %}
-            {% if place_list.has_next %}
-              <li><a href="?/place={{place}}&date={{date}}&capacity={{capacity}}&page={{ place_list.next_page_number }}" class="next"><i class="fa fa-angle-right"></i></a></li>
-            {% endif %}
-          </ul>
-          <div class="separador-70"> </div>
-        {% else %}
-          <div class="separador-40"> </div>
-        {% endif %}
-        <div class="row">
 
 
 
+      <!-- ====================================================== -->
+      <!--                       List Items                       -->
+      <!-- ====================================================== -->
+      <div id="items_pk">{{places_pk}}</div>
+      <section class="block equal-height" style="padding-top:0" id="list_item">
 
-
-
-          {% for place in place_list %}
-            <!-- ====================================================== -->
-            <!--                       Each Item                        -->
-            <!-- ====================================================== -->
-            <div class="col-md-4 col-sm-6">
-              <div class="place_item" pk="{{place.pk}}">
-                <div class="image">
-                  <a href="/buffet/detalhar/?pk={{place.pk}}">
-                    <div class="overlay" id="overlay_{{place.pk}}">
-                      <div class="inner">
-                        <div class="content">
-                          <p>{{place.description}}</p>
-                        </div>
-                      <div class="separador-20"> </div>
-                      <div class="center_element">
-                        <span style="color:#b4b5b4"><img src="/static/img/icon/person.png" alt="" style="width:10px;">&nbsp;&nbsp;{{place.capacity|only_integer}} pessoas</span>
-                      </div>
-
-                      </div>
-                    </div>
-                    <div class="place_featured">
-                      <img src="/static/img/123festas/logo_white_squared.png">
-                    </div>
-                    <div class="img-center center-cropped place_image" style="background-image: url(/media/{{place.photo}});"></div>
-                  </a>
-                </div>
-                <div class="wrapper place_description_wrapper">
-                  <div class="place_description_cell">
-                    <a class="place_name" href="/buffet/detalhar/?pk={{place.pk}}">
-                      {{place.name}}
-                    </a>
-                    <div class="separador-2"> </div>
-                    <figure class="place_address">{{place.address}}</figure>
-                    <h4 class="place_price">R$</h4>
-                    <h3 class="place_price">{{place.placeprice_min}}</h3>
-                  </div>
-                  <div class="place_description_cell" style="height:50px;"/>
-                    <div class="separador-5"> </div>
-                    {% if place.review_list.review_rates == "None" %}
-                      <figure style="font-size:12px; color:#888888">Aguardando Primeira Avaliaçao!</figure>
-                    {% else %}
-                      <div style="display:block">
-                        <span style="color:#70b7c8; dislay:inline" class="stars" data-rating="{{place.review_list.review_rates.rate_average}}" data-num-stars="5"></span>&nbsp;
-                        <span style="font-size:12px; color:#888888">{{place.review_list.review_rates.n_review}} Avaliações</span>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
       </section>
 
 
@@ -267,6 +197,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
   <script type="text/javascript" src="/static/CUSTOM_JS/core/review.js"></script>
 {% endblock jquery %}
+  <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
 
   <script>
     // ==================== 
@@ -305,92 +236,11 @@
     })
 
 
-    $("#pnleft_update").click(function(){
-      var search = $("#place_id").val()
-      var date = $("#date_id").val()
-      var capacity = $("#capacity_val").html()
-      $.ajax({
-        url: "/buffet/ajax/get/",
-        dataType: 'json',
-        data: {
-          search:search,
-          date:date,
-          capacity:capacity,
-        },
-        success: function (data) {
-          console.log(data)
-        }
-      })
-    })
-
-    $(".additional_information_checkbox").on("change", function(){
-      if($(this).attr("checked")=="checked"){
-        $(this).removeAttr("checked")
-      } else {
-        $(this).attr("checked", "checked")
-      }
-      var pnleft = get_pnleft()
-      console.log(pnleft)
-      $.ajax({
-        url: "/buffet/ajax/get-additional-information/",
-        dataType: 'json',
-        data: {
-          "search":pnleft["search"],
-          "date":pnleft["date"],
-          "capacity":pnleft["capacity"],
-          "additional_informations":String(pnleft["additional_informations"]),
-
-        },
-        success: function (data) {
-          console.log(data)
-        }
-      })
-    })
-
-
-
-    // Get all information from Panel Left
-    function get_pnleft(){
-      var search = $("#place_id").val()
-      var date = $("#date_id").val()
-      var capacity = $("#capacity_val").html()
-
-      var additional_informations = []
-      $(".additional_information_checkbox").each(function(){
-        if($(this).attr("checked")=="checked"){
-          additional_informations.push($(this).attr("name"))
-        }
-      })
-      return {
-        "search":search,
-        "date":date,
-        "capacity":capacity,
-        "additional_informations":additional_informations,
-      }
-    }
 
 
 
 
 
-
-    // ==================== 
-    // Order By
-    // ====================    
-    $("#order_by").on("change", function(){
-      var current_pks = $("#places_pk").html()
-      $.ajax({
-        url: "/buffet/ajax/order-by/",
-        dataType: 'json',
-        data: {
-          "current_pks":String(current_pks),
-          "option":$("#order_by").val(),
-        },
-        success: function (data) {
-          console.log(data)
-        }
-      })
-    })
 
 
 
@@ -413,6 +263,84 @@
       var pk = $(this).attr("pk")
       $("#overlay_" + pk).fadeOut(300)
     })
+
+
+
+
+
+
+
+
+
+
+
+// ==================== 
+// Pnl Left
+// ====================    
+$("#pnleft_update").click(function(){
+  var search = $("#place_id").val()
+  var date = $("#date_id").val()
+  var capacity = $("#capacity_val").html()
+  $.ajax({
+    url: "/buffet/ajax/get/",
+    dataType: 'json',
+    data: {
+      search:search,
+      date:date,
+      capacity:capacity,
+    },
+    success: function (data) {
+      console.log(data)
+    }
+  })
+})
+
+$(".additional_information_checkbox").on("change", function(){
+  items_pk = $("#items_pk").html()
+  if($(this).attr("checked")=="checked"){
+    $(this).removeAttr("checked")
+  } else {
+    $(this).attr("checked", "checked")
+  }
+  var pnleft = get_pnleft()
+  $.ajax({
+    url: "/buffet/ajax/get-additional-information/",
+    dataType: 'json',
+    data: {
+      "places_pk":JSON.stringify($("#places_pk").html()),
+      "additional_informations":String(pnleft["additional_informations"]),
+
+    },
+    success: function (data) {
+      load_places(JSON.stringify(data.items_pk))
+    }
+  })
+})
+
+
+
+// Get all information from Panel Left
+function get_pnleft(){
+  var search = $("#place_id").val()
+  var date = $("#date_id").val()
+  var capacity = $("#capacity_val").html()
+
+  var additional_informations = []
+  $(".additional_information_checkbox").each(function(){
+    if($(this).attr("checked")=="checked"){
+      additional_informations.push($(this).attr("name"))
+    }
+  })
+  return {
+    "search":search,
+    "date":date,
+    "capacity":capacity,
+    "additional_informations":additional_informations,
+  }
+}
+
+
+
 
 
 

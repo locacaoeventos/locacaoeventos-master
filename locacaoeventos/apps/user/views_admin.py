@@ -2,13 +2,13 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-import xlwt
+import xlwt, json
 
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.feature import *
 from locacaoeventos.utils.excel import *
 
-from locacaoeventos.apps.place.placecore.models import Place
+from locacaoeventos.apps.place.placecore.models import Place, PlaceFeature
 
 class AdminHome(View):
     def get(self, request, *args, **kwargs):
@@ -44,13 +44,42 @@ class UploadBuffet(View):
 class AdminFeaturedBuffet(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        update_feature_places()
+        place_list = update_feature_places()
+
+        # Remove Creation and None, as bugs JS
+
+        context["place_list"] = place_list
+        context["place_list_js"] = json.dumps(place_list, indent=4, sort_keys=True, default=str)
+        placefeature = PlaceFeature.objects.all()[0]
+        context["visualization"] = {
+            "factor": str(placefeature.visualization_factor).replace(",","."),
+            "factor_firstday": str(placefeature.visualization_factor_firstday).replace(",","."),
+        }
+        context["review"] = {
+            "factor": str(placefeature.review_factor).replace(",","."),
+            "factor_firstday": str(placefeature.review_factor_firstday).replace(",","."),
+        }
+
+
         return render(request, "admin/buffet_featured.html", context)
 
 
 
+    def post(self, request, *args, **kwargs):
+        visualization_factor = request.POST.get("visualization_factor")
+        visualization_factor_firstday = request.POST.get("visualization_factor_firstday")
+        review_factor = request.POST.get("review_factor_firstday")
+        review_factor_firstday = request.POST.get("review_factor_firstday")
+
+        placefeature = PlaceFeature.objects.all()[0]
+        placefeature.visualization_factor = visualization_factor
+        placefeature.visualization_factor_firstday = visualization_factor_firstday
+        placefeature.review_factor = review_factor
+        placefeature.review_factor_firstday = review_factor_firstday
+        placefeature.save()
 
 
+        return self.get(request, *args, **kwargs)
 
 
 

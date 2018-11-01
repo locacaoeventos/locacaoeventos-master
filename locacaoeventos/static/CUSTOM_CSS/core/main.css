@@ -13,6 +13,9 @@ option {
     background-color: white
 }
 
+* {
+	font-family: Verdana, sans-serif;
+}
 
 
 .error_message {

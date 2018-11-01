@@ -10,49 +10,57 @@ from locacaoeventos.utils.place import *
 
 class ListBuffetAjax(View):
     def get(self, request, *args, **kwargs):
-
-        search = request.GET.get("search")
-        date = request.GET.get("date")
-        capacity = request.GET.get("capacity")
-
-
-        data = {
-        }
-        return JsonResponse(data)
-
-
-class ListBuffetAdditionalInformationAjax(View):
-    def get(self, request, *args, **kwargs):
-        additional_informations = request.GET.get("additional_informations").split(",")
+        pnleft = ast.literal_eval(request.GET.get("pnleft"))
+        additional_informations = [info for info in pnleft["additional_informations"] if info != ""]
         places_pk = ast.literal_eval(ast.literal_eval(request.GET.get("places_pk")))
-        places_option = Place.objects.filter(pk__in=places_pk)
-
-        places = []
-        for placeadditionalinformation in PlaceAdditionalInformation.objects.all():
-            has_all = True
-            if len(additional_informations) >= 1 and additional_informations[0] != "":
-                for i in range(len(additional_informations)):
-                    if getattr(placeadditionalinformation, additional_informations[i]) == False:
-                        has_all = False
-                if has_all:
-                    if placeadditionalinformation.place in places_option:
-                        places.append(placeadditionalinformation.place)
+        option = int(request.GET.get("option"))
 
 
-        # Filter by Name/Location, Capacity and Date
 
-        if len(additional_informations) == 1 and additional_informations[0] == "":
-            places = [place for place in places_option]
+        # ================ Filter like Home (Capacity, Search, Date)
+        places_by_search = filter_place_information(
+            place_list_not_filtered=get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True)),
+            capacity=pnleft["capacity"],
+            buffet=pnleft["search"],
+            date=pnleft["date"]
+        )
 
-        items_pk = []
-        for place in places:
-            items_pk.append(place.pk)
-        print(items_pk)
-        if len(items_pk) > 0:
-            data = { "items_pk":items_pk }
+
+
+        # ================ Filter By Additional Information
+        places_by_additionalinformation = []
+
+        if len(additional_informations) == 0:
+            places_by_additionalinformation = [place for place in places_by_search]
         else:
-            data = { "none": "True" }
-        return JsonResponse(data)
+            for placeadditionalinformation in PlaceAdditionalInformation.objects.all():
+                has_all = True
+                if len(additional_informations) >= 1 and additional_informations[0] != "": # If there's additionalinfo to filter
+                    for i in range(len(additional_informations)):
+                        if getattr(placeadditionalinformation, additional_informations[i]) == False:
+                            has_all = False
+                    if has_all:
+                        if get_dic_by_key(
+                            listdic=places_by_search,
+                            key="pk",
+                            value=placeadditionalinformation.place.pk
+                        ): # If additionalinfo's Place on the list
+                            places_by_additionalinformation.append(get_single_place_dic(placeadditionalinformation.place))
+
+
+        # ================ Converting into list PKs
+        items_pk = []
+        for place in places_by_additionalinformation:
+            items_pk.append(place["pk"])
+
+
+        # ================ Ordering
+        items_pk = order_by(option, items_pk)
+
+
+        return JsonResponse(items_pk)
+
+
 
 
 
@@ -64,82 +72,9 @@ class ListBuffetAdditionalInformationAjax(View):
 
 class OrderByBuffetAjax(View):
     def get(self, request, *args, **kwargs):
-
-
-        current_pks = ast.literal_eval(request.GET.get("current_pks"))
+        places_pk = ast.literal_eval(request.GET.get("places_pk"))
         option = int(request.GET.get("option"))
-        places = [Place.objects.get(pk=place_pk) for place_pk in current_pks]
-        place_list = get_place_information(places)
-        if len(place_list) > 0:
-            for i in range(len(place_list)):
-                place_list[i]["placeprice_min"] = float(place_list[i]["placeprice_min"])
-
-            # =============================
-            # Price
-            # =============================
-            if option == 2 or option == 3:
-                if option == 2: # Bigger Price
-                    place_list_sorted = sorted(place_list, key=lambda k: k['placeprice_min'], reverse=True) 
-                elif option == 3: # Smaller Price
-                    place_list_sorted = sorted(place_list, key=lambda k: k['placeprice_min']) 
-
-
-            # =============================
-            # Rate
-            # =============================
-            elif option == 4:
-                place_list_sorted = []
-                pk_list = []
-
-                # Here, we ignore "Nones"
-                for i in range(len(place_list)):
-                    highest_rate = -1
-                    pk_selected = None
-                    print("==========", i)
-                    for j in range(len(place_list)):
-                        if place_list[j]["review_list"]["review_rates"] != "None":
-                            rate_average = float(place_list[j]["review_list"]["review_rates"]["rate_average"])
-                            if rate_average >= highest_rate:
-                                if place_list[j]["pk"] not in pk_list:
-                                    pk_selected = place_list[j]["pk"]
-                                    highest_rate = rate_average
-                                    print(highest_rate)
-
-                    if pk_selected is not None:
-                        for j in range(len(place_list)):
-                            if place_list[j]["pk"] == pk_selected:
-                                place_list_sorted.append(place_list[j])
-                                pk_list.append(place_list[j]["pk"])
-
-
-                # We add the nones
-                if len(place_list) != len(place_list_sorted):
-                    for i in range(len(place_list)):
-                        if place_list[i]["review_list"]["review_rates"] == "None":
-                            place_list_sorted.append(place_list[i])
-
-
-
-            # =============================
-            # Name
-            # =============================
-            elif option == 5 or option == 6:
-                if option == 5: # A-Z
-                    place_list_sorted = sorted(place_list, key=lambda k: k['name']) 
-                elif option == 6: # Z-A
-                    place_list_sorted = sorted(place_list, key=lambda k: k['name'], reverse=True) 
-
-
-            for i in range(len(place_list_sorted)):
-                place_list_sorted[i]["placeprice_min"] = "%.2f"%place_list_sorted[i]["placeprice_min"]
-
-            items_pk = []
-            for i in range(len(place_list_sorted)):
-                items_pk.append(place_list_sorted[i]["pk"])
-
-            data = { "items_pk":items_pk }
-        else:
-            data = { "none": "True" }
+        data = order_by(option, places_pk)
         return JsonResponse(data)
 
 

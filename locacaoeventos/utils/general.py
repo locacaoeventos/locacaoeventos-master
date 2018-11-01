@@ -1,9 +1,9 @@
 import googlemaps
 
 def get_dic_by_key(listdic, key, value):
-	for i in range(len(listdic)):
-		if listdic[i][key] == value:
-			return listdic[i]
+    for i in range(len(listdic)):
+        if listdic[i][key] == value:
+            return listdic[i]
 
 
 def get_latlng_from_address_str(address_str):
@@ -12,26 +12,26 @@ def get_latlng_from_address_str(address_str):
     return [geocode_result[0]['geometry']['location']['lat'], geocode_result[0]['geometry']['location']['lng']]
 
 def get_positive(number):
-	if number < 0:
-		return number*(-1)
-	return number
+    if number < 0:
+        return number*(-1)
+    return number
 
 
 
 def remove_left_zero(number):
-	string = str(number)
-	while string[0] == "0":
-		string = string[1:]
-	return string
+    string = str(number)
+    while string[0] == "0":
+        string = string[1:]
+    return string
 
 
 # Comparing two different Strings
 def compare_strings(string1, string2):
-	error = (levenshtein(string1.lower(), string2.lower()) - len(string1) + len(string2))/len(string2)
-	accept = False
-	if error < 0.5:
-		accept = True
-	return accept
+    error = (levenshtein(string1.lower(), string2.lower()) - len(string1) + len(string2))/len(string2)
+    accept = False
+    if error < 0.5:
+        accept = True
+    return accept
 
 
 def levenshtein(s1, s2):

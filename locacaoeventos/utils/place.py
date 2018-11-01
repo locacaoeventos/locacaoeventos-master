@@ -184,37 +184,41 @@ def get_messages_to_chat(user, is_seller):
 
 
 
+def get_single_place_dic(place):
+    place_dic = {
+        "pk": place.pk,
+        "name": place.name,
+        "capacity": place.capacity,
+        "address": place.address,
+        "description": place.description,
+        "lat": place.lat,
+        "lng": place.lng,
+        "feature": place.feature,
+    }
+    photo = PlacePhoto.objects.filter(place=place)
+    if photo:
+        place_dic["photo"] = str(photo[0].photo.photo)
+
+    placeprice_min = 9999999999999
+    for placeprice in PlacePrice.objects.filter(place=place):
+        if placeprice.value < placeprice_min:
+            placeprice_min = placeprice.value
+    if placeprice_min != 9999999999999:
+        place_dic["placeprice_min"] = "%.2f"%placeprice_min
+    # No objects allowed
+    review_list = get_reviews_from_place(place)
+    for i in range(len(review_list["review_list"])):
+        review_list["review_list"][i]["buyerprofile"] = review_list["review_list"][i]["buyerprofile"].pk
+    place_dic["review_list"] = review_list
+    return place_dic
+
+
 
 def get_place_information(places):
     place_list = []
     for place in places:
-        place_dic = {
-            "pk": place.pk,
-            "name": place.name,
-            "capacity": place.capacity,
-            "address": place.address,
-            "description": place.description,
-            "lat": place.lat,
-            "lng": place.lng,
-        }
-        photo = PlacePhoto.objects.filter(place=place)
-        if photo:
-            place_dic["photo"] = str(photo[0].photo.photo)
-
-        placeprice_min = 9999999999999
-        for placeprice in PlacePrice.objects.filter(place=place):
-            if placeprice.value < placeprice_min:
-                placeprice_min = placeprice.value
-        if placeprice_min != 9999999999999:
-            place_dic["placeprice_min"] = "%.2f"%placeprice_min
-        # No objects allowed
-        review_list = get_reviews_from_place(place)
-        for i in range(len(review_list["review_list"])):
-            review_list["review_list"][i]["buyerprofile"] = ""
-        place_dic["review_list"] = review_list
-        place_list.append(place_dic)
+        place_list.append(get_single_place_dic(place))
     return place_list
-
 
 
 
@@ -268,8 +272,9 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
             place_list = place_list_not_filtered
 
 
+
         # Filter by Capacity
-        if capacity != "":
+        if capacity != "" and capacity != "sem":
             place_list_filtered_capacity = []
             capacity_tolerance = 100
             capacity_analyse = int(capacity)
@@ -277,7 +282,8 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 place = place_list[i]
                 if place["capacity"]+capacity_tolerance >= capacity_analyse and place["capacity"]-capacity_tolerance <= capacity_analyse:
                     place_list_filtered_capacity.append(place)
-
+        else:
+            place_list_filtered_capacity = place_list
 
         # Filter by Date
         place_list_filtered_date = []
@@ -292,8 +298,10 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 is_occupied = False
                 for unavailability in unavailabilities:
                     utc=pytz.UTC
-                    if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
+                    if str(date_analyse.replace(tzinfo=utc).year) + str(date_analyse.replace(tzinfo=utc).month) + str(date_analyse.replace(tzinfo=utc).day) == str(unavailability.datetime_begin.replace(tzinfo=utc).year) + str(unavailability.datetime_begin.replace(tzinfo=utc).month) + str(unavailability.datetime_begin.replace(tzinfo=utc).day):
                         is_occupied = True
+                    # if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
+                    #     is_occupied = True
                 
                 if not is_occupied:
                     place_list_filtered_date.append(place_dic)
@@ -302,3 +310,89 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
             place_list_filtered_date = place_list_filtered_capacity
 
         return place_list_filtered_date
+
+
+
+
+
+def order_by(option, places_pk):
+    places = [Place.objects.get(pk=place_pk) for place_pk in places_pk]
+    place_list = get_place_information(places)
+    if len(place_list) > 0:
+        for i in range(len(place_list)):
+            place_list[i]["placeprice_min"] = float(place_list[i]["placeprice_min"])
+
+
+        # =============================
+        # Relevance (Feature)
+        # =============================
+        if option == 1:
+            place_list_sorted = sorted(place_list, key=lambda k: k['feature'], reverse=True) 
+
+
+
+        # =============================
+        # Price
+        # =============================
+        elif option == 2 or option == 3:
+            if option == 2: # Bigger Price
+                place_list_sorted = sorted(place_list, key=lambda k: k['placeprice_min'], reverse=True) 
+            elif option == 3: # Smaller Price
+                place_list_sorted = sorted(place_list, key=lambda k: k['placeprice_min']) 
+
+
+        # =============================
+        # Rate
+        # =============================
+        elif option == 4:
+            place_list_sorted = []
+            pk_list = []
+
+            # Here, we ignore "Nones"
+            for i in range(len(place_list)):
+                highest_rate = -1
+                pk_selected = None
+                for j in range(len(place_list)):
+                    if place_list[j]["review_list"]["review_rates"] != "None":
+                        rate_average = float(place_list[j]["review_list"]["review_rates"]["rate_average"])
+                        if rate_average >= highest_rate:
+                            if place_list[j]["pk"] not in pk_list:
+                                pk_selected = place_list[j]["pk"]
+                                highest_rate = rate_average
+
+                if pk_selected is not None:
+                    for j in range(len(place_list)):
+                        if place_list[j]["pk"] == pk_selected:
+                            place_list_sorted.append(place_list[j])
+                            pk_list.append(place_list[j]["pk"])
+
+
+            # We add the nones
+            if len(place_list) != len(place_list_sorted):
+                for i in range(len(place_list)):
+                    if place_list[i]["review_list"]["review_rates"] == "None":
+                        place_list_sorted.append(place_list[i])
+
+
+
+        # =============================
+        # Name
+        # =============================
+        elif option == 5 or option == 6:
+            if option == 5: # A-Z
+                place_list_sorted = sorted(place_list, key=lambda k: k['name']) 
+            elif option == 6: # Z-A
+                place_list_sorted = sorted(place_list, key=lambda k: k['name'], reverse=True) 
+
+
+        for i in range(len(place_list_sorted)):
+            place_list_sorted[i]["placeprice_min"] = "%.2f"%place_list_sorted[i]["placeprice_min"]
+
+        items_pk = []
+        for i in range(len(place_list_sorted)):
+            items_pk.append(place_list_sorted[i]["pk"])
+
+        data = {"items_pk":items_pk }
+    else:
+        data = { "none": "True" }
+    return data

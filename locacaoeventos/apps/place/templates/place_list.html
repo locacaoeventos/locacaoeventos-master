@@ -23,7 +23,6 @@
 
 
 
-<div id="places_pk_original" style="display:none">{{places_pk}}</div>
 <div id="places_pk" style="display:none">{{places_pk}}</div>
 <div id="places_container"></div>
 <section class="container">
@@ -48,33 +47,22 @@
         </div>
 
         <section class="toggle_menu">
-          <h1 style="color:#383838; text-transform:none">Refine sua Busca</h1>
-          <div class="separador-10"> </div>
-
-          <div class="pnleft_card">
-            <label class="pnleft_label">Localização ou Nome</label>
-            <input class="pnleft_input" id="place_id" type="text" value="{{address}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px" placeholder="Localização ou Nome"/>
-          </div>
-          <div class="separador-20"> </div>
-
           <div class="pnleft_card">
             <label class="pnleft_label">Data do Evento</label>
             <div class="center_element">
-              <input class="pnleft_input calendar_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center;" id="date_id"/>
+              <input class="pnleft_input calendar_input" type="text" value="{{date}}" style="border-bottom:1px solid #c5c5c5; box-shadow:none; padding:4px; text-align:center;" id="date_id" disabled="true" />
               {% include "calendar-input.html" %}
             </div>
           </div>
           <div class="separador-20"> </div>
 
           <div class="pnleft_card">
-            <label class="pnleft_label">Capacidade: <span id="capacity_val">{{capacity}}</span> pessoas</label>
+            <label class="pnleft_label">
+              Capacidade: <span id="capacity_val">{% if not capacity_exists %}{{capacity}}{% else %}sem{% endif %}</span> pessoas
+            </label>
             <div class="separador-5"> </div>
-            <div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0"></div>
+            <div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0; margin:auto"></div>
           </div>
-          <div class="separador-20"> </div>
-          <button type="submit" class="btn btn-default" id="pnleft_update">Atualizar</button>
-          <div class="separador-10"> </div>
-          
 
 
           <div class="pnleft_card" style="background-color:white">
@@ -119,20 +107,30 @@
     <div class="col-md-9 col-sm-8">
       <div class="separador-20"> </div>
       <figure class="filter clearfix" style="margin:0">
-        <div class="pull-right">
-          <aside class="sorting">
-            <span>Ordenar</span>
-            <div class="form-group">
-              <select class="framed" name="sort" id="order_by">
-                <option value="1">Relevância</option>
-                <option value="2">Preço - Maior</option>
-                <option value="3">Preço - Menor</option>
-                <option value="4">Avaliação - Maior</option>
-                <option value="5">Nome - A-Z</option>
-                <option value="6">Nome - Z-A</option>
-              </select>
+        <div class="row">
+          <div class="col-md-8">
+            <div style="width:100%; padding-right:40px; position:relative">
+              <input type="text" style="width:100%; height:31px; font-size:36px" class="pnleft_input" id="place_id" value="{{address}}" placeholder="Localização ou Nome"/>
+              <div id="search_button">
+                <i class="fa fa-search"> </i>
+              </div>
             </div>
-          </aside>
+            <div class="separador-10"> </div>
+          </div>
+          <div class="col-md-4">
+            <div class="pull-right">
+              <aside class="sorting">
+                  <select class="framed" name="sort" id="order_by">
+                    <option value="1">Relevância</option>
+                    <option value="2">Preço - Maior</option>
+                    <option value="3">Preço - Menor</option>
+                    <option value="4">Avaliação - Maior</option>
+                    <option value="5">Nome - A-Z</option>
+                    <option value="6">Nome - Z-A</option>
+                  </select>
+              </aside>
+            </div>
+          </div>
         </div>
       </figure>
 
@@ -141,7 +139,7 @@
       <!-- ====================================================== -->
       <!--                       List Items                       -->
       <!-- ====================================================== -->
-      <div id="items_pk">{{places_pk}}</div>
+      <div class="separador-20"> </div>
       <section class="block equal-height" style="padding-top:0" id="list_item">
 
       </section>
@@ -200,10 +198,11 @@
   <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
 
   <script>
-    // ==================== 
-    // LEFT PANEL
-    // ====================    
-    // Toggler
+
+
+    // ====================================
+    // Toggler for Mobile
+    // ====================================
     $(".toggle_buyer_seller_base").click(function() {
       if($(".toggle_pnleft_sign").html() == "+"){
         $(".toggle_pnleft_sign").html("&minus;")
@@ -213,7 +212,10 @@
       $(".toggle_menu").slideToggle();
     });
 
+
+    // ====================================
     // Capacity
+    // ====================================
     // source: https://refreshless.com/nouislider/
     var slider_page = document.getElementById('search_capacity');
     var start_value = parseInt("{{capacity}}")
@@ -229,15 +231,98 @@
     slider_page.noUiSlider.on("slide", function(values){
       $("#capacity_val").html(parseInt(values))
     })
+    slider_page.noUiSlider.on("change", function(values){
+      loading_icon()
+      var get_places = get_places_pk()
+    })
 
 
+    // ====================================
+    // Date
+    // ====================================
     $(document).ready(function(){
       $('#date_id').mask("00 / 00 / 0000",{placeholder:"dd / mm / aaaa"});
+    })
+    $(document).on("click", ".calendar_class_day", function(){
+      loading_icon()
+      var get_places = get_places_pk()
+    })
+
+
+
+    // ====================================
+    // Place Aditional Information on Change
+    // ====================================
+    $(".additional_information_checkbox").on("change", function(){
+      loading_icon()
+      if($(this).attr("checked")=="checked"){
+        $(this).removeAttr("checked")
+      } else {
+        $(this).attr("checked", "checked")
+      }
+      var items_pk = get_places_pk()
     })
 
 
 
 
+    // ====================================
+    // Search
+    // ====================================
+    $("#search_button").click(function(){
+      loading_icon()
+      var get_places = get_places_pk()
+    })
+
+
+
+    // =================
+    // AUXILIAR - Get Pnl Left
+    // =================
+    // Get all information from Panel Left
+    function get_pnleft(){
+      var search = $("#place_id").val()
+      var date = $("#date_id").val()
+      var capacity = $("#capacity_val").html()
+      var order_by = $("#order_by").val()
+
+      var additional_informations = []
+      $(".additional_information_checkbox").each(function(){
+        if($(this).attr("checked")=="checked"){
+          additional_informations.push($(this).attr("name"))
+        }
+      })
+      return {
+        "search":search,
+        "date":date,
+        "capacity":capacity,
+        "order_by":order_by,
+        "additional_informations":additional_informations,
+      }
+    }
+
+
+    function get_places_pk() {
+      var places_pk = JSON.stringify($("#places_pk").html())
+      var pnleft = JSON.stringify(get_pnleft())
+      var option = $("#order_by").val()
+      $.ajax({
+        url: "/buffet/ajax/get/",
+        dataType: 'json',
+        data: {
+          "places_pk":places_pk,
+          "pnleft":pnleft,
+          "option":option,
+
+        },
+        success: function (data) {
+          var items_pk = JSON.stringify(data.items_pk)
+          $("#places_pk").html(items_pk)
+          load_places(items_pk)
+        }
+      })      
+      return items_pk
+    }
 
 
 
@@ -274,70 +359,6 @@
 
 
 
-// ==================== 
-// Pnl Left
-// ====================    
-$("#pnleft_update").click(function(){
-  var search = $("#place_id").val()
-  var date = $("#date_id").val()
-  var capacity = $("#capacity_val").html()
-  $.ajax({
-    url: "/buffet/ajax/get/",
-    dataType: 'json',
-    data: {
-      search:search,
-      date:date,
-      capacity:capacity,
-    },
-    success: function (data) {
-      console.log(data)
-    }
-  })
-})
-
-$(".additional_information_checkbox").on("change", function(){
-  items_pk = $("#items_pk").html()
-  if($(this).attr("checked")=="checked"){
-    $(this).removeAttr("checked")
-  } else {
-    $(this).attr("checked", "checked")
-  }
-  var pnleft = get_pnleft()
-  $.ajax({
-    url: "/buffet/ajax/get-additional-information/",
-    dataType: 'json',
-    data: {
-      "places_pk":JSON.stringify($("#places_pk").html()),
-      "additional_informations":String(pnleft["additional_informations"]),
-
-    },
-    success: function (data) {
-      load_places(JSON.stringify(data.items_pk))
-    }
-  })
-})
-
-
-
-// Get all information from Panel Left
-function get_pnleft(){
-  var search = $("#place_id").val()
-  var date = $("#date_id").val()
-  var capacity = $("#capacity_val").html()
-
-  var additional_informations = []
-  $(".additional_information_checkbox").each(function(){
-    if($(this).attr("checked")=="checked"){
-      additional_informations.push($(this).attr("name"))
-    }
-  })
-  return {
-    "search":search,
-    "date":date,
-    "capacity":capacity,
-    "additional_informations":additional_informations,
-  }
-}
 
 
 
@@ -349,9 +370,9 @@ function get_pnleft(){
 
 
 
-
-
-
+    // ====================================
+    // Google Init Auto Complete
+    // ====================================
     function initAutocomplete() {
       //----autocomplete start
       var input = (document.getElementById('place_id'));
