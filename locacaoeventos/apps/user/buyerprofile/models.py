@@ -33,3 +33,8 @@ class FamilyMember(models.Model):
     relation = models.CharField("Relation", max_length=64)
     related_to = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE, related_name="Parentesco com+")
 
+
+class ShoppingCart(models.Model):
+    buyerprofile = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    placeprice = models.ForeignKey(PlacePrice, on_delete=models.CASCADE)
