@@ -2,7 +2,8 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-from locacaoeventos.apps.place.placecore.models import Place
+from locacaoeventos.apps.place.placecore.models import Placea
+from locacaoeventos.apps.place.placereservation.models import PlacePrice
 
 class BuyerProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Usuário Comprador+")
@@ -34,5 +35,6 @@ class FamilyMember(models.Model):
 
 
 class ShoppingCart(models.Model):
-    buyerprofile = models.OneToOneField(BuyerProfile, on_delete=models.CASCADE)
+    buyerprofile = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    placeprice = models.ForeignKey(PlacePrice, on_delete=models.CASCADE)
