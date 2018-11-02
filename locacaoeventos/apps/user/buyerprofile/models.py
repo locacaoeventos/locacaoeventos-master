@@ -2,7 +2,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-from locacaoeventos.apps.place.placecore.models import Placea
+from locacaoeventos.apps.place.placecore.models import Place
 from locacaoeventos.apps.place.placereservation.models import PlacePrice
 
 class BuyerProfile(models.Model):
