@@ -63,7 +63,7 @@ class PlaceAdditionalInformation(models.Model):
 
 class PlaceVisualization(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    creation = models.DateTimeField()
+    creation = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "Visualização de " + self.place.name + " - " + str(self.creation)
 
