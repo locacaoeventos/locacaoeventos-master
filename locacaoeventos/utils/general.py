@@ -28,8 +28,9 @@ def remove_left_zero(number):
 # Comparing two different Strings
 def compare_strings(string1, string2):
     error = (levenshtein(string1.lower(), string2.lower()) - len(string1) + len(string2))/len(string2)
+    print(error)
     accept = False
-    if error < 0.5:
+    if error < 0.3:
         accept = True
     return accept
 

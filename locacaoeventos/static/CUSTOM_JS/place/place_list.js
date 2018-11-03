@@ -10,8 +10,9 @@ function loading_icon() {
   div_loading +=   '<img src="/static/img/icon/loading.gif" style="width:50px">'
   div_loading += '</div>'
   $("#list_item").html(div_loading)
-
 }
+
+
 function load_places(items_pk){
   $.ajax({
     url: "/buffet/ajax/get-place/",
