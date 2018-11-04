@@ -31,8 +31,7 @@ html {overflow: hidden; overflow-y: auto;}
 </head>
 
 
-
-
+{% block place_maps %}
 
 <!-- =====================================================
 Body code
@@ -50,47 +49,7 @@ Body code
     <!--                                                           HEADER                                                           -->
 
     <!-- ========================================================================================================================== -->
-    <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white; ">
-      <div class="wrapper" style="">
-        <div class="brand">
-          <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 10px 40px" alt="logo"></a>
-        </div>
-        <nav class="navigation-items">
-          <div class="wrapper" style="padding-top:15px">
-            <ul class="main-navigation navigation-top-header"></ul>
-            <ul class="user-area">
-
-              {% if user.is_superuser %}
-                <li><a href="/administrador/home/">Administrador</a></li>
-              {% endif %}
-              <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
-              {% if user.is_authenticated %}
-                {% if buyer %}
-                  <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
-                {% endif %}
-              <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
-              <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
-              {% if user_type == "buyer" %}
-                <li><a href="/usuario/chat/?is_seller=/"><i class="fa fa-shopping-cart" style="font-size:16px; padding:10px; border-width:1px"> </i></a></li>
-              {% endif %}
-              {% else %}
-                <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
-                <li><a {% if basemenu == "register" %}class="menu_selected"{% endif %} href="/usuario/cadastrar/"><strong>Cadastrar</strong></a></li>
-                <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
-              {% endif %}
-
-            </ul>
-            <div class="toggle-navigation">
-              <div class="icon">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </div>
+    {% include "_header.html" %}
 
 
 
@@ -164,69 +123,8 @@ Body code
     <!--                                                           FOOTER                                                           -->
 
     <!-- ========================================================================================================================== -->
-    <footer id="footer_id">
-      <div class="inner">
-        <div class="separador-30"> </div>
-        <div class="footer-top">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-4 col-sm-4">
-                Deseja receber ofertas exclusivas?<br>
-                Assine a nossa newsletter!
-              </div>
-              <div class="col-md-8 col-sm-8">
-               <div id ="base_newsletter_input_container">
-                <input type="text" id="base_newsletter_input" class="form_input_text" placeholder="Digite seu e-mail...">
-               </div>
-               <div id="base_newsletter_send_container">
-                <div id="base_newsletter_send">
-                  <span id="base_newsletter_send_span">
-                    INSCREVA-SE!
-                  </span>
-                </div>
-               </div>
-              </div>
-            </div>
-            <div class="separador-30"> </div>
-            <div class="row">
-              <div class="col-xs-6">
-                  <a style="color:white" href="/usuario/sobre-nos">Sobre Nós</a><br>
-                  <a style="color:white" href="/usuario/fale-conosco">Fale Conosco</a><br>
-                  <a style="color:white" href="/usuario/faq">FAQ</a><br>
-                  <a style="color:white" href="#">Mapa</a><br>
-              </div>
-              <div class="col-xs-6">
-                <div id="base_social_wrapper">
-                  Acesse nossas redes sociais<br>
-                  <div style="display: table; float:right">
-                    <div class="base_social_button_wrapper">
-                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-2px;right:14px"><i class="fa fa-facebook"></i></a></div>
-                    </div><!--
-                    --><div class="base_social_button_wrapper">
-                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-3px;right:8px"><i class="fa fa-instagram"></i></a></div>
-                    </div><!--
-                    --><div class="base_social_button_wrapper">
-                      <div class="base_social_inside"><a href="#" class="base_social_button" style="top:-2px;right:7px"><i class="fa fa-twitter"></i></a></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="separador-30"> </div>
-        <div class="footer_bottom">
-          <div class="separador-30"> </div>
-          <div class="container">
-            <img src="/static/img/123festas/logo_horizontal_branco.png" style="height:40px"/><br>
-            <div class="separador-10"> </div>
-            <span style="font-size:11px">Direitos autorais 2018 123Festas | Todos os direitos reservados.</span>
-            </span>
-          </div>
-          <div class="separador-30"> </div>
-        </div>
-      </div>
-    </footer>
+    {% include "_footer.html" %}
+
   </div>
 </div>
 <!-- end Outer Wrapper-->
@@ -296,4 +194,5 @@ JavaScript imports
     <script type="text/javascript" src="/static/CUSTOM_JS/place/place_list.js"></script>
 
 </body>
+{% endblock place_maps %}
 </html>

@@ -25,20 +25,20 @@ function drawInfobox(category, infoboxContent, json, i){
                 '<div class="item-specific">' + drawItemSpecific(category, json, i) + '</div>' +
                 '<div class="overlay">' +
                     '<div class="wrapper">' +
-                        '<a href="#" class="quick-view" data-toggle="modal" data-target="#modal" id="' + id + '">Quick View</a>' +
+                        '<a href="' + url +  '" class="detail">Visualizar<br>Buffet</a>' +
                         '<hr>' +
-                        '<a href="' + url +  '" class="detail">Go to Detail</a>' +
                     '</div>' +
                 '</div>' +
                 '<a href="' + url +  '" class="description">' +
                     '<div class="meta">' +
                         price +
                         '<h2>' + title +  '</h2>' +
-                        '<figure>' + location +  '</figure>' +
-                        '<i class="fa fa-angle-right"></i>' +
+                        '<figure style="font-size:11px">' + location +  '</figure>' +
+                        '<div class="separador-5"> </div>' +
+                        '<figure>' + json.data[i].place.description +  '</figure>' +
                     '</div>' +
                 '</a>' +
-                '<img src="' + gallery +  '">' +
+                '<div pk="' + gallery + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[i].gallery[0] + '); width:100%; height:200px"></div>' +
             '</div>' +
         '</div>' +
     '</div>';

@@ -20,13 +20,13 @@ if( $body.hasClass('map-fullscreen') ) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function createHomepageGoogleMap(_latitude,_longitude,json){
-    $.get("assets/external/_infobox.js", function() {
+    $.get("/static/base_template_user/assets/external/_infobox.js", function() {
         gMap();
     });
     function gMap(){
         var mapCenter = new google.maps.LatLng(_latitude,_longitude);
         var mapOptions = {
-            zoom: 14,
+            zoom: 12,
             center: mapCenter,
             disableDefaultUI: false,
             scrollwheel: false,
@@ -40,7 +40,16 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
             zoomControlOptions: {
                 style: google.maps.ZoomControlStyle.LARGE,
                 position: google.maps.ControlPosition.RIGHT_TOP
-            }
+            },
+            styles: [
+                {
+                    "featureType": "poi",
+                    "stylers": [
+                       { "visibility": "off" }
+                    ]
+                }
+            ]
+
         };
         var mapElement = document.getElementById('map');
         var map = new google.maps.Map(mapElement, mapOptions);
@@ -98,7 +107,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
                 boxClass: "infobox",
                 enableEventPropagation: true,
                 closeBoxMargin: "0px 0px -30px 0px",
-                closeBoxURL: "assets/img/close.png",
+                closeBoxURL: "/static/base_template_user/assets/img/close.png",
                 infoBoxClearance: new google.maps.Size(1, 1)
             };
 
@@ -174,7 +183,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
 
         var clusterStyles = [
             {
-                url: 'assets/img/cluster.png',
+                url: '/static/base_template_user/assets/img/cluster.png',
                 height: 34,
                 width: 34
             }
@@ -360,7 +369,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
 
 function createHomepageOSM(_latitude,_longitude,json,mapProvider){
 
-    $.get("assets/external/_infobox.js", function() {
+    $.get("/static/base_template_user/assets/external/_infobox.js", function() {
         osmMap();
     });
 
@@ -520,7 +529,6 @@ function itemDetailMap(json){
     else icon = '';
 
     // Google map marker content -----------------------------------------------------------------------------------
-
     var markerContent = document.createElement('DIV');
     markerContent.innerHTML =
         '<div class="map-marker">' +
@@ -592,27 +600,23 @@ function simpleMap(_latitude, _longitude, draggableMarker){
 
 function pushItemsToArray(json, a, category, visibleItemsArray){
     var itemPrice;
+    var place = json.data[a].place
     visibleItemsArray.push(
-        '<li>' +
-            '<div class="item" id="' + json.data[a].id + '">' +
-                '<a href="#" class="image">' +
-                    '<div class="inner">' +
-                        '<div class="item-specific">' +
-                            drawItemSpecific(category, json, a) +
-                        '</div>' +
-                        '<img src="' + json.data[a].gallery[0] + '" alt="">' +
+        '<li class="result_place" pk="' + place.pk + '">' +
+            '<div pk="' + place.pk + '" class="result_place item" id="' + json.data[a].id + '">' +
+                '<div pk="' + place.pk + '" class="result_place image">' +
+                    '<div pk="' + place.pk + '" class="result_place inner" style="height:200px">' +
+                        '<div pk="' + place.pk + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[a].gallery[0] + '); width:100%; height:200px"></div>' +
                     '</div>' +
-                '</a>' +
-                '<div class="wrapper">' +
+                '</div>' +
+                '<div pk="' + place.pk + '" class="result_place wrapper">' +
                     '<a href="#" id="' + json.data[a].id + '"><h3>' + json.data[a].title + '</h3></a>' +
-                    '<figure>' + json.data[a].location + '</figure>' +
-                    drawPrice(json.data[a].price) +
-                    '<div class="info">' +
-                        '<div class="type">' +
-                            '<i><img src="' + json.data[a].type_icon + '" alt=""></i>' +
-                            '<span>' + json.data[a].type + '</span>' +
-                        '</div>' +
-                        '<div class="rating" data-rating="' + json.data[a].rating + '"></div>' +
+                    '<figure style="font-size:11px">' + json.data[a].location + '</figure>' +
+                    '<figure style="font-size:11px"><b>Capacidade</b>: ' + place.capacity + '</figure>' +
+                    '<div class="separador-10"> </div>' +
+                    drawPrice(json.data[a].place.placeprice_min) +
+                    '<div pk="' + place.pk + '" class="result_place info">' +
+                        '<div pk="' + place.pk + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -621,7 +625,7 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
 
     function drawPrice(price){
         if( price ){
-            itemPrice = '<div class="price">' + price +  '</div>';
+            itemPrice = '<div class="price">R$ ' + price +  '</div>';
             return itemPrice;
         }
         else {
@@ -645,27 +649,27 @@ function centerMapToMarker(){
 
 // Create modal if more items are on the same location (example: one building with floors) -----------------------------
 
-function multiChoice(sameLatitude, sameLongitude, json) {
-    //if (clickedCluster.getMarkers().length > 1){
-        var multipleItems = [];
-        $.each(json.data, function(a) {
-            if( json.data[a].latitude == sameLatitude && json.data[a].longitude == sameLongitude ) {
-                pushItemsToArray(json, a, json.data[a].category, multipleItems);
-            }
-        });
-        $('body').append('<div class="modal-window multichoice fade_in"></div>');
-        $('.modal-window').load( 'assets/external/_modal-multichoice.html', function() {
-            $('.modal-window .modal-wrapper .items').html( multipleItems );
-            rating('.modal-window');
-        });
-        $('.modal-window .modal-background, .modal-close').live('click',  function(e){
-            $('.modal-window').addClass('fade_out');
-            setTimeout(function() {
-                $('.modal-window').remove();
-            }, 300);
-        });
-    //}
-}
+// function multiChoice(sameLatitude, sameLongitude, json) {
+//     //if (clickedCluster.getMarkers().length > 1){
+//         var multipleItems = [];
+//         $.each(json.data, function(a) {
+//             if( json.data[a].latitude == sameLatitude && json.data[a].longitude == sameLongitude ) {
+//                 pushItemsToArray(json, a, json.data[a].category, multipleItems);
+//             }
+//         });
+//         $('body').append('<div class="modal-window multichoice fade_in"></div>');
+//         $('.modal-window').load( '/static/base_template_user/assets/external/_modal-multichoice.html', function() {
+//             $('.modal-window .modal-wrapper .items').html( multipleItems );
+//             rating('.modal-window');
+//         });
+//         $('.modal-window .modal-background, .modal-close').live('click',  function(e){
+//             $('.modal-window').addClass('fade_out');
+//             setTimeout(function() {
+//                 $('.modal-window').remove();
+//             }, 300);
+//         });
+//     //}
+// }
 
 // Animate OSM marker --------------------------------------------------------------------------------------------------
 

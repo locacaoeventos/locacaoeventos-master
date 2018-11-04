@@ -12,7 +12,6 @@ class ListBuffetAjax(View):
     def get(self, request, *args, **kwargs):
         pnleft = ast.literal_eval(request.GET.get("pnleft"))
         additional_informations = [info for info in pnleft["additional_informations"] if info != ""]
-        places_pk = ast.literal_eval(ast.literal_eval(request.GET.get("places_pk")))
         option = int(request.GET.get("option"))
 
 

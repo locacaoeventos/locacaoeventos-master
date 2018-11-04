@@ -105,7 +105,7 @@ $(document).ready(function($) {
 
 // Set width for inputs in horizontal search bar -----------------------------------------------------------------------
 
-    $( "#redefine-search-form" ).load( "assets/external/_search-bar.html", function() {
+    $( "#redefine-search-form" ).load( "/static/base_template_user/assets/external/_search-bar.html", function() {
         setInputsWidth();
         //autoComplete();
     });
@@ -330,7 +330,7 @@ function setInputsWidth(){
 // Autocomplete address ------------------------------------------------------------------------------------------------
 
 function autoComplete(){
-    if( !$("script[src='assets/js/leaflet.js']").length ){
+    if( !$("script[src='/static/base_template_user/assets/js/leaflet.js']").length ){
         var input = document.getElementById('location') ;
         var autocomplete = new google.maps.places.Autocomplete(input, {
             types: ["geocode"]
@@ -405,7 +405,7 @@ function rating(element){
 // Owl Carousel in Modal Window ----------------------------------------------------------------------------------------
 
 function drawOwlCarousel(_rtl){
-    $.getScript( "assets/js/owl.carousel.min.js", function( data, textStatus, jqxhr ) {
+    $.getScript( "/static/base_template_user/assets/js/owl.carousel.min.js", function( data, textStatus, jqxhr ) {
         $(".image .gallery").owlCarousel({
             rtl: _rtl,
             items: 1,
@@ -456,7 +456,7 @@ function equalHeight(container){
 // Initialize Owl carousel ---------------------------------------------------------------------------------------------
 
 function initializeOwl(_rtl){
-    $.getScript( "assets/js/owl.carousel.min.js", function( data, textStatus, jqxhr ) {
+    $.getScript( "/static/base_template_user/assets/js/owl.carousel.min.js", function( data, textStatus, jqxhr ) {
         if ($('.owl-carousel').length > 0) {
             if ($('.carousel-full-width').length > 0) {
                 setCarouselWidth();
@@ -516,16 +516,16 @@ function drawItemSpecific(category, json, a){
         if( category == 'real_estate' ){
             if( json.data[a].item_specific ){
                 if( json.data[a].item_specific.bedrooms ){
-                    itemSpecific += '<span title="Bedrooms"><img src="assets/img/bedrooms.png">' + json.data[a].item_specific.bedrooms + '</span>';
+                    itemSpecific += '<span title="Bedrooms"><img src="/static/base_template_user/assets/img/bedrooms.png">' + json.data[a].item_specific.bedrooms + '</span>';
                 }
                 if( json.data[a].item_specific.bathrooms ){
-                    itemSpecific += '<span title="Bathrooms"><img src="assets/img/bathrooms.png">' + json.data[a].item_specific.bathrooms + '</span>';
+                    itemSpecific += '<span title="Bathrooms"><img src="/static/base_template_user/assets/img/bathrooms.png">' + json.data[a].item_specific.bathrooms + '</span>';
                 }
                 if( json.data[a].item_specific.area ){
-                    itemSpecific += '<span title="Area"><img src="assets/img/area.png">' + json.data[a].item_specific.area + '<sup>2</sup></span>';
+                    itemSpecific += '<span title="Area"><img src="/static/base_template_user/assets/img/area.png">' + json.data[a].item_specific.area + '<sup>2</sup></span>';
                 }
                 if( json.data[a].item_specific.garages ){
-                    itemSpecific += '<span title="Garages"><img src="assets/img/garages.png">' + json.data[a].item_specific.garages + '</span>';
+                    itemSpecific += '<span title="Garages"><img src="/static/base_template_user/assets/img/garages.png">' + json.data[a].item_specific.garages + '</span>';
                 }
                 return itemSpecific;
             }
@@ -551,7 +551,7 @@ function drawItemSpecific(category, json, a){
 function quickView(id){
     $.ajax({
         type: 'POST',
-        url: 'assets/external/_modal.html',
+        url: '/static/base_template_user/assets/external/_modal.html',
         data: id,
         success: function (data) {
             // Create HTML element with loaded data
@@ -570,7 +570,4 @@ function adaptBackgroundHeight(){
             $(this).children('img').css('height', '100%');
         }
     });
-
-
-
 }

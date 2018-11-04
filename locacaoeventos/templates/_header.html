@@ -1,0 +1,41 @@
+<div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white; ">
+  <div class="wrapper" style="">
+    <div class="brand">
+      <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 10px 40px" alt="logo"></a>
+    </div>
+    <nav class="navigation-items">
+      <div class="wrapper" style="padding-top:15px">
+        <ul class="main-navigation navigation-top-header"></ul>
+        <ul class="user-area">
+
+          {% if user.is_superuser %}
+            <li><a href="/administrador/home/">Administrador</a></li>
+          {% endif %}
+          <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
+          {% if user.is_authenticated %}
+            {% if buyer %}
+              <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
+            {% endif %}
+          <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
+          <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
+          {% if user_type == "buyer" %}
+            <li><a href="/usuario/chat/?is_seller=/"><i class="fa fa-shopping-cart" style="font-size:16px; padding:10px; border-width:1px"> </i></a></li>
+          {% endif %}
+          {% else %}
+            <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
+            <li><a {% if basemenu == "register" %}class="menu_selected"{% endif %} href="/usuario/cadastrar/"><strong>Cadastrar</strong></a></li>
+            <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
+          {% endif %}
+
+        </ul>
+        <div class="toggle-navigation">
+          <div class="icon">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

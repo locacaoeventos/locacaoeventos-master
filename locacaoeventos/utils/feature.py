@@ -43,6 +43,7 @@ def update_feature_places():
 
         # Review
         review_value = 0
+        print(placefeature.review_factor_firstday)
         review_factor_firstday = placefeature.review_factor_firstday
         review_factor = placefeature.review_factor
 
@@ -57,6 +58,8 @@ def update_feature_places():
             
             # First-day-Factor for Review
             if delta_time <= 1:
+                print(review_factor_firstday)
+                print(placereview_average)
                 value = review_factor_firstday*placereview_average
             else:
                 value = placereview_average*1/(e**(delta_time*review_factor))

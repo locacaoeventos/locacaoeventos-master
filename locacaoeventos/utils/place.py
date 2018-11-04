@@ -205,7 +205,7 @@ def get_single_place_dic(place):
             placeprice_min = placeprice.value
     if placeprice_min != 9999999999999:
         place_dic["placeprice_min"] = "%.2f"%placeprice_min
-    # No objects allowed
+
     review_list = get_reviews_from_place(place)
     for i in range(len(review_list["review_list"])):
         review_list["review_list"][i]["buyerprofile"] = review_list["review_list"][i]["buyerprofile"].pk
@@ -260,7 +260,6 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
 
                     if get_positive(lat_place - lat) <= lat_difference and get_positive(lng_place - lng) <= lng_difference:
                         place_list.append(place)
-            print(place_list)
 
             # Filter by Name
             for i in range(len(place_list_not_filtered)):
@@ -270,23 +269,16 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 for i in range(len(buffet_list_str)):
                     buffet_str = buffet_list_str[i]
                     break_loop = False
-                    print("=====================================")
                     if len(buffet_str) > 2:
                         place_list_str = place["name"].split(" ")
                         for j in range(len(place_list_str)):
                             place_str = place_list_str[j].replace(",", "").replace("-", "")
                             if len(place_str) > 2:
-                                print("--------------")
-                                print(place_str)
-                                print(compare_strings(buffet_str, place_str))
                                 if compare_strings(buffet_str, place_str):
                                     if get_dic_by_key(place_list, "pk", place["pk"]) is None:
                                         place_list.append(place)
                                         break_loop = True
                                         break
-                                        print("CHECK")
-                                print("--------------")
-                    print("=====================================")
                     if break_loop:
                         break
 

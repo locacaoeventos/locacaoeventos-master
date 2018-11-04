@@ -303,14 +303,12 @@
 
 
     function get_places_pk() {
-      var places_pk = JSON.stringify($("#places_pk").html())
       var pnleft = JSON.stringify(get_pnleft())
       var option = $("#order_by").val()
       $.ajax({
         url: "/buffet/ajax/get/",
         dataType: 'json',
         data: {
-          "places_pk":places_pk,
           "pnleft":pnleft,
           "option":option,
 

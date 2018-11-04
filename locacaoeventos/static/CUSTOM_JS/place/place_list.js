@@ -25,9 +25,7 @@ function load_places(items_pk){
       list_places = data.list_places
       str_total = ''
       str_total += '<div class="row">'
-      console.log(list_places)
-      console.log(list_places)
-      console.log(list_places)
+
       if(list_places!=undefined){
         for(i=0;i<list_places.length;i++){
           place = list_places[i]
