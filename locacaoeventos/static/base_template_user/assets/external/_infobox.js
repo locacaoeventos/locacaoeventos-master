@@ -32,7 +32,7 @@ function drawInfobox(category, infoboxContent, json, i){
                     '<div class="meta">' +
                         price +
                         '<h2>' + title +  '</h2>' +
-                        '<figure style="font-size:11px">' + location + '<br>' + json.data[i].gallery[0] + '</figure>' +
+                        '<figure style="font-size:11px">' + location +  '</figure>' +
                         '<div class="separador-5"> </div>' +
                         '<figure>' + json.data[i].place.description +  '</figure>' +
                     '</div>' +
