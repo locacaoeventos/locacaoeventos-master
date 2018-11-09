@@ -31,11 +31,11 @@ class Place(models.Model):
 
     menu = models.FileField('Menu', upload_to='place/menu', blank=True)
 
-    period_soon_begin = models.DateTimeField(default=datetime.datetime.now())
-    period_soon_end = models.DateTimeField(default=datetime.datetime.now())
-    period_late_begin = models.DateTimeField(default=datetime.datetime.now())
-    period_late_end = models.DateTimeField(default=datetime.datetime.now())
-    
+    period_soon_begin = models.DateTimeField(default=datetime.datetime.date(2008, 6, 24))
+    period_soon_end = models.DateTimeField(default=datetime.datetime.date(2008, 6, 24))
+    period_late_begin = models.DateTimeField(default=datetime.datetime.date(2008, 6, 24))
+    period_late_end = models.DateTimeField(default=datetime.datetime.date(2008, 6, 24))
+
     # Auto-Fill
     sellerprofile = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="SellerProfile")
     lat = models.FloatField("Latitude")
