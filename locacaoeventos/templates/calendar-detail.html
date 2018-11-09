@@ -1,0 +1,284 @@
+{% load general_tags %}
+{% load i18n %}
+<style>
+  * {box-sizing: border-box;}
+  ul {list-style-type: none;}
+  body {font-family: Verdana, sans-serif; margin:0;}
+  .calendar_wrapper {
+    position:relative;
+  }
+  .month {
+      padding: 5px 4px 5px 4px;
+      width: 100%;
+      background: transparent;
+      text-align: center;
+  }
+
+  .month ul {
+      margin: 0;
+      padding: 0;
+  }
+
+  .month ul li {
+      color:#484848;
+      font-size: 13px;
+      text-transform: capitalize;
+      letter-spacing: 3px;
+  }
+
+  .month .prev {
+      float: left;
+      padding-top: 10px;
+  }
+
+  .month .next {
+      float: right;
+      padding-top: 10px;
+  }
+  .next a, .prev a {
+    color: 484848;
+    text-decoration:none;
+  }
+  .weekdays {
+      margin: 0;
+      padding: 10px 0;
+      background-color: white;
+  }
+
+  .weekdays li {
+      display: inline-block;
+      width: 14.28%;
+      font-size:11px;
+      color: #666;
+      text-align: center;
+  }
+
+  .days {
+      padding: 10px 0;
+      background: white;
+      margin: 0;
+  }
+
+  .days li {
+      list-style-type: none;
+      display: inline-block;
+      width: 14.28%;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size:12px;
+      color: #777;
+  }
+
+  .days li .active {
+      padding: 5px;
+      background: #4fa7bc;
+      color: white !important
+  }
+  .day_select {
+    cursor:pointer;
+  }
+  .pass {
+    text-decoration: line-through
+
+  }
+  .occupied {
+    background-color:#dddddd;
+    padding:5px;
+    color:#eeeeee;
+    cursor:pointer;
+  }
+  .move {
+    cursor:pointer;
+  }
+
+
+
+
+
+
+  /* Day Description */
+  .day_description {
+    /* positioning */
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    margin: 0;
+    display:none;
+    /* customize */
+    width:70%;
+    max-width:200px;
+    height:70%;
+    max-height:200px;
+    box-shadow:1px 1px 1px 1px #888888;
+    overflow-y:auto;
+    background-color:white;
+    padding:2px 5px 5px 5px;
+  }
+  #day_description_date {
+    color:#4fa7bc;
+    font-weight:bold;
+  }
+  .day_description_unavailability {
+    font-weight:bold;
+  }
+
+</style>
+
+<div class="calendar_wrapper">
+  <div class="day_description">
+    <span style="float:right; cursor:pointer;">&times;</span><br>
+    <span id="day_description_date"></span>
+    <div class="separador-10"> </div>
+    Ocupado:
+    <div class="separador-10"> </div>
+    <div class="unavailability_container">
+    </div>
+  </div>
+  <div class="month">      
+    <ul>
+      <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
+      <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
+      <li>
+        <span id="month_ajax">{{month}}</span><br>
+        <span id="year_ajax">{{year}}</span>
+      </li>
+    </ul>
+  </div>
+
+  <ul class="weekdays">
+    <li>Seg</li><!--
+    --><li>Ter</li><!--
+    --><li>Qua</li><!--
+    --><li>Qui</li><!--
+    --><li>Sex</li><!--
+    --><li>Sab</li><!--
+    --><li>Dom</li>
+  </ul>
+
+  <ul class="days" id="days_ajax">  
+    {% for day in list_month %}{{day|safe}}{% endfor %}
+  </ul>
+</div>
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
+<script>
+  // Load Calendar
+  $(document).ready(function(){
+    $.ajax({
+      url: "/usuario/ajax/calendario/",
+      dataType: 'json',
+      data: {
+        "pk": "{{place_pk}}"
+      },
+      success: function (data) {
+        $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("month", data["month_int"])
+        $("#year_ajax").html(data["year"])
+        str_days = ""
+        for(i=0;i<data["list_month"].length;i++){
+          str_days += data["list_month"][i]
+        }
+        $("#days_ajax").html(str_days)
+      }
+    })
+
+  })
+
+  // Changing months
+  $(".move").click(function(){
+    var elem = $(this)
+    var months = parseInt($(this).attr("value-count")) + parseInt($(this).attr("count"))
+    $(".move").attr("value-count", months)
+
+    // Animation
+    if($(this).attr("count") == -1) {
+      if ($('.calendar_wrapper').is(':hidden')) {
+        $('.calendar_wrapper').show('slide',{direction:'left'},500);
+      } else {
+        $('.calendar_wrapper').hide('slide',{direction:'right'},500);
+      }
+    } else {
+      if ($('.calendar_wrapper').is(':hidden')) {
+        $('.calendar_wrapper').show('slide',{direction:'right'},500);
+      } else {
+        $('.calendar_wrapper').hide('slide',{direction:'left'},500);
+      }
+    }
+
+    $.ajax({
+      url: "/usuario/ajax/calendario/",
+      dataType: 'json',
+      data: {
+        "pk": "{{place_pk}}",
+        "meses":months
+      },
+      success: function (data) {
+        $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("month", data["month_int"])
+        $("#year_ajax").html(data["year"])
+        str_days = ""
+        for(i=0;i<data["list_month"].length;i++){
+          str_days += data["list_month"][i]
+        }
+        $("#days_ajax").html(str_days)
+
+        // Animation
+        if(elem.attr("count") == -1) {
+          $(".calendar_wrapper").show("slide", { direction: "left" }, 500);
+        } else {
+          $(".calendar_wrapper").show("slide", { direction: "right" }, 500);
+        }
+
+      }
+    })
+  })
+
+
+
+  $(document).on("click", ".calendar_class_day", function(){
+    var today_day = $(this).children(1).html()
+    if(today_day==undefined) {
+      today_day = $(this).html()
+    }
+    today_day = String(today_day)
+
+    var today_month = String($("#month_ajax").attr("month"))
+    if(today_month.length==1) {
+      today_month = "0" + today_month
+    }
+
+    var today_year = String($("#year_ajax").html())
+    
+
+    $(".calendar_class_day").each(function(){
+      $(this).css("background-color","white")
+      $(this).css("color","#rgb(119, 119, 119)")
+    })
+
+    if($(this).has("span").length==0){
+      var date_value_selected = today_day + " / " + today_month + " / " + today_year
+      var background_color = $(this).css("background-color")
+      if($(this).attr("is_selected")==undefined){ // Add
+        $(this).css("background-color","#98d000")
+        $(this).css("color","white")
+        $("#date_form").val(date_value_selected)
+        $(this).attr("is_selected", "True")
+        check_field_availability()
+      } else { // Remove
+        $(this).css("background-color","white")
+        $(this).css("color","#rgb(119, 119, 119)")
+        $(this).attr("is_selected", null)
+        $("#date_form").val("")
+        check_field_availability()
+
+      }
+    }
+
+
+  })
+
+
+</script>

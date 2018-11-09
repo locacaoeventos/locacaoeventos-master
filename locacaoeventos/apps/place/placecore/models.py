@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
 from PIL import Image
+import datetime
 
 from locacaoeventos.apps.user.sellerprofile.models import SellerProfile
 
@@ -29,6 +30,11 @@ class Place(models.Model):
     decoration = ArrayField(models.CharField(max_length=200), blank=True)
 
     menu = models.FileField('Menu', upload_to='place/menu', blank=True)
+
+    period_soon_begin = models.DateTimeField(default=datetime.datetime.now())
+    period_soon_end = models.DateTimeField(default=datetime.datetime.now())
+    period_late_begin = models.DateTimeField(default=datetime.datetime.now())
+    period_late_end = models.DateTimeField(default=datetime.datetime.now())
     
     # Auto-Fill
     sellerprofile = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="SellerProfile")

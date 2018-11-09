@@ -53,7 +53,7 @@ function load_places(items_pk){
                 str_item += '</a>'
               str_item += '</div>'
               str_item += '<div class="wrapper place_description_wrapper" pk="' + place.pk + '">'
-                str_item += '<div class="place_description_cell">'
+                str_item += '<div class="place_description_cell" pk="' + place.pk + '">'
                   str_item += '<a class="place_name">'
                     str_item += place.name
                   str_item += '</a>'
@@ -97,10 +97,10 @@ function load_places(items_pk){
 
 
 
-// $(document).on("click", ".place_description_wrapper", function(){
-//   var pk = $(this).attr("pk")
-//   "/buffet/detalhar/?pk="
-// })
+$(document).on("click", ".place_description_cell", function(){
+  var pk = $(this).attr("pk")
+  window.location = "/buffet/detalhar/?pk=" + String(pk)
+})
 
 
 // ==================== 
