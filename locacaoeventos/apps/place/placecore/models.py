@@ -31,7 +31,6 @@ class Place(models.Model):
 
     menu = models.FileField('Menu', upload_to='place/menu', blank=True)
 
-    period_soon_begin = models.DateTimeField(auto_now=True)
     period_soon_end = models.DateTimeField(auto_now=True)
     period_late_begin = models.DateTimeField(auto_now=True)
     period_late_end = models.DateTimeField(auto_now=True)
