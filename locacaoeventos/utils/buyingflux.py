@@ -70,7 +70,7 @@ def check_seller_has_finished_payment(seller_pk, bank_code, agency, account, acc
                         'bank_code': str(bank_code),
                         'conta': str(account),
                         'conta_dv': '1',
-                        'document_number': str(seller.cnpj).replace(".","").replace("/","").replace("-0",""),
+                        'document_number': str(seller.cpf).replace(".","").replace("/","").replace("-",""),
                         'legal_name': str(seller.pk) + " " + str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "-" + str(now.hour) + "-" + str(now.minute) + "-" + str(now.second)
                     }
                 }
