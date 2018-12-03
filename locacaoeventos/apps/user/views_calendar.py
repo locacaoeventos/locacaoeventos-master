@@ -24,7 +24,7 @@ class CalendarAjax(View):
         # Unavailability
         place_unavailability_list = []
         period = request.GET.get("period")
-        if period != "none":
+        if period != "none" and period != None:
             period = ast.literal_eval(request.GET.get("period"))
             placeunavailabilities = []
             if period[0] == 1:
