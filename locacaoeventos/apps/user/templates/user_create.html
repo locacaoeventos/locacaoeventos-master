@@ -216,47 +216,43 @@
         <div id="seller_wrapper" {% if form_type == "seller" %}style="display:block"{% endif %}>
           <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
             {% for field in form_seller %}
-                <div class="form-group">
-                  <label>{{field.label}}</label>
-                  {% if forloop.name == "password_seller" %}
-                    <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
-                    <div class="separador-15"> </div>
-                    <label>Confirme a senha</label>
-                    <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
-                    <div id="tooshort_seller" class="error_message">
-                      A senha deve conter no mínimo 6 dígitos
-                    </div>
-                    <div id="nomatchpswd_seller" class="error_message">
-                      As senhas não são correspondentes
-                    </div>
-                  {% elif field.name == "accepts_newsletter_seller" %}
-                    <div class="separador-5"> </div>
-                    <div class="center_element">
-                      <label class="container_checkbox" style="font-weight:bold; display:inline">
-                        <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
-                        <span class="checkmark_checkbox"></span>
-                      </label>
-                    </div>
-                  {% elif field.name != "bank_code" and field.name != "agency" and field.name != "account" and field.name != "account_type" %}
+                {% if field.name != "bank_code" and field.name != "agency" and field.name != "account" and field.name != "account_type" %}
 
-
-
-
-
-
-
-                    {{field}}
-                    <div id="{{field.name}}_error" class="error_message"></div>
-                    {% if field.errors %}
-                      <div class="error_message" style="display:block">
-                        {% for error in field.errors %}
-                        {{error}}
-                        {% endfor %}
+                  <div class="form-group">
+                    <label>{{field.label}}</label>
+                    {% if forloop.name == "password_seller" %}
+                      <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
+                      <div class="separador-15"> </div>
+                      <label>Confirme a senha</label>
+                      <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+                      <div id="tooshort_seller" class="error_message">
+                        A senha deve conter no mínimo 6 dígitos
                       </div>
+                      <div id="nomatchpswd_seller" class="error_message">
+                        As senhas não são correspondentes
+                      </div>
+                    {% elif field.name == "accepts_newsletter_seller" %}
+                      <div class="separador-5"> </div>
+                      <div class="center_element">
+                        <label class="container_checkbox" style="font-weight:bold; display:inline">
+                          <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+                          <span class="checkmark_checkbox"></span>
+                        </label>
+                      </div>
+                    {% else %}
+                      {{field}}
+                      <div id="{{field.name}}_error" class="error_message"></div>
+                      {% if field.errors %}
+                        <div class="error_message" style="display:block">
+                          {% for error in field.errors %}
+                          {{error}}
+                          {% endfor %}
+                        </div>
+                      {% endif %}
                     {% endif %}
-                  {% endif %}
-              </div>
-              <div class="separador-20"> </div>
+                </div>
+                <div class="separador-20"> </div>
+              {% endif %}
             {% endfor %}
             <!--<div class="checkbox pull-left">
               <label><input type="checkbox" name="newsletter">&nbsp;&nbsp;Concordo e Aceito com os Termos e Condições</label>
