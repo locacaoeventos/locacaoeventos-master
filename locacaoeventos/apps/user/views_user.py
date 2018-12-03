@@ -158,6 +158,28 @@ class CreateUser(View):
                 user.set_password(request.POST['password_seller'])
                 user.save()
                 key = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(23))
+                # seller = SellerProfile.objects.create(
+                #     user=user,
+                #     name=form_seller.cleaned_data["name_seller"],
+                #     email=form_seller.cleaned_data["email_seller"],
+                #     cpf=form_seller.cleaned_data["cpf"],
+                #     cnpj=form_seller.cleaned_data["cnpj"],
+                #     cellphone=form_seller.cleaned_data["cellphone_seller"],
+                #     accepts_newsletter=False,
+                #     key=key,
+                #     is_active=False
+                # )
+                # if "accepts_newsletter_seller" in form_seller.cleaned_data:
+                #     seller.accepts_newsletter = True
+                #     seller.save()
+
+
+                # user_pk = SellerProfile.objects.get(email=form_seller.cleaned_data["email_seller"]).user.pk
+                # str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
+                # str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user_pk) + "&token=" + key + "&seller=true"
+                # send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
+
+                # DEBUG
                 seller = SellerProfile.objects.create(
                     user=user,
                     name=form_seller.cleaned_data["name_seller"],
@@ -167,17 +189,11 @@ class CreateUser(View):
                     cellphone=form_seller.cleaned_data["cellphone_seller"],
                     accepts_newsletter=False,
                     key=key,
-                    is_active=False
+                    is_active=True
                 )
                 if "accepts_newsletter_seller" in form_seller.cleaned_data:
                     seller.accepts_newsletter = True
                     seller.save()
-
-
-                user_pk = SellerProfile.objects.get(email=form_seller.cleaned_data["email_seller"]).user.pk
-                str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
-                str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user_pk) + "&token=" + key + "&seller=true"
-                send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
                 return redirect("/usuario/cadastro-concluido/")
             else:
                 return render(request, "user_create.html", context)
