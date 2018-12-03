@@ -15,7 +15,7 @@ class PlaceForm(TOCForm):
     address = fields.CharField(required=True, label="Endereço")
     description = fields.CharField(required=True, widget=forms.Textarea, label="Descrição")
 
-    capacity = fields.CharField(required=True, widget=forms.NumberInput(label="Capacidade")
+    capacity = fields.CharField(required=True, widget=forms.NumberInput(label="Capacidade"))
 
     video = fields.CharField(
         required=False,
