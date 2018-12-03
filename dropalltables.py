@@ -22,7 +22,7 @@ from os import walk
 dir = str(os.path.dirname(os.path.abspath(__file__)))
 for (dirpath, dirnames, filenames) in walk(dir):
     for x in filenames:
-        if x.startswith("000") or x.startswith("db.sqlite3"):
+        if x.startswith("000") or x.startswith("00") or x.startswith("db.sqlite3"):
             os.remove(os.path.join(dirpath, x))
 
 print('==========================')
