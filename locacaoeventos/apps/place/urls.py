@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^listar/$', ListPlace.as_view()),
     url(r'^detalhar/$', DetailPlace.as_view()),
     url(r'^comprar/$', BuyPlace.as_view()),
+    url(r'^finalizar-compra/$', PurchasePlace.as_view(), name="checkout"),
 
     url(r'^ajax/get/$', ListBuffetAjax.as_view()),
     url(r'^ajax/order-by/$', OrderByBuffetAjax.as_view()),

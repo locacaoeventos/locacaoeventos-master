@@ -124,6 +124,7 @@ class CreateUser(View):
                 buyer = BuyerProfile.objects.create(
                     user=user,
                     name=form_buyer.cleaned_data["name"],
+                    cpf=form_buyer.cleaned_data["cpf_buyer"],
                     birthday=birthday,
                     cellphone=form_buyer.cleaned_data["cellphone"],
                     gender=form_buyer.cleaned_data["gender"],

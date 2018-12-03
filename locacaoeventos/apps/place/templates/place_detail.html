@@ -40,32 +40,7 @@ Body code
         <div id="buying_flux">
           <h1 class="detail_wrapper_title" style="text-align:left">Agendar</h1>
           <hr class="line"/>
-          <div class="separador-20"> </div>
-          <div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;r">
-            <div>{% include "calendar-detail.html" %}</div>
-          </div>
-          <div class="separador-10"> </div>
-          <div class="detail_description_text justify_text">
-            Número de Convidados
-          </div>
-          <div class="separador-2"> </div>
-          <input type="number" id="capacity_form"/>
-          <input type="text" id="date_form"/>
-
-          <hr class="line"/>
-          <div class="separador-10"> </div>
-
-          <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
-          <!--<div class="detail_description_text justify_text">
-            <select style="width:100%; border-radius:20px">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="vw">VW</option>
-              <option value="audi" selected>Audi</option>
-            </select>
-          </div>-->
-
-
+          {% include "calendar-detail.html" %}
         </div>
         <div class="separador-40"> </div>
       </div>
@@ -583,30 +558,6 @@ JavaScript imports
 
 
 
-// ==========================================
-// BUYING FLUX
-// ==========================================
-  function check_field_availability(){
-   var capacity_form = $("#capacity_form").val() 
-   var date_form = $("#date_form").val() 
-   if(capacity_form != "" && date_form != ""){
-    if(capacity_form>0){
-      $("#check_availability").removeClass("check_availability_disabled")
-      date_form = JSON.stringify(date_form.replace(" ", "").split("/"))
-      date_form = encodeURIComponent(date_form)
-      var url_str = "/buffet/comprar/?place_pk=" + {{place_pk}} +  "&capacidade=" + capacity_form + "&date=" + date_form
-      $("#check_availability").attr("onClick", "location='" + url_str + "'")
-    } else {
-      $("#check_availability").addClass("check_availability_disabled")
-      $("#check_availability").attr("onClick", "")
-    }
-   } else {
-    $("#check_availability").addClass("check_availability_disabled")
-    $("#check_availability").attr("onClick", "")
-
-   }
-  }
-
 
 // ==========================================
 // GALERY
@@ -652,7 +603,6 @@ $(document).on("click", ".detail_header_img_round", function() {
     }
     photo_counter_other += 1
   })  
-  console.log(photo_index)
   $(".detail_gallery").attr("style", photo_links[photo_index])
 })
 

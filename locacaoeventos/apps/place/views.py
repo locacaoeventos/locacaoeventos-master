@@ -18,7 +18,7 @@ from .placereview.models import PlaceReview
 class ListPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        place_list_not_filtered = get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True))
+        place_list_not_filtered = get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True, has_finished_payment=True))
 
 
 
@@ -105,7 +105,6 @@ class DetailPlace(View):
         context["review_rates"] = reviews_dic["review_rates"]
 
         context["price_list"] = PlacePrice.objects.filter(place=place_obj)
-
 
 
 

@@ -82,6 +82,21 @@
         </section>
         <hr class="line" style="margin:0; -webkit-box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.05)"/>
       </aside>
+
+      <div class="separador-10"> </div>
+      <div class="detail_description_text justify_text">
+        Número de Convidados
+      </div>
+      <div class="separador-2"> </div>
+      <input type="number" id="capacity_form"/>
+      <input type="text" id="date_form"/>
+
+      <hr class="line"/>
+      <div class="separador-10"> </div>
+
+      <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
+
+      
     </div>
 
 
@@ -141,7 +156,6 @@
       <!-- ====================================================== -->
       <div class="separador-20"> </div>
       <section class="block equal-height" style="padding-top:0" id="list_item">
-
       </section>
 
 
@@ -391,8 +405,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>
 {% endblock js_maps %}
 
-{% block js_select_customize %}
-{% endblock js_select_customize %}
+{% block js_select_customize %}{% endblock js_select_customize %}
 {% endblock content %}
 
 

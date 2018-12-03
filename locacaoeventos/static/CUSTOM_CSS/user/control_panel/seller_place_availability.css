@@ -1,3 +1,6 @@
+/* ==================
+Main
+================== */
 .section_availability {
     padding:0 0 0 5px;
 }
@@ -9,8 +12,20 @@
 }
 
 
-/* Forms */
 
+/* ==================
+Place Price
+================== */
+.placeprice_field {
+	width:100%;
+	padding:10px 5px;
+	border-shadow:inset 0px 1px 0.5px rgba(0, 0, 0, 0.15) !important;
+}
+
+
+/* ==================
+Availability
+================== */
 #unavailability_sameday {
     cursor:pointer;
     font-style:italic;

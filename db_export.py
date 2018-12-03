@@ -7,26 +7,26 @@ import os
 str_command = "python manage.py dumpdata "
 
 
-# ======================= Models to save
-str_command += "placecore.place "
-str_command += "placecore.placeadditionalinformation "
-str_command += "placecore.placevisualization "
-str_command += "placecore.photoprovisory "
-str_command += "placecore.placephoto "
+# # ======================= Models to save
+# str_command += "placecore.place "
+# str_command += "placecore.placeadditionalinformation "
+# str_command += "placecore.placevisualization "
+# str_command += "placecore.photoprovisory "
+# str_command += "placecore.placephoto "
 
-str_command += "placereservation.placeprice "
-str_command += "placereservation.placeunavailability "
-str_command += "placereservation.placereservation "
+# str_command += "placereservation.placeprice "
+# str_command += "placereservation.placeunavailability "
+# str_command += "placereservation.placereservation "
 
-# str_command += "placereview.placereview "
+# # str_command += "placereview.placereview "
 
 
-str_command += "buyerprofile.buyerprofile "
-str_command += "buyerprofile.familymember "
+# str_command += "buyerprofile.buyerprofile "
+# str_command += "buyerprofile.familymember "
 
-str_command += "sellerprofile.sellerprofile "
+# str_command += "sellerprofile.sellerprofile "
 
-# ======================= Models to save
+# # ======================= Models to save
 
 
 str_command += " > database/db_export.json"

@@ -23,3 +23,10 @@ $(document).ready(function(){
     }
     $('.stars').stars();
 })
+function loading_icon() {
+  var div_loading = ''
+  div_loading += '<div style="width:100%; text-align:center; padding-top:50px; opacity:0.4">'
+  div_loading +=   '<img src="/static/img/icon/loading.gif" style="width:50px">'
+  div_loading += '</div>'
+  $("#list_item").html(div_loading)
+}

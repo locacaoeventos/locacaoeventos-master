@@ -13,6 +13,7 @@ class BuyerProfile(models.Model):
     cellphone = models.CharField("Celular", max_length=64)
     gender = models.CharField("Sexo", max_length=64)
     civil_status = models.CharField("Status Civil", max_length=64)
+    cpf = models.CharField("CPF", max_length=32)
 
     creation = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
@@ -32,9 +33,3 @@ class FamilyMember(models.Model):
     birthday = models.DateField()
     relation = models.CharField("Relation", max_length=64)
     related_to = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE, related_name="Parentesco com+")
-
-
-class ShoppingCart(models.Model):
-    buyerprofile = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    placeprice = models.ForeignKey(PlacePrice, on_delete=models.CASCADE)

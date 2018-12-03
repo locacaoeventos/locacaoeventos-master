@@ -10,6 +10,7 @@ from locacaoeventos.utils.forms import *
 class BuyerForm(TOCForm):
 
     name = fields.CharField(required=True, label="Nome")
+    cpf_buyer = fields.CharField(required=True, label="CPF do responsável")
     email = fields.CharField(required=True, widget=forms.EmailInput, label="E-mail")
     password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
 
@@ -22,6 +23,11 @@ class BuyerForm(TOCForm):
     
     photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
+
+
+
+
+
     def __init__(self, *args, **kwargs):
         super(BuyerForm, self).__init__(*args, **kwargs)
     def clean(self):
@@ -57,6 +63,11 @@ class BuyerForm(TOCForm):
                     "Utilize um arquivo de imagem")
                 self.add_error('photo', error_message)
 
+        # CPF
+        cpf = str(cleaned_data.get('cpf_buyer'))
+        if len(cpf) != 14:
+            error_message = forms.ValidationError("CPF digitado incorretamente")
+            self.add_error('cpf', error_message)
 
 
 
@@ -67,6 +78,7 @@ class BuyerFormFB(TOCForm):
     cellphone = fields.CharField(required=True, label="Celular")
     civil_status = fields.CharField(required=True, label="Status Civil")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
+    cpf = fields.CharField(required=True, label="CPF do responsável")
 
     def __init__(self, *args, **kwargs):
         super(BuyerFormFB, self).__init__(*args, **kwargs)
@@ -88,20 +100,35 @@ class BuyerFormFB(TOCForm):
         except:
             error_message = forms.ValidationError("ERROR")
             self.add_error('day', error_message)
+        # CPF
+        cpf = str(cleaned_data.get('cpf'))
+        if len(cpf) != 14:
+            error_message = forms.ValidationError("CPF digitado incorretamente")
+            self.add_error('cpf', error_message)
 
 
 
 class SellerForm(TOCForm):
-    email_seller = fields.EmailField(required=True, widget=forms.EmailInput, label="E-mail")
-    password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
-    cellphone_seller = fields.CharField(required=True, label="Celular")
+    # PagarMe
+    bank_code = fields.CharField(required=False, label="Código do Banco")
+    agency = fields.CharField(required=False, label="Agência", max_length=5, min_length=5)
+    account = fields.CharField(required=False, label="Conta Bancária", max_length=13, min_length=13)
+    account_type = fields.CharField(required=False, label="Tipo de Conta")
+
+
 
     name_seller = fields.CharField(required=True, label="Nome do responsável")
+    email_seller = fields.EmailField(required=True, widget=forms.EmailInput, label="E-mail")
+    cellphone_seller = fields.CharField(required=True, label="Celular")
+
 
     cpf = fields.CharField(required=True, label="CPF do responsável")
     cnpj = fields.CharField(label="CNPJ do estabelecimento")
 
+    password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
     accepts_newsletter_seller = forms.BooleanField(required=False, initial="checked", label="Aceita receber Newsletter")
+
+
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()
 

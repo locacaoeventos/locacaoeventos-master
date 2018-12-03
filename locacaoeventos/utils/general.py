@@ -24,7 +24,12 @@ def remove_left_zero(number):
         string = string[1:]
     return string
 
-
+def add_left_zero(number):
+    if len(str(number)) == 1:
+        number_str = "0" + str(number)
+    else:
+        number_str = str(number)
+    return number_str
 # Comparing two different Strings
 def compare_strings(string1, string2):
     error = (levenshtein(string1.lower(), string2.lower()) - len(string1) + len(string2))/len(string2)

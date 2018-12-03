@@ -4,6 +4,7 @@ from locacaoeventos.apps.user.views_user import *
 from locacaoeventos.apps.user.views_general import *
 from locacaoeventos.apps.user.views_calendar import *
 from locacaoeventos.apps.user.views_control_panel_seller import *
+from locacaoeventos.apps.user.views_control_panel_seller_ajax import *
 from locacaoeventos.apps.user.views_control_panel_buyer import *
 from locacaoeventos.apps.user.views_admin import *
 from locacaoeventos.apps.user.views_static import *
@@ -29,6 +30,9 @@ urlpatterns = [
     url(r'^anunciante/buffet/disponibilidade/$', AvailabilityPlace.as_view()),
     url(r'^ajax/unavailability/create/$', UnavailabilityCreateAjax.as_view()),
     url(r'^ajax/unavailability/detail/$', UnavailabilityDetailAjax.as_view()),
+    url(r'^ajax/placeprice/get/$', PlacePriceGetAjax.as_view()),
+    url(r'^ajax/placeprice/create/$', PlacePriceCreateAjax.as_view()),
+    url(r'^ajax/placeprice/delete/$', PlacePriceDeleteAjax.as_view()),
 
     # Buyer
     url(r'^conta/$', EditBuyer.as_view()),

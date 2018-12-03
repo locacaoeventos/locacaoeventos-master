@@ -5,18 +5,21 @@ from django.contrib.auth.models import User
 
 class PlacePrice(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    value = models.FloatField("Valor")
-    number_people = models.IntegerField("Número de pessoas", default=0)
+    value = models.FloatField()
+    name = models.CharField(max_length=32)
+    description = models.CharField(max_length=128)
+    capacity_min = models.IntegerField()
+    capacity_max = models.IntegerField()
     def __str__(self):
-        return self.place.name
+        return self.place.name + " - " + str(self.value)
 
 
 class PlaceUnavailability(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
-    datetime_begin = models.DateTimeField()
-    datetime_end = models.DateTimeField()
+    period = models.CharField(max_length=4) # min or max
+    day = models.DateField()
     def __str__(self):
-        return self.place.name
+        return self.place.name + " - " + str(self.day)
 
 
 class PlaceReservation(models.Model):

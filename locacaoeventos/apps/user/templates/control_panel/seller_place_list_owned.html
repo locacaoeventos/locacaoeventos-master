@@ -6,118 +6,122 @@
 {% block user_panel_content %}
     <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_listowned.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
-    <a href="/usuario/anunciante/buffet/cadastrar" class="btn btn-default pull-right" style=>Novo Anúncio</a>
 
 
+    {% if has_finished_payment == False %}
+        <div class="error_message" style="display:block; float:none">
+            Para poder anunciar, <a href="/usuario/anunciante/conta/" style="font-weight:bold;color:inherit">clique aqui</a> e preencha os dados bancários de sua conta
+        </div>
+    {% else %}
+        <a href="/usuario/anunciante/buffet/cadastrar" class="btn btn-default pull-right" style=>Novo Anúncio</a>
+        <div class="separador-45"> </div>
+        <section class="block listing" style="padding-top:0">
+            {% for place in place_list %}
+                <div class="item list" style="border: 1px solid #f9f9f9; height:200px; margin-bottom:10px">
+                    <div class="image" style="padding:0 !important;">
+                        {% if place.is_active %}
+                            <div class="quick-view" style="width:30px; padding-left:5px" onclick="javascript:location.href='/buffet/detalhar/?pk={{place.pk}}'">
+                                <i class="fa fa-eye" style="float:left"></i>
+                            </div>
+                        {% endif %}
+                        <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %} style="line-height:0">
+                            <div class="item-specific">
+                                <span title="Capacity">
+                                    <img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
+                                </span>
+                            </div>
+                            <div class="center-cropped img-center" style="background-image: url(/media/{{place.photo}}); height:200px; width:100%" alt=""></div>
+                        </a>
+                    </div>
+                    <div class="wrapper wrapper_placeowned" style="vertical-align:top">
+                        <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %}>
+                            <h3>{{place.name}}</h3>
+                        </a>
+                        <figure>{{place.address}}</figure>
+                        <div class="info">
+                            <div class="separador-10"> </div>
 
-    <div class="separador-45"> </div>
-    <section class="block listing" style="padding-top:0">
-        {% for place in place_list %}
-            <div class="item list" style="border: 1px solid #f9f9f9; height:200px; margin-bottom:10px">
-                <div class="image" style="padding:0 !important;">
-                    {% if place.is_active %}
-                        <div class="quick-view" style="width:30px; padding-left:5px" onclick="javascript:location.href='/buffet/detalhar/?pk={{place.pk}}'">
-                            <i class="fa fa-eye" style="float:left"></i>
-                        </div>
-                    {% endif %}
-                    <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %} style="line-height:0">
-                        <div class="item-specific">
-                            <span title="Capacity">
-                                <img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
-                            </span>
-                        </div>
-                        <div class="center-cropped img-center" style="background-image: url(/media/{{place.photo}}); height:200px; width:100%" alt=""></div>
-                    </a>
-                </div>
-                <div class="wrapper wrapper_placeowned" style="vertical-align:top">
-                    <a {% if place.is_active %}href="/buffet/detalhar/?pk={{place.pk}}"{% endif %}>
-                        <h3>{{place.name}}</h3>
-                    </a>
-                    <figure>{{place.address}}</figure>
-                    <div class="info">
-                        <div class="separador-10"> </div>
-
-                        {% if not place.is_active %}
-                            <figure style="color:#f74235; font-weight:bold">
-                                Seu anúncio foi bloqueado. Por favor, <u style="cursor:pointer" onclick="javascript:location.href='/usuario/fale-conosco/'">contactar o Administrador</u> para mais informações
-                            </figure>
-                        {% elif not place.has_finished_basic %}
-                            <figure>
-                                Quase lá! Complete mais algumas informacoes para seu buffet aparecer para todos
-                            </figure>
-                        {% else %}
-                            {% if place.review_rates == "None" %}
-                                <figure class="pull-left" style="font-weight:bolder">
-                                    Aguardando Primeira Avaliaçao!
-                                    <i style="color:#4fa7bc;" class="fa fa-star"></i>
-                                </figure><br>
-
-                            {% else %}    
-                                <figure class="pull-left" style="vertical-align:top;">
-                                    Quantidade de festas reservadas: {{place.count_reservation}}
+                            {% if not place.is_active %}
+                                <figure style="color:#f74235; font-weight:bold">
+                                    Seu anúncio foi bloqueado. Por favor, <u style="cursor:pointer" onclick="javascript:location.href='/usuario/fale-conosco/'">contactar o Administrador</u> para mais informações
                                 </figure>
-                                <div class="separador-20"> </div>
-                                <figure class="pull-left" style="vertical-align:top;">
-                                    Faturamento do Buffet: {{place.total_profit}}
+                            {% elif not place.has_finished_basic %}
+                                <figure>
+                                    Quase lá! Complete mais algumas informacoes para seu buffet aparecer para todos
                                 </figure>
-                                <div class="separador-20"> </div>
+                            {% else %}
+                                {% if place.review_rates == "None" %}
+                                    <figure class="pull-left" style="font-weight:bolder">
+                                        Aguardando Primeira Avaliaçao!
+                                        <i style="color:#4fa7bc;" class="fa fa-star"></i>
+                                    </figure><br>
 
-                                <figure class="pull-left" style="vertical-align:top; font-weight:bold">
-                                    Avaliação ({{place.review_rates.rate_average}})
-                                </figure>
-                                <span class="review_plussign pull-right" place-pk="{{place.pk}}" style="color:#4fa7bc">+</span>
-                                <div class="separador-25"> </div>
-
-
-                                <div class="review_wrapper" id="review_wrapper_{{place.pk}}">
-                                    <figure style="display:inline-block;">
-                                        Infraestrutura ({{place.review_rates.rate_infraestructure}})
+                                {% else %}    
+                                    <figure class="pull-left" style="vertical-align:top;">
+                                        Quantidade de festas reservadas: {{place.count_reservation}}
                                     </figure>
-                                    <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
-                                    <div class="separador-10"> </div>
-
-                                    <figure style="display:inline-block;">
-                                        Brinquedos ({{place.review_rates.rate_rides}})
+                                    <div class="separador-20"> </div>
+                                    <figure class="pull-left" style="vertical-align:top;">
+                                        Faturamento do Buffet: {{place.total_profit}}
                                     </figure>
-                                    <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_rides}}" data-num-stars="5"></span>
-                                    <div class="separador-10"> </div>
+                                    <div class="separador-20"> </div>
 
-                                    
-                                    <figure style="display:inline-block;">
-                                        Custo-Benefício ({{place.review_rates.rate_cost_benefit}})
+                                    <figure class="pull-left" style="vertical-align:top; font-weight:bold">
+                                        Avaliação ({{place.review_rates.rate_average}})
                                     </figure>
-                                    <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
-                                    <div class="separador-10"> </div>
+                                    <span class="review_plussign pull-right" place-pk="{{place.pk}}" style="color:#4fa7bc">+</span>
+                                    <div class="separador-25"> </div>
 
 
-                                    <figure style="display:inline-block;">
-                                        Atendimento ({{place.review_rates.rate_attendance}})
-                                    </figure>
-                                    <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_attendance}}" data-num-stars="5"></span>
-                                    <div class="separador-10"> </div>
+                                    <div class="review_wrapper" id="review_wrapper_{{place.pk}}">
+                                        <figure style="display:inline-block;">
+                                            Infraestrutura ({{place.review_rates.rate_infraestructure}})
+                                        </figure>
+                                        <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
+                                        <div class="separador-10"> </div>
 
-                                    
-                                    <figure style="display:inline-block;">
-                                        Opinião das Crianças ({{place.review_rates.rate_children_opinion}})
-                                    </figure>
-                                    <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
-                                    <div class="separador-60"> </div>
-                                </div>
+                                        <figure style="display:inline-block;">
+                                            Brinquedos ({{place.review_rates.rate_rides}})
+                                        </figure>
+                                        <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_rides}}" data-num-stars="5"></span>
+                                        <div class="separador-10"> </div>
+
+                                        
+                                        <figure style="display:inline-block;">
+                                            Custo-Benefício ({{place.review_rates.rate_cost_benefit}})
+                                        </figure>
+                                        <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
+                                        <div class="separador-10"> </div>
+
+
+                                        <figure style="display:inline-block;">
+                                            Atendimento ({{place.review_rates.rate_attendance}})
+                                        </figure>
+                                        <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_attendance}}" data-num-stars="5"></span>
+                                        <div class="separador-10"> </div>
+
+                                        
+                                        <figure style="display:inline-block;">
+                                            Opinião das Crianças ({{place.review_rates.rate_children_opinion}})
+                                        </figure>
+                                        <span style="color:#70b7c8; float:right" class="stars" data-rating="{{place.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
+                                        <div class="separador-60"> </div>
+                                    </div>
+                                {% endif %}
                             {% endif %}
+                        </div>
+                    </div>
+                    <div style="position:absolute; bottom:0px; right:5px">
+                        {% if place.is_active %}
+                                <a {% if place.is_active %}href={% if not place.has_finished_basic %}/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}{% else %}"/usuario/anunciante/buffet/cadastrar/?pk={{place.pk}}"{% endif %}{% endif %} class="btn btn-default listowned_button" style="margin-bottom:5px; vertical-align:top">{% if not place.has_finished_basic %}Terminar Anúncio{% else %}Editar{% endif %}</a>
+                                {% if place.has_finished_basic %}
+                                    <a {% if place.is_active %}href="/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}"{% endif %} style="vertical-align:top" class="btn btn-default listowned_button">Disponibilidade & Preços</a>
+                                {% endif %}
                         {% endif %}
                     </div>
                 </div>
-                <div style="position:absolute; bottom:0px; right:5px">
-                    {% if place.is_active %}
-                            <a {% if place.is_active %}href="/usuario/anunciante/buffet/cadastrar/?pk={{place.pk}}"{% endif %} class="btn btn-default listowned_button" style="margin-bottom:5px; vertical-align:top">{% if not place.has_finished_basic %}Terminar Anúncio{% else %}Editar{% endif %}</a>
-                            {% if place.has_finished_basic %}
-                                <a {% if place.is_active %}href="/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}"{% endif %} style="vertical-align:top" class="btn btn-default listowned_button">Disponibilidades</a>
-                                <a {% if place.is_active %}href="/usuario/anunciante/buffet/disponibilidade/?pk={{place.pk}}"{% endif %} style="vertical-align:top" class="btn btn-default listowned_button">Preços</a>
-                            {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </section>
 
 

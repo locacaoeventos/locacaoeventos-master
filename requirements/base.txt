@@ -3,4 +3,5 @@ psycopg2
 pillow
 googlemaps
 xlwt
-social-auth-app-django
+requests==2.18.2
+pagarme

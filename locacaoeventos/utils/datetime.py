@@ -35,3 +35,13 @@ def translate_month(month_eng):
 	elif month_eng == "December":
 		month_pt = "Dezembro"
 	return month_pt
+
+
+
+def convert_to_time(str_time):
+	time = datetime.datetime.strptime(str_time, "%Hh%M")
+	return time 
+
+def convert_time_to_string(time):
+	time_str = time.strftime("%Hh%M")
+	return time_str

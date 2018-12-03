@@ -20,41 +20,77 @@
 
 
   <section class="block listing" style="padding-top:0">
-    <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
-      <input class="hidden" name="place_pk" id="id_place_pk" value="{{place_pk}}"/>
-      {% for field in form %}
-        {% if field.name == "capacity" %}
-          <div class="form-group medium">
-            <div class="row">
-              <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                  <label>Capacidade</label>
-                  {{field}}
-                </div>
-                {% if field.errors %}
-                  <div class="error_message" style="display:block">
-                    {% for error in field.errors %}
-                      {{error}}
-                    {% endfor %}
+    {% if has_finished_payment == False %}
+        <div class="error_message" style="display:block; float:none">
+            Para poder anunciar, <a href="/usuario/anunciante/conta/" style="font-weight:bold;color:inherit">clique aqui</a> e preencha os dados bancários de sua conta
+        </div>
+    {% else %}
+
+      <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+        <input class="hidden" name="place_pk" id="id_place_pk" value="{{place_pk}}"/>
+        {% for field in form %}
+          {% if field.name == "capacity" %}
+            <div class="form-group medium">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="form-group">
+                    <label>Capacidade</label>
+                    {{field}}
                   </div>
-                {% endif %}
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
               </div>
             </div>
-          </div>
-          <div class="separador-5"> </div>
-        {% elif field.name == "children_rides" %}
-          <div class="form-group medium">
-            {{field.as_hidden}}<!-- hidden field -->
-            <div class="row">
-              <div class="col-md-6">
-                <label for="title">Brinquedos (opcional)</label>
-                <input type="text" id="id_children_rides_input"/>
-                <div class="add_button" type="children_rides">+</div>
-                <br><br>
+            <div class="separador-5"> </div>
+          {% elif field.name == "children_rides" %}
+            <div class="form-group medium">
+              {{field.as_hidden}}<!-- hidden field -->
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="title">Brinquedos (opcional)</label>
+                  <input type="text" id="id_children_rides_input"/>
+                  <div class="add_button" type="children_rides">+</div>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                  <div class="separador-20"> </div>
+                  <div class="add_container" id="id_children_rides_container">
+                  </div>
+                </div>
               </div>
-              <div class="col-md-6">
-                <div class="separador-20"> </div>
-                <div class="add_container" id="id_children_rides_container">
+              {% if field.errors %}
+                <div class="error_message" style="display:block">
+                  {% for error in field.errors %}
+                    {{error}}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="separador-20"> </div>
+
+
+
+
+          {% elif field.name == "decoration" %}
+            <div class="form-group medium">
+              {{field.as_hidden}}<!-- hidden field -->
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="title">Decorações (opcional)</label>
+                  <input type="text" id="id_decoration_input"/>
+                  <div class="add_button" type="decoration">+</div>
+                  <br><br>
+                </div>
+                <div class="col-md-6">
+                  <div class="separador-20"> </div>
+                  <div class="add_container" id="id_decoration_container">
+                  </div>
                 </div>
               </div>
             </div>
@@ -65,144 +101,115 @@
                 {% endfor %}
               </div>
             {% endif %}
-          </div>
-          <div class="separador-20"> </div>
+
+
+            <div class="separador-30"> </div>
 
 
 
 
-        {% elif field.name == "decoration" %}
-          <div class="form-group medium">
+
+
+
+
+          {% elif field.name == "photos" %}
             {{field.as_hidden}}<!-- hidden field -->
-            <div class="row">
-              <div class="col-md-6">
-                <label for="title">Decorações (opcional)</label>
-                <input type="text" id="id_decoration_input"/>
-                <div class="add_button" type="decoration">+</div>
-                <br><br>
+            <!-- ==================================================
+              Upload multiple files 
+            ================================================== -->
+            <label>Carregue as fotos do estabelecimento</label>
+            <div class="separador-10"> </div>
+            <input id="fileupload" type="file" name="photo" multiple
+              style="display: none;"
+              data-url="/upload_file/"
+              data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+            >
+            <button type="button" class="btn btn-primary js-upload-photos">
+              <i class="fa fa-cloud-upload"></i> Carregar nova Foto
+            </button><br><br>
+            <div id="gallery">
+              <div class="js-upload-photos" id="upload_frame">
+                <br>
+                <i class="fa fa-cloud-upload" style="font-size:30px"> </i><br>Carregar <br>            
+                <br>
               </div>
-              <div class="col-md-6">
-                <div class="separador-20"> </div>
-                <div class="add_container" id="id_decoration_container">
-                </div>
+            </div>
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                  {{error}}
+                {% endfor %}
               </div>
+            {% endif %}
+            <div class="separador-30"> </div>
+
+
+
+
+
+
+          {% elif field.name == "name" or field.name == "description" or field.name == "video" or field.name == "address" %}
+            <div class="form-group medium">
+              <label for="title">{{field.label}}</label>
+              {{field}}
             </div>
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                  {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+            <div class="separador-15"> </div>
+
+
+          {% elif field.name == "menu" %}
+            <label>Menu do Buffet (opcional)</label>
+            <label class="btn btn-default btn-file" id="menu_click">
+                Carregar Arquivo{{field}} <!-- hidden field -->
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
+            <div class="separador-30"> </div>
+
+
+          {% else %}
+            {% if field.name == "alcoholic_drink" %}
+              <label>Informações Adiconais</label>
+            {% endif %}
+            {% if forloop.counter|divisibleby:2 %}
+              <div class="row">
+            {% endif %}
+              <div class="col-md-6">
+                <ul class="list-unstyled checkboxes">
+                  <li>
+                    <div class="checkbox">
+                      <label>
+                        {{field}}
+                        {{field.label}}
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            {% if not forloop.counter|divisibleby:2 %}
+            </div>
+            {% endif %}
+
+          {% endif %}
+        {% endfor %}
+
+        <div class="separador-60"> </div>
+
+        <section>
+          <figure class="pull-left margin-top-15">
+            <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
+          </figure>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
           </div>
-          {% if field.errors %}
-            <div class="error_message" style="display:block">
-              {% for error in field.errors %}
-                {{error}}
-              {% endfor %}
-            </div>
-          {% endif %}
+        </section>
 
-
-          <div class="separador-30"> </div>
-
-
-
-
-
-
-
-
-        {% elif field.name == "photos" %}
-          {{field.as_hidden}}<!-- hidden field -->
-          <!-- ==================================================
-            Upload multiple files 
-          ================================================== -->
-          <label>Carregue as fotos do estabelecimento</label>
-          <div class="separador-10"> </div>
-          <input id="fileupload" type="file" name="photo" multiple
-            style="display: none;"
-            data-url="/upload_file/"
-            data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
-          >
-          <button type="button" class="btn btn-primary js-upload-photos">
-            <i class="fa fa-cloud-upload"></i> Carregar nova Foto
-          </button><br><br>
-          <div id="gallery">
-            <div class="js-upload-photos" id="upload_frame">
-              <br>
-              <i class="fa fa-cloud-upload" style="font-size:30px"> </i><br>Carregar <br>            
-              <br>
-            </div>
-          </div>
-          {% if field.errors %}
-            <div class="error_message" style="display:block">
-              {% for error in field.errors %}
-                {{error}}
-              {% endfor %}
-            </div>
-          {% endif %}
-          <div class="separador-30"> </div>
-
-
-
-
-
-
-        {% elif field.name == "name" or field.name == "description" or field.name == "video" or field.name == "address" %}
-          <div class="form-group medium">
-            <label for="title">{{field.label}}</label>
-            {{field}}
-          </div>
-          {% if field.errors %}
-            <div class="error_message" style="display:block">
-              {% for error in field.errors %}
-                {{error}}
-              {% endfor %}
-            </div>
-          {% endif %}
-          <div class="separador-15"> </div>
-
-
-        {% elif field.name == "menu" %}
-          <label>Menu do Buffet (opcional)</label>
-          <label class="btn btn-default btn-file" id="menu_click">
-              Carregar Arquivo{{field}} <!-- hidden field -->
-          </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_menu_path" style="color:#999999">{{menu_url}}</span>
-          <div class="separador-30"> </div>
-
-
-        {% else %}
-          {% if field.name == "alcoholic_drink" %}
-            <label>Informações Adiconais</label>
-          {% endif %}
-          {% if forloop.counter|divisibleby:2 %}
-            <div class="row">
-          {% endif %}
-            <div class="col-md-6">
-              <ul class="list-unstyled checkboxes">
-                <li>
-                  <div class="checkbox">
-                    <label>
-                      {{field}}
-                      {{field.label}}
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          {% if not forloop.counter|divisibleby:2 %}
-          </div>
-          {% endif %}
-
-        {% endif %}
-      {% endfor %}
-
-      <div class="separador-60"> </div>
-
-      <section>
-        <figure class="pull-left margin-top-15">
-          <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
-        </figure>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
-        </div>
-      </section>
-
-    </form>
+      </form>
+    {% endif %}
   </section>
 
 

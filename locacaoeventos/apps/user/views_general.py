@@ -15,6 +15,8 @@ from .sellerprofile.models import SellerProfile
 class ComingSoon(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+
+        
         return render(request, "coming_soon.html", context)
 
 class Home(View):
@@ -27,6 +29,9 @@ class Home(View):
         date = request.POST["date"]
         capacity = request.POST["capacity"]
         url_str = "/buffet/listar/?buffet=" + place + "&date=" + date + "&capacity=" + capacity
+
+
+
         return redirect(url_str)
 
 class AboutUs(View):

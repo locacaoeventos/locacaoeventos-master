@@ -1,4 +1,4 @@
-import datetime, calendar, pytz
+import datetime, calendar, pytz, ast
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -19,20 +19,26 @@ class CalendarExample(View):
 
 class CalendarAjax(View):
     def get(self, request):
-
-        # Declaring Variables - Unavailability
         place = Place.objects.get(pk=request.GET.get("pk"))
+
+        # Unavailability
         place_unavailability_list = []
-        for unavailability in PlaceUnavailability.objects.filter(place=place):
-            datetime_unavailability = unavailability.datetime_begin
-            str_date_unavailability = str(datetime_unavailability.year) + "-" + str(datetime_unavailability.month) + "-" + str(datetime_unavailability.day)
-            place_unavailability_list.append(str_date_unavailability)
-            datetime_unavailability = unavailability.datetime_end
-            str_date_unavailability = str(datetime_unavailability.year) + "-" + str(datetime_unavailability.month) + "-" + str(datetime_unavailability.day)
-            place_unavailability_list.append(str_date_unavailability)
+        period = request.GET.get("period")
+        if period != "none":
+            period = ast.literal_eval(request.GET.get("period"))
+            placeunavailabilities = []
+            if period[0] == 1:
+                placeunavailabilities += PlaceUnavailability.objects.filter(place=place, period="min")
+            if period[1] == 1:
+                placeunavailabilities += PlaceUnavailability.objects.filter(place=place, period="max")
+
+            for unavailability in placeunavailabilities:
+                day = unavailability.day
+                str_date_unavailability = str(day.year) + "-" + str(day.month) + "-" + str(day.day)
+                place_unavailability_list.append(str_date_unavailability)
 
 
-        # Declaring Variables - Others
+        # Today, this month, this year
         today = datetime.datetime.today()
         today_month = request.GET.get("meses", None) # Checking if it's changing month
         if today_month == None:
@@ -53,7 +59,7 @@ class CalendarAjax(View):
 
         # Correct size of month
         count_day = calendar.monthrange(today_year, today_month)
-        list_month = ["<li class='day_select calendar_class_day'>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
+        list_month = ["<li class='day_select calendar_class_day'><span>" + str(item+1) + "</span></li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
         
 
         # Seting colors and markers
@@ -63,25 +69,25 @@ class CalendarAjax(View):
             # We are in the current month
             if today_day:
                 if day == today_day:
-                    list_month[i] = "<li class='calendar_class_day'><span class='active day_select'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_colored active day_select'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
-                    list_month[i] = "<li class='calendar_class_day'><span class='pass'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_colored pass'>" + str(i+1) + "</span></li>"
                 elif day > today_day and this_day in place_unavailability_list:
-                    list_month[i] = "<li class='calendar_class_day'><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
             
             else:
                 # We are in a future month
                 if today_year > today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li class='calendar_class_day'><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                        list_month[i] = "<li class='calendar_class_day'><span class='day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 elif today_month > today.month and today_year >= today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li class='calendar_class_day'><span class='occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                        list_month[i] = "<li class='calendar_class_day'><span class='day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 # We are in past month
                 elif today_year < today.year:
-                    list_month[i] = "<li class='calendar_class_day'><span class='pass'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_colored pass'>" + str(i+1) + "</span></li>"
                 elif today_month < today.month:
-                    list_month[i] = "<li class='calendar_class_day'><span class='pass'>" + str(i+1) + "</span></li>"
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_colored pass'>" + str(i+1) + "</span></li>"
 
         # Geting the first day of the month fiting with weekday
         weekday = datetime.datetime.strptime(str(today_year) + "-" + str(today_month) + "-1", "%Y-%m-%d").weekday()

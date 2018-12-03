@@ -4,60 +4,151 @@
 
 {% block user_panel_content %}
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_user_edit.css" type="text/css">
 
 
 
 
 
 <section class="block listing" style="padding-top:0">
+  {% if has_finished_payment == False %}
+    <div class="error_message" style="display:block; float:none">
+      Preencha os dados bancários, para que você possa divulgar seus buffets!
+    </div>
+  {% endif %}
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
-      {% if field.name != "email_seller" %}
-        <div class="form-group">
-          {% if field.name == "password_seller" %}
-            <label>Nova senha</label>
-            <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
-            <div class="separador-15"> </div>
-            <label>Confirme a senha</label>
-            <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
-            <div id="tooshort_seller" class="error_message">
-              A senha deve conter no mínimo 6 dígitos
-            </div>
-            <div id="nomatchpswd_seller" class="error_message">
-              As senhas não são correspondentes
-            </div>
 
-          {% elif field.name == "accepts_newsletter_seller" %}
-            <div class="separador-10"> </div>
-            <div class="center_element">
-              <label style="display:inline">{{field.label}}</label><br>
-              <div class="separador-5"> </div>
-              <label class="container_checkbox" style="display:inline">
-                <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
-                <span class="checkmark_checkbox"></span>
-              </label>
-            </div>
-          {% else %}
-            <label>{{field.label}}</label>
-            {{field}}
-            {% if field.errors %}
-              <div class="error_message" style="display:block">
-                {% for error in field.errors %}
-                {{error}}
+
+
+
+
+
+
+
+      {% if field.name != "email_seller" %}
+        <!-- ==============================================================
+        Conta Bancária
+        ============================================================== -->
+        {% if field.name == "bank_code" %}
+          <div class="separador-15"> </div>
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="selleredit_title">Banco</div>
+              <hr class="line">
+              <div class="separador-20"> </div>
+
+              <label>{{field.label}}</label>
+
+
+              <select style="width:100%; display:inline; text-align:center; height:43px" id="bank_code_id" name="bank_code">
+                <option value="">Código Bancário</option>
+                {% for code in bank_code %}
+                  {% if field.value == code.code %}
+                    <option value="{{code.code}}" selected>{{code.name}}</option>
+                  {% else %}
+                    <option value="{{code.code}}">{{code.name}}</option>
+                  {% endif %}
                 {% endfor %}
-              </div>
-            {% endif %}
-          {% endif %}
+              </select>
+
+              
+
+        {% elif field.name == "agency" %}
+          <div class="separador-15"> </div>
+          <label>{{field.label}}</label>
+          {{field}}
+
+
+        {% elif field.name == "account" %}
+          <div class="separador-15"> </div>
+          <label>{{field.label}}</label>
+          {{field}}
+
+
+        {% elif field.name == "account_type" %}
+          <div class="separador-15"> </div>
+          <label>{{field.label}}</label>
+          <select style="width:100%; display:inline; text-align:center; height:43px" id="account_type_id" name="account_type">
+            <option value="">Código Bancário</option>
+            {% for code in account_type %}
+              {% if field.value == code.code %}
+                <option value="{{code.code}}" selected>{{code.name}}</option>
+              {% else %}
+                <option value="{{code.code}}">{{code.name}}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+
+          <div class="separador-20"> </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+          </div>
+
+          <div class="separador-50"> </div>
         </div>
-        <div class="separador-10"> </div>
-        {% endif %}
-    {% endfor %}
-    <section>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+
+
+
+
+        <!-- ==============================================================
+        Conta Padrão
+        ============================================================== -->
+        {% elif field.name == "password_seller" %}
+          <label>Nova senha</label>
+          <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
+          <div class="separador-15"> </div>
+          <label>Confirme a senha</label>
+          <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
+          <div id="tooshort_seller" class="error_message">
+            A senha deve conter no mínimo 6 dígitos
+          </div>
+          <div id="nomatchpswd_seller" class="error_message">
+            As senhas não são correspondentes
+          </div>
+          <div class="separador-15"> </div>
+
+        {% elif field.name == "accepts_newsletter_seller" %}
+          <div class="separador-15"> </div>
+          <div class="center_element">
+            <label style="display:inline">{{field.label}}</label><br>
+            <div class="separador-5"> </div>
+            <label class="container_checkbox" style="display:inline">
+              <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+              <span class="checkmark_checkbox"></span>
+            </label>
+          </div>
+          <div class="separador-15"> </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+          </div>
+
+        </div>
       </div>
-      <!-- /.form-group -->
-    </section>
+        {% else %}
+          {% if field.name == "name_seller" %}
+          
+            <div class="col-md-6">
+              <div class="selleredit_title">Usuário</div>
+              <hr class="line">
+              <div class="separador-20"> </div>
+          {% endif %}
+          <label>{{field.label}}</label>
+          {{field}}
+          {% if field.errors %}
+            <div class="error_message" style="display:block">
+              {% for error in field.errors %}
+              {{error}}
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class="separador-15"> </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
 
   </form>
 </section>
@@ -65,6 +156,7 @@
 
 
 
+{% block js_select_customize %}{% endblock js_select_customize %}
 {% block jquery %}
   <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}

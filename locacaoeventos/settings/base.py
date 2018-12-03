@@ -36,7 +36,13 @@ INSTALLED_APPS = [
     'locacaoeventos.apps.user.chat',
     'locacaoeventos.apps.user.buyerprofile',
     'locacaoeventos.apps.user.sellerprofile',
+
+    # PayPal
+    'paypal.standard.ipn',
+
+
 ]
+PAYPAL_TEST = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -159,3 +165,17 @@ EMAIL_HOST_USER = "christian.org96@gmail.com"
 EMAIL_HOST_PASSWORD = "catalizrqwe"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+
+
+# ========= Pagarme
+PAGARME_API_KEY = "ak_test_byCqY3pLyr1OEIqh3Z10oRdfDV0f3P"
+PAGARME_ENCRYPTION_KEY = "ek_test_WKIuGoRvj1jUt6APtPd5tXz9CaxdOB"
+
+
+
+
+
+
+

@@ -119,17 +119,17 @@ class ListPlaceBought(View):
             place_dic["review_rates"] = reviews_dic["review_rates"]
             
 
-            datetime_begin = reservation.unavailability.datetime_begin
+            day = reservation.unavailability.day
             utc = pytz.UTC
-            if datetime_begin.replace(tzinfo=utc) < datetime.datetime.now().replace(tzinfo=utc):
+            if day < datetime.datetime.now().date():
                 place_dic["has_passed"] = True
-            place_dic["datetime_begin"] = reservation.unavailability.datetime_begin
+            place_dic["day"] = reservation.unavailability.day
 
 
 
 
             place_list.append(place_dic)
-        place_list = sorted(place_list, key=lambda k: k['datetime_begin'], reverse=True) 
+        place_list = sorted(place_list, key=lambda k: k['day'], reverse=True) 
         context["place_list"] = place_list
 
         return render(request, "control_panel/buyer_buffet_bought.html", context)

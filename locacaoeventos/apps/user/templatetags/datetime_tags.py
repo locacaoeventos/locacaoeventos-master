@@ -75,6 +75,26 @@ def create_minutehour_set(number):
 
 
 
+@register.filter
+def create_minutehour(number):
+    list_time = []
+    for i in range(24):
+        hour = ""
+        if i < 10:
+            hour = "0" + str(i)
+        else:
+            hour = str(i)
+
+        for j in range(6):
+            minute = ""
+            j = j*10
+            if j == 0:
+                minute = "0" + str(j)
+            else:
+                minute = str(j)
+            list_time.append(hour + "h" + minute)
+    return list_time
+
 
 
 

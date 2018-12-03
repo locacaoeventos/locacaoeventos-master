@@ -28,10 +28,12 @@ urlpatterns = [
     url(r'^login/$', Login.as_view()),
     url(r'^logout/$', Logout.as_view()),
 
-
+    # Photos
     url(r'^upload_file/$', UploadFile.as_view()),
     url(r'^get_photo/$', GetPhoto.as_view()),
 
+    # Django-Paypal
+    url(r'^paypal/', include('paypal.standard.ipn.urls')),
 
     url(r'^.well-known/pki-validation/godaddy.html$', GoDaddyVerification.as_view()),
     

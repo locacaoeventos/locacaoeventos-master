@@ -18,7 +18,7 @@ class ListBuffetAjax(View):
 
         # ================ Filter like Home (Capacity, Search, Date)
         places_by_search = filter_place_information(
-            place_list_not_filtered=get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True)),
+            place_list_not_filtered=get_place_information(Place.objects.filter(is_active=True, has_finished_basic=True, has_finished_payment=True)),
             capacity=pnleft["capacity"],
             buffet=pnleft["search"],
             date=pnleft["date"]

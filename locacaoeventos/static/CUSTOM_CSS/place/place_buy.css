@@ -1,0 +1,153 @@
+/* ==================
+Place Description
+================== */
+.buyingflux_place_container {
+  width:100%;
+}
+.buyingflux_place_photo {
+  display:inline-block;
+  width:20%;
+}
+.buyingflux_place_description {
+  display:inline-block;
+  width:80%;
+  padding:5px;
+  vertical-align:top;
+}
+
+
+
+
+/* ==================
+Place Prices
+================== */
+.page_title {
+  width:100%;
+  color:#011a5d;
+  font-weight:bold;
+  font-size:22px;
+}
+.placeprice_card_container {
+  width:50% !important;
+  cursor:pointer;
+  display:inline-block !important;    
+  padding:5px;
+}
+.placeprice_card {
+  display:inline-block;
+  background-color:white;
+  color:#727272;
+  border:1px solid #f8f8f8;
+  font-size:13px;
+  padding:10px 10px;
+  border-radius:10px;
+  width:100%;
+  position:relative;
+  cursor:pointer;
+}
+.placeprice_card:hover{
+  background-color:#4f8cbc;
+  color:white;
+}
+.crossmark_delete {
+  float:right;
+  margin-right:5px;
+  cursor:pointer;
+}
+.placeprice_card_name {
+  text-align:center;
+  font-size:16px;
+  font-weight:bold;
+}
+.placeprice_card_attr {
+  text-align:left;
+}
+.placeprice_selected {
+  background-color:#4f8cbc;
+  color:white;
+}
+#place_checkout {
+  padding:10px;
+  text-align:center;
+  color:white;
+  font-weight:bold;
+  font-size:12px;
+  border-radius:10px;
+  cursor:pointer;
+  float:right;
+  background-color:#dddddd;
+}
+.place_checkout_disable {
+  background-color:#dddddd;
+  color:#ffffff !important;
+  cursor:default !important;
+}
+
+
+
+
+/* ==================
+Pay
+================== */
+#payment_container {
+  display:none;
+  position:relative;
+}
+#backto_selectprice {
+  padding:10px;
+  border-radius:10px;
+  color:white;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+  background-color:#4fa7bc;
+
+  position:absolute;
+  right:15px;
+  top:150px;
+}
+.pay_col {
+  display:inline-block;
+  width:50%;
+  padding:15px;
+  padding-right:0px;
+}
+@media(max-width:600px) {
+  .pay_col {
+    width:100%;
+    padding-left:0px;
+  }
+}
+.pay_col_editable {
+  width:50%;
+}
+.pay_title {
+  font-size:16px;
+}
+.pay_editable_field {
+  width:150px !important;
+}
+.pay_noneditable_field {
+  cursor:default;
+  background-color:#dddddd !important;
+  border:none !important;
+  border-color:transparent !important;
+}
+.pay_button {
+  padding:10px;
+  border-radius:10px;
+  color:white;
+  display:inline-block;
+  border:none;
+  cursor:pointer;
+  float:right;
+  margin-left:5px;
+  font-weight:bold;
+  background-color:#98d000;
+}
+
+.pay_button_disabled {
+  cursor:default;
+  background-color:#dddddd;
+}
+

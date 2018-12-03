@@ -18,6 +18,8 @@ class Place(models.Model):
     is_authorized_by_admin = models.BooleanField(default=False)
     has_finished_basic = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    has_finished_payment = models.BooleanField(default=False)
+
 
     # Place Form
     name = models.CharField("Nome", max_length=64)
@@ -31,10 +33,10 @@ class Place(models.Model):
 
     menu = models.FileField('Menu', upload_to='place/menu', blank=True)
 
-    period_soon_begin = models.DateTimeField(auto_now=True)
-    period_soon_end = models.DateTimeField(auto_now=True)
-    period_late_begin = models.DateTimeField(auto_now=True)
-    period_late_end = models.DateTimeField(auto_now=True)
+    period_soon_begin = models.TimeField(blank=True,null=True)
+    period_soon_end = models.TimeField(blank=True,null=True)
+    period_late_begin = models.TimeField(blank=True,null=True)
+    period_late_end = models.TimeField(blank=True,null=True)
 
     # Auto-Fill
     sellerprofile = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="SellerProfile")

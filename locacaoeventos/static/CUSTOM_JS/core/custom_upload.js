@@ -33,7 +33,7 @@ $(function () {
           current_val = data.result.pk
         }
         $("#id_photos").val(current_val)
-        $("#fileupload").replaceWith($("#fileupload").val('').clone(true));
+        $("#fileupload").val('');
       }
     }
 

@@ -194,18 +194,23 @@ def get_single_place_dic(place):
         "lat": place.lat,
         "lng": place.lng,
         "feature": place.feature,
+        "period_soon_begin": place.period_soon_begin,
+        "period_soon_end": place.period_soon_end,
+        "period_late_begin": place.period_late_begin,
+        "period_late_end": place.period_late_end,
+
+
+
+
+
+        
     }
     photo = PlacePhoto.objects.filter(place=place)
     if photo:
         place_dic["photo"] = str(photo[0].photo.photo)
 
-    placeprice_min = 9999999999999
-    for placeprice in PlacePrice.objects.filter(place=place):
-        if placeprice.value < placeprice_min:
-            placeprice_min = placeprice.value
-    if placeprice_min != 9999999999999:
-        place_dic["placeprice_min"] = "%.2f"%placeprice_min
 
+    place_dic["placeprice_min"] = get_place_pricemin(place)
     review_list = get_reviews_from_place(place)
     for i in range(len(review_list["review_list"])):
         review_list["review_list"][i]["buyerprofile"] = review_list["review_list"][i]["buyerprofile"].pk
@@ -227,8 +232,14 @@ def get_place_information(places):
 
 
 
-
-
+def get_place_pricemin(place):
+    placeprice_min = 9999999999999
+    for placeprice in PlacePrice.objects.filter(place=place):
+        if placeprice.value < placeprice_min:
+            placeprice_min = placeprice.value
+    if placeprice_min != 9999999999999:
+        placeprice_min = "%.2f"%placeprice_min
+    return placeprice_min
 
 
 

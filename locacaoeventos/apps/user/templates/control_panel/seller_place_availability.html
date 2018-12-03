@@ -1,103 +1,257 @@
 {% extends "control_panel/seller_base.html" %}
-{% block page_title %}Disponibilidade{% endblock page_title %}
-{% block panel_title %}Disponibilidade{% endblock panel_title %}
+{% block page_title %}Disponibilidade & Preços{% endblock page_title %}
+{% block panel_title %}Disponibilidade & Preços - {{place.name}}{% endblock panel_title %}
 {% load datetime_tags %}
+{% load general_tags %}
 
 {% block user_panel_content %}
     <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_availability.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
-  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/placeprice.css" type="text/css">
 
+
+
+
+
+
+    <div class="separador-10"> </div>
+
+
+
+    {% if has_period %}
+        <section>
+            <div class="row">
+                <div class="col-md-6">
+
+                    {% if not placeprice_list %}
+                        <span style="color:red">Crie um pacote de preço para concluir!</span>
+                        <div class="separador-10"> </div>
+                    {% endif %}
+
+                    Nome:<br>
+                    <input type="text" required placeholder="Nome" class="placeprice_field" id="id_name" name="name" maxlength="32"/>
+                    <div class="separador-20"> </div>
+
+                    Descrição:<br>
+                    <textarea rows="4" cols="50" placeholder="Descrição" class="placeprice_field" id="id_description" name="name" maxlength="128"></textarea>
+                    <div class="separador-20"> </div>
+
+                    Preço:<br>
+                    <input type="number" required placeholder="R$ 00.00" step="any" class="placeprice_field" id="id_value" name="value"/>
+                    <div class="separador-20"> </div>
+
+                    Capacidade Mínima:&nbsp;&nbsp;
+                    <select class="placeprice_field" id="id_capacity_min" name="capacity_min">
+                        <option value="">-</option>
+                        {% for i in 1000|create_range %}
+                            <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="separador-20"> </div>
+
+                    Capacidade Máxima:&nbsp;&nbsp;
+                    <select class="placeprice_field" id="id_capacity_max" name="capacity_max">
+                        <option value="">-</option>
+                        {% for i in 1000|create_range %}
+                            <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="separador-10"> </div>
+
+                    <span class="error_message" id="placeprice_add_error">
+                        Preencha todos os espaços!
+                    </span>
+                    <div class="separador-20"> </div>
+
+                    <button class="btn btn-default pull-right" style="font-size:12px" id="placeprice_add">Adicionar</button>
+                </div>
+                <div class="col-md-6">
+                    <h1>Pacotes de Preço</h1>
+                    <div id="placeprice_container">
+                    </div>
+
+                </div>
+
+        </section>
+        <div class="separador-20"> </div>
+        <hr class="line"/>
+        <div class="separador-20"> </div>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+    <div class="separador-10"> </div>
     <section>
         <div class="row">
             <div class="col-md-6">
-                {% include "calendar.html" %}
+                Selecione ao menos um período que seu Buffet opera para colocá-lo no ar!
                 <div class="separador-20"> </div>
+                <form id="form-submit" role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+                    Funcionamento<br>
+                    Das:
+                        <select class="unavailability_field begin" id="id_soon_begin" name="soon_begin" required value="{{soon_begin}}">
+                            <option value="">-</option>
+                            {% for i in 24|create_minutehour %}
+                                <option value="{{i}}" {% if soon_begin == i %}selected{% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    Até:
+                        <select class="unavailability_field begin" id="id_soon_end" name="soon_end" required value="{{soon_end}}">
+                            <option value="">-</option>
+                            {% for i in 24|create_minutehour %}
+                                <option value="{{i}}" {% if soon_end == i %}selected{% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+
+                    <div class="separador-20"> </div>
+                    Funcionamento Opcional<br>
+                    Das:
+                        <select class="unavailability_field begin" id="id_late_begin" name="late_begin" value="{{late_begin}}">
+                            <option value="">-</option>
+                            {% for i in 24|create_minutehour %}
+                                <option value="{{i}}" {% if late_begin == i %}selected{% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    Até:
+                        <select class="unavailability_field begin" id="id_late_end" name="late_end" value="{{late_end}}">
+                            <option value="">-</option>
+                            {% for i in 24|create_minutehour %}
+                                <option value="{{i}}" {% if late_end == i %}selected{% endif %}>{{i}}</option>
+                            {% endfor %}
+                        </select>
+                    <div class="separador-40"> </div>
+                    <input type="text" value="{{place_pk}}" id="id_place_pk" name="place_pk" style="display:none">
+                    <button type="submit" class="btn btn-default pull-right" style="font-size:12px">Atualizar</button>
+                </form>
             </div>
+
+
+
+
+
+
+
 
             <div class="col-md-6">
-                <section class="section_availability">
-                    <h2 id="place_pk" pk="{{place_pk}}" style="margin-top:0">{{place.name}}</h2>
-                    <span class="section_title">Quando seu buffet estará ocupado?</span><br>
-                    <span class="section_title">(selecione no calendário)</span>
-                    <div class="subsection_availability">
-                            <span>Início</span>
-                            <div class="separador-3"> </div>
-                            <div style="padding-left:5px">
-                                <select class="unavailability_field begin" id="id_day_begin" required>
-                                    <option value="">Dia</option>
-                                    {% for i in 31|create_monthday_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field begin" id="id_month_begin" required>
-                                    <option value="">Mês</option>
-                                    {% for i in 12|create_monthday_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field begin" id="id_year_begin" required>
-                                    <option value="">Ano</option>
-                                    {% for i in 10|create_year_set_later %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field begin" id="id_hour_begin" required>
-                                    <option value="">H</option>
-                                    {% for i in 24|create_minutehour_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field begin" id="id_minute_begin" required>
-                                    <option value="">M</option>
-                                    {% for i in 60|create_minutehour_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
 
-                            <div class="separador-10"> </div>
-                            <span>Fim <span id="unavailability_sameday">(mesmo dia)</span></span>
-                            <div class="separador-3"> </div>
-                            <div style="padding-left:5px">
-                                <select class="unavailability_field end" id="id_day_end" required>
-                                    <option value="">Dia</option>
-                                    {% for i in 31|create_monthday_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field end" id="id_month_end" required>
-                                    <option value="">Mês</option>
-                                    {% for i in 12|create_monthday_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field end" id="id_year_end" required>
-                                    <option value="">Ano</option>
-                                    {% for i in 10|create_year_set_later %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field end" id="id_hour_end" required>
-                                    <option value="">H</option>
-                                    {% for i in 24|create_minutehour_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                                <select class="unavailability_field end" id="id_minute_end" required>
-                                    <option value="">M</option>
-                                    {% for i in 60|create_minutehour_set %}
-                                    <option value="{{i}}">{{i}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="separador-10"> </div>
-                            <div class="error_message" id="error_unavailability">EXEMPLO</div>
-                            <div class="separador-25"> </div>
-                            <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
-                    </div>
-                </section>
+
+
+
+
+
+
+                {% include "calendar.html" %}
+                <span class="section_title">Quando seu buffet estará ocupado?</span><br>
+                <span class="section_title">(selecione no calendário)</span>
+                <div class="subsection_availability">
+                        <span>Início</span>
+                        <div class="separador-3"> </div>
+                        <div style="padding-left:5px">
+                            <select class="unavailability_field begin" id="id_day_begin" required>
+                                <option value="">Dia</option>
+                                {% for i in 31|create_monthday_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field begin" id="id_month_begin" required>
+                                <option value="">Mês</option>
+                                {% for i in 12|create_monthday_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field begin" id="id_year_begin" required>
+                                <option value="">Ano</option>
+                                {% for i in 10|create_year_set_later %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field begin" id="id_hour_begin" required>
+                                <option value="">H</option>
+                                {% for i in 24|create_minutehour_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field begin" id="id_minute_begin" required>
+                                <option value="">M</option>
+                                {% for i in 60|create_minutehour_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="separador-10"> </div>
+                        <span>Fim <span id="unavailability_sameday">(mesmo dia)</span></span>
+                        <div class="separador-3"> </div>
+                        <div style="padding-left:5px">
+                            <select class="unavailability_field end" id="id_day_end" required>
+                                <option value="">Dia</option>
+                                {% for i in 31|create_monthday_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field end" id="id_month_end" required>
+                                <option value="">Mês</option>
+                                {% for i in 12|create_monthday_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field end" id="id_year_end" required>
+                                <option value="">Ano</option>
+                                {% for i in 10|create_year_set_later %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field end" id="id_hour_end" required>
+                                <option value="">H</option>
+                                {% for i in 24|create_minutehour_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <select class="unavailability_field end" id="id_minute_end" required>
+                                <option value="">M</option>
+                                {% for i in 60|create_minutehour_set %}
+                                <option value="{{i}}">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="separador-10"> </div>
+                        <div class="error_message" id="error_unavailability">EXEMPLO</div>
+                        <div class="separador-25"> </div>
+                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
+                </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
 
@@ -106,9 +260,36 @@
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
-{% block old_custom_js %}
-{% endblock old_custom_js %}
-<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_availability.js"></script>
+{% block old_custom_js %}{% endblock old_custom_js %}
 {% block js_select_customize %}{% endblock js_select_customize %}
 
+
+
+
+
+<script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_availability.js"></script>
+<script>
+    // ====================================
+    // Capacity
+    // ====================================
+    // source: https://refreshless.com/nouislider/
+    // var slider_page = document.getElementById('aaa');
+    // noUiSlider.create(slider_page, {
+    //   start: [0,100],
+    //   range: {
+    //     'min': [0],
+    //     'max': [5000]
+    //   },
+
+    // });
+    // slider_page.noUiSlider.on("slide", function(values){
+    //   $("#capacity_val").html(parseInt(values))
+    // })
+    // slider_page.noUiSlider.on("change", function(values){
+    //   loading_icon()
+    //   var get_places = get_places_pk()
+    // })
+</script>
 {% endblock user_panel_content %}
