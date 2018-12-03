@@ -220,7 +220,7 @@
 
                   <div class="form-group">
                     <label>{{field.label}}</label>
-                    {% if forloop.name == "password_seller" %}
+                    {% if field.name == "password_seller" %}
                       <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
                       <div class="separador-15"> </div>
                       <label>Confirme a senha</label>
