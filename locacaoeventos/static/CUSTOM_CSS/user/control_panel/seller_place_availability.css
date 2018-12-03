@@ -21,6 +21,46 @@ Place Price
 	padding:10px 5px;
 	border-shadow:inset 0px 1px 0.5px rgba(0, 0, 0, 0.15) !important;
 }
+.placeprice_card_container {
+  width:50% !important;
+  cursor:pointer;
+  display:inline-block !important;    
+  padding:5px;
+}
+.placeprice_card {
+  display:inline-block;
+  background-color:white;
+  color:#727272;
+  border:1px solid #f8f8f8;
+  font-size:13px;
+  padding:10px 10px;
+  border-radius:10px;
+  width:100%;
+  position:relative;
+  cursor:pointer;
+}
+.placeprice_card:hover{
+  background-color:#4f8cbc;
+  color:white;
+}
+.crossmark_delete {
+  float:right;
+  margin-right:5px;
+  cursor:pointer;
+}
+.placeprice_card_name {
+  text-align:center;
+  font-size:16px;
+  font-weight:bold;
+}
+.placeprice_card_attr {
+  text-align:left;
+}
+.placeprice_selected {
+  background-color:#4f8cbc;
+  color:white;
+}
+
 
 
 /* ==================
