@@ -237,7 +237,14 @@
                         <span class="checkmark_checkbox"></span>
                       </label>
                     </div>
-                  {% else %}
+                  {% elif field.name != "bank_code" and field.name != "agency" and field.name != "account" and field.name != "account_type" %}
+
+
+
+
+
+
+
                     {{field}}
                     <div id="{{field.name}}_error" class="error_message"></div>
                     {% if field.errors %}
