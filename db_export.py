@@ -28,7 +28,7 @@ str_command += "chat.message "
 
 str_command += "sellerprofile.sellerprofile "
 
-str_command += "auth "
+str_command += "auth.user "
 
 # ======================= Models to save
 
