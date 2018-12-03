@@ -4,4 +4,4 @@ pillow
 googlemaps
 xlwt
 requests==2.18.2
-pagarme
+pagarme-python

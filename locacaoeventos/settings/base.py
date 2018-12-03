@@ -38,11 +38,11 @@ INSTALLED_APPS = [
     'locacaoeventos.apps.user.sellerprofile',
 
     # PayPal
-    'paypal.standard.ipn',
+    # 'paypal.standard.ipn',
 
 
 ]
-PAYPAL_TEST = True
+# PAYPAL_TEST = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

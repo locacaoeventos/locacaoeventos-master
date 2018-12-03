@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^get_photo/$', GetPhoto.as_view()),
 
     # Django-Paypal
-    url(r'^paypal/', include('paypal.standard.ipn.urls')),
+    # url(r'^paypal/', include('paypal.standard.ipn.urls')),
 
     url(r'^.well-known/pki-validation/godaddy.html$', GoDaddyVerification.as_view()),
     
