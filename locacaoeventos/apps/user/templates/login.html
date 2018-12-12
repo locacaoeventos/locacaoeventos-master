@@ -70,7 +70,7 @@
           {
              if (response.authResponse) 
              {
-        testAPI();
+              testAPI();
              } 
              else 
              {
@@ -140,7 +140,6 @@
       str_data += "&gender=" + response.gender
       str_data += "&locale=" + response.locale
       str_data += "&picture=" + String(response.picture.data.url)
-      str_data += "&age=" + String(response.age_range.min) 
 
       window.location = '/usuario/cadastrar-facebook/' + str_data
 
