@@ -58,7 +58,6 @@ class PurchasePlace(View):
         placeprice_pk = request.GET.get("placeprice_pk")
         place_pk = request.GET.get("place_pk")
         data = json.loads(request.GET.get("data"))
-        print(data)
 
         place = Place.objects.get(pk=place_pk)
         seller = place.sellerprofile
@@ -74,7 +73,6 @@ class PurchasePlace(View):
 
 
         # Billing
-
         zip_code = request.GET.get("zip_code").replace("-", "")
         number = request.GET.get("number")
         state = request.GET.get("state")
@@ -84,36 +82,36 @@ class PurchasePlace(View):
 
         # Faz a Transação
         params = {
-			"amount": data["amount"],
-			"card_hash": data["card_hash"],
+            "amount": data["amount"],
+            "card_hash": data["card_hash"],
             "installments":data["installments"],
-			"customer": {
-			    "external_id": str(buyer.pk),
-			    "name": buyer.name,
-			    "type": "individual",
-			    "country": "br",
-			    "email": buyer.email,
-			    "documents": [
-			        {
-			            "type": "cpf",
-			            "number": buyer.cpf.replace(".", "").replace("-", "")
-			        }
-			    ],
-			    "phone_numbers": ["+" + buyer.cellphone.replace("(", "").replace(")", "").replace("-", "")],
-			    "birthday": str(birthday.year) + "-" + add_left_zero(str(birthday.month)) + "-" + str(birthday.day)
-			},
-			"billing": {
-			    "name": "Trinity Moss",
-			    "address": {
-			        "country": "br",
-			        "state": state,
-			        "city": city,
-			        "neighborhood": neighbourhood,
-			        "street": street,
-			        "street_number": number,
-			        "zipcode": zip_code
-			    }
-			},
+            "customer": {
+                "external_id": str(buyer.pk),
+                "name": buyer.name,
+                "type": "individual",
+                "country": "br",
+                "email": buyer.email,
+                "documents": [
+                    {
+                        "type": "cpf",
+                        "number": buyer.cpf.replace(".", "").replace("-", "")
+                    }
+                ],
+                "phone_numbers": ["+" + buyer.cellphone.replace("(", "").replace(")", "").replace("-", "")],
+                "birthday": str(birthday.year) + "-" + add_left_zero(str(birthday.month)) + "-" + str(birthday.day)
+            },
+            "billing": {
+                "name": buyer.name,
+                "address": {
+                    "country": "br",
+                    "state": state,
+                    "city": city,
+                    "neighborhood": neighbourhood,
+                    "street": street,
+                    "street_number": number,
+                    "zipcode": zip_code
+                }
+            },
             "items": [
                 {
                     "id": str(placeprice.pk),
