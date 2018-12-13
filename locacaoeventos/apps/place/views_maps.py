@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import JsonResponse
 from django.db.models import Case, When
+from django.core.serializers.json import DjangoJSONEncoder
 
 import json
 
@@ -48,7 +49,12 @@ class MapsPlace(View):
             data_dic["place"] = place
             data_list.append(data_dic)
 
-        context["data"] = json.dumps({"data": data_list})
+        context["data"] = json.dumps(
+            {"data": data_list},
+            sort_keys=True,
+            indent=1,
+            cls=DjangoJSONEncoder
+        )
 
         return render(request, "place_maps.html", context)
 

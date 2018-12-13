@@ -28,6 +28,7 @@
  * @extends {google.maps.OverlayView}
  * @constructor
  */
+
 function RichMarker(opt_options) {
   var options = opt_options || {};
 
@@ -52,7 +53,7 @@ function RichMarker(opt_options) {
   }
 
   if (opt_options['anchor'] == undefined) {
-    opt_options['anchor'] = RichMarkerPosition['BOTTOM'];
+    opt_options['anchor'] = 8;
   }
 
   this.setValues(options);

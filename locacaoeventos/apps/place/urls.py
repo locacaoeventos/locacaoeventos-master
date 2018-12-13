@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^ajax/get-place/$', GetPlaceInformation.as_view()),
     
 
-    url(r'^maps/$', MapsPlace.as_view()),
+    url(r'^mapa/$', MapsPlace.as_view()),
     url(r'^maps-ajax/$', MapsPlaceAjax.as_view()),
 
 ]

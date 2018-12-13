@@ -198,12 +198,6 @@ def get_single_place_dic(place):
         "period_soon_end": place.period_soon_end,
         "period_late_begin": place.period_late_begin,
         "period_late_end": place.period_late_end,
-
-
-
-
-
-        
     }
     photo = PlacePhoto.objects.filter(place=place)
     if photo:

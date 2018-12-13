@@ -13,7 +13,7 @@ class PlaceForm(TOCForm):
 
     name = fields.CharField(required=True, label="Nome")
     address = fields.CharField(required=True, label="Endereço")
-    description = fields.CharField(required=True, widget=forms.Textarea, label="Descrição")
+    description = fields.CharField(required=True, widget=forms.Textarea, max_length=1024, label="Descrição")
 
     capacity = fields.CharField(required=True, widget=forms.NumberInput(), label="Capacidade")
 

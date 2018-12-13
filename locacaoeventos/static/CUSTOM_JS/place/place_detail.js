@@ -1,6 +1,16 @@
+// ==========================================
+// Gallery
+// ==========================================
+$("#detail_header_showphotos").click(function(){
+  if($(this).hasClass("place_favorite")){
+    $(this).removeClass("place_favorite")
+    $(this).html('<img src="/static/img/icon/favorite.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei')
+  } else {
+    $(this).addClass("place_favorite")
+    $(this).html('<img src="/static/img/icon/favorite-selected.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei')
 
-
-
+  }
+})
 
 
 
@@ -10,41 +20,41 @@
 // ==========================================
 // Buying Flux
 // ==========================================
-  var window_width  = $(window).width();
-  if(window_width>=992){
-    var top_offset = $('#buying_flux').offset().top - 0;
-    var featured_offset = $('#featured').offset().top - 800;
+var window_width  = $(window).width();
+if(window_width>=992){
+  var top_offset = $('#buying_flux').offset().top - 50;
+  var featured_offset = $('#featured').offset().top - 800;
 
 
 
-    $(window).scroll(function (event) {
-      var y = $(this).scrollTop();
-      if (y >= top_offset){
-        if(y>featured_offset){
+  $(window).scroll(function (event) {
+    var y = $(this).scrollTop();
+    if (y >= top_offset){
+      if(y>featured_offset){
 
-          $('#buying_flux').removeClass('fixed');
-          $('#buying_flux').addClass('absolute');
-          $('#buying_flux').css('top', featured_offset-580);
-          console.log(featured_offset)
-
-        }
-        else {
-          $('#buying_flux').css('top', "0");
-          $('#buying_flux').addClass('fixed');
-          $('#buying_flux').removeClass('absolute');
-
-        }
-      }
-      else{
-        $('#buying_flux').css('top', "0");
         $('#buying_flux').removeClass('fixed');
-        $('#buying_flux').removeClass('absolute');
+        $('#buying_flux').addClass('absolute');
+        $('#buying_flux').css('top', featured_offset-580);
+        console.log(featured_offset)
+
       }
-    });    
-  }
-  $(document).on("keyup mouseup", "#capacity_form", function(){
-    check_field_availability()    
-  })
+      else {
+        $('#buying_flux').css('top', "50");
+        $('#buying_flux').addClass('fixed');
+        $('#buying_flux').removeClass('absolute');
+
+      }
+    }
+    else{
+      $('#buying_flux').css('top', "0");
+      $('#buying_flux').removeClass('fixed');
+      $('#buying_flux').removeClass('absolute');
+    }
+  });    
+}
+$(document).on("keyup mouseup", "#capacity_form", function(){
+  check_field_availability()    
+})
 
 
 

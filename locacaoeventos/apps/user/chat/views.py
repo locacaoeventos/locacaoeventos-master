@@ -36,6 +36,8 @@ class Chat(View):
                 "place": message.place,
             }
 
+
+
             if BuyerProfile.objects.filter(user=message.user_to):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_to)[0].pk
             messages_from.append(message_dic)
@@ -51,6 +53,7 @@ class Chat(View):
 
             if BuyerProfile.objects.filter(user=message.user_from):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_from)[0].pk
+
             messages_to.append(message_dic)
 
         messages = messages_from + messages_to
@@ -147,12 +150,14 @@ class ChatGetViewAjax(View):
             "message_text": message.text,
             "datetime": message.datetime,
             "from": buyerprofile.name,
+            "from_pk": buyerprofile.user.pk,
             "photo": buyerprofile_photo,
             } for message in Message.objects.filter(user_from=user_buyer, user_to=user_seller, place=place)
         ] + [{
             "message_text": message.text,
             "datetime": message.datetime,
             "from": place.name,
+            "from_pk": place.sellerprofile.user.pk,
             "place": place,
             } for message in Message.objects.filter(user_from=user_seller, user_to=user_buyer, place=place)
         ]
@@ -162,13 +167,18 @@ class ChatGetViewAjax(View):
 
 
 
-            # Sorting messages by groups
+            # =========== Sorting messages by groups
             messages_compiled = []
             message_dic = {
                 "message_text": [messages[0]["message_text"]],
                 "datetime": messages[0]["datetime"],
                 "from": messages[0]["from"],
             }
+            # Left and right position
+            if messages[0]["from_pk"] == request.user.pk:
+                message_dic["from_this_user"] = True
+
+
             if "photo" in messages[0]:
                 message_dic["photo"] = messages[0]["photo"]
             else:
@@ -193,6 +203,13 @@ class ChatGetViewAjax(View):
                         "datetime": message["datetime"],
                         "from": message["from"],
                     }
+                    # Left and right position
+                    # print(message["from_pk"])
+                    # print(request.user.pk)
+
+                    if message["from_pk"] == request.user.pk:
+                        message_dic["from_this_user"] = True
+
 
                     if "media" not in message["photo"] and "static" not in message["photo"]:
                         message["photo"] = "/media/" + message["photo"]

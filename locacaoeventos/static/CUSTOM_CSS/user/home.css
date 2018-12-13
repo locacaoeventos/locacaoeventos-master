@@ -65,35 +65,3 @@ First Block
 
 
 
-/* How does it work */
-#seller_row {
-	display:none;
-}
-.howworks_title {
-	font-size:22px;
-	color:#00195c;
-	font-weight:bold;
-}
-.howworks_option {
-	font-weight:bold;
-	padding-bottom:5px;
-	cursor:pointer;
-}
-.buyer {
-	color:#98d000;
-	border-bottom:2px solid #98d000;
-}
-.seller {
-	color:#4fa7bc;
-}
-.howworks_col {
-	padding:0 25px;
-}
-.option_title_container {
-	height:50px;
-}
-.option_title {
-	font-size:18px;
-	color:#00195c;
-
-}

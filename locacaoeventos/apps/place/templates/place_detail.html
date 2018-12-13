@@ -20,6 +20,13 @@ Body code
   <!-- DETAIL HEADER begin -->
   <div class="separador-20"> </div>
   <div class="detail_header_img center-cropped img-center" style="background-image: url(/media/{{photo_list_html.0}});">
+    <div class="detail_header_img_icon" style="right:130px; top:20px;" id="detail_header_showphotos">
+      <img src="/static/img/icon/favorite.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei
+    </div>
+    <div class="detail_header_img_icon detail_header_showphotos" style="right:20px; top:20px;">
+      Ver Fotos
+    </div>
+
   </div>
   <div class="separador-50"> </div>
   <!-- DETAIL HEADER end -->
@@ -42,7 +49,7 @@ Body code
           <hr class="line"/>
           {% include "calendar-detail.html" %}
         </div>
-        <div class="separador-40"> </div>
+        <div class="separador-10 separate_titles"> </div>
       </div>
 
 
@@ -60,9 +67,9 @@ Body code
         <div class="detail_description_text justify_text">
           {{place.description}}
         </div>
-        <div class="separador-40"> </div>
+        <div class="separador-10 separate_titles"> </div>
         <hr class="line"/>
-        <div class="separador-40"> </div>
+        <div class="separador-10 separate_titles"> </div>
         <!-- Additional Information -->
         {% if additionalinformation|length > 0 %}
           <h1 class="detail_wrapper_title">Informações Adicionais</h1>
@@ -71,15 +78,14 @@ Body code
             {% for info in additionalinformation %}
               {% if not forloop.first %}-->{% endif %}
               <div class="detail_description_card detail_additionalinformation">
-                <img src="/static/img/123festas/logo.png"/>
                 <div>{{info.name}}</div>
               </div>
               {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
             {% endfor %}<span style="display:none">--></span>
           </div>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
           <hr class="line"/>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
         {% endif %}
         {% if place.decoration or place.children_rides %}
           {% if place.decoration %}
@@ -94,9 +100,9 @@ Body code
                 {% if not forloop.last %}&nbsp;<!--{% endif %}
               {% endfor %}<span style="display:none">--></span>
             </div>
-            <div class="separador-40"> </div>
+            <div class="separador-10 separate_titles"> </div>
             <hr class="line"/>
-            <div class="separador-40"> </div>
+            <div class="separador-10 separate_titles"> </div>
           {% endif %}
           {% if place.children_rides %}
             <h1 class="detail_wrapper_title">Brinquedos</h1>
@@ -110,9 +116,9 @@ Body code
                 {% if not forloop.last %}&nbsp;<!--{% endif %}
               {% endfor %}<span style="display:none">--></span>
             </div>
-            <div class="separador-40"> </div>
+            <div class="separador-10 separate_titles"> </div>
             <hr class="line"/>
-            <div class="separador-40"> </div>
+            <div class="separador-10 separate_titles"> </div>
           {% endif %}
         {% endif %}
 
@@ -120,10 +126,12 @@ Body code
 
 
         <!-- DETAIL MAP begin -->
+        <h1 class="detail_wrapper_title">Localização</h1>
+        <div class="separador-10"> </div>
         <div id="map" style="height:300px; width:100%"></div>
-        <div class="separador-40"> </div>
+        <div class="separador-10 separate_titles"> </div>
         <hr class="line"/>
-        <div class="separador-40"> </div>
+        <div class="separador-10 separate_titles"> </div>
         <!-- DETAIL MAP end -->
 
 
@@ -161,7 +169,7 @@ Body code
             </div>
           </div>
           <div id="review_read_more">Leia Mais...</div>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
           <div id="reviews_wrapper">
             {% for review in review_list %}
               <div class="review_container">
@@ -199,9 +207,9 @@ Body code
               <div class="separador-10"> </div>
             {% endfor %}
           </div>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
           <hr class="line"/>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
         {% endif %}
         <!-- DETAIL REVIEW end -->
 
@@ -221,9 +229,9 @@ Body code
           <div class="center_element">
             <iframe src="{{place.video}}" id="place_video"></iframe>
           </div>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
           <hr class="line"/>
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
         {% endif %}
 
 
@@ -235,9 +243,9 @@ Body code
             <embed src="/media/{{place.menu}}" id="place_menu"/>
           </div>
 
-          <div class="separador-40"> </div>
+          <div class="separador-10 separate_titles"> </div>
           <hr class="line"/>
-          <div class="separador-40"> </div>            
+          <div class="separador-10 separate_titles"> </div>            
         {% endif %}
 
 
@@ -312,7 +320,7 @@ Body code
 
 
   <!-- CHAT begin -->
-  {% if user_type == "buyer" %}
+  {% if user_type != "seller" %}
     <style>
       #chat_container {
         position:fixed; 
@@ -374,30 +382,39 @@ Body code
     </style>
     <div id="chat_container">
       <div id="chat_opener"><i class="fa fa-comment"></i>&nbsp;&nbsp;Conversa</div>
-      <div id="chat_conversation">
+      {% if user_type == "buyer" %}
+        <div id="chat_conversation">
 
-        <div id="chat_conversation_container">
-        </div>
+          <div id="chat_conversation_container">
+          </div>
 
-        <div style="width:100%; position:fixed; bottom:0; right:0; width:280px;">
-          <input id="message_input" placeholder="Digite..." style="width:80%; display:inline-block; height:40px;"><!--
-          --><div id="message_send">
-            <div style="height:100%; vertical-align:middle; line-height:40px; color:white;">
-              <i class="fa fa-chevron-right"></i>
+          <div style="width:100%; position:fixed; bottom:0; right:0; width:280px;">
+            <input id="message_input" placeholder="Digite..." style="width:80%; display:inline-block; height:40px;"><!--
+            --><div id="message_send">
+              <div style="height:100%; vertical-align:middle; line-height:40px; color:white;">
+                <i class="fa fa-chevron-right"></i>
+              </div>
             </div>
           </div>
         </div>
 
+      {% else %}
+        <script>
+          $("#chat_opener").click(function(){
+            window.location.href = "/login/";
+          })      
+
+        </script>
 
 
-
-      </div>
+      {% endif %}
     </div>
 
 
 
 
 
+{% if user_type == "buyer" %}
 <script type="text/javascript" src="/static/CUSTOM_JS/core/chat_general.js"></script>
 <script>
     // =========================================
@@ -472,7 +489,7 @@ Body code
 
     })
 </script>
-
+{% endif %}
 
 
 
@@ -620,8 +637,9 @@ $(document).on("click", ".detail_gallery_other", function() {
 $(document).click(function(e) {
   var classname = String(e.target.className);
   var idname = String(e.target.id);
-  if(classname.indexOf("detail_header_img ")>=0){
+  if(classname.indexOf("detail_header_img ")>=0 || classname.indexOf("detail_header_showphotos")>=0){
     $("#black_layer").fadeIn(800)
+    $("#black_layer").append('<div style="position:absolute; top:30px; right:30px; color:white; cursor:pointer">&#10006;</div>')
     $("#black_layer").append(
       '<div class="detail_gallery center-cropped img-center" style="background-image: url(/media/{{photo_list_html.0}});" counter="0">' +
         '<div class="detail_header_img_mov" style="left:0px; padding-left:10px;">' +
@@ -633,15 +651,15 @@ $(document).click(function(e) {
       '</div>' 
     )
     var photo_list = {{photo_list_js|safe}}
-    console.log(photo_list)
+    $("#black_layer").append('<div id="detail_galery_option_list">')
     for(i=0;i<photo_list.length;i++){
       if(i==0){
-        $("#black_layer").append(
+        $("#detail_galery_option_list").append(
           '<div class="detail_gallery_other center-cropped img-center detail_photo_active" style="background-image: url(/media/' + photo_list[i] + ');">' +
           '</div>'
         ) 
       } else {
-        $("#black_layer").append(
+        $("#detail_galery_option_list").append(
           '<div class="detail_gallery_other center-cropped img-center" style="background-image: url(/media/' + photo_list[i] + ');">' +
           '</div>'
         )         

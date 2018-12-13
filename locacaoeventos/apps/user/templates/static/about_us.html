@@ -1,191 +1,57 @@
-{% extends "_base_user.html" %}
+{% extends "static/_base_static.html" %}
 {% block page_title %}Sobre Nós{% endblock page_title %}
-{% block content %} 
 
+{% block content_static %}
+<style>
+    p {
+        opacity:1;
+    }
+</style>
+    <section>
+        <h2>Quem Somos Nós</h2>
+        
+        <p>O <img src="/static/img/123festas/logo_horizontal.png" style="width:100px; margin:0 5px 10px 5px;"/> é uma startup brasileira criada por quatro jovens empreendedores com o objetivo de levar mais <b>facilidade</b> à vida dos pais e mães modernos, que no dia-a-dia agitado procuram <b>praticidade</b> e <b>agilidade</b>. O <b>site</b> possibilita <b>encontrar</b> o local ideal para festa de aniversário dos seus filhos, com uma variedade de lugares incríveis.</p>
+        
+        <p>Com o <b>123Festas</b>, fazer a festa do seu filho nunca foi tão fácil! Não é preciso visitar cada local ou descobrir buffets no boca-a-boca e acabar nos mesmos de sempre, na sua rua ou no qual todos os amiguinhos da escola já fizeram sua festa.</p>
+        
+        <p>Viemos para <b>revolucionar</b>! O  <b>123Festas conecta</b> famílias com os melhores e mais <b>diversos</b> buffets infantis de sua região, de acordo com a festa dos seus sonhos e, é claro, com o seu bolso.</p>
+        
+        <p>É possível <b>comparar</b> preço, forma de pagamento, localização, infraestrutura, e ter acesso a opinião e avaliação de outras pessoas, de acordo com as características que a sua família procura.</p>
+        
+        <p>Sem sair de casa, no trabalho ou até no cabelereiro é possível, com apenas alguns cliques, <b>procurar</b>, <b>comparar</b> e <b>reservar</b> o buffet ideal, deixando mais tempo para o que realmente importa.</p>
 
+    </section>
 
+    <div class="separador-30"> </div>
+    <section>
+        <h2>Missão</h2>
+        <p>Proporcionar uma alternativa moderna, tecnológica e eficiente que facilite o processo da procura, comparação e reserva do melhor buffet infantil para realizar a festa dos sonhos do seu filho.</p>
 
-    <!--Page Content-->
-    <div id="page-content">
-        <section class="container">
-            <header>
-                <h1 class="page-title">About Us</h1>
-            </header>
-        </section>
-        <!--/.container-->
-        <section id="image">
-            <div class="container">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="text-banner">
-                        <figure>
-                            <img src="/static/base_template_user/assets/img/marker.png" alt="">
-                        </figure>
-                        <div class="description">
-                            <h2>The best spots in one place</h2>
-                            <p>
-                                Suspendisse potenti. Integer quis eleifend neque. Curabitur lobortis dictum mollis.
-                                In rhoncus sapien eget tellus sodales.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/.container-->
-            <div class="background">
-                <img src="/static/base_template_user/assets/img/about-us-bg.jpg" alt="">
-            </div>
-            <!--/.bakcground-->
-        </section>
-        <section class="block background-color-grey-dark" id="features">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature-box">
-                            <i class="fa fa-thumbs-up"></i>
-                            <div class="description">
-                                <h3>Lorem ipsum dolor </h3>
-                                <p>
-                                    Praesent tempor a erat in iaculis. Phasellus vitae libero libero. Vestibulum ante
-                                    ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                                </p>
-                            </div>
-                        </div>
-                        <!--/.feature-box-->
-                    </div>
-                    <!--/.col-md-4-->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature-box">
-                            <i class="fa fa-folder"></i>
-                            <div class="description">
-                                <h3>Etiam vehicula felis a ipsum</h3>
-                                <p>
-                                    Pellentesque nisl quam, aliquet sed velit eu, varius condimentum nunc.
-                                    Nunc vulputate turpis ut erat egestas, vitae rutrum sapien varius.
-                                </p>
-                            </div>
-                        </div>
-                        <!--/.feature-box-->
-                    </div>
-                    <!--/.col-md-4-->
-                    <div class="col-md-4 col-sm-4">
-                        <div class="feature-box">
-                            <i class="fa fa-money"></i>
-                            <div class="description">
-                                <h3>Donec dolor justo, volutpat </h3>
-                                <p>
-                                    Maecenas quis ipsum lectus. Fusce molestie, metus ut consequat pulvinar,
-                                    ipsum quam condimentum leo, sit amet auctor lacus nulla at felis.
-                                </p>
-                            </div>
-                        </div>
-                        <!--/.feature-box-->
-                    </div>
-                    <!--/.col-md-4-->
-                </div>
-                <!--/.row-->
-            </div>
-            <!--/.container-->
-        </section>
-        <!--/.block-->
-        <section class="block" id="the-team">
-            <div class="container">
-                <header class="no-border"><h3>The Team</h3></header>
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <div class="member">
-                            <img src="/static/base_template_user/assets/img/member-1.jpg" alt="">
-                            <h4>Jane Daubert</h4>
-                            <figure>Company CEO</figure>
-                            <hr>
-                            <div class="social">
-                                <a href="#" ><i class="fa fa-twitter"></i></a>
-                                <a href="#" ><i class="fa fa-facebook"></i></a>
-                                <a href="#" ><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                        <!--/.member-->
-                    </div>
-                    <!--/.col-md-3-->
-                    <div class="col-md-3 col-sm-3">
-                        <div class="member">
-                            <img src="/static/base_template_user/assets/img/member-2.jpg" alt="">
-                            <h4>Kristy Jose</h4>
-                            <figure>Marketing Specialist</figure>
-                            <hr>
-                            <div class="social">
-                                <a href="#" ><i class="fa fa-twitter"></i></a>
-                                <a href="#" ><i class="fa fa-facebook"></i></a>
-                                <a href="#" ><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                        <!--/.member-->
-                    </div>
-                    <!--/.col-md-3-->
-                    <div class="col-md-3 col-sm-3">
-                        <div class="member">
-                            <img src="/static/base_template_user/assets/img/member-3.jpg" alt="">
-                            <h4>John Doe</h4>
-                            <figure>PR Manager</figure>
-                            <hr>
-                            <div class="social">
-                                <a href="#" ><i class="fa fa-twitter"></i></a>
-                                <a href="#" ><i class="fa fa-facebook"></i></a>
-                                <a href="#" ><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                        <!--/.member-->
-                    </div>
-                    <!--/.col-md-3-->
-                    <div class="col-md-3 col-sm-3">
-                        <div class="member">
-                            <img src="/static/base_template_user/assets/img/member-4.jpg" alt="">
-                            <h4>Misty Bates</h4>
-                            <figure>Support</figure>
-                            <hr>
-                            <div class="social">
-                                <a href="#" ><i class="fa fa-twitter"></i></a>
-                                <a href="#" ><i class="fa fa-facebook"></i></a>
-                                <a href="#" ><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </div>
-                        <!--/.member-->
-                    </div>
-                    <!--/.col-md-3-->
-                </div>
-                <!--/.row-->
-            </div>
-            <!--/.container-->
-        </section>
-        <!--/.block-->
-        <section class="block background-color-white" id="testimonials">
-            <div class="container">
-                <div class="owl-carousel testimonials">
-                    <blockquote>
-                        <figure><img src="/static/base_template_user/assets/img/client.jpg" alt=""></figure>
-                        <div class="description">
-                            <p>
-                                Fusce risus metus, placerat in consectetur eu, porttitor a est. Sed sed dolor lorem. Cras adipiscing
-                            </p>
-                            <footer>Natalie Jenkins</footer>
-                        </div>
-                    </blockquote>
-                    <blockquote>
-                        <figure><img src="/static/base_template_user/assets/img/client.jpg" alt=""></figure>
-                        <div class="description">
-                            <p>
-                                Fusce risus metus, placerat in consectetur eu, porttitor a est. Sed sed dolor lorem. Cras adipiscing
-                            </p>
-                            <footer>Natalie Jenkins</footer>
-                        </div>
-                    </blockquote>
-                </div>
-                <!--/.testimonials-->
-            </div>
-            <!--/.container-->
-        </section>
+        <div class="separador-30"> </div>
+        <h2>Visão</h2>
+        <p>Ser a empresa líder de mercado, realizando sonhos e levando felicidade às crianças e suas famílias.</p>
 
-    </div>
-    <!-- end Page Content-->
+        <div class="separador-30"> </div>
+        <h2>Valores</h2>
+        <p>O <b>123Festas</b> tem 5 pilares como base de sua cultura e do seu relacionamento com os clientes e fornecedores:</p>
+        <p>- Fazer mais e melhor a cada dia</p>
+        <p>- Inovar em todos os momentos</p>
+        <p>- Criar alegria e diversão </p>
+        <p>- Focar no Cliente</p>
+        <p>- Espírito aventureiro e criativo</p>
+        
+    </section>
+        
+
+    <div class="separador-30"> </div>
+    <style>
+      #howworks_container {
+        display:block !important;
+        width:auto !important;
+      }
+    </style>
+
+    {% include "_how_it_works.html" %}
 
 
 
@@ -198,14 +64,4 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-{% endblock content %}
+{% endblock content_static %}

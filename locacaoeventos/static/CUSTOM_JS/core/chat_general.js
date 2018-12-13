@@ -8,6 +8,7 @@
         "buyerprofile_pk":buyerprofile_pk,
       },
       success: function (data) {
+        console.log(data)
         if(data.messages.length>0) {
           var div_str = ''
           for(i=0;i<data.messages.length;i++) {
@@ -20,10 +21,16 @@
             }
 
             div_str += '<div class="chat_message">'
-            div_str +=   '<div class="chat_photo">'
+            div_str +=   '<div class="chat_photo' 
+                    if(message.from_this_user==true){div_str += ' chat_photo_from'}
+                    div_str += '">'
             div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:40px; height:40px; border-radius:50%"></div>'
             div_str +=   '</div>'
-            div_str +=    '<div class="chat_info">'
+            div_str +=    '<div class="chat_info'
+
+                    if(message.from_this_user==true){div_str += ' chat_info_from'}
+                    div_str += '">'
+
             div_str +=     '<div class="chat_author">'
             div_str +=       message.from
             div_str +=     '</div>'
@@ -80,8 +87,15 @@
 
             message.photo = message.photo.replace("/media//", "/")
 
-            div_str += '<div class="chat_message">'
-            div_str +=   '<div class="chat_photo">'
+            div_str += '<div class="chat_message'
+                    if(message.from_this_user==true){div_str += ' chat_message_from'}
+                    div_str += '">'
+
+
+            div_str +=   '<div class="chat_photo'
+                    if(message.from_this_user==true){div_str += ' chat_photo_from'}
+                    div_str += '">'
+
             div_str +=     '<div class="center-cropped img-center" style="background-image: url(' + message.photo + '); width:30px; height:30px; border-radius:50%"></div>'
             div_str +=   '</div>'
             div_str +=   '<div class="chat_text_container">'

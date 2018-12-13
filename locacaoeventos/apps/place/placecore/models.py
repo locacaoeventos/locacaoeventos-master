@@ -24,7 +24,7 @@ class Place(models.Model):
     # Place Form
     name = models.CharField("Nome", max_length=64)
     address = models.CharField("Endereço", max_length=256)
-    description = models.CharField("Descrição", max_length=512)
+    description = models.CharField("Descrição", max_length=1024)
 
     capacity = models.IntegerField("Capacidade")
     video = models.CharField("Video URL", max_length=128, blank=True)

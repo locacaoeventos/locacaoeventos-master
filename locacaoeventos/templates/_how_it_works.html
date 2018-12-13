@@ -1,0 +1,158 @@
+<style>
+/* How does it work */
+#seller_row {
+  display:none;
+}
+.howworks_title {
+  font-size:22px;
+  color:#00195c;
+  font-weight:bold;
+}
+.howworks_option {
+  font-weight:bold;
+  padding-bottom:5px;
+  cursor:pointer;
+}
+.buyer {
+  color:#98d000;
+  border-bottom:2px solid #98d000;
+}
+.seller {
+  color:#4fa7bc;
+}
+.howworks_col {
+  padding:0 25px;
+}
+.option_title_container {
+  height:50px;
+}
+.option_title {
+  font-size:18px;
+  color:#00195c;
+
+}
+</style>
+<section class="block">
+  <div class="container" id="howworks_container" style="text-align:center">
+    <span class="howworks_title" style="cursor:default">Como o <img src="/static/img/123festas/logo_horizontal.png" style="width:135px; margin-bottom:10px;" alt="logo"> funciona?</span>
+    <div class="separador-10"> </div>
+    <span class="howworks_option buyer">PARA ANIVERSARIANTE</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="howworks_option seller">PARA BUFFET</span>
+    <div class="separador-40"> </div>
+
+
+
+
+    <div class="row row_option" id="buyer_row">
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            PRATICIDADE
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Acesse o nosso site à qualquer momento e encontre a melhor opção de buffets infantis sem precisar sair de casa, economizando tempo e dinheiro.
+        </span>
+        <div class="separador-30"> </div>
+      </div>
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            QUALIDADE
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Aqui você encontra uma ampla rede de buffets para festas infantis com as mais diversas características e ainda conta com as avaliações de outros usuários.
+        </span>
+        <div class="separador-30"> </div>
+      </div>
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            FACILIDADE
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Procure, compare e reserve o buffet ideal para festa de seus sonhos, em apenas alguns clicks através de uma plataforma simples, rápida e segura.
+        </span>
+      </div>
+    </div>
+
+
+
+    <div class="row row_option" id="seller_row">
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            MODERNIDADE
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Faça parte do maior site de buffets infantis do Brasil! Aumente o fluxo de clientes e o numero de festas em seu estabelecimento. Seja parte do time 123Festas de forma rápida, simples e gratuita.
+        </span>
+        <div class="separador-30"> </div>
+      </div>
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            TRANSPARÊNCIA
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Entregamos seus resultados em tempo real para que você controle sua agenda, o fluxo de caixa de suas operações com o 123Festas e outras funcionalidades através de um espaço exclusivo em nossa plataforma.
+        </span>
+        <div class="separador-30"> </div>
+      </div>
+      <div class="col-md-4 howworks_col">
+        <img src="/static/img/123festas/logo.png" style="height:120px;">
+        <div class="separador-20"> </div>
+        <div class="option_title_container">
+          <span class="option_title">
+            DIVULGAÇÃO
+          </span>
+        </div>
+        <div class="separador-10"> </div>
+        <span class="option_description">
+          Deixe que nossa equipe invista e cuide da divulgação de seu espaço! O nosso objetivo é que você faça as melhores festas e os melhores negócios. 
+        </span>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+
+<script>
+  $(".howworks_option").click(function(){
+    var is_underlined = $(this).css("border-width")
+    if(is_underlined=="0px") {
+      var border_color = $(this).css("border-color")
+      $(".howworks_option").css("border-width", "0px")
+      $(".row_option").css("display", "none")
+      $(this).css("border-bottom", "2px solid " + border_color)
+      if($(this).hasClass("buyer")) {
+        $("#buyer_row").fadeIn(500)
+      } else {
+        $("#seller_row").fadeIn(500)
+      }
+    }
+  })
+</script>

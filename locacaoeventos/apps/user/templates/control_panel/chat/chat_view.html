@@ -17,6 +17,7 @@
 
     padding:10px;
     padding-left:45px;
+    padding-right:55px;
     padding-bottom:0px;
   }
 
@@ -30,10 +31,19 @@
     left:-37px;    
 
   }
+  .chat_photo_from {
+    left:auto;    
+    right:-47px;    
+
+  }
   .chat_info {
     display:inline-block;
     line-height:35px;
     vertical-align:top;
+    width:100%;
+  }
+  .chat_info_from {
+    text-align:right;
   }
   .chat_author {
     padding-left:10px;
@@ -52,6 +62,8 @@
     border-radius:10px 10px 10px 0;
     display: inline-block;
     min-width:80px;
+    max-width:400px;
+
   }
 
 
@@ -172,8 +184,8 @@
 
 
 
-    setInterval(function(){
-    // setTimeout(function(){
+    // setInterval(function(){
+    setTimeout(function(){
       load_messages_visualize(place_pk, buyerprofile_pk)
     }, 2000)
 

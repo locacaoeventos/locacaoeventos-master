@@ -11,3 +11,5 @@ class Message(models.Model):
     user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_to')
     datetime = models.DateTimeField(auto_now_add=True)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    def __str__(self):
+    	return str(self.user_from) + " to " + str(self.user_to)
