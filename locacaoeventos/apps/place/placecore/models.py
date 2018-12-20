@@ -127,3 +127,9 @@ class PlaceFeature(models.Model):
     review_factor_firstday = models.FloatField(default=0)
 
 
+
+
+class PlaceLove(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    creation = models.DateTimeField(auto_now_add=True)
