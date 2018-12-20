@@ -12,7 +12,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-
+        migrations.CreateModel(
+            name='PlacePrice',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('value', models.FloatField(verbose_name='Valor')),
+                ('number_people', models.IntegerField(default=0, verbose_name='Número de pessoas')),
+                ('place', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='placecore.Place')),
+            ],
+        ),
         migrations.AlterField(
             model_name='placereservation',
             name='placeprice',
