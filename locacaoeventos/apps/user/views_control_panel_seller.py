@@ -119,6 +119,7 @@ class ListPlaceOwned(View):
                 "description": place.description,
                 "capacity": place.capacity,
                 "creation": place.creation,
+                "modified": place.modified,
                 "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
 
                 "is_active": place.is_active,
@@ -136,7 +137,7 @@ class ListPlaceOwned(View):
                 count_reservation += 1
             place_dic["total_profit"] = "%.2f"%total_profit
             place_dic["count_reservation"] = count_reservation
-        place_list = sorted(place_list, key=lambda k: k['creation'], reverse=True) 
+        place_list = sorted(place_list, key=lambda k: k['modified'], reverse=True) 
         context["place_list"] = place_list
         return render(request, "control_panel/seller_place_list_owned.html", context)
 
@@ -182,19 +183,40 @@ class AvailabilityPlace(View):
         soon_begin = request.POST.get("soon_begin")
         if soon_begin:
             soon_begin = convert_to_time(soon_begin)
-            place.period_soon_begin = soon_begin
-        soon_end = request.POST.get("soon_end")
-        if soon_end:
-            soon_end = convert_to_time(soon_end)
-            place.period_soon_end = soon_end
+            soon_end = request.POST.get("soon_end")
+            if soon_end:
+                soon_end = convert_to_time(soon_end)
+
+                if soon_end > soon_begin:
+                    place.period_soon_end = soon_end
+                    place.period_soon_begin = soon_begin
+                else:
+                    place.period_soon_end = soon_begin
+                    place.period_soon_begin = soon_end
+
         late_begin = request.POST.get("late_begin")
         if late_begin:
-            late_begin = convert_to_time(late_begin)
-            place.period_late_begin = late_begin
-        late_end = request.POST.get("late_end")
-        if late_end:
-            late_end = convert_to_time(late_end)
-            place.period_late_end = late_end
+            late_end = request.POST.get("late_end")
+            if late_end:
+                late_end = convert_to_time(late_end)
+                late_begin = convert_to_time(late_begin)
+
+                if late_end > late_begin:
+                    place.period_late_end = late_end
+                    place.period_late_begin = late_begin
+                else:
+                    place.period_late_end = late_begin
+                    place.period_late_begin = late_end
+
+
+            else:
+                place.period_late_end = None
+                place.period_late_begin = None
+
+
+        else:
+            place.period_late_begin = None
+
 
         place.save()
 
@@ -228,9 +250,9 @@ def context_availabilityplace(request, context, place_pk):
     if place.period_soon_end:
         context["soon_end"] = convert_time_to_string(place.period_soon_end)
     if place.period_late_begin:
-        context["sate_begin"] = convert_time_to_string(place.period_late_begin)
+        context["late_begin"] = convert_time_to_string(place.period_late_begin)
     if place.period_late_end:
-        context["sate_end"] = convert_time_to_string(place.period_late_end)
+        context["late_end"] = convert_time_to_string(place.period_late_end)
 
     if place.period_soon_begin and place.period_soon_end:
         context["has_period"] = True
@@ -260,58 +282,51 @@ def context_availabilityplace(request, context, place_pk):
 class UnavailabilityCreateAjax(View):
     def get(self, request, *args, **kwargs):
         data = {}
-        unavailability_begin = request.GET.get("unavailability_begin").split(",")
-        unavailability_end = request.GET.get("unavailability_end").split(",")
+
         place_pk = request.GET.get("place_pk")
         place = Place.objects.get(pk=place_pk)
-        utc = pytz.UTC
-        datetime_begin = ""
-        datetime_end = ""
-        for i in range(len(unavailability_begin)):
-            if i != 0:
-                datetime_begin += "-" + str(unavailability_begin[i])
-                datetime_end += "-" + str(unavailability_end[i])
-            else:
-                datetime_begin += str(unavailability_begin[i])
-                datetime_end += str(unavailability_end[i])
+        day = request.GET.get("day").replace(" / ", "-")
+        id_min_period = request.GET.get("id_min_period")
+        id_max_period = request.GET.get("id_max_period")
+
+
+        unavailability_repeat = request.GET.get("unavailability_repeat")
+        if unavailability_repeat == "":
+            unavailability_repeat = None
+
+
+
         # Checking if Date Exists
         error = False
         try:
-            datetime_begin = datetime.datetime.strptime(datetime_begin, '%d-%m-%Y-%H-%M')
-            datetime_end = datetime.datetime.strptime(datetime_end, '%d-%m-%Y-%H-%M')
+            day = datetime.datetime.strptime(day, '%d-%m-%Y').date()
         except:
             data["error"] = "A data está inválida"
             error = True
-        # Checking if end is after than begin
-        if not error:
-            if datetime_begin > datetime_end:
-                data["error"] = "A data de fim está antes da data de começo"
-                error = True
+
         # Checking if begin is sooner than today
         if not error:
-            if datetime_begin < datetime.datetime.today():
+            if day <= datetime.datetime.today().date():
                 data["error"] = "A data está antes de agora"
                 error = True
-        # Checking if there's already unavailability on that period
+        # All completed
         if not error:
-            for unavailability in PlaceUnavailability.objects.filter(place=place):
-                crossing_dates = True
-                if datetime_begin.replace(tzinfo=utc) < unavailability.datetime_begin and datetime_end.replace(tzinfo=utc) < unavailability.datetime_end:
-                    crossing_dates = False
-                elif datetime_begin.replace(tzinfo=utc) > unavailability.datetime_begin and datetime_end.replace(tzinfo=utc) > unavailability.datetime_end:
-                    crossing_dates = False
-                if crossing_dates:
-                    data["error"] = "Este horário já encontra-se ocupado"
-                    error = True
-        # Create Unavailability
-        if not error:
-            data["error"] = "false"
+            # Create Unavailability
             placeunavailability = PlaceUnavailability.objects.create(
                 place=place,
-                datetime_begin=datetime_begin,
-                datetime_end=datetime_end,
+                period="min",
+                day=day,
+                repeat=unavailability_repeat
             )
-            data["place_pk"] = place_pk
+            placeunavailability = PlaceUnavailability.objects.create(
+                place=place,
+                period="max",
+                day=day,
+                repeat=unavailability_repeat
+
+            )
+        data["error"] = error
+        data["place_pk"] = place_pk
         return JsonResponse(data)
 
 
@@ -442,10 +457,17 @@ class CreateEditPlace(View):
                 for i in range(len(photos)):
                     photo = PhotoProvisory.objects.get(pk=photos[i])
                     PlacePhoto.objects.filter(place=place, photo=photo).delete()
-                    PlacePhoto.objects.create(
-                        place=place,
-                        photo=photo
-                    )
+                    if i == 0:
+                        PlacePhoto.objects.create(
+                            place=place,
+                            photo=photo,
+                            is_first=True,
+                        )
+                    else:
+                        PlacePhoto.objects.create(
+                            place=place,
+                            photo=photo
+                        )
                 return redirect("/usuario/anunciante/buffet/listar/")
             # ================================ Creation Mode
             else:

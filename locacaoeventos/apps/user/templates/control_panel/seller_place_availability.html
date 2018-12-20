@@ -5,6 +5,7 @@
 {% load general_tags %}
 
 {% block user_panel_content %}
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_availability.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
@@ -23,7 +24,8 @@
         <section>
             <div class="row">
                 <div class="col-md-6">
-
+                    <h1>Pacotes de Preço</h1>
+                    <div class="separador-10"> </div>
                     {% if not placeprice_list %}
                         <span style="color:red">Crie um pacote de preço para concluir!</span>
                         <div class="separador-10"> </div>
@@ -67,7 +69,6 @@
                     <button class="btn btn-default pull-right" style="font-size:12px" id="placeprice_add">Adicionar</button>
                 </div>
                 <div class="col-md-6">
-                    <h1>Pacotes de Preço</h1>
                     <div id="placeprice_container">
                     </div>
 
@@ -111,7 +112,7 @@
                         </select>
 
                     <div class="separador-20"> </div>
-                    Funcionamento Opcional<br>
+                    Funcionamento Opcional <i id="unavailability_optional_erase">(apagar)</i><br>
                     Das:
                         <select class="unavailability_field begin" id="id_late_begin" name="late_begin" value="{{late_begin}}">
                             <option value="">-</option>
@@ -147,84 +148,42 @@
 
 
 
-                {% include "calendar.html" %}
+                {% include "calendar-availability.html" %}
+                <div class="separador-10"> </div>
                 <span class="section_title">Quando seu buffet estará ocupado?</span><br>
-                <span class="section_title">(selecione no calendário)</span>
+                <span class="section_title">(selecione a data no calendário)</span>
                 <div class="subsection_availability">
-                        <span>Início</span>
-                        <div class="separador-3"> </div>
-                        <div style="padding-left:5px">
-                            <select class="unavailability_field begin" id="id_day_begin" required>
-                                <option value="">Dia</option>
-                                {% for i in 31|create_monthday_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field begin" id="id_month_begin" required>
-                                <option value="">Mês</option>
-                                {% for i in 12|create_monthday_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field begin" id="id_year_begin" required>
-                                <option value="">Ano</option>
-                                {% for i in 10|create_year_set_later %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field begin" id="id_hour_begin" required>
-                                <option value="">H</option>
-                                {% for i in 24|create_minutehour_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field begin" id="id_minute_begin" required>
-                                <option value="">M</option>
-                                {% for i in 60|create_minutehour_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
 
-                        <div class="separador-10"> </div>
-                        <span>Fim <span id="unavailability_sameday">(mesmo dia)</span></span>
-                        <div class="separador-3"> </div>
-                        <div style="padding-left:5px">
-                            <select class="unavailability_field end" id="id_day_end" required>
-                                <option value="">Dia</option>
-                                {% for i in 31|create_monthday_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field end" id="id_month_end" required>
-                                <option value="">Mês</option>
-                                {% for i in 12|create_monthday_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field end" id="id_year_end" required>
-                                <option value="">Ano</option>
-                                {% for i in 10|create_year_set_later %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field end" id="id_hour_end" required>
-                                <option value="">H</option>
-                                {% for i in 24|create_minutehour_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                            <select class="unavailability_field end" id="id_minute_end" required>
-                                <option value="">M</option>
-                                {% for i in 60|create_minutehour_set %}
-                                <option value="{{i}}">{{i}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="separador-10"> </div>
-                        <div class="error_message" id="error_unavailability">EXEMPLO</div>
-                        <div class="separador-25"> </div>
-                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
+                    <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off">
+                    <div class="separador-15"> </div>
+                    <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
+                      <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period">
+                      <span class="checkmark_checkbox"></span>
+                      {{place.period_soon_begin}} - {{place.period_soon_end}}
+                    </label>
+                    {% if place.period_late_begin != None %}
+                        &nbsp;&nbsp;
+                        <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
+                          <input class="unavailability_period" type="checkbox" name="max_period" id="id_max_period">
+                          <span class="checkmark_checkbox"></span>
+                          {{place.period_late_begin}} - {{place.period_late_end}}
+                        </label>
+                    {% endif %}
+                    <div class="separador-10"> </div>
+
+                    <span class="section_title">Repete...</span><br>
+                    <select id="unavailability_repeat" name="" required>
+                        <option value="">-</option>
+                        <option value="week">Toda Semana</option>
+                        <option value="biweek">Quinzenalmente</option>
+                        <option value="month">Todo Mês</option>
+                    </select>
+
+                    <div class="separador-10"> </div>
+
+                    <div class="error_message" id="error_unavailability">EXEMPLO</div>
+                    <div class="separador-25"> </div>
+                    <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
                 </div>
             </div>
 
@@ -260,6 +219,7 @@
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
 {% block old_custom_js %}{% endblock old_custom_js %}
 {% block js_select_customize %}{% endblock js_select_customize %}
 

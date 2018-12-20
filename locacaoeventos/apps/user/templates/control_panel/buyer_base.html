@@ -58,6 +58,14 @@ Body code
                               <span>Mensagens</span>
                           </a>
                       </li>
+
+                      <li {% if panel_type == "loved" %}class="active"{% endif %}>
+                          <a href="/usuario/amados/">
+                              <i class="icon_menu fa fa-heart"></i>
+                              <span>Amados</span>
+                          </a>
+                      </li>
+
                       <li>
                           <a href="/logout/">
                               <i class="icon_menu fa fa-power-off"></i>

@@ -45,3 +45,12 @@ def convert_to_time(str_time):
 def convert_time_to_string(time):
 	time_str = time.strftime("%Hh%M")
 	return time_str
+
+
+
+
+def next_days(number_days, comparison):
+	days_response = []
+	for i in range(number_days):
+		days_response.append(comparison + datetime.timedelta(days=i+1))
+	return days_response

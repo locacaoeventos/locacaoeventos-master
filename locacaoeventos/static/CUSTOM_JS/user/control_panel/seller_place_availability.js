@@ -108,9 +108,6 @@ $(document).on("click", ".crossmark_delete", function(){
             "place_pk":place_pk,
         },
         success: function (data) {
-            console.log("aaaaaaaaaaaaaaaaaa")
-            console.log("aaaaaaaaaaaaaaaaaa")
-            console.log("aaaaaaaaaaaaaaaaaa")
             placeprice_show(data)
         }
     })    
@@ -141,33 +138,89 @@ $(document).on("click", ".crossmark_delete", function(){
 // ===========================================================
 // Unavailability
 // ===========================================================
+$('#date_id').mask("00 / 00 / 0000",{placeholder:"Data"});
+
+// Erase Optional
+$("#unavailability_optional_erase").click(function(){
+    $("#id_late_begin").val("")
+    $("#id_late_end").val("")
+
+})
+
 // Forms new Unavailability
-$("#send_new_unavailability").click(function(e){
-     $("#error_unavailability").css("display", "None")
-    var unavailability_begin = []
-    var unavailability_end = []
-    $(".begin").each(function(){
-        unavailability_begin.push($(this).val())
-    })
-    $(".end").each(function(){
-        unavailability_end.push($(this).val())
+  function load_calendar(place_pk, months, elem, period){
+    console.log(place_pk)
+    $.ajax({
+      url: "/usuario/ajax/calendario/",
+      dataType: 'json',
+      data: {
+        "pk": place_pk,
+        "meses":months,
+        "period":period,
+      },
+      success: function (data) {
+        console.log(data)
+        $("#month_ajax").html(data["month"])
+        $("#month_ajax").attr("month", data["month_int"])
+        $("#year_ajax").html(data["year"])
+        str_days = ""
+        for(i=0;i<data["list_month"].length;i++){
+          str_days += data["list_month"][i]
+        }
+        $("#days_ajax").html(str_days)
+
+        // Animation
+        if(elem!="none"){
+          if(elem.attr("count") == -1) {
+            $(".calendar_wrapper").show("slide", { direction: "left" }, 500);
+          } else {
+            $(".calendar_wrapper").show("slide", { direction: "right" }, 500);
+          }
+
+        }
+
+      }
     })
 
-    if(unavailability_begin.indexOf("")<0 && unavailability_end.indexOf("")<0){ // All fields are filled
+
+  }
+
+$("#send_new_unavailability").click(function(e){
+    $("#error_unavailability").css("display", "None")
+
+    var day = $("#date_id").val()
+
+    var has_period = false
+    var id_min_period = false
+    var id_max_period = false
+    if($("#id_min_period").is(':checked')){
+        has_period = true
+        id_min_period = true
+    }
+    if($("#id_max_period").is(':checked')){
+        has_period = true
+        id_max_period = true
+    }
+
+
+    if(day != "" && has_period == true){ // All fields are filled
         e.preventDefault()
-        place_pk = $("#place_pk").attr("pk")
+        place_pk = $("#id_place_pk").val()
 
         $.ajax({
             url: "/usuario/ajax/unavailability/create/",
             dataType: 'json',
             data: {
-                "place_pk":place_pk,
-                "unavailability_begin":String(unavailability_begin),
-                "unavailability_end":String(unavailability_end),
+                "place_pk":$("#id_place_pk").val(),
+                "day":day,
+                "id_min_period":id_min_period,
+                "id_max_period":id_max_period,
+                "unavailability_repeat":$("#unavailability_repeat").val(),
+
             },
             success: function (data) {
 
-                if(data.error=="false") { // AJAX succeeded
+                if(data.error==false) { // AJAX succeeded
                     $(".begin").each(function(){
                         $(this).val("")
                     })
@@ -176,29 +229,16 @@ $("#send_new_unavailability").click(function(e){
                     })
 
 
-                    $.ajax({
-                      url: "/usuario/ajax/calendario/",
-                      dataType: 'json',
-                      data: {
-                        "pk": data.place_pk,
-                        "meses":0
-                      },
-                      success: function (data) {
-                        $("#month_ajax").html(data["month"])
-                        $("#year_ajax").html(data["year"])
-                        str_days = ""
-                        for(i=0;i<data["list_month"].length;i++){
-                          str_days += data["list_month"][i]
-                        }
-                        $("#days_ajax").html(str_days)
-                      }
-                    })
+                    load_calendar(place_pk, 0, "none", [1,1])
+
                 } else {
                     $("#error_unavailability").html(data.error)
                     $("#error_unavailability").css("display", "block")
                 }
             }
         })
+
+
     }
 })
 

@@ -70,3 +70,6 @@ Availability
     cursor:pointer;
     font-style:italic;
 }
+#unavailability_optional_erase {
+  cursor:pointer;
+}

@@ -317,7 +317,7 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 is_occupied = False
                 for unavailability in unavailabilities:
                     utc=pytz.UTC
-                    if str(date_analyse.replace(tzinfo=utc).year) + str(date_analyse.replace(tzinfo=utc).month) + str(date_analyse.replace(tzinfo=utc).day) == str(unavailability.datetime_begin.replace(tzinfo=utc).year) + str(unavailability.datetime_begin.replace(tzinfo=utc).month) + str(unavailability.datetime_begin.replace(tzinfo=utc).day):
+                    if date_analyse.replace(tzinfo=utc) == unavailability.day:
                         is_occupied = True
                     # if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
                     #     is_occupied = True

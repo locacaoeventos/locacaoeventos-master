@@ -262,4 +262,18 @@
       $(".day_description").fadeOut(300)
     }
   })
+  $(document).on("click", function(event){
+    var class_name = event.target.className
+    if(class_name.indexOf("day_option") >= 0){
+      if(class_name.indexOf("day_colored") < 0){
+        var month = $("#month_ajax").attr("month")
+        var year = $("#year_ajax").html()
+        var day = event.target.innerHTML
+        $("#date_id").val(day + " / " + month + " / " + year)
+      }
+    }
+  })
+
+
+
 </script>

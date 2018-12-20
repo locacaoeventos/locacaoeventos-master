@@ -1,15 +1,28 @@
 // ==========================================
 // Gallery
 // ==========================================
-$("#detail_header_showphotos").click(function(){
+$("#detail_header_loved").click(function(){
   if($(this).hasClass("place_favorite")){
     $(this).removeClass("place_favorite")
     $(this).html('<img src="/static/img/icon/favorite.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei')
+
   } else {
     $(this).addClass("place_favorite")
     $(this).html('<img src="/static/img/icon/favorite-selected.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei')
 
   }
+
+  $.ajax({
+    url: "/buffet/ajax/love/",
+    dataType: 'json',
+    data: {
+      "place_pk":$("#place_pk").val(),
+    },
+    success: function (data) {
+      console.log("a")
+    }
+  })  
+
 })
 
 

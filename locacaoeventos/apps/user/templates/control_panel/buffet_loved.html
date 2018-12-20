@@ -1,0 +1,61 @@
+{% extends extend_page %}
+
+
+{% load general_tags %}
+{% load i18n %}
+
+{% block page_title %}Home{% endblock page_title %}
+{% block panel_title %}Buffets{% endblock panel_title %}
+
+{% block user_panel_content %}
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/buyer_buffet_bought.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
+
+    <section class="listing">
+        {% for place in place_list %}
+            <div class="item list" style="border: 1px solid #f9f9f9">
+                <div class="image" style="padding:0 !important">
+                    <div class="quick-view" style="width:30px; padding-left:5px" onclick="javascript:location.href='/buffet/detalhar/?pk={{place.pk}}'"><i class="fa fa-eye"></i></div>
+                    <a href="/buffet/detalhar/?pk={{place.pk}}" style="line-height:0">
+                        <div class="item-specific">
+                            <span title="Capacity">
+                                <img src="/static/img/icon/person.png" alt="" style="width:10px;">{{place.capacity|only_integer}} pessoas
+                            </span>
+                        </div>
+
+						<div class="center-cropped img-center" style="background-image: url(/media/{{place.photo}}); height:150px; width:100%" alt=""></div>
+                    </a>
+                </div>
+                <div class="wrapper wrapper_buffetbought" style="vertical-align:top">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <a href="/buffet/detalhar/?pk={{place.pk}}">
+                                <h3>{{place.name}}</h3>
+                            </a>
+                            <figure>{{place.address}}</figure>
+
+			                <figure>
+								Data do Evento: 
+								{% language 'pt-br' %}
+									{{place.day}}
+								{% endlanguage %}
+			                </figure>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/buyer_buffet_bought.js"></script>
+{% block old_custom_js %}{% endblock old_custom_js %}
+
+
+{% endblock user_panel_content %}

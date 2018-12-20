@@ -6,6 +6,7 @@ from locacaoeventos.apps.user.views_calendar import *
 from locacaoeventos.apps.user.views_control_panel_seller import *
 from locacaoeventos.apps.user.views_control_panel_seller_ajax import *
 from locacaoeventos.apps.user.views_control_panel_buyer import *
+from locacaoeventos.apps.user.views_control_panel_general import *
 from locacaoeventos.apps.user.views_admin import *
 from locacaoeventos.apps.user.views_static import *
 from locacaoeventos.apps.user.views import *
@@ -40,6 +41,8 @@ urlpatterns = [
     url(r'^buffets-agendados/$', ListPlaceBought.as_view()),
     url(r'^avaliar-buffet/$', ReviewPlaceBought.as_view()),
 
+    # User General
+    url(r'^amados/$', UserLoved.as_view()),
 
     # General
     url(r'^calendarioexemplo/$', CalendarExample.as_view()),

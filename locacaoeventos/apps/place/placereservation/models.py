@@ -18,6 +18,8 @@ class PlaceUnavailability(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     period = models.CharField(max_length=4) # min or max
     day = models.DateField()
+    repeat = models.CharField(max_length=16, blank=True, null=True) # min or max
+
     def __str__(self):
         return self.place.name + " - " + str(self.day)
 

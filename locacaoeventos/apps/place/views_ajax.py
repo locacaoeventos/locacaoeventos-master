@@ -4,7 +4,7 @@ from django.http import JsonResponse
 import ast
 
 
-from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PlaceAdditionalInformation
+from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceLove
 from locacaoeventos.utils.place import *
 
 
@@ -102,5 +102,17 @@ class GetPlaceInformation(View):
 
 
 
+class LoveBuffetAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {"check": "check"}
+        place_pk = request.GET.get("place_pk")
+        place = Place.objects.get(pk=place_pk)
+
+        placeloves = PlaceLove.objects.filter(place=place, user=request.user)
+        if placeloves:
+            placeloves.delete()
+        else:
+            PlaceLove.objects.create(place=place, user=request.user)
+        return JsonResponse(data)
 
 

@@ -401,6 +401,7 @@
 
   // Load Calendar
   $(document).ready(function(){
+    console.log("aaaaaaaaaaaaa")
     load_calendar("{{place_pk}}", 0, "none", "none")
   })
 
@@ -437,6 +438,7 @@
         "period":period,
       },
       success: function (data) {
+        console.log(data)
         $("#month_ajax").html(data["month"])
         $("#month_ajax").attr("month", data["month_int"])
         $("#year_ajax").html(data["year"])

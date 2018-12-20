@@ -10,7 +10,7 @@ from locacaoeventos.utils.place import *
 from locacaoeventos.utils.general import *
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 
-from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceVisualization
+from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceVisualization, PlaceLove
 from .placereservation.models import PlacePrice, PlaceUnavailability, PlaceReservation, PlacePrice
 from .placereview.models import PlaceReview
 
@@ -103,6 +103,9 @@ class DetailPlace(View):
         reviews_dic = get_reviews_from_place(place_obj)
         context["review_list"] = reviews_dic["review_list"]
         context["review_rates"] = reviews_dic["review_rates"]
+
+        context["is_loved"] = PlaceLove.objects.filter(place=place_obj, user=request.user).exists()
+
 
         context["price_list"] = PlacePrice.objects.filter(place=place_obj)
 

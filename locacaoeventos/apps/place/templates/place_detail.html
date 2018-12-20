@@ -19,14 +19,16 @@ Body code
 ===================================================== -->
   <!-- DETAIL HEADER begin -->
   <div class="separador-20"> </div>
+  <input type="text" style="display:none" value="{{place_pk}}" id="place_pk">
   <div class="detail_header_img center-cropped img-center" style="background-image: url(/media/{{photo_list_html.0}});">
-    <div class="detail_header_img_icon" style="right:130px; top:20px;" id="detail_header_showphotos">
-      <img src="/static/img/icon/favorite.png" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei
-    </div>
+    {% if user_type %}
+      <div class="detail_header_img_icon {% if is_loved %}place_favorite{% endif %}" style="right:130px; top:20px;" id="detail_header_loved">
+        <img src="{% if is_loved %}/static/img/icon/favorite-selected.png{% else %}/static/img/icon/favorite.png{% endif %}" style="width:20px;vertical-align:bottom; display:inline-block"/> &nbsp;Amei
+      </div>
+    {% endif %}
     <div class="detail_header_img_icon detail_header_showphotos" style="right:20px; top:20px;">
       Ver Fotos
     </div>
-
   </div>
   <div class="separador-50"> </div>
   <!-- DETAIL HEADER end -->

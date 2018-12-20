@@ -53,16 +53,16 @@ class Place(models.Model):
 class PlaceAdditionalInformation(models.Model):
     place = models.OneToOneField(Place, on_delete=models.CASCADE)
     
-    alcoholic_drink = models.BooleanField("Serve bebidas alcólicas")
-    has_entertainment = models.BooleanField("Enterteinimento")
-    has_thematicdecoration = models.BooleanField("Decoração Temática")
-    has_childrenrides = models.BooleanField("Brinquedo pra Crianças")
-    has_costumes = models.BooleanField("Fantasias para os Atores")
-    has_parking = models.BooleanField("Estacionamento")
     has_externalarea = models.BooleanField("Área externa")
-    has_music = models.BooleanField("Música")
-    has_illumination = models.BooleanField("Iluminação")
+    has_childrenrides = models.BooleanField("Brinquedo pra Crianças")
+    has_thematicdecoration = models.BooleanField("Decoração Temática")
+    has_entertainment = models.BooleanField("Enterteinimento")
+    has_parking = models.BooleanField("Estacionamento")
+    has_costumes = models.BooleanField("Fantasias para os Atores")
     has_babychangingroom = models.BooleanField("Fraldário")
+    has_illumination = models.BooleanField("Iluminação")
+    has_music = models.BooleanField("Música")
+    alcoholic_drink = models.BooleanField("Serve bebidas alcólicas")
 
     def __str__(self):
         return "Additional Info of " + self.place.name
@@ -126,3 +126,10 @@ class PlaceFeature(models.Model):
     review_factor = models.FloatField(default=0)
     review_factor_firstday = models.FloatField(default=0)
 
+
+
+
+class PlaceLove(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    creation = models.DateTimeField(auto_now_add=True)

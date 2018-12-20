@@ -229,8 +229,7 @@ def context_review_placebought(reservation_pk, context, request):
         "description": place.description,
         "address": place.address,
         "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
-        "datetime_begin": reservation.unavailability.datetime_begin,
-        "datetime_end": reservation.unavailability.datetime_end,
+        "day": reservation.unavailability.day,
     }
 
     review = PlaceReview.objects.filter(reservation=reservation, buyerprofile=buyerprofile)
