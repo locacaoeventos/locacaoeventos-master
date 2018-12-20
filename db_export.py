@@ -4,7 +4,7 @@ import os
 # Para pegarmos a base de dados do sistema atual
 # os.system("python manage.py dumpdata --exclude=my_admin > db.json")
 # os.system("python manage.py dumpdata core.DadoError> db.json")
-str_command = "python manage_production.py dumpdata "
+str_command = "python3.6 manage_production.py dumpdata "
 
 
 # ======================= Models to save
