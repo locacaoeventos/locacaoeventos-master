@@ -301,14 +301,12 @@ class UnavailabilityCreateAjax(View):
         try:
             day = datetime.datetime.strptime(day, '%d-%m-%Y').date()
         except:
-            data["error"] = "A data está inválida"
-            error = True
+            error = "A data está inválida"
 
         # Checking if begin is sooner than today
         if not error:
             if day <= datetime.datetime.today().date():
-                data["error"] = "A data está antes de agora"
-                error = True
+                error = "A data está antes de agora"
         # All completed
         if not error:
             # Create Unavailability

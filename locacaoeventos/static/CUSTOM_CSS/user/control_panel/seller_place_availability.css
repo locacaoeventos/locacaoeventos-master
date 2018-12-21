@@ -38,6 +38,7 @@ Place Price
   width:100%;
   position:relative;
   cursor:pointer;
+  margin-bottom:5px;
 }
 .placeprice_card:hover{
   background-color:#4f8cbc;
@@ -72,4 +73,30 @@ Availability
 }
 #unavailability_optional_erase {
   cursor:pointer;
+}
+.unavailability_card {
+  margin-bottom:5px;
+  height:80px;
+  display:inline-block;
+  background-color:white;
+  color:#727272;
+  border:1px solid #f8f8f8;
+  font-size:13px;
+  padding:15px 10px;
+  border-radius:10px;
+  width:100%;
+  position:relative;
+  cursor:pointer;
+
+}
+.unavailability_crossmark_delete {
+  float:right;
+  margin-right:0px;
+  margin-top:-10px !important;
+  cursor:pointer;
+
+}
+.unavailability_card:hover{
+  background-color:#4f8cbc;
+  color:white;
 }

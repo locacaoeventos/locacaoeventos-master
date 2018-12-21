@@ -1,9 +1,12 @@
 from django.views.generic import View
 from django.http import JsonResponse
 
-from locacaoeventos.apps.place.placecore.models import Place
-from locacaoeventos.apps.place.placereservation.models import PlacePrice
+import datetime
 
+from locacaoeventos.utils.datetime import unavailability_repeat
+
+from locacaoeventos.apps.place.placecore.models import Place
+from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability
 
 
 
@@ -104,3 +107,72 @@ class PlacePriceDeleteAjax(View):
             place.has_finished_basic = False
             place.save()
         return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class UnavailabilityGetAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {"check":"check"}
+
+        place_pk = request.GET.get("place_pk")
+        place = Place.objects.get(pk=place_pk)
+
+        placeunavailabilities = []
+        today = datetime.datetime.now().date()
+        for placeunavailability in PlaceUnavailability.objects.filter(place=place):
+            if placeunavailability.day > today:
+                day = placeunavailability.day.strftime("%d/%m/%Y")
+                place = placeunavailability.place
+                dic = {
+                    "day": day,
+                    "day_datetime": placeunavailability.day,
+                    "placeunavailability_pk": placeunavailability.pk,
+                }
+
+                if placeunavailability.period == "min":
+                    period = place.period_soon_begin.strftime("%Hh%M") + " - " + place.period_soon_end.strftime("%Hh%M")
+                elif placeunavailability.period == "max":
+                    period = place.period_late_begin.strftime("%Hh%M") + " - " + place.period_late_end.strftime("%Hh%M")
+                dic["period"] = period
+
+
+                repeat = unavailability_repeat(placeunavailability.repeat)
+                dic["repeat"] = repeat
+                placeunavailabilities.append(dic)
+        placeunavailabilities = sorted(placeunavailabilities, key=lambda k: k['day_datetime'], reverse=False) 
+        data["placeunavailabilities"] = placeunavailabilities
+        return JsonResponse(data)
+
+
+
+
+class UnavailabilityDeleteAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {"check":"check"}
+
+        placeunavailability_pk = request.GET.get("placeunavailability_pk")
+        PlaceUnavailability.objects.get(pk=placeunavailability_pk).delete()
+        return JsonResponse(data)
+

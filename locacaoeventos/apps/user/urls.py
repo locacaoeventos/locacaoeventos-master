@@ -29,8 +29,10 @@ urlpatterns = [
 
     # Seller - Availability
     url(r'^anunciante/buffet/disponibilidade/$', AvailabilityPlace.as_view()),
+    url(r'^ajax/unavailability/get/$', UnavailabilityGetAjax.as_view()),
     url(r'^ajax/unavailability/create/$', UnavailabilityCreateAjax.as_view()),
     url(r'^ajax/unavailability/detail/$', UnavailabilityDetailAjax.as_view()),
+    url(r'^ajax/unavailability/delete/$', UnavailabilityDeleteAjax.as_view()),
     url(r'^ajax/placeprice/get/$', PlacePriceGetAjax.as_view()),
     url(r'^ajax/placeprice/create/$', PlacePriceCreateAjax.as_view()),
     url(r'^ajax/placeprice/delete/$', PlacePriceDeleteAjax.as_view()),

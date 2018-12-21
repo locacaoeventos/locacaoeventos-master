@@ -3,6 +3,7 @@
 // ===========================================================
 $(document).ready(function(){
     placeprice_get()
+    unavailabilities_get()
 })
 
 // GET ===================================
@@ -23,6 +24,7 @@ function placeprice_show(data){
     str_div = ""
     for(i=0;i<data.placeprice_list.length;i++){
         var placeprice = data.placeprice_list[i]
+        str_div += '<div class="col-md-6">'
         str_div += '<div class="placeprice_card">'
             str_div += '<div class="crossmark_delete" placeprice_pk="' + placeprice.pk + '" place_pk="' + placeprice.place_pk + '">&#10006;</div>'
             str_div += '<div class="separador-10"> </div>'
@@ -32,6 +34,7 @@ function placeprice_show(data){
             str_div += '<span class="placeprice_card_attr">Mínimo: ' + placeprice.capacity_min + ' pessoas</span><br>'
             str_div += '<span class="placeprice_card_attr">Máximo: ' + placeprice.capacity_max + ' pessoas</span><br>'
             str_div += '<div class="separador-10"> </div>'
+        str_div += '</div>'                
         str_div += '</div>'                
     }
 
@@ -159,7 +162,6 @@ $("#unavailability_optional_erase").click(function(){
         "period":period,
       },
       success: function (data) {
-        console.log(data)
         $("#month_ajax").html(data["month"])
         $("#month_ajax").attr("month", data["month_int"])
         $("#year_ajax").html(data["year"])
@@ -227,9 +229,11 @@ $("#send_new_unavailability").click(function(e){
                     $(".end").each(function(){
                         $(this).val("")
                     })
+                    $("#date_id").val("")
 
 
                     load_calendar(place_pk, 0, "none", [1,1])
+                    unavailabilities_get()
 
                 } else {
                     $("#error_unavailability").html(data.error)
@@ -288,5 +292,51 @@ $(document).on("click", ".day_select", function() {
 })
 
 
+// Delete Unavailabilities
+$(document).on("click", ".unavailability_crossmark_delete", function(){
+    $.ajax({
+        url: "/usuario/ajax/unavailability/delete/",
+        dataType: 'json',
+        data: {
+            "placeunavailability_pk":$(this).attr("placeunavailability_pk"),
+        },
+        success: function (data) {
+            unavailabilities_get()
+            load_calendar($("#id_place_pk").val(), 0, "none", [1,1])
+
+        }
+    })
+})
+
+
+
+// Show unavailabilities
+function unavailabilities_get(){
+    $.ajax({
+        url: "/usuario/ajax/unavailability/get/",
+        dataType: 'json',
+        data: {
+            "place_pk":$("#id_place_pk").val(),
+        },
+        success: function (data) {
+            div_str = ""
+            unavailabilities = data.placeunavailabilities
+            for(i=0;i<unavailabilities.length;i++){
+                unavailability = unavailabilities[i]
+                div_str += '<div class="col-md-6">'
+                    div_str += '<div class="unavailability_card">'
+                        div_str += '<div class="unavailability_crossmark_delete" placeunavailability_pk="' + unavailability.placeunavailability_pk + '">&#10006;</div>'
+                        div_str += 'Dia: ' + unavailability.day + '<br>'
+                        div_str += 'Horário: ' + unavailability.period + '<br>'
+                        if(unavailability.repeat != null){
+                            div_str += '<b>' + unavailability.repeat + '</b><br>'
+                        }
+                    div_str += '</div>'
+                div_str += '</div>'                
+            }
+            $("#unavailability_container").html(div_str)
+        }
+    })
+}
 
 

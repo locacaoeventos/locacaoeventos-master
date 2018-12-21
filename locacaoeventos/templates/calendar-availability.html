@@ -238,7 +238,7 @@
 
   // Detail Unavailability
   $(document).on("click", function(event){
-    if(String(event.target.className) == "occupied") {
+    if(String(event.target.className).indexOf("occupied") >= 0) {
       var this_day = event.target.getAttribute("date_occupied")
       $(".unavailability_container").html()
       $.ajax({

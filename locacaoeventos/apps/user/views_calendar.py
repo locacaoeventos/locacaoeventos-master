@@ -6,6 +6,8 @@ from django.views import View
 
 from locacaoeventos.utils.main import base_context
 from locacaoeventos.utils.datetime import translate_month, next_days
+from locacaoeventos.utils.general import remove_left_zero
+
 from locacaoeventos.apps.place.placecore.models import Place
 from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability
 
@@ -155,35 +157,31 @@ class UnavailabilityDetailAjax(View):
         pk = request.GET.get("pk")
         this_day = request.GET.get("this_day")
         datetime_this_day = datetime.datetime.strptime(this_day, '%Y-%m-%d').replace(tzinfo=utc)
+        this_day = datetime_this_day.strftime('%d')
+        this_month = datetime_this_day.strftime('%m')
+        this_year = datetime_this_day.strftime('%Y')
+        this_day_yyyy_mm_dd = this_year + "-" + remove_left_zero(this_month) + "-" + remove_left_zero(this_day)
+
         place = Place.objects.get(pk=pk)
 
         unavailability_this_day = []
-        for unavailability in PlaceUnavailability.objects.filter(place=place):
-            begin = unavailability.datetime_begin
-            begin_str = begin.strftime("%Hh%M")
-            end = unavailability.datetime_end
-            end_str = end.strftime("%Hh%M")
-            
-            if begin.date() == datetime_this_day.date() or end.date() == datetime_this_day.date(): # Unavailability on this day
-                if begin.date() < datetime_this_day.date() or end.date() > datetime_this_day.date(): # theres an exception
-                    if begin.date() < datetime_this_day.date() and end.date() > datetime_this_day.date():
-                        unavailability_this_day.append("00h00-23h59")
-
-                    elif begin.date() < datetime_this_day.date():
-                        unavailability_this_day.append("00h00-" + end_str)
-
-                    elif end.date() > datetime_this_day.date():
-                        unavailability_this_day.append(begin_str + "-23h59")
-
-                else: # No exception
-                    unavailability_this_day.append(begin_str + "-" + end_str)
+        place_unavailability_list_min = get_unavailabilities(place, "[1,0]")
+        place_unavailability_list_max = get_unavailabilities(place, "[0,1]")
+        unavailability_this_day = []
+        for unavailability in place_unavailability_list_min:
+            if unavailability == this_day_yyyy_mm_dd:
+                unavailability_this_day.append(str(place.period_soon_begin.strftime("%H:%M")) + "-" + str(place.period_soon_end.strftime("%H:%M")))
+                break
+        for unavailability in place_unavailability_list_max:
+            if unavailability == this_day_yyyy_mm_dd:
+                unavailability_this_day.append(str(place.period_late_begin.strftime("%H:%M")) + "-" + str(place.period_late_end.strftime("%H:%M")))
+                break
 
         unavailability_this_day = sorted(unavailability_this_day)
         data["unavailability_this_day"] = unavailability_this_day
-        this_day = datetime_this_day.strftime('%d')
-        this_month = datetime_this_day.strftime('%B')
-        this_year = datetime_this_day.strftime('%Y')
-        data["this_day"] = this_day + " de " + translate_month(this_month) + " de " + this_year
+
+        this_month_eng = datetime_this_day.strftime('%B')
+        data["this_day"] = this_day + " de " + translate_month(this_month_eng) + " de " + this_year
         return JsonResponse(data)
 
 
