@@ -104,7 +104,8 @@ class DetailPlace(View):
         context["review_list"] = reviews_dic["review_list"]
         context["review_rates"] = reviews_dic["review_rates"]
 
-        context["is_loved"] = PlaceLove.objects.filter(place=place_obj, user=request.user).exists()
+        if "user_type" in context:
+            context["is_loved"] = PlaceLove.objects.filter(place=place_obj, user=request.user).exists()
 
 
         context["price_list"] = PlacePrice.objects.filter(place=place_obj)
