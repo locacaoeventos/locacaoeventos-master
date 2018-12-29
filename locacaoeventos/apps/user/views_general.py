@@ -4,13 +4,15 @@ from django.contrib.auth import authenticate, login
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 
+import datetime
+
 from locacaoeventos.utils.main import *
 from django.contrib.auth.models import User
-
 from .buyerprofile.models import BuyerProfile
 from .sellerprofile.models import SellerProfile
 
-
+# Celery
+from locacaoeventos.apps.user.tasks import *
 
 class ComingSoon(View):
     def get(self, request, *args, **kwargs):
@@ -22,6 +24,13 @@ class ComingSoon(View):
 class Home(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+        now = datetime.datetime.now()
+        tomorrow = now + datetime.timedelta(seconds=10)
+
+        print(now)
+        print(tomorrow)
+
+        test.apply_async((2, 2), eta=tomorrow)
         return render(request, "home.html", context)
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)

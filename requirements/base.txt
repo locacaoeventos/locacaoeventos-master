@@ -5,3 +5,4 @@ googlemaps
 xlwt
 requests==2.18.2
 pagarme-python
+celery

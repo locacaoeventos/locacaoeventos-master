@@ -176,6 +176,5 @@ PAGARME_ENCRYPTION_KEY = "ek_test_WKIuGoRvj1jUt6APtPd5tXz9CaxdOB"
 
 
 
-
-
+BROKER_URL = 'amqp://guest:guest@localhost:30412//'
 
