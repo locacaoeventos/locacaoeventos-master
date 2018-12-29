@@ -24,7 +24,7 @@ class ComingSoon(View):
 class Home(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        now = datetime.datetime.now()
+        now = datetime.datetime.utcnow()
         tomorrow = now + datetime.timedelta(seconds=10)
 
         print(now)
