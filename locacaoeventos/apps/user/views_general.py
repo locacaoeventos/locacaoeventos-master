@@ -12,7 +12,7 @@ from .buyerprofile.models import BuyerProfile
 from .sellerprofile.models import SellerProfile
 
 # Celery
-from locacaoeventos.apps.user.tasks import *
+from locacaoeventos.apps.user.tasks import test
 
 class ComingSoon(View):
     def get(self, request, *args, **kwargs):
