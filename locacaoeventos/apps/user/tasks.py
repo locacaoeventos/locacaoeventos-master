@@ -1,18 +1,21 @@
-from celery import Celery
-from django.conf import settings
-
+from celery.task.schedules import crontab
+from celery.decorators import periodic_task
+from celery.utils.log import get_task_logger
+import datetime
+ 
 from django.core.mail import send_mail
 
-app = Celery('tasks', broker=settings.BROKER_URL)
+logger = get_task_logger(__name__)
+ 
 
 
-@app.task
-def test(x, y):
-    str_titulo = "afwaefwea"
-    str_body = "aewrwefawefwe"
-    to_email = "christian.hukai@gmail.com"
+
+
+# A periodic task that will run every minute (the symbol "*" means every)
+@periodic_task(run_every=(crontab(hour="*", minute="*", day_of_week="*")))
+def scraper_send():
+    str_titulo = str(datetime.datetime.now())
+    str_body = "Oi Alec!!"
+    to_email = "alecsander343@gmail.com"
     send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [to_email], fail_silently=False)
-    return x + y
-
-
 

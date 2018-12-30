@@ -76,3 +76,10 @@ STATIC_ROOT = '/home/locacao123f/webapps/locacao_eventos_static/'
 #             }
 #     },
 # }
+
+
+
+
+
+# CELERY
+BROKER_URL = 'amqp://guest:guest@localhost:30412//'

@@ -12,3 +12,5 @@ DEBUG = True
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:5672/locacao123f"
