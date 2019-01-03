@@ -181,6 +181,7 @@ PAGARME_ENCRYPTION_KEY = "ek_test_WKIuGoRvj1jUt6APtPd5tXz9CaxdOB"
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACKS_LATE = True
 CELERY_TIMEZONE = 'America/Sao_Paulo'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
