@@ -82,5 +82,5 @@ STATIC_ROOT = '/home/locacao123f/webapps/locacao_eventos_static/'
 
 
 # CELERY
-BROKER_URL = 'amqp://guest:guest@localhost:22225//'
-# BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:18941/locacao123f"
+# BROKER_URL = 'amqp://guest:guest@localhost:22225//'
+BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:22349/locacao123f"
