@@ -18,4 +18,4 @@ def scraper_send():
     # str_body = "Oi Alec!!"
     # to_email = "alecsander343@gmail.com"
     # send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [to_email], fail_silently=False)
-    return "a"
+	print("a")
