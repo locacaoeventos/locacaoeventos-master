@@ -1,7 +1,7 @@
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
-import datetime
+from datetime import datetime
  
 from django.core.mail import send_mail
 
