@@ -13,4 +13,5 @@ DEBUG = False
 #     }
 # }
 
-BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:18941/locacao123f"
+BROKER_URL = 'amqp://guest:guest@localhost:18941//'
+# BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:18941/locacao123f"
