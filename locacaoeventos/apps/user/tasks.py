@@ -16,5 +16,5 @@ logger = get_task_logger(__name__)
 def scraper_send():
     logger.info("Start task")
     now = datetime.now()
-    result = scrapers.scraper_example(now.day, now.minute)
+    result = now.day + now.minute
     logger.info("Task finished: result = %i" % result)
