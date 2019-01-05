@@ -11,8 +11,8 @@ from locacaoeventos.utils.general import *
 
 class PlaceForm(TOCForm):
 
-    name = fields.CharField(required=True, label="Nome")
-    address = fields.CharField(required=True, label="Endereço")
+    name = fields.CharField(required=True, label="Nome", max_length=64)
+    address = fields.CharField(required=True, label="Endereço", max_length=256)
     description = fields.CharField(required=True, widget=forms.Textarea, max_length=1024, label="Descrição")
 
     capacity = fields.CharField(required=True, widget=forms.NumberInput(), label="Capacidade")
@@ -20,7 +20,8 @@ class PlaceForm(TOCForm):
     video = fields.CharField(
         required=False,
         label="Vídeo do Youtube (opcional)",
-        widget=forms.TextInput(attrs={'placeholder': 'Ex: www.youtube.com/watch?v=CoudYW6g'})
+        widget=forms.TextInput(attrs={'placeholder': 'Ex: www.youtube.com/watch?v=CoudYW6g'}),
+        max_length=128
     )
 
     children_rides = forms.CharField(required=False, label="Brinquedos para Crianças")
