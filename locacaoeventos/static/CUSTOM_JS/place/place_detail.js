@@ -24,9 +24,10 @@ $("#detail_header_loved").click(function(){
   })  
 
 })
-
-
-
+$("#detail_header_loved_not_logged").click(function(){
+  var place_pk = $("#place_pk").val()
+  window.location.href = '/login/?next=/buffet/detalhar/?pk=' + place_pk;
+})
 
 
 

@@ -12,4 +12,4 @@ class Message(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     def __str__(self):
-    	return str(self.user_from) + " to " + str(self.user_to)
+    	return str(self.user_from) + " to " + str(self.place.name)

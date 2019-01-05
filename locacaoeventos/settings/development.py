@@ -5,7 +5,7 @@ from .base import *
 
 ALLOWED_HOSTS = ['*']
 
-DEBUG = False
+DEBUG = True
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -13,6 +13,7 @@ DEBUG = False
 #     }
 # }
 
-# BROKER_URL = 'amqp://guest:guest@localhost:22225//'
-BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:22349/locacao123f"
-# BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:18941/locacao123f"
+# BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:22349/locacao123f"
+
+# DEVELOPMENT CELERY RABBITMQ
+BROKER_URL = "amqp://locacao123f:locacaoqwe@localhost:5672/locacao123f"

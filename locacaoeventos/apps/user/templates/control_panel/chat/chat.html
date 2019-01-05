@@ -46,6 +46,8 @@
     padding:0 6px;
     cursor:pointer;
 
+
+
   }
   .message_author_container:hover {
     background-color:#fafafa;
@@ -56,6 +58,14 @@
     display:inline-block;
     vertical-align:middle;
     line-height:20px;
+  }
+
+  .message_author_wrapper {
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;    
   }
 
 
@@ -101,7 +111,11 @@
 
   <div class="message_container" style="{% if not forloop.last %}border-bottom:none{% endif %}">
     <div class="message_author_container" onclick="javascript:location.href='/buffet/detalhar/?pk={{message.place.pk}}'">
-      <span class="message_author_text color_black">{{message.place.name}}</span>
+      <span class="message_author_text color_black">
+        <div class="message_author_wrapper">
+          {{message.place.name}}
+        </div>
+      </span>
     </div><!--
 
 

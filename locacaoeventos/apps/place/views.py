@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.serializers.json import DjangoJSONEncoder
 
-import datetime, calendar, json
+import datetime, calendar, json, ast
 
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
@@ -81,13 +81,22 @@ class DetailPlace(View):
         PlaceVisualization.objects.create(place=place_obj, creation=now)
 
         place = place_obj.__dict__
+        place["children_rides"] = ast.literal_eval(str(place["children_rides"]).replace('"',""))
+        place["decoration"] = ast.literal_eval(str(place["decoration"]).replace('"',""))
         context["place_seller"] = place_obj.sellerprofile.__dict__
         context["place"] = place
         context["place_capacity"] = place["capacity"]
         context["place_pk"] = place_obj.pk
         context["place_obj"] = place_obj
-        context["photo_list_html"] = [str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj)]
-        context["photo_list_js"] = json.dumps([str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj)], cls=DjangoJSONEncoder)
+
+
+        # PHOTOs Detail
+        photo_first = str(PlacePhoto.objects.filter(place=place_obj, is_first=True)[0].photo.photo)
+        context["photo_list_html"] = [str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj, is_first=False)]
+        context["photo_list_html"].insert(0, photo_first)
+
+
+        context["photo_list_js"] = json.dumps(context["photo_list_html"], cls=DjangoJSONEncoder)
 
         context["additionalinformation"] = []
         additionalinformation = PlaceAdditionalInformation.objects.get(place=place_obj).__dict__

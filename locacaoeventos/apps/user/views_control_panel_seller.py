@@ -360,7 +360,10 @@ class CreateEditPlace(View):
                 context["is_editing"] = True
                 context["panel_type"] = "listowned"
                 additionalinformation = PlaceAdditionalInformation.objects.get(place=place)
-                photos = [item.photo.pk for item in PlacePhoto.objects.filter(place=place)]
+                photo_first_pk = PlacePhoto.objects.filter(place=place, is_first=True)[0].photo.pk
+                photos = [item.photo.pk for item in PlacePhoto.objects.filter(place=place) if item.is_first != True]
+                photos.insert(0, photo_first_pk)
+                # photos = [item.photo.pk for item in PlacePhoto.objects.filter(place=place)]
                 context["form"] = PlaceForm(initial={
                     "name": place.name,
                     "address": place.address,

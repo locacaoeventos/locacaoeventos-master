@@ -8,7 +8,6 @@
         "buyerprofile_pk":buyerprofile_pk,
       },
       success: function (data) {
-        console.log(data)
         if(data.messages.length>0) {
           var div_str = ''
           for(i=0;i<data.messages.length;i++) {
@@ -66,8 +65,6 @@
         setTimeout(function(){
           var objDiv = document.getElementById("chat_conversation_container")
           objDiv.scrollTop = objDiv.scrollHeight
-          console.log(objDiv)
-          console.log(objDiv.scrollHeight)
         }, 1000)
       }
     })  

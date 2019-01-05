@@ -16,7 +16,7 @@ class Chat(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         is_seller = request.GET.get("is_seller", False)
-        if is_seller:
+        if is_seller == "True" or is_seller == True:
             template_base = "control_panel/seller_base.html"
         else:
             template_base = "control_panel/buyer_base.html"
@@ -94,8 +94,25 @@ class ChatView(View):
             context["template_base"] = "control_panel/buyer_base.html"
         context["panel_type"] = "chat"
 
-        context["place_pk"] = request.GET.get("place_pk")
-        context["buyerprofile_pk"] = request.GET.get("buyerprofile_pk")
+        place_pk = request.GET.get("place_pk")
+        buyerprofile_pk = request.GET.get("buyerprofile_pk")
+        context["place_pk"] = place_pk
+        context["buyerprofile_pk"] = buyerprofile_pk
+
+        place = Place.objects.get(pk=place_pk)
+        seller_user = Place.objects.get(pk=place_pk).sellerprofile.user
+        if buyerprofile_pk:
+            buyer_user = BuyerProfile.objects.get(pk=buyerprofile_pk).user
+        else:
+            buyer_user = request.user
+        message_count = Message.objects.filter(place=place, user_to=buyer_user).count() + Message.objects.filter(place=place, user_to=seller_user).count()
+
+        if message_count < 10:
+            context["contact_warning"] = True
+        else:
+            context["contact_warning"] = None
+
+
         return render(request, "control_panel/chat/chat_view.html", context)
 
 
@@ -342,13 +359,24 @@ class ChatSendAjax(View):
             user_to = BuyerProfile.objects.get(pk=buyerprofile_pk).user
 
 
-        message = Message.objects.create(
-            text = text,
-            user_from = user_from,
-            user_to = user_to,
-            datetime = now,
-            place = place
-        )
+        # Verification for contact information
+        text_verification = text.lower()
+        if "email" in text_verification or "e-mail" in text_verification or "@" in text_verification or ".com" in text_verification or "wwww" in text_verification or verify_phone_number(text_verification):
+            message = Message.objects.create(
+                text = "[Por motivos de segurança, não é permitido o envio de websites, e-mails e números de telefone]",
+                user_from = user_from,
+                user_to = user_to,
+                datetime = now,
+                place = place
+            )
+        else:
+            message = Message.objects.create(
+                text = text,
+                user_from = user_from,
+                user_to = user_to,
+                datetime = now,
+                place = place
+            )
 
         data = {"check": "check"}
         return JsonResponse(data)
@@ -357,3 +385,19 @@ class ChatSendAjax(View):
 
 
 
+def verify_phone_number(text_verification):
+    text = text_verification.replace("um", "1").replace("dois", "2").replace("três", "3").replace("tres", "3").replace("quatro", "4").replace("cinco", "5").replace("seis", "6").replace("sete", "7").replace("oito", "8").replace("nove", "9").replace(" ", "").replace("-", "").replace(".", "").replace("+", "").replace(",", "").replace("=", "").replace(";", "").replace("/", "").replace("(", "").replace(")", "").replace("*", "").replace("#", "").replace("$", "").replace("!", "").replace("%", "").replace("[", "").replace("]", "").replace("{", "").replace("}", "")
+    text_list = list(text)
+
+    count_number = 0
+    for i in range(len(text_list)):
+        char = text_list[i]
+        is_number = char.isdigit()
+        if is_number:
+            count_number += 1
+        else:
+            count_number = 0
+
+        if count_number == 9:
+            return True
+    return False

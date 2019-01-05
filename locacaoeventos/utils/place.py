@@ -199,9 +199,7 @@ def get_single_place_dic(place):
         "period_late_begin": place.period_late_begin,
         "period_late_end": place.period_late_end,
     }
-    photo = PlacePhoto.objects.filter(place=place)
-    if photo:
-        place_dic["photo"] = str(photo[0].photo.photo)
+    place_dic["photo"] = str(PlacePhoto.objects.filter(place=place, is_first=True)[0].photo.photo)
 
 
     place_dic["placeprice_min"] = get_place_pricemin(place)

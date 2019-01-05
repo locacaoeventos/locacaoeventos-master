@@ -7,6 +7,7 @@
     height: 450px;
     border:1px solid #ebebeb;
     position:relative;
+    background-image: url("/static/img/chat/background.jpg");
   }
 
   #chat_conversation_container {
@@ -55,11 +56,11 @@
     padding-left:10px;
   }
   .chat_text {
-    background-color:#fbfbfb;
+    background-color:white;
     line-height:20px;
     padding:5px 7px;
     margin-bottom:5px;
-    border-radius:10px 10px 10px 0;
+    border-radius:10px;
     display: inline-block;
     min-width:80px;
     max-width:400px;
@@ -97,6 +98,7 @@
     right:0;
     text-align:center;
     padding:0;
+    cursor:pointer;
   }
 
 
@@ -132,7 +134,11 @@
 
 
 
-
+{% if contact_warning != None %}
+  Evite compartilhar informações de contato externo à plataforma, tais como e-mail, telefone!
+  <br>
+  <br>
+{% endif %}
 <div id="chat_container">
   <div id="chat_conversation_container">
   </div>
@@ -184,8 +190,8 @@
 
 
 
-    // setInterval(function(){
-    setTimeout(function(){
+    setInterval(function(){
+    // setTimeout(function(){ // DEBUG
       load_messages_visualize(place_pk, buyerprofile_pk)
     }, 2000)
 
