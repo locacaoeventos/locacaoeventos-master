@@ -51,6 +51,7 @@ $("#buyer_button").click(function(){
   $("#seller_wrapper").css("display", "none")
   $(this).css("background-color", "#98d000")
   $("#seller_button").css("background-color", "#4fa7bc")
+  $(".create_user_container").css("overflow-y", "scroll")
 })
 
 
@@ -105,6 +106,7 @@ $("#seller_button").click(function(){
   $("#seller_wrapper").fadeIn(300)
   $(this).css("background-color", "#98d000")
   $("#buyer_button").css("background-color", "#4fa7bc")
+  $(".create_user_container").css("overflow-y", "scroll")
 })
 
 
