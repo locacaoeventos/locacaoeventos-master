@@ -49,10 +49,11 @@ class EditBuyer(View):
         context["panel_type"] = "user"
         context["basemenu"] = "myaccount"
 
-        context["has_finished_payment"] = buyer_can_purchase(context)
         buyer = context["buyer"]
         form = BuyerForm(request.POST, request.FILES)
         form.is_valid()
+        buyer.cpf = form.cleaned_data["cpf_buyer"]
+        buyer.gender = form.cleaned_data["gender"]
         buyer.civil_status = form.cleaned_data["civil_status"]
         buyer.name = form.cleaned_data["name"]
         buyer.cellphone = form.cleaned_data["cellphone"]
@@ -91,6 +92,7 @@ class EditBuyer(View):
         if buyer.photo:
             context["buyer_photo_str"] = str(str(buyer.photo).replace("buyerprofile/photo/",""))
             context["buyer_photo"] = buyer.photo
+        context["has_finished_payment"] = buyer_can_purchase(context)
         
         return render(request, "control_panel/buyer_user_edit.html", context)
 
