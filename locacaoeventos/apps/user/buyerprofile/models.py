@@ -8,12 +8,12 @@ from locacaoeventos.apps.place.placecore.models import Place
 class BuyerProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Usuário Comprador+")
     name = models.CharField("Nome", max_length=64)
-    birthday = models.DateField()
-
-    cellphone = models.CharField("Celular", max_length=64)
-    gender = models.CharField("Sexo", max_length=64)
-    civil_status = models.CharField("Status Civil", max_length=64)
-    cpf = models.CharField("CPF", max_length=32)
+    
+    birthday = models.DateField(null=True, blank=True)
+    cellphone = models.CharField("Celular", max_length=64, null=True, blank=True)
+    gender = models.CharField("Sexo", max_length=64, null=True, blank=True)
+    civil_status = models.CharField("Status Civil", max_length=64, null=True, blank=True)
+    cpf = models.CharField("CPF", max_length=32, null=True, blank=True)
 
     creation = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)

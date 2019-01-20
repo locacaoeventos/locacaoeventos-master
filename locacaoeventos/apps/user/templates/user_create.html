@@ -20,20 +20,19 @@
     </header>
     <hr>
     <div class="separador-10"> </div>
+    <div style="width:50%; min-width:380px; margin:auto">
+      {% include "_login_fb.html" %}
+    </div>
+    <div class="separador-20"> </div>
     <div style="text-align:center; width:100%">
       <span style="font-weight:bold; float:left">EU QUERO</span><br>
       <div class="separador-10"> </div>
-      <div style="position:relative; width:350px">
-        <div style="position:absolute; left:35px">
-          <div class="btn btn-default" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
-          <div class="btn btn-default" id="seller_button" {% if form_type == "seller" %}style="background-color:#98d000"{% endif %}>Anunciar</div><br>
-        </div>
-      </div>
+      <div class="btn btn-default" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
+      <div class="btn btn-default" id="seller_button" {% if form_type == "seller" %}style="background-color:#98d000"{% endif %}>Anunciar</div><br>
       <div class="separador-40"> </div>
     </div>
 
     <div class="separador-20"> </div>
-
 
 
 
@@ -60,135 +59,163 @@
 
       <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
         {% for field in form_buyer %}
-            {% if field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" %}
-            <div class="form-group">
-              <label>{{field.label}}</label>
-            {% endif %}
+
             {% if field.name == "password" %}
-              <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password">
-              <div class="separador-15"> </div>
-              <label>Confirme a senha</label>
-              <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm"onblur="validarSenha()">
-              <div id="tooshort" class="error_message">
-                A senha deve conter no mínimo 6 dígitos
-              </div>
+              <div class="form-group">
+                <label>{{field.label}}</label>
 
-              <div id="nomatchpswd" class="error_message">
-                As senhas não são correspondentes
+                <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password">
+                <div class="separador-15"> </div>
+                <label>Confirme a senha</label>
+                <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm"onblur="validarSenha()">
+                <div id="tooshort" class="error_message">
+                  A senha deve conter no mínimo 6 dígitos
+                </div>
+
+                <div id="nomatchpswd" class="error_message">
+                  As senhas não são correspondentes
+                </div>
               </div>
+              <div class="separador-20"> </div>
+
+
+
             {% elif field.name == "day" %}
+              <!--
+              <div class="form-group">
+                <label>{{field.label}}</label>
 
+                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required>
+                  <option value="">Dia</option>
+                  {% for i in 31|create_monthday_set %}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required>
+                  <option value="">Mês</option>
+                  {% for i in 12|create_monthday_set %}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required>
+                  <option value="">Ano</option>
+                  {% for i in 120|create_year_set %}
+                    <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+                <div class="separador-5"> </div>
+                {% if field.errors %}
+                  <div class="error_message" style="display:block">
+                    Data inválida
+                  </div>
+                {% endif %}
+              </div>
+              <div class="separador-20"> </div>
 
-
-
-
-
-
-              <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required>
-                <option value="">Dia</option>
-                {% for i in 31|create_monthday_set %}
-                  <option value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
-              <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required>
-                <option value="">Mês</option>
-                {% for i in 12|create_monthday_set %}
-                  <option value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
-              <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required>
-                <option value="">Ano</option>
-                {% for i in 120|create_year_set %}
-                  <option value="{{i}}">{{i}}</option>
-                {% endfor %}
-              </select>
-              <div class="separador-5"> </div>
-              {% if field.errors %}
-                <div class="error_message" style="display:block">
-                  Data inválida
-                </div>
-              {% endif %}
+              -->
             {% elif field.name == "gender" %}
-              <div class="row-100">
-                <div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Masculino
-                    <input id="male" type="radio" name="gender" value="Masculino">
-                    <span class="checkmark_radio"></span>
-                  </label>
-                </div><!--
-                --><div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Feminino
-                    <input id="female" type="radio" name="gender" value="Feminino">
-                    <span class="checkmark_radio"></span>
-                  </label>
+            <!--
+              <div class="form-group">
+                <label>{{field.label}}</label>
+
+                <div class="row-100">
+                  <div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Masculino
+                      <input id="male" type="radio" name="gender" value="Masculino">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div><div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Feminino
+                      <input id="female" type="radio" name="gender" value="Feminino">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
+              <div class="separador-20"> </div>
+            -->
+
             {% elif field.name == "civil_status" %}
-              <div class="row-100">
-                <div class="row-50">
+              <!--
+              <div class="form-group">
+                <label>{{field.label}}</label>
 
-                  <label class="container_radio" style="font-weight:bold">Solteiro(a)
-                    <input id="id_solteiro" type="radio" name="civil_status" value="solteiro">
-                    <span class="checkmark_radio"></span>
-                  </label>
-                </div><!--
-                --><div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Casado(a)
-                    <input id="id_casado" type="radio" name="civil_status" value="casado">
-                    <span class="checkmark_radio"></span>
-                  </label>
+                <div class="row-100">
+                  <div class="row-50">
+
+                    <label class="container_radio" style="font-weight:bold">Solteiro(a)
+                      <input id="id_solteiro" type="radio" name="civil_status" value="solteiro">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div><div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Casado(a)
+                      <input id="id_casado" type="radio" name="civil_status" value="casado">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row-100">
+                  <div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Viúvo(a)
+                      <input id="id_viuvo" type="radio" name="civil_status" value="viuvo">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div><div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Divorciado(a)
+                      <input id="id_divorciado" type="radio" name="civil_status" value="divorciado">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row-100">
+                  <div class="row-50">
+                    <label class="container_radio" style="font-weight:bold">Outro
+                      <input id="id_outro" type="radio" name="civil_status" value="outro">
+                      <span class="checkmark_radio"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div class="row-100">
-                <div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Viúvo(a)
-                    <input id="id_viuvo" type="radio" name="civil_status" value="viuvo">
-                    <span class="checkmark_radio"></span>
-                  </label>
-                </div><!--
-                --><div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Divorciado(a)
-                    <input id="id_divorciado" type="radio" name="civil_status" value="divorciado">
-                    <span class="checkmark_radio"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row-100">
-                <div class="row-50">
-                  <label class="container_radio" style="font-weight:bold">Outro
-                    <input id="id_outro" type="radio" name="civil_status" value="outro">
-                    <span class="checkmark_radio"></span>
-                  </label>
-                </div>
-              </div>
+              <div class="separador-20"> </div>
+              -->
+
             {% elif field.name == "photo" %}
-              <input name="photo_hidden" id="id_photo_hidden" value="{{photo_url}}" class="hidden"/><!-- hidden field -->
-              <div class="separador-10"> </div>
-              <label class="btn btn-default btn-file" id="photo_click">
-                  Carregar Arquivo{{field}} <!-- hidden field -->
-              </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_photo_path" style="color:#999999">{{photo_url}}</span>
-              {% if field.errors %}
-                <div class="error_message" style="display:block">
-                  {% for error in field.errors %}
+              <div class="form-group">
+                <label>{{field.label}}</label>
+
+                <input name="photo_hidden" id="id_photo_hidden" value="{{photo_url}}" class="hidden"/><!-- hidden field -->
+                <div class="separador-10"> </div>
+                <label class="btn btn-default btn-file" id="photo_click">
+                    Carregar Arquivo{{field}} <!-- hidden field -->
+                </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_photo_path" style="color:#999999">{{photo_url}}</span>
+                {% if field.errors %}
+                  <div class="error_message" style="display:block">
+                    {% for error in field.errors %}
+                      {{error}}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <div class="separador-10"> </div>
+              </div>
+              <div class="separador-20"> </div>
+
+
+
+
+            {% elif field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" and field.name != "cpf_buyer" and field.name != "cellphone" %}
+              <div class="form-group">
+                <label>{{field.label}}</label>
+
+                {{field}}
+                {% if field.errors %}
+                  <div class="error_message" style="display:block">
+                    {% for error in field.errors %}
                     {{error}}
-                  {% endfor %}
-                </div>
-              {% endif %}
-              <div class="separador-10"> </div>
-
-
-
-
-            {% elif field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" %}
-              {{field}}
-              {% if field.errors %}
-                <div class="error_message" style="display:block">
-                  {% for error in field.errors %}
-                  {{error}}
-                  {% endfor %}
-                </div>
-              {% endif %}
-
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="separador-20"> </div>
 
 
 
@@ -207,9 +234,7 @@
             <div class="center_element" style="white-space: normal;">
 
               <label class="container_checkbox" style="display:inline-block;">
-                <input 
-                  id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked{% endif %}
-                >
+                <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked="True"{% endif %}>
                 <span class="checkmark_checkbox" style="display:inline-block; margin-top:-5px"></span>
               </label>
               <figure class="note" style="display:inline-block;">Aceita receber newsletter</figure>
@@ -221,17 +246,9 @@
           </div>
 
 
-
             {% endif %}
 
-            <!-- ===========================================================
-            Other Fields
-            =========================================================== -->
 
-          {% if field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" %}
-          </div>
-          <div class="separador-20"> </div>
-          {% endif %}
         {% endfor %}
 
 

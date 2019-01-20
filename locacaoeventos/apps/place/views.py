@@ -5,9 +5,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 import datetime, calendar, json, ast
 
+from locacaoeventos.utils.general import *
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
-from locacaoeventos.utils.general import *
+from locacaoeventos.utils.user import *
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 
 from .placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceVisualization, PlaceLove
@@ -74,6 +75,7 @@ class ListPlace(View):
 class DetailPlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+        context["has_finished_payment"] = buyer_can_purchase(context)
         place_obj = Place.objects.get(pk=request.GET["pk"])
 
         # Place Visualization

@@ -5,21 +5,22 @@ from django import forms
 import datetime
 
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
+from locacaoeventos.apps.user.sellerprofile.models import SellerProfile
 from locacaoeventos.utils.forms import *
 
 class BuyerForm(TOCForm):
 
     name = fields.CharField(required=True, label="Nome")
-    cpf_buyer = fields.CharField(required=True, label="CPF do responsável")
+    cpf_buyer = fields.CharField(required=False, label="CPF do responsável")
     email = fields.CharField(required=True, widget=forms.EmailInput, label="E-mail")
     password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
 
-    day = fields.CharField(required=True, label="Data de Nascimento")
-    month = fields.CharField(required=True, label="Data de Nascimento")
-    year = fields.CharField(required=True, label="Data de Nascimento")
-    cellphone = fields.CharField(required=True, label="Celular")
-    gender = fields.CharField(required=True, label="Gênero")
-    civil_status = fields.CharField(required=True, label="Status Civil")
+    day = fields.CharField(required=False, label="Data de Nascimento")
+    month = fields.CharField(required=False, label="Data de Nascimento")
+    year = fields.CharField(required=False, label="Data de Nascimento")
+    cellphone = fields.CharField(required=False, label="Celular")
+    gender = fields.CharField(required=False, label="Gênero")
+    civil_status = fields.CharField(required=False, label="Status Civil")
     
     photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
@@ -37,20 +38,21 @@ class BuyerForm(TOCForm):
         day = str(cleaned_data.get('day'))
         month = str(cleaned_data.get('month'))
         year = str(cleaned_data.get('year'))
-        if len(month) == 1:
-            month = "0" + month
-        if len(day) == 1:
-            day = "0" + day
-        birthday = year + "-" + month + "-" + day
-        try:
-            datetime.datetime.strptime(birthday, '%Y-%m-%d')
-        except:
-            error_message = forms.ValidationError("ERROR")
-            self.add_error('day', error_message)
+        if day != "" and month != "" and year != "":
+            if len(month) == 1:
+                month = "0" + month
+            if len(day) == 1:
+                day = "0" + day
+            birthday = year + "-" + month + "-" + day
+            try:
+                datetime.datetime.strptime(birthday, '%Y-%m-%d')
+            except:
+                error_message = forms.ValidationError("ERROR")
+                self.add_error('day', error_message)
 
         # E-mail
         email = str(cleaned_data.get('email'))
-        if BuyerProfile.objects.filter(email=email):
+        if BuyerProfile.objects.filter(email=email) or SellerProfile.objects.filter(email=email):
             error_message = forms.ValidationError("Já existe uma conta com este e-mail")
             self.add_error('email', error_message)
 
@@ -65,9 +67,10 @@ class BuyerForm(TOCForm):
 
         # CPF
         cpf = str(cleaned_data.get('cpf_buyer'))
-        if len(cpf) != 14:
-            error_message = forms.ValidationError("CPF digitado incorretamente")
-            self.add_error('cpf', error_message)
+        if cpf != "":
+            if len(cpf) != 14:
+                error_message = forms.ValidationError("CPF digitado incorretamente")
+                self.add_error('cpf_buyer', error_message)
 
 
 
@@ -149,7 +152,7 @@ class SellerForm(TOCForm):
 
         # E-mail
         email_seller = str(cleaned_data.get('email_seller'))
-        if BuyerProfile.objects.filter(email=email_seller):
+        if BuyerProfile.objects.filter(email=email) or SellerProfile.objects.filter(email=email):
             error_message = forms.ValidationError("Já existe uma conta com este e-mail")
             self.add_error('email_seller', error_message)
 

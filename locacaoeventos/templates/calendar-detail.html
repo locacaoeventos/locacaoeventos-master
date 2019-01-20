@@ -271,11 +271,16 @@
 <div class="separador-20"> </div>
 
 {% if user_type == "buyer" %}
-  <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
+  {% if has_finished_payment %}
+    <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
+  {% else %}
+    <div><a href="/usuario/conta/">Conclua seu cadastro para poder agendar uma festa!</a></div>
+  {% endif %}
+
 {% elif user_type == "seller" %}
   <div>Entre com uma conta de Comprador, para agendar sua festa!</div>
 {% else %}
-  <div><a href="/login/?next=/buffet/detalhar/?pk={{place_pk}}">Faça seu login, para poder agendar uma festa.</a></div>
+  <div><a href="/login/?next=/buffet/detalhar/?pk={{place_pk}}">Faça seu login, para poder agendar uma festa!</a></div>
 {% endif %}
 
 

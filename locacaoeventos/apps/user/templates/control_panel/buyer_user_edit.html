@@ -14,6 +14,12 @@
 
 
 <section class="block listing" style="padding-top:0">
+  {% if has_finished_payment == False %}
+      <div class="error_message" style="display:block; float:none">
+          Para poder agendar sua festa, preencha todos os dados!
+      </div>
+      <div class="separador-20"> </div>
+  {% endif %}
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
       {% if field.name != "email" %}
@@ -41,7 +47,7 @@
             {% if field.name == "day" %}
               <div class="form-group">
                 <label>Data de Nascimento</label>
-                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required>
+                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day">
                   <option value="">Dia</option>
                   {% for i in 31|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -52,7 +58,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "month" %}
-                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required>
+                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month">
                   <option value="">Mês</option>
                   {% for i in 12|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -63,7 +69,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "year" %}
-                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required>
+                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year">
                   <option value="">Ano</option>
                   {% for i in 120|create_year_set_int_str %}
                     {% if request.method == "POST" %}

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.datetime import *
 from locacaoeventos.utils.place import *
+from locacaoeventos.utils.user import *
 
 from .forms_user import *
 
@@ -19,18 +20,23 @@ class EditBuyer(View):
         context = base_context(request.user)
         context["panel_type"] = "user"
         context["basemenu"] = "myaccount"
+        context["has_finished_payment"] = buyer_can_purchase(context)
         buyer = context["buyer"]
-        context["form"] = BuyerForm(initial={
+        initial = {
             "name": buyer.name,
             "password": "aaaa",
-            "day": buyer.birthday.day,
-            "month": buyer.birthday.month,
-            "year": buyer.birthday.year,
             "cellphone": buyer.cellphone,
             "gender": buyer.gender,
             "civil_status": buyer.civil_status,
             "photo": buyer.photo,
-        }, field_order = ['name'])
+        }
+
+        if buyer.birthday != None:
+            initial["day"] = buyer.birthday.day
+            initial["month"] = buyer.birthday.month
+            initial["year"] = buyer.birthday.year
+
+        context["form"] = BuyerForm(initial=initial, field_order = ['name'])
 
         context["is_valid_date"] = True
         if buyer.photo:
@@ -43,6 +49,7 @@ class EditBuyer(View):
         context["panel_type"] = "user"
         context["basemenu"] = "myaccount"
 
+        context["has_finished_payment"] = buyer_can_purchase(context)
         buyer = context["buyer"]
         form = BuyerForm(request.POST, request.FILES)
         form.is_valid()
@@ -67,7 +74,11 @@ class EditBuyer(View):
             day = str(form.cleaned_data["day"])
             month = str(form.cleaned_data["month"])
             year = str(form.cleaned_data["year"])
-            buyer.birthday = year + "-" + month + "-" + day
+            if day != "" and month != "" and year != "":
+                birthday = year + "-" + month + "-" + day
+            else:
+                birthday = None
+            buyer.birthday = birthday
 
         else:
             context["is_valid_date"] = False
