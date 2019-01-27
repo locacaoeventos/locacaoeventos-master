@@ -17,11 +17,13 @@
               <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
             {% endif %}
           <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
+          <li><a href="/buffet/mapa/">Mapa</a></li>
+          <li><a href="/usuario/favoritos/">Favoritos</a></li>
           <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
           {% else %}
-            <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
-            <li><a {% if basemenu == "register" %}class="menu_selected"{% endif %} href="/usuario/cadastrar/"><strong>Cadastrar</strong></a></li>
             <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
+            <li><a href="/buffet/mapa/">Mapa</a></li>
+            <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
           {% endif %}
 
         </ul>

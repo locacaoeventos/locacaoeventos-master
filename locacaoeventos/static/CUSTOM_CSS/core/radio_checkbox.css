@@ -41,7 +41,7 @@ Radio
 
 /* When the radio button is checked, add a blue background */
 .container_radio input:checked ~ .checkmark_radio {
-  background-color: #6fb7c8;
+  background-color: #98d000;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -126,7 +126,7 @@ Checkbox
 
 /* When the checkbox is checked, add a blue background */
 .container_checkbox input:checked ~ .checkmark_checkbox {
-    background-color: #6fb7c8;
+    background-color: #98d000;
 }
 
 /* Create the checkmark_checkbox/indicator (hidden when not checked) */

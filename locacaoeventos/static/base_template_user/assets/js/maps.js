@@ -19,14 +19,14 @@ if( $body.hasClass('map-fullscreen') ) {
 // Homepage map - Google
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function createHomepageGoogleMap(_latitude,_longitude,json){
+function createHomepageGoogleMap(_latitude,_longitude,json, zoom, get_marker){
     $.get("/static/base_template_user/assets/external/_infobox.js", function() {
         gMap();
     });
     function gMap(){
         var mapCenter = new google.maps.LatLng(_latitude,_longitude);
         var mapOptions = {
-            zoom: 12,
+            zoom: zoom,
             center: mapCenter,
             disableDefaultUI: false,
             scrollwheel: false,
@@ -57,7 +57,6 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
         var markerClicked = 0;
         var activeMarker = false;
         var lastClicked = false;
-
         for (var i = 0; i < json.data.length; i++) {
 
             // Google map marker content -----------------------------------------------------------------------------------
@@ -90,7 +89,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
                 map: map,
                 draggable: false,
                 content: markerContent,
-                flat: true
+                flat: true,
             });
 
             newMarkers.push(marker);
@@ -120,6 +119,12 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
 
             newMarkers[i].infobox = new InfoBox(infoboxOptions);
 
+            // OPENING MARKER
+            if(get_marker!="None"){
+                if(get_marker == json.data[i].id){
+                    newMarkers[i].infobox.open(map, marker)
+                }
+            }
             // Show infobox after click ------------------------------------------------------------------------------------
 
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -290,25 +295,25 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
             var locationCenter = new google.maps.LatLng( position.coords.latitude, position.coords.longitude);
             map.setCenter( locationCenter );
             map.setZoom(14);
-			
-			var markerContent = document.createElement('DIV');
-			markerContent.innerHTML =
-				'<div class="map-marker">' +
-					'<div class="icon">' +
-					'</div>' +
-				'</div>';
+            
+            var markerContent = document.createElement('DIV');
+            markerContent.innerHTML =
+                '<div class="map-marker">' +
+                    '<div class="icon">' +
+                    '</div>' +
+                '</div>';
 
-			// Create marker on the map ------------------------------------------------------------------------------------
+            // Create marker on the map ------------------------------------------------------------------------------------
 
-			var marker = new RichMarker({
-				position: locationCenter,
-				map: map,
-				draggable: false,
-				content: markerContent,
-				flat: true
-			});
+            var marker = new RichMarker({
+                position: locationCenter,
+                map: map,
+                draggable: false,
+                content: markerContent,
+                flat: true
+            });
 
-			marker.content.className = 'marker-loaded';
+            marker.content.className = 'marker-loaded';
 
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({
@@ -602,21 +607,21 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
     var itemPrice;
     var place = json.data[a].place
     visibleItemsArray.push(
-        '<li class="result_place" pk="' + place.pk + '">' +
-            '<div pk="' + place.pk + '" class="result_place item" id="' + json.data[a].id + '">' +
-                '<div pk="' + place.pk + '" class="result_place image">' +
-                    '<div pk="' + place.pk + '" class="result_place inner" style="height:200px">' +
-                        '<div pk="' + place.pk + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[a].gallery[0] + '); width:100%; height:200px"></div>' +
+        '<li class="result_place" pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '">' +
+            '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place item" id="' + json.data[a].id + '">' +
+                '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place image">' +
+                    '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place inner" style="height:200px">' +
+                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[a].gallery[0] + '); width:100%; height:200px"></div>' +
                     '</div>' +
                 '</div>' +
-                '<div pk="' + place.pk + '" class="result_place wrapper">' +
+                '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place wrapper">' +
                     '<a href="#" id="' + json.data[a].id + '"><h3>' + json.data[a].title + '</h3></a>' +
                     '<figure style="font-size:11px">' + json.data[a].location + '</figure>' +
                     '<figure style="font-size:11px"><b>Capacidade</b>: ' + place.capacity + '</figure>' +
                     '<div class="separador-10"> </div>' +
                     drawPrice(json.data[a].place.placeprice_min) +
-                    '<div pk="' + place.pk + '" class="result_place info">' +
-                        '<div pk="' + place.pk + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>' +
+                    '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place info">' +
+                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +

@@ -21,7 +21,6 @@ CSS imports
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/separadores.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/main.css" type="text/css">
   <link rel="stylesheet" href="/static/CUSTOM_CSS/core/_base_user.css" type="text/css">
-  <link rel="stylesheet" href="/static/CUSTOM_CSS/icheck/purple.css" type="text/css">
   <link rel="shortcut icon" href="/static/img/123festas/favicon.png"/>
   <title>123Festas | {% block page_title %}Buffets{% endblock page_title %}</title>
 <style>
@@ -161,7 +160,6 @@ JavaScript imports
     <script type="text/javascript" src="/static/base_template_user/assets/js/maps.js"></script>
 {% endblock js_maps %}
 <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/static/base_template_user/assets/js/icheck.min.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/before.load.js"></script>
 {% block js_select_customize %}
   <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-migrate-1.2.1.min.js"></script>
@@ -181,13 +179,6 @@ JavaScript imports
     });
 
     autoComplete();
-    $(document).ready(function(){
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-purple',
-        radioClass: 'iradio_square-purple',
-        increaseArea: '10%' // optional
-      });
-    });
 </script>
 {% endblock old_custom_js %}
 {% block page_js %}{% endblock page_js %}

@@ -96,6 +96,7 @@ List Items
 	margin-bottom:30px;
 	height:320px;
 	cursor:pointer;
+	z-index:2;
 }
 .overlay {
 	background-color:rgba(0,0,0,0.5);

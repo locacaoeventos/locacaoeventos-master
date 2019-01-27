@@ -24,7 +24,7 @@ function load_places(items_pk){
 
       list_places = data.list_places
       str_total = ''
-      str_total += '<div class="row">'
+      str_total += '<div class="row" style="padding-top:10px">'
 
       if(list_places!=undefined){
         for(i=0;i<list_places.length;i++){

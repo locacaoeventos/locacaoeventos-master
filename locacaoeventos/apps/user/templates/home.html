@@ -16,12 +16,12 @@ CSS imports
 <!-- =====================================================
 Body code
 ===================================================== -->
-<section class="hero-image search-filter-middle height-500">
-  <div class="inner">
+<section class="hero-image search-filter-middle height-700">
+  <div class="inner" style="vertical-align:top; padding-top:50px">
     <div class="container">
       <div style="max-width:650px; display:inline-block"><h1 id="home_title">Encontre o melhor local para a sua festa!</h1></div>
       <div class="search-bar horizontal">
-        <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
+        <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data" novalidate>{%csrf_token%}
           <div class="input-row" style="min-height:230px">
             <div style="width:100%">
               <label class="form_label" for="place" style="width:100%">Localização ou Nome do Buffet</label>
@@ -46,7 +46,10 @@ Body code
               </div>
               <div class="col-md-6">
                 <label class="form_label" for="capacity">Quantidade de Convidados</label>
-                <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados">
+                {# <div class="quantity"> #}
+
+                  <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados" step="10">
+                {# </div> #}
               </div>
               <div class="separador-20"> </div>
             </div>
@@ -135,6 +138,54 @@ JavaScript imports
     var autocomplete = new google.maps.places.Autocomplete(input, options);
     //----autocomplete end
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+    jQuery('.quantity').each(function() {
+      var spinner = jQuery(this),
+        input = spinner.find('input[type="number"]'),
+        btnUp = spinner.find('.quantity-up'),
+        btnDown = spinner.find('.quantity-down'),
+        min = input.attr('min'),
+        max = input.attr('max');
+
+      btnUp.click(function() {
+        var oldValue = parseFloat(input.val());
+        if (oldValue >= max) {
+          var newVal = oldValue;
+        } else {
+          var newVal = oldValue + 1;
+        }
+        spinner.find("input").val(newVal);
+        spinner.find("input").trigger("change");
+      });
+
+      btnDown.click(function() {
+        var oldValue = parseFloat(input.val());
+        if (oldValue <= min) {
+          var newVal = oldValue;
+        } else {
+          var newVal = oldValue - 1;
+        }
+        spinner.find("input").val(newVal);
+        spinner.find("input").trigger("change");
+      });
+
+    });
+  
 </script>
 {% block js_maps %}
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places&callback=initAutocomplete&language=pt"async defer></script>

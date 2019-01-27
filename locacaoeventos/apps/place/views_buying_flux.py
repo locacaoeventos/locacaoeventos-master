@@ -49,6 +49,11 @@ class BuyPlace(View):
         return render(request, "place_buy.html", context)
 
 
+
+
+
+
+
 class PurchasePlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
@@ -72,6 +77,10 @@ class PurchasePlace(View):
 
 
 
+
+
+
+
         # Billing
         zip_code = request.GET.get("zip_code").replace("-", "")
         number = request.GET.get("number")
@@ -79,6 +88,13 @@ class PurchasePlace(View):
         city = request.GET.get("city")
         neighbourhood = request.GET.get("neighbourhood")
         street = request.GET.get("street")
+
+
+
+
+
+
+
 
         # Faz a Transação
         params = {

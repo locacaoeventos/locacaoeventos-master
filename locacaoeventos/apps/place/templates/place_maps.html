@@ -180,6 +180,7 @@
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw&libraries=places"></script>
 
 <script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
+<script type="text/javascript" src="/static/CUSTOM_JS/place/place_maps.js"></script>
 
 <script type="text/javascript" src="/static/base_template_user/assets/js/infobox.js"></script>
 <script type="text/javascript" src="/static/base_template_user/assets/js/richmarker-compiled.js"></script>
@@ -199,41 +200,27 @@
     var _longitude = -46.625290;
 
     // Load JSON data and create Google Maps
-    createHomepageGoogleMap(_latitude,_longitude,{{data|safe}});
-    // $.getJSON(jsonPath)
-    //     .done(function(json) {
-    //         console.log(json)
-    //         createHomepageGoogleMap(_latitude,_longitude,json);
-    //     })
-    //     .fail(function( jqxhr, textStatus, error ) {
-    //         console.log(error);
-    //     })
-    // ;
-
-
-    // Set if language is RTL and load Owl Carousel
+    data = {{data|safe}}
+    createHomepageGoogleMap(_latitude,_longitude,data, zoom=13, get_marker="None");
 
     $(window).load(function(){
-        var rtl = false; // Use RTL
         initializeOwl(rtl);
     });
 
     autoComplete();
 
 
-    $(document).on("click", ".result_place", function(e){
-        var pk = $(this).attr("pk")
-        var win = window.open("/buffet/detalhar/?pk=" + pk, '_blank');
-        win.focus();
+    // $(document).on("click", ".result_place", function(e){
+    //     var pk = $(this).attr("pk")
+    //     var win = window.open("/buffet/detalhar/?pk=" + pk, '_blank');
+    //     win.focus();
 
-        e.stopPropagation()
-    })
+    //     e.stopPropagation()
+    // })
 
 
     $(document).on("click", "#search_button", function(e){
         e.preventDefault()
-
-        // var data_search = 
 
         // Get all information from Panel Left
         var search = $("#place_id").val()
@@ -261,13 +248,24 @@
 
             },
             success: function (data) {
-                createHomepageGoogleMap(_latitude,_longitude,data);
+                createHomepageGoogleMap(_latitude,_longitude,data, zoom=13, get_marker="None");
             }
           })      
 
         // alert("oi")
     })
+    $(document).ready(function(){
+        $(document).on("click", ".result_place", function(){
+            var lat = parseFloat($(this).attr("lat"))+0.008
+            var lng = parseFloat($(this).attr("lng"))+0.008
+            var pk = $(this).attr("pk")
+            createHomepageGoogleMap(lat,lng,data, zoom=14, get_marker=pk);
 
+
+            e.stopPropagation()
+
+        })  
+    })
 </script>
 
 <!--[if lte IE 9]>

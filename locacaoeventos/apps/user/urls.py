@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^avaliar-buffet/$', ReviewPlaceBought.as_view()),
 
     # User General
-    url(r'^amados/$', UserLoved.as_view()),
+    url(r'^favoritos/$', UserLoved.as_view()),
 
     # General
     url(r'^calendarioexemplo/$', CalendarExample.as_view()),

@@ -293,11 +293,20 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
         # Filter by Capacity
         if capacity != "" and capacity != "sem":
             place_list_filtered_capacity = []
-            capacity_tolerance = 100
-            capacity_analyse = int(capacity)
+
+
             for i in range(len(place_list)):
                 place = place_list[i]
-                if place["capacity"]+capacity_tolerance >= capacity_analyse and place["capacity"]-capacity_tolerance <= capacity_analyse:
+                if capacity == "500+":
+                    capacity = 500
+
+                capacity_tolerance = 100
+                capacity = int(capacity)
+                capacity_place = int(place["capacity"])
+
+                if capacity+capacity_tolerance >= capacity_place and capacity-capacity_tolerance <= capacity_place:
+                    place_list_filtered_capacity.append(place)
+                elif capacity == 500 and capacity_place >= 500:
                     place_list_filtered_capacity.append(place)
         else:
             place_list_filtered_capacity = place_list

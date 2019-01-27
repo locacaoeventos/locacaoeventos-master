@@ -307,17 +307,24 @@
   })
 
   $(document).on("click", ".calendar_class_day", function(){
-    var today_day = $(this).children(1).html()
-    if(today_day==undefined) {
-      today_day = $(this).html()
-    }
-    today_day = String(today_day)
+    var class_clicked = $(event.target).attr('class')
+    if(class_clicked != "pass"){
+      var today_day = $(this).children(1).html()
+      if(today_day==undefined) {
+        today_day = $(this).html()
+      }
+      today_day = String(today_day)
 
-    var today_month = String($("#month_ajax").attr("datemonth"))
-    if(today_month.length==1) {
-      today_month = "0" + today_month
+      var today_month = String($("#month_ajax").attr("datemonth"))
+      if(today_month.length==1) {
+        today_month = "0" + today_month
+      }
+      var today_year = String($("#year_ajax").html())
+
+
+      
+      $(".calendar_input").val(today_day + " / " + today_month + " / " + today_year)      
     }
-    var today_year = String($("#year_ajax").html())
-    $(".calendar_input").val(today_day + " / " + today_month + " / " + today_year)
+
   })
 </script>

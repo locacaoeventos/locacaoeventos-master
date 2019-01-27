@@ -221,15 +221,18 @@ function createHomepageGoogleMap(_latitude,_longitude,json){
             });
 
             var $singleItem = $('.results .item');
-            $singleItem.hover(
-                function(){
-                    newMarkers[ $(this).attr('id') - 1 ].content.className = 'marker-active marker-loaded';
-                },
-                function() {
-                    newMarkers[ $(this).attr('id') - 1 ].content.className = 'marker-loaded';
-                }
-            );
+            // $singleItem.hover(
+            //     function(){
+            //         newMarkers[ $(this).attr('id') - 1 ].content.className = 'marker-active marker-loaded';
+            //     },
+            //     function() {
+            //         newMarkers[ $(this).attr('id') - 1 ].content.className = 'marker-loaded';
+            //     }
+            // );
         });
+
+
+
 
         redrawMap('google', map);
 

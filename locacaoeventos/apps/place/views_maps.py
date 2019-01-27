@@ -5,6 +5,7 @@ from django.db.models import Case, When
 from django.core.serializers.json import DjangoJSONEncoder
 
 import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.place import *
@@ -102,7 +103,7 @@ class MapsPlaceAjax(View):
             data_dic["place"] = place
             data_list.append(data_dic)
 
-        json.dumps({"data": data_list})
+        json.dumps({"data": data_list}, cls=DjangoJSONEncoder)
 
         return JsonResponse({"data": data_list})
 

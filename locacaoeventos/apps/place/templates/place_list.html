@@ -58,7 +58,7 @@
 
           <div class="pnleft_card">
             <label class="pnleft_label">
-              Capacidade: <span id="capacity_val">{% if not capacity_exists %}{{capacity}}{% else %}sem{% endif %}</span> pessoas
+              Convidados: <span id="capacity_val">{% if not capacity_exists %}{{capacity}}{% else %}sem{% endif %}</span> pessoas
             </label>
             <div class="separador-5"> </div>
             <div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0; margin:auto"></div>
@@ -83,18 +83,7 @@
         <hr class="line" style="margin:0; -webkit-box-shadow:0 1px 1px 0 rgba(0, 0, 0, 0.05)"/>
       </aside>
 
-      <div class="separador-10"> </div>
-      <div class="detail_description_text justify_text">
-        Número de Convidados
-      </div>
-      <div class="separador-2"> </div>
-      <input type="number" id="capacity_form"/>
-      <input type="text" id="date_form"/>
 
-      <hr class="line"/>
-      <div class="separador-10"> </div>
-
-      <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
 
       
     </div>
@@ -123,7 +112,7 @@
       <div class="separador-20"> </div>
       <figure class="filter clearfix" style="margin:0">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div style="width:100%; padding-right:40px; position:relative">
               <input type="text" style="width:100%; height:31px; font-size:36px" class="pnleft_input" id="place_id" value="{{address}}" placeholder="Localização ou Nome"/>
               <div id="search_button">
@@ -132,20 +121,35 @@
             </div>
             <div class="separador-10"> </div>
           </div>
-          <div class="col-md-4">
-            <div class="pull-right">
-              <aside class="sorting">
-                  <select class="framed" name="sort" id="order_by">
-                    <option value="1">Relevância</option>
-                    <option value="2">Preço - Maior</option>
-                    <option value="3">Preço - Menor</option>
-                    <option value="4">Avaliação - Maior</option>
-                    <option value="5">Nome - A-Z</option>
-                    <option value="6">Nome - Z-A</option>
-                  </select>
+          <div class="col-md-5">
+            <div class="">
+              <aside class="sorting pull-right">
+                <select class="framed" name="sort" id="order_by">
+                  <option value="1">Relevância</option>
+                  <option value="2">Preço - Maior</option>
+                  <option value="3">Preço - Menor</option>
+                  <option value="4">Avaliação - Maior</option>
+                  <option value="5">Nome - A-Z</option>
+                  <option value="6">Nome - Z-A</option>
+                </select>
               </aside>
+
+              <div class="pull-right" style="position:relative; margin-right:20px; margin-top:-3px; cursor:pointer; color:white; background-color:#4fa7bc; padding:10px 30px" onclick="location.href='/buffet/mapa/';">
+                <div style="margin-right:-20px;" onclick="location.href='/buffet/mapa/';">
+                  Acessar o Mapa
+                  <div style="position:absolute; left:10px; top:8px" onclick="location.href='/buffet/mapa/';">
+                    <i class="fa fa-map-marker" style="font-size:24px;"> </i>
+                  </div>
+
+                </div>
+
+              </div>
+
             </div>
+
           </div>
+
+
         </div>
       </figure>
 
@@ -237,13 +241,17 @@
       start: [start_value],
       range: {
         'min': [0],
-        'max': [5000]
+        'max': [500]
       },
-      step: 1,
+      step: 10,
       connect: [true, false],
     });
     slider_page.noUiSlider.on("slide", function(values){
-      $("#capacity_val").html(parseInt(values))
+      if(values<500){
+        $("#capacity_val").html(parseInt(values))
+      } else {
+        $("#capacity_val").html("500+")
+      }
     })
     slider_page.noUiSlider.on("change", function(values){
       loading_icon()
@@ -258,8 +266,11 @@
       $('#date_id').mask("00 / 00 / 0000",{placeholder:"dd / mm / aaaa"});
     })
     $(document).on("click", ".calendar_class_day", function(){
-      loading_icon()
-      var get_places = get_places_pk()
+      var class_clicked = $(event.target).attr('class')
+      if(class_clicked != "pass"){
+        loading_icon()
+        var get_places = get_places_pk()
+      }
     })
 
 
