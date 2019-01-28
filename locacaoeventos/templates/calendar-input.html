@@ -153,28 +153,30 @@
 <!-- ========================================================================================= -->
 <div style="background-color:#fcfcfc">
 <div class="calendar_wrapper">
-  <div class="month">      
-    <ul>
-      <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
-      <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
-      <li class="calendar_class">
-        <span class="calendar_class" id="month_ajax"></span> - <span class="calendar_class" id="year_ajax"></span>
-      </li>
+  <div style="position:absolute; top:0; z-index:999999999">
+    <div class="month">      
+      <ul>
+        <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
+        <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
+        <li class="calendar_class">
+          <span class="calendar_class" id="month_ajax"></span> - <span class="calendar_class" id="year_ajax"></span>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="weekdays">
+      <li class="calendar_class">Seg</li><!--
+      --><li class="calendar_class">Ter</li><!--
+      --><li class="calendar_class">Qua</li><!--
+      --><li class="calendar_class">Qui</li><!--
+      --><li class="calendar_class">Sex</li><!--
+      --><li class="calendar_class">Sab</li><!--
+      --><li class="calendar_class">Dom</li>
+    </ul>
+
+    <ul class="days" id="days_ajax">  
     </ul>
   </div>
-
-  <ul class="weekdays">
-    <li class="calendar_class">Seg</li><!--
-    --><li class="calendar_class">Ter</li><!--
-    --><li class="calendar_class">Qua</li><!--
-    --><li class="calendar_class">Qui</li><!--
-    --><li class="calendar_class">Sex</li><!--
-    --><li class="calendar_class">Sab</li><!--
-    --><li class="calendar_class">Dom</li>
-  </ul>
-
-  <ul class="days" id="days_ajax">  
-  </ul>
 </div>
 </div>
 
