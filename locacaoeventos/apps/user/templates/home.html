@@ -17,7 +17,7 @@ CSS imports
 Body code
 ===================================================== -->
 <section class="hero-image search-filter-middle height-500">
-  <div class="inner" style="vertical-align:top; padding-top:50px">
+  <div class="inner" style="vertical-align:top; padding-top:40px">
     <div class="container">
       <div style="max-width:650px; display:inline-block"><h1 id="home_title">Encontre o melhor local para a sua festa!</h1></div>
       <div class="search-bar horizontal">
@@ -48,7 +48,7 @@ Body code
                 <label class="form_label" for="capacity">Quantidade de Convidados</label>
                 {# <div class="quantity"> #}
 
-                  <input  type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados" step="10">
+                <input type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados" step="10">
                 {# </div> #}
               </div>
               <div class="separador-20"> </div>
@@ -153,38 +153,38 @@ JavaScript imports
 
 
 
-    jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
-    jQuery('.quantity').each(function() {
-      var spinner = jQuery(this),
-        input = spinner.find('input[type="number"]'),
-        btnUp = spinner.find('.quantity-up'),
-        btnDown = spinner.find('.quantity-down'),
-        min = input.attr('min'),
-        max = input.attr('max');
+    // jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up">+</div><div class="quantity-button quantity-down">-</div></div>').insertAfter('.quantity input');
+    // jQuery('.quantity').each(function() {
+    //   var spinner = jQuery(this),
+    //     input = spinner.find('input[type="number"]'),
+    //     btnUp = spinner.find('.quantity-up'),
+    //     btnDown = spinner.find('.quantity-down'),
+    //     min = input.attr('min'),
+    //     max = input.attr('max');
 
-      btnUp.click(function() {
-        var oldValue = parseFloat(input.val());
-        if (oldValue >= max) {
-          var newVal = oldValue;
-        } else {
-          var newVal = oldValue + 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-      });
+    //   btnUp.click(function() {
+    //     var oldValue = parseFloat(input.val());
+    //     if (oldValue >= max) {
+    //       var newVal = oldValue;
+    //     } else {
+    //       var newVal = oldValue + 1;
+    //     }
+    //     spinner.find("input").val(newVal);
+    //     spinner.find("input").trigger("change");
+    //   });
 
-      btnDown.click(function() {
-        var oldValue = parseFloat(input.val());
-        if (oldValue <= min) {
-          var newVal = oldValue;
-        } else {
-          var newVal = oldValue - 1;
-        }
-        spinner.find("input").val(newVal);
-        spinner.find("input").trigger("change");
-      });
+    //   btnDown.click(function() {
+    //     var oldValue = parseFloat(input.val());
+    //     if (oldValue <= min) {
+    //       var newVal = oldValue;
+    //     } else {
+    //       var newVal = oldValue - 1;
+    //     }
+    //     spinner.find("input").val(newVal);
+    //     spinner.find("input").trigger("change");
+    //   });
 
-    });
+    // });
   
 </script>
 {% block js_maps %}

@@ -32,7 +32,7 @@ First Block
 /* ================================================
 Quantity People
 ================================================ */
-input[type=number]::-webkit-inner-spin-button,
+/*input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
 {
   -webkit-appearance: none;
@@ -43,7 +43,7 @@ input[type=number]
 {
   -moz-appearance: textfield;
 }
-
+*/
 .quantity input {
   width: 45px;
   height: 42px;
