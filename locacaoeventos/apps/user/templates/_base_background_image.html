@@ -1,0 +1,31 @@
+{% extends "_base_user.html" %}
+
+{% block js_select_customize %}{% endblock js_select_customize %}
+{% block old_custom_js %}{% endblock old_custom_js %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/user/user_create.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/upload_single_file.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+
+
+<div class="center-cropped img-center create_user_background">
+  <div class="separador-40"> </div>
+  <div class="create_user_container">
+    {% block container_with_background %}{% endblock container_with_background %}
+  </div>
+</div>
+
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+  <script type="text/javascript" src="/static/CUSTOM_JS/user/user_create.js"></script>
+  <script type="text/javascript" src="/static/CUSTOM_JS/core/upload_single_file.js"></script>
+  <script>
+  </script>
+  
+{% endblock content %}

@@ -115,7 +115,7 @@ class DetailPlace(View):
         context["review_list"] = reviews_dic["review_list"]
         context["review_rates"] = reviews_dic["review_rates"]
 
-        if "user_type" in context:
+        if context["user_type"] != "anonymous":
             context["is_loved"] = PlaceLove.objects.filter(place=place_obj, user=request.user).exists()
 
 

@@ -16,4 +16,9 @@ def base_context(user):
 			profile = buyers[0]
 			context["user_type"] = "buyer"
 		context["profile"] = profile
+		if user.is_superuser:
+			context["is_superuser"] = True
+	else:
+		context["user_type"] = "anonymous"
+		context["is_superuser"] = False
 	return context

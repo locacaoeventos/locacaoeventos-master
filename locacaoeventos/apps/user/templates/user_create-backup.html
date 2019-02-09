@@ -10,7 +10,13 @@
     <h1 class="page-title" style="padding:0px; color:#00195c">Eu quero...</h1>
   </header>
   <hr>
+  <div class="separador-10"> </div>
+  <div style="width:50%; min-width:380px; margin:auto">
+    {% include "_login_fb.html" %}
+  </div>
+  <div class="separador-20"> </div>
   <div style="text-align:center; width:100%">
+    <div class="separador-10"> </div>
     <div class="btn btn-default" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar</div>
     <div class="btn btn-default" id="seller_button" {% if form_type == "seller" %}style="background-color:#98d000"{% endif %}>Anunciar</div><br>
     <div class="separador-40"> </div>

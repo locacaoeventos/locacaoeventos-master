@@ -54,13 +54,16 @@ function load_places(items_pk){
               str_item += '</div>'
               str_item += '<div class="wrapper place_description_wrapper" pk="' + place.pk + '">'
                 str_item += '<div class="place_description_cell" pk="' + place.pk + '">'
-                  str_item += '<a class="place_name">'
+                  str_item += '<div class="place_name_container"><a class="place_name">'
                     str_item += place.name
-                  str_item += '</a>'
+                  str_item += '</a></div>'
                   str_item += '<div class="separador-2"> </div>'
                   str_item += '<figure class="place_address">' + place.address + '</figure>'
                   str_item += '<h4 class="place_price">R$</h4>'
-                  str_item += '<h3 class="place_price">' + place.placeprice_min + ' - ' + place.feature.toFixed(2) + '</h3>'
+                  str_item += '<h3 class="place_price">' + place.placeprice_min
+                  if(data.is_superuser==true){
+                    str_item += ' - ' + place.feature.toFixed(2) + '</h3>'
+                  }
                 str_item += '</div>'
                 str_item += '<div class="place_description_cell" style="height:50px;">'
                   str_item += '<div class="separador-5"> </div>'
@@ -69,7 +72,7 @@ function load_places(items_pk){
                   } else {
                     str_item += '<div style="display:block">'
                       str_item += '<span style="color:#70b7c8; dislay:inline" class="stars" data-rating="' + place.review_list.review_rates.rate_average + '" data-num-stars="5"></span>&nbsp;'
-                      str_item += '<span style="font-size:12px; color:#888888">' + place.review_list.review_rates.n_review + ' Avaliações</span>'
+                      str_item += '<span style="font-size:12px; color:#888888">' + place.review_list.review_rates.rate_average + '&nbsp;(' + place.review_list.review_rates.n_review + ')</span>'
                     str_item += '</div>'                
                   }
 
@@ -80,7 +83,10 @@ function load_places(items_pk){
 
           str_total += str_item
         }        
+      } else {
+        str_total += '<div class="col-md-12 col-sm-12">Não houve resultados em sua pesquisa!</div>'
       }
+
 
       str_total += '</div>'
 
@@ -90,8 +96,7 @@ function load_places(items_pk){
 
 
 
-    }
-  })  
+    }  }) 
 }
 
 

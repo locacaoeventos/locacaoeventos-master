@@ -74,42 +74,6 @@ class BuyerForm(TOCForm):
 
 
 
-class BuyerFormFB(TOCForm):
-    day = fields.CharField(required=True, label="Data de Nascimento")
-    month = fields.CharField(required=True, label="Data de Nascimento")
-    year = fields.CharField(required=True, label="Data de Nascimento")
-    cellphone = fields.CharField(required=True, label="Celular")
-    civil_status = fields.CharField(required=True, label="Status Civil")
-    accepts_newsletter = forms.BooleanField(required=False, initial="checked")
-    cpf = fields.CharField(required=True, label="CPF do responsável")
-
-    def __init__(self, *args, **kwargs):
-        super(BuyerFormFB, self).__init__(*args, **kwargs)
-
-
-    def clean(self):
-        cleaned_data = super(BuyerFormFB, self).clean()
-        # Birthday
-        day = str(cleaned_data.get('day'))
-        month = str(cleaned_data.get('month'))
-        year = str(cleaned_data.get('year'))
-        if len(month) == 1:
-            month = "0" + month
-        if len(day) == 1:
-            day = "0" + day
-        birthday = year + "-" + month + "-" + day
-        try:
-            datetime.datetime.strptime(birthday, '%Y-%m-%d')
-        except:
-            error_message = forms.ValidationError("ERROR")
-            self.add_error('day', error_message)
-        # CPF
-        cpf = str(cleaned_data.get('cpf'))
-        if len(cpf) != 14:
-            error_message = forms.ValidationError("CPF digitado incorretamente")
-            self.add_error('cpf', error_message)
-
-
 
 class SellerForm(TOCForm):
     # PagarMe

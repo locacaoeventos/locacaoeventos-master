@@ -308,6 +308,8 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                     place_list_filtered_capacity.append(place)
                 elif capacity == 500 and capacity_place >= 500:
                     place_list_filtered_capacity.append(place)
+                elif capacity == 0:
+                    place_list_filtered_capacity.append(place)
         else:
             place_list_filtered_capacity = place_list
 

@@ -6,6 +6,7 @@ import ast
 
 from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto, PlaceAdditionalInformation, PlaceLove
 from locacaoeventos.utils.place import *
+from locacaoeventos.utils.main import *
 
 
 class ListBuffetAjax(View):
@@ -56,7 +57,6 @@ class ListBuffetAjax(View):
         # ================ Ordering
         items_pk = order_by(option, items_pk)
 
-
         return JsonResponse(items_pk)
 
 
@@ -84,6 +84,7 @@ class OrderByBuffetAjax(View):
 
 class GetPlaceInformation(View):
     def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
         try:
             items_pk = ast.literal_eval(request.GET.get("items_pk"))
             list_places_obj = []
@@ -95,6 +96,8 @@ class GetPlaceInformation(View):
             data = { "list_places": list_places }
         except:
             data = { "none": True }
+        data["is_superuser"] = context["is_superuser"]
+        print(data["list_places"][0]["review_list"])
         return JsonResponse(data)
 
 

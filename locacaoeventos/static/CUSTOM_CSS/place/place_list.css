@@ -151,6 +151,12 @@ List Items
 	text-align:left;
 	width:100%;
 }
+.place_name_container {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .place_name {
 	font-size:16px;
 	color:#00195c;

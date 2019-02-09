@@ -217,15 +217,8 @@ class CreateUserCompleted(View):
 class CreateUserFacebook(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        context = {
-            "form_buyer": BuyerFormFB(), 
-        }
-
-
-
         fb_id = str(request.GET.get("id"))
-        fb_email = str(request.GET.get("email"))
-        username = "FACEBOOKUSER" + fb_email + fb_id
+        username = "FACEBOOKUSER" + fb_id
 
         user_list = User.objects.filter(username=username)
         if user_list:
@@ -236,63 +229,42 @@ class CreateUserFacebook(View):
         return render(request, "user_create_fb.html", context)
     def post(self, request, *args, **kwargs):
         context = {}
-        form_buyer = BuyerFormFB(request.POST, initial={"accepts_newsletter":True})
-        context["form_buyer"] = form_buyer 
-
         fb_id = str(request.GET.get("id"))
-        fb_email = str(request.GET.get("email"))
         fb_name = str(request.GET.get("name").replace("%20", " "))
-        fb_gender = str(request.GET.get("gender"))
         fb_picture = str(request.GET.get("picture"))
-        fb_age = str(request.GET.get("age"))
 
+        user = User.objects.create(
+            username="FACEBOOKUSER" + fb_id,
+            password="rawrawraw"
+        )
+        user.set_password(fb_id+fb_id)
+        user.save()
+        email = request.POST["email"]
 
-
-
-        if form_buyer.is_valid():
-            user = User.objects.create(
-                username="FACEBOOKUSER"+fb_email+fb_id,
-                password="rawrawraw"
-            )
-            user.set_password(fb_email+fb_id)
-            user.save()
-
-            day = str(form_buyer.cleaned_data["day"])
-            month = str(form_buyer.cleaned_data["month"])
-            year = str(form_buyer.cleaned_data["year"])
-            birthday = year + "-" + month + "-" + day
-
-
-
-
-            buyer = BuyerProfile.objects.create(
-                user=user,
-                name=fb_name,
-                birthday=birthday,
-                cellphone=form_buyer.cleaned_data["cellphone"],
-                gender=fb_gender,
-                civil_status=form_buyer.cleaned_data["civil_status"],
-                email=fb_email,
-                is_active=True,
-                key=fb_id,
-                accepts_newsletter=False,
-                photo="http://graph.facebook.com/" + fb_id + "/picture?type=normal"
-            )
-
-
-            if "accepts_newsletter" in form_buyer.cleaned_data:
-                buyer.accepts_newsletter = True
-                buyer.save()
-            user_pk = str(User.objects.get(username="FACEBOOKUSER"+fb_email+fb_id).pk)
-            return redirect("/usuario/confirmar-email/?key_FB=" + fb_id + "&user_pk=" + user_pk)
+        if "accepts_newsletter" in request.POST:
+            accepts_newsletter = True
         else:
-            return render(request, "user_create_fb.html", context)
+            accepts_newsletter = False
 
 
+        buyer = BuyerProfile.objects.create(
+            user=user,
+            name=fb_name,
+            cpf=None,
+            birthday=None,
+            cellphone=None,
+            gender=None,
+            civil_status=None,
+            email=email,
+            key=fb_id,
+            is_active=True,
+            accepts_newsletter=False,
+            photo="http://graph.facebook.com/" + fb_id + "/picture?type=normal"
+        )
 
 
-
-
+        user_pk = str(User.objects.get(username="FACEBOOKUSER"+fb_id).pk)
+        return redirect("/usuario/confirmar-email/?key_FB=" + fb_id + "&user_pk=" + user_pk)
 
 
 
