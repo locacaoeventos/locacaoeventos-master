@@ -16,15 +16,16 @@ function drawInfobox(category, infoboxContent, json, i){
         else                        { location = '' }
     if(json.data[i].gallery[0])     { var gallery = json.data[i].gallery[0] }
         else                        { gallery[0] = '../img/default-item.jpg' }
-
+    console.log(json.data[i])
     var ibContent = '';
+    var place = json.data[i];
     ibContent =
     '<div class="infobox ' + color + '">' +
         '<div class="inner">' +
             '<div class="image">' +
                 '<div class="overlay">' +
                     '<div class="wrapper">' +
-                        '<a href="' + url +  '" class="detail">Visualizar<br>Buffet</a>' +
+                        '<a href="' + url +  '" class="detail"></a>' +
                         '<hr>' +
                     '</div>' +
                 '</div>' +
@@ -33,11 +34,9 @@ function drawInfobox(category, infoboxContent, json, i){
                         price +
                         '<h2>' + title +  '</h2>' +
                         '<figure style="font-size:11px">' + location +  '</figure>' +
-                        '<div class="separador-5"> </div>' +
-                        '<figure>' + json.data[i].place.description +  '</figure>' +
                     '</div>' +
                 '</a>' +
-                '<div pk="' + gallery + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[i].gallery[0] + '); width:100%; height:200px"></div>' +
+                '<div pk="' + gallery + '" class="result_place img-center center-cropped" style="background-image: url(' + place.gallery[0] + '); width:100%; height:200px"></div>' +
             '</div>' +
         '</div>' +
     '</div>';

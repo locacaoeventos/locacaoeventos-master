@@ -50,7 +50,7 @@ $("#buyer_button").click(function(){
   $("#buyer_wrapper").fadeIn(300)
   $("#seller_wrapper").css("display", "none")
   $(this).css("background-color", "#98d000")
-  $("#seller_button").css("background-color", "#4fa7bc")
+  $("#seller_button").css("background-color", "#e4e4e4")
   $(".create_user_container").css("overflow-y", "scroll")
 })
 
@@ -101,11 +101,13 @@ function validarSenhaSeller(){
 
  }
 }
+
+
 $("#seller_button").click(function(){
   $("#buyer_wrapper").css("display", "none")
   $("#seller_wrapper").fadeIn(300)
   $(this).css("background-color", "#98d000")
-  $("#buyer_button").css("background-color", "#4fa7bc")
+  $("#buyer_button").css("background-color", "#e4e4e4")
   $(".create_user_container").css("overflow-y", "scroll")
 })
 

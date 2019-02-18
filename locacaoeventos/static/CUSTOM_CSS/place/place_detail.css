@@ -43,7 +43,7 @@ Detail Header
 }
 
 .detail_header_img {
-	height:400px;
+	height:500px;
 	/*width:70%;*/
 	width:100%;
 	display:inline-block;
@@ -144,9 +144,9 @@ Gallery
 =============================== */
 .detail_gallery {
 	position:absolute;
-	top:90px;
+	top:30px;
 	width:90%;
-	max-width:600px;
+	max-width:1000px;
 	height:400px;
 	left: 0; 
 	right: 0; 

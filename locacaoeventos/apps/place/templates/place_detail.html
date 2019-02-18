@@ -63,7 +63,7 @@ Body code
 
 
 
-        <h1 class="detail_wrapper_title">{{place.name}}</h1>
+        <h1 class="detail_wrapper_title" style="font-size:32px">{{place.name}}</h1>
         <div class="detail_description_text justify_text">
           {{place.description}}
         </div>
@@ -74,7 +74,7 @@ Body code
         {% if additionalinformation|length > 0 %}
           <h1 class="detail_wrapper_title">Informações Adicionais</h1>
           <div class="separador-10"> </div>
-          <div class="center_element">
+          <div class="center_element" style="text-align:left">
             {% for info in additionalinformation %}
               {% if not forloop.first %}-->{% endif %}
               <div class="detail_description_card detail_additionalinformation">
@@ -127,7 +127,9 @@ Body code
 
         <!-- DETAIL MAP begin -->
         <h1 class="detail_wrapper_title">Localização</h1>
+        {{place.address}}
         <div class="separador-10"> </div>
+
         <div id="map" style="height:300px; width:100%"></div>
         <div class="separador-10 separate_titles"> </div>
         <hr class="line"/>
@@ -224,8 +226,8 @@ Body code
 
         <!-- DETAIL VIDEO -->
         {% if place.video %}
-          <h1 class="detail_wrapper_title">Vídeo do Local</h1>
-          <div class="separador-30"> </div>
+          <h1 class="detail_wrapper_title">Vídeo do Buffet</h1>
+          <div class="separador-10"> </div>
           <div class="center_element">
             <iframe src="{{place.video}}" id="place_video"></iframe>
           </div>
@@ -640,7 +642,7 @@ $(document).click(function(e) {
   var idname = String(e.target.id);
   if(classname.indexOf("detail_header_img ")>=0 || classname.indexOf("detail_header_showphotos")>=0){
     $("#black_layer").fadeIn(800)
-    $("#black_layer").append('<div style="position:absolute; top:30px; right:30px; color:white; cursor:pointer">&#10006;</div>')
+    $("#black_layer").append('<div style="position:absolute; top:30px; right:30px; color:white; cursor:pointer"></div>')
     $("#black_layer").append(
       '<div class="detail_gallery center-cropped img-center" style="background-image: url(/media/{{photo_list_html.0}});" counter="0">' +
         '<div class="detail_header_img_mov" style="left:0px; padding-left:10px;">' +

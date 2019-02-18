@@ -51,9 +51,16 @@ class ContactUs(View):
         email = request.POST.get("faq-form-email")
         text = request.POST.get("faq-form-question")
 
-
+        name = request.POST.get("faq-form-name")
+        cellphone = request.POST.get("faq-form-cellphone")
         str_titulo = ('Pergunta de USUÁRIO')
-        str_body = ('De: ' + email + " >> " + text)
+        str_body = (
+            'De: ' + email + "\n" +
+            "Nome:  " + name + "\n" +
+            "Celular: " + cellphone + "\n" +
+            "Mensagem: " + text + "\n"
+
+        )
         send_mail(str_titulo, str_body, 'christian.org96@gmail.com', ["christian.org96@gmail.com"], fail_silently=False)
 
 

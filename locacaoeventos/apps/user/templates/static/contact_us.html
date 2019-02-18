@@ -9,19 +9,30 @@
 
             <form role="form" action="?" method="post">{% csrf_token %}
                 <div class="form-group">
-                    <label for="faq-form-email">Email</label>
+                    <label for="faq-form-name">Nome completo *</label>
+                    <input type="text" class="form-control" id="faq-form-name" name="faq-form-name" required="">
+                </div>
+                <div class="separador-10"> </div>
+
+                <div class="form-group">
+                    <label for="faq-form-email">E-mail *</label>
                     <input type="email" class="form-control" id="faq-form-email" name="faq-form-email" required="">
                 </div>
-                <!-- /.form-group -->
+                <div class="separador-10"> </div>
                 <div class="form-group">
-                    <label for="faq-form-question">Question</label>
+                    <label for="faq-form-cellphone">Celular</label>
+                    <input type="text" class="form-control" id="faq-form-cellphone" name="faq-form-cellphone">
+                </div>
+
+                <div class="separador-10"> </div>
+                <div class="form-group">
+                    <label for="faq-form-question">Questão *</label>
                     <textarea class="form-control" id="faq-form-question" name="faq-form-question" name="faq-form-question"  rows="3" required=""></textarea>
                 </div>
-                <!-- /.form-group -->
+                <div class="separador-30"> </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Submit Question</button>
+                    <button type="submit" class="btn btn-default" id="submit">Enviar</button>
                 </div>
-                <!-- /.form-group -->
             </form>
 
             <!--/#contact-form-->
@@ -37,7 +48,27 @@
                 </figure>
             </section>
         {% endif %}
-
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
+<script>
+$('#faq-form-cellphone').mask('(00)00000-0000');
+$('#faq-form-cellphone').keyup(function(){
+    cellphone_length = $(this).val().length
+    if(cellphone_length < 14 && cellphone_length > 0) {
+        $("#cellphone_error").html("O número de celular é curto demais")
+        $("#cellphone_error").css("display", "block")
+        document.getElementById("submit").disabled = true;
+    } else if (cellphone_length==14) {
+        $("#cellphone_error").css("display", "none")
+        document.getElementById("submit").disabled = false;
+    } else {
+        cellphone_length = "no cellphone"
+        document.getElementById("submit").disabled = false;
+    }
+});
+</script>
 {% endblock content_static %}
 
 

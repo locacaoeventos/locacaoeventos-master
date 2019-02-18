@@ -194,7 +194,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json, zoom, get_marker){
             }
         ];
 
-        var markerCluster = new MarkerClusterer(map, newMarkers, { styles: clusterStyles, maxZoom: 19 });
+        var markerCluster = new MarkerClusterer(map, newMarkers, { styles: clusterStyles, maxZoom: 15 });
         markerCluster.onClick = function(clickedClusterIcon, sameLatitude, sameLongitude) {
             return multiChoice(sameLatitude, sameLongitude, json);
         };
@@ -373,7 +373,7 @@ function createHomepageGoogleMap(_latitude,_longitude,json, zoom, get_marker){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function createHomepageOSM(_latitude,_longitude,json,mapProvider){
-
+    // Esse é o correto do painel à esquerda
     $.get("/static/base_template_user/assets/external/_infobox.js", function() {
         osmMap();
     });
@@ -606,8 +606,7 @@ function simpleMap(_latitude, _longitude, draggableMarker){
 function pushItemsToArray(json, a, category, visibleItemsArray){
     var itemPrice;
     var place = json.data[a].place
-    visibleItemsArray.push(
-        '<li class="result_place" pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '">' +
+    var div_str = '<li class="result_place" pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '">' +
             '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place item" id="' + json.data[a].id + '">' +
                 '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place image">' +
                     '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place inner" style="height:200px">' +
@@ -621,12 +620,15 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
                     '<div class="separador-10"> </div>' +
                     drawPrice(json.data[a].place.placeprice_min) +
                     '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place info">' +
-                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>' +
-                    '</div>' +
+                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>'
+                        if(place.review_list.review_rates.rate_average!=undefined){
+                            div_str += '<figure style="font-size:11px; margin-top:5px">(' + place.review_list.review_rates.rate_average + ')</figure>'
+                        }
+        div_str += '</div>' +
                 '</div>' +
             '</div>' +
         '</li>'
-    );
+    visibleItemsArray.push(div_str);
 
     function drawPrice(price){
         if( price ){

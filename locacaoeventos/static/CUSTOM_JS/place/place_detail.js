@@ -19,7 +19,6 @@ $("#detail_header_loved").click(function(){
       "place_pk":$("#place_pk").val(),
     },
     success: function (data) {
-      console.log("a")
     }
   })  
 
