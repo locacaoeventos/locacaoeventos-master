@@ -18,6 +18,8 @@ def base_context(user):
 		context["profile"] = profile
 		if user.is_superuser:
 			context["is_superuser"] = True
+		else:
+			context["is_superuser"] = False
 	else:
 		context["user_type"] = "anonymous"
 		context["is_superuser"] = False
