@@ -96,7 +96,8 @@ class GetPlaceInformation(View):
             data = { "list_places": list_places }
         except:
             data = { "none": True }
-        data["is_superuser"] = context["is_superuser"]
+        if "is_superuser" in context:
+            data["is_superuser"] = context["is_superuser"]
         print(data["list_places"][0]["review_list"])
         return JsonResponse(data)
 
