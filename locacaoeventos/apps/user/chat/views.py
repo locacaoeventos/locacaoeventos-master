@@ -73,10 +73,9 @@ class Chat(View):
                 messages_compiled.append(message)
         # =================
         
-        messages_compiled
         context["messages"] = messages_compiled
 
-        return render(request, "control_panel/chat/chat.html", context)
+        return render(request, "control_panel/chat/chat_seller.html", context)
 
 
 

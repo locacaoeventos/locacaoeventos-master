@@ -112,6 +112,10 @@ class ListPlaceOwned(View):
         context["has_finished_payment"] = context["seller"].has_finished_payment
         place_list = []
         for place in Place.objects.filter(sellerprofile=context["seller"]):
+            print(place.name)
+            print(place.pk)
+            print(PlacePhoto.objects.filter(place=place))
+            print(PlacePhoto.objects.filter(place=place, is_first=True))
             place_dic = {
                 "pk": place.pk,
                 "name": place.name,
@@ -120,7 +124,7 @@ class ListPlaceOwned(View):
                 "capacity": place.capacity,
                 "creation": place.creation,
                 "modified": place.modified,
-                "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
+                "photo": PlacePhoto.objects.filter(place=place, is_first=True)[0].photo.photo,
 
                 "is_active": place.is_active,
                 "has_finished_basic": place.has_finished_basic,
@@ -360,7 +364,9 @@ class CreateEditPlace(View):
                 context["is_editing"] = True
                 context["panel_type"] = "listowned"
                 additionalinformation = PlaceAdditionalInformation.objects.get(place=place)
-                photo_first_pk = PlacePhoto.objects.filter(place=place, is_first=True)[0].photo.pk
+                photo_first = PlacePhoto.objects.filter(place=place, is_first=True)[0].photo
+                photo_first_pk = photo_first.pk
+                photo_first_src = photo_first.photo
                 photos = [item.photo.pk for item in PlacePhoto.objects.filter(place=place) if item.is_first != True]
                 photos.insert(0, photo_first_pk)
                 # photos = [item.photo.pk for item in PlacePhoto.objects.filter(place=place)]
@@ -374,6 +380,7 @@ class CreateEditPlace(View):
                     "decoration": place.decoration,
                     "menu": place.menu,
                     "photos": photos,
+                    "first_photo": photo_first_pk,
                     "alcoholic_drink": additionalinformation.alcoholic_drink,
                     "has_entertainment": additionalinformation.has_entertainment,
                     "has_thematicdecoration": additionalinformation.has_thematicdecoration,
@@ -385,6 +392,7 @@ class CreateEditPlace(View):
                     "has_illumination": additionalinformation.has_illumination,
                     "has_babychangingroom": additionalinformation.has_babychangingroom,
                 })
+                context["photo_first_src"] = photo_first_src
                 context["menu_url"] = str(place.menu).replace("place/menu/", "")
             else:
                 context["form"] = PlaceForm()
@@ -455,10 +463,11 @@ class CreateEditPlace(View):
                 placeadditionalinformation.save()
                 # ===================== Photos
                 photos = form.cleaned_data["photos"]
+                first_photo = form.cleaned_data["first_photo"]
+                PlacePhoto.objects.filter(place=place).delete() # Deleting current dependencies, to create new ones
                 for i in range(len(photos)):
                     photo = PhotoProvisory.objects.get(pk=photos[i])
-                    PlacePhoto.objects.filter(place=place, photo=photo).delete()
-                    if i == 0:
+                    if photo.pk == first_photo:
                         PlacePhoto.objects.create(
                             place=place,
                             photo=photo,
@@ -503,12 +512,21 @@ class CreateEditPlace(View):
                 )
                 # ===================== Photos
                 photos = form.cleaned_data["photos"]
+                first_photo = form.cleaned_data["first_photo"]
                 for i in range(len(photos)):
                     photo = PhotoProvisory.objects.get(pk=photos[i])
-                    PlacePhoto.objects.create(
-                        place=place,
-                        photo=photo
-                    )
+                    if photo.pk == first_photo:
+                        PlacePhoto.objects.create(
+                            place=place,
+                            photo=photo,
+                            is_first=True,
+                        )
+                    else:
+                        PlacePhoto.objects.create(
+                            place=place,
+                            photo=photo
+                        )
+
                 context["place_pk"] = place.pk
                 return render(request, "control_panel/seller_place_createedit_completed.html", context)
         return render(request, "control_panel/seller_place_createedit.html", context)

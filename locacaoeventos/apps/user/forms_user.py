@@ -10,10 +10,9 @@ from locacaoeventos.utils.forms import *
 
 class BuyerForm(TOCForm):
 
-    name = fields.CharField(required=True, label="Nome")
+    name = fields.CharField(required=True, label="Nome Completo")
     cpf_buyer = fields.CharField(required=False, label="CPF do responsável")
     email = fields.CharField(required=True, widget=forms.EmailInput, label="E-mail")
-    password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
 
     day = fields.CharField(required=False, label="Data de Nascimento")
     month = fields.CharField(required=False, label="Data de Nascimento")
@@ -23,6 +22,9 @@ class BuyerForm(TOCForm):
     civil_status = fields.CharField(required=False, label="Status Civil")
     
     photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
+
+
+    password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
 
 
@@ -75,12 +77,70 @@ class BuyerForm(TOCForm):
 
 
 
+class FamilyMemberForm(TOCForm):
+    name = fields.CharField(required=True, label="Nome do Familiar")
+    gender = fields.CharField(required=False, label="Gênero")
+
+    day = fields.CharField(required=False, label="Data de Nascimento")
+    month = fields.CharField(required=False, label="Data de Nascimento")
+    year = fields.CharField(required=False, label="Data de Nascimento")
+
+    relation = fields.CharField(required=False, label="Relação Familiar")
+
+    def __init__(self, *args, **kwargs):
+        super(FamilyMemberForm, self).__init__(*args, **kwargs)
+    def clean(self):
+        cleaned_data = super(FamilyMemberForm, self).clean()
+
+        # Birthday
+        day = str(cleaned_data.get('day'))
+        month = str(cleaned_data.get('month'))
+        year = str(cleaned_data.get('year'))
+        if day != "" and month != "" and year != "":
+            if len(month) == 1:
+                month = "0" + month
+            if len(day) == 1:
+                day = "0" + day
+            birthday = year + "-" + month + "-" + day
+            try:
+                datetime.datetime.strptime(birthday, '%Y-%m-%d')
+            except:
+                error_message = forms.ValidationError("ERROR")
+                self.add_error('day', error_message)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class SellerForm(TOCForm):
-    # PagarMe
-    bank_code = fields.CharField(required=False, label="Código do Banco")
-    agency = fields.CharField(required=False, label="Agência", max_length=5, min_length=5)
-    account = fields.CharField(required=False, label="Conta Bancária", max_length=13, min_length=13)
-    account_type = fields.CharField(required=False, label="Tipo de Conta")
 
 
 
@@ -95,6 +155,11 @@ class SellerForm(TOCForm):
     password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
     accepts_newsletter_seller = forms.BooleanField(required=False, initial="checked", label="Aceita receber Newsletter")
 
+    # PagarMe
+    bank_code = fields.CharField(required=False, label="Código do Banco")
+    agency = fields.CharField(required=False, label="Agência", max_length=5, min_length=5)
+    account = fields.CharField(required=False, label="Conta Bancária", max_length=13, min_length=13)
+    account_type = fields.CharField(required=False, label="Tipo de Conta")
 
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()

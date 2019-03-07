@@ -1,4 +1,4 @@
-$('#id_cellphone_seller').mask('(00)00000-0000');
+$('#id_cellphone_seller').mask('(00) 00000-0000');
 $('#id_cellphone_seller').keyup(function(){
   if($(this).val().length < 14) {
     $("#cellphone_seller_error").html("O número de celular é curto demais")

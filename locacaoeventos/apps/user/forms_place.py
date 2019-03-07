@@ -11,7 +11,7 @@ from locacaoeventos.utils.general import *
 
 class PlaceForm(TOCForm):
 
-    name = fields.CharField(required=True, label="Nome", max_length=64)
+    name = fields.CharField(required=True, label="Nome do Buffet", max_length=64)
     address = fields.CharField(required=True, label="Endereço", max_length=256)
     description = fields.CharField(required=True, widget=forms.Textarea, max_length=1024, label="Descrição")
 
@@ -26,7 +26,7 @@ class PlaceForm(TOCForm):
 
     children_rides = forms.CharField(required=False, label="Brinquedos para Crianças")
     decoration = forms.CharField(required=False, label="Decorações")
-    photos = SimpleArrayField(forms.CharField(required=True, label="Decorações"))
+
     menu = forms.FileField(required=False, widget=forms.FileInput)
 
 
@@ -43,14 +43,14 @@ class PlaceForm(TOCForm):
     has_illumination = forms.BooleanField(required=False, label="Iluminação")
     has_babychangingroom = forms.BooleanField(required=False, label="Fraldário")
 
-
+    photos = SimpleArrayField(forms.CharField(required=True, label="Decorações"))
+    first_photo = forms.IntegerField(required=True, label="Foto de Capa")
     def __init__(self, *args, **kwargs):
         super(PlaceForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(PlaceForm, self).clean()
         address = cleaned_data.get('address')
-        coordinates = get_latlng_from_address_str(address)
         try:
             coordinates = get_latlng_from_address_str(address)
         except:
@@ -62,7 +62,8 @@ class PlaceForm(TOCForm):
         if video:
             if not any(string in video for string in ['youtube.com/watch?v=', 'youtube.com/embed/']) and video is not None:
                 error_message = forms.ValidationError(
-                    "Utilize um vídeo hospedado em youtube.com")
+                    "Utilize um vídeo hospedado em youtube.com"
+                )
                 self.add_error('video', error_message)
 
         # Menu file
@@ -70,5 +71,15 @@ class PlaceForm(TOCForm):
         if menu:
             if not any(string in str(menu) for string in [".png", ".jpeg", ".jpg", ".pdf"]) and menu is not None:
                 error_message = forms.ValidationError(
-                    "Utilize um arquivo de imagem ou pdf")
+                    "Utilize um arquivo de imagem ou pdf"
+                )
                 self.add_error('menu', error_message)
+
+
+        # First Photo
+        first_photo = cleaned_data.get('first_photo')
+        if not first_photo:
+            error_message = forms.ValidationError(
+                "Clique em alguma foto acima como capa!"
+            )
+            self.add_error('first_photo', error_message)

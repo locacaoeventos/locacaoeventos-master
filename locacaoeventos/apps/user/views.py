@@ -38,10 +38,9 @@ class GetPhoto(View):
         photos = []
         for i in range(len(photos_list)):
             photo_provisory = PhotoProvisory.objects.get(pk=photos_list[i])
-            photo = PlacePhoto.objects.get(photo=photo_provisory)
             photos.append({
-                "url":str(photo.photo),
-                "pk":str(photo.pk)
+                "url":str(photo_provisory.photo),
+                "pk":str(photo_provisory.pk)
             })
         data = {"photos":photos}
         return JsonResponse(data)

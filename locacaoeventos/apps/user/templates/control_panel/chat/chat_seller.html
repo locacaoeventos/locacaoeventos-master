@@ -1,0 +1,207 @@
+{% extends template_base %}
+{% block panel_title %}Mensagens{% endblock panel_title %}
+{% block user_panel_content %}
+<style>
+  .header_container {
+    vertical-align:bottom;
+    display:inline-block;
+    font-weight:bold;
+    text-transform:uppercase;
+    padding-bottom:5px;
+    font-size:10px;
+  }
+  .header_buffet {
+    width:30%;
+    text-align:center;
+
+  }
+
+  .header_user {
+    width:20%;
+    text-align:center;
+
+  }
+
+  .header_message {
+    width:50%;
+    text-align:center;
+
+  }
+
+
+
+
+
+
+  .message_container {
+    width:100%;
+    background-color:white;
+    border:1px solid #ebebeb;
+    border-left:none;
+    border-right:none;
+    height:66px;
+  }
+
+
+  .message_author_container {
+    width:30%;
+    display:inline-block;
+    text-align:center;
+    vertical-align:top;
+    height:66px;
+    line-height:66px;
+    padding:0 6px;
+    cursor:pointer;
+
+
+
+  }
+  .message_author_container:hover {
+    background-color:#fafafa;
+  }
+  
+
+  .message_author_text {
+    display:inline-block;
+    vertical-align:middle;
+    line-height:20px;
+  }
+
+  .message_author_wrapper {
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .message_user_container {
+    width:20%;
+    display:inline-block;
+    text-align:center;
+    vertical-align:top;
+    height:66px;
+    line-height:66px;
+    padding:0 6px;
+    cursor:pointer;
+
+
+
+
+
+
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+
+
+  
+  }
+  .message_user_container:hover {
+    background-color:#fafafa;
+  }
+  
+
+
+
+
+
+
+
+  .message_text_container {
+    width:50%;
+    display:inline-block;
+    color:#102766;
+    padding-left:5px;
+    position:relative;
+    cursor:pointer;
+    height:66px;
+  }
+  .message_text_container:hover {
+    background-color:#fafafa;
+  }
+
+
+  .message_text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .color_black {
+    color:black;
+  }
+  .color_lightgray {
+    color:#b6b6b6;
+  }
+  .color_gray {
+    color:#8b8b8b;
+  }
+
+</style>
+  <div class="header_container header_buffet">
+    Buffet
+  </div><!--
+  --><div class="header_container header_user">
+    Usuário
+  </div><!--
+  --><div class="header_container header_message">
+    Mensagem
+  </div>
+
+{% for message in messages %}
+
+
+
+  <div class="message_container" style="{% if not forloop.last %}border-bottom:none{% endif %}">
+    <div class="message_author_container" onclick="javascript:location.href='/buffet/detalhar/?pk={{message.place.pk}}'">
+      <span class="message_author_text color_black">
+        <div class="message_author_wrapper">
+          {{message.place.name}}
+        </div>
+      </span>
+    </div><!--
+
+
+
+    --><div class="message_user_container" onclick="javascript:location.href='/buffet/detalhar/?pk={{message.place.pk}}'">
+          {{message.user_contacted}}
+    </div><!--
+
+
+
+    --><div class="message_text_container" onclick="javascript:location.href='/usuario/chat/visualizar/?place_pk={{message.place.pk}}{% if user_type == "seller" %}&buyerprofile_pk={{message.buyerprofile_pk}}{% endif %}'">
+      <span class="color_lightgray" style="position:absolute; top:5px; right:10px; font-size:10px">Última mensagem: {{message.datetime|date:'d/m/y'}}</span>
+      <div class="separador-25"> </div>
+      <div class="message_text color_gray">
+        {{message.text}}
+      </div>
+      <div class="separador-10"> </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="separador-20"> </div>
+  <div style="width:100%; text-align:center; letter-spacing:2px;">Não há mensagens<br>Entre em contato com os Buffets nas suas respectivas páginas!</div>
+{% endfor %}
+
+
+
+
+
+
+
+
+
+{% endblock user_panel_content %}

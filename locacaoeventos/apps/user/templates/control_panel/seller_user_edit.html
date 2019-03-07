@@ -32,10 +32,8 @@
         ============================================================== -->
         {% if field.name == "bank_code" %}
           <div class="separador-15"> </div>
-          <div class="row">
-            <div class="col-md-6">
 
-              <div class="selleredit_title">Banco</div>
+              <div class="selleredit_title">Dados Bancários</div>
               <hr class="line">
               <div class="separador-20"> </div>
 
@@ -56,39 +54,38 @@
               
 
         {% elif field.name == "agency" %}
-          <div class="separador-15"> </div>
-          <label>{{field.label}}</label>
-          {{field}}
+              <div class="separador-15"> </div>
+              <label>{{field.label}}</label>
+              {{field}}
 
 
         {% elif field.name == "account" %}
-          <div class="separador-15"> </div>
-          <label>{{field.label}}</label>
-          {{field}}
+              <div class="separador-15"> </div>
+              <label>{{field.label}}</label>
+              {{field}}
 
 
         {% elif field.name == "account_type" %}
-          <div class="separador-15"> </div>
-          <label>{{field.label}}</label>
-          <select style="width:100%; display:inline; text-align:center; height:43px" id="account_type_id" name="account_type">
-            <option value="">Código Bancário</option>
-            {% for code in account_type %}
-              {% if field.value == code.code %}
-                <option value="{{code.code}}" selected>{{code.name}}</option>
-              {% else %}
-                <option value="{{code.code}}">{{code.name}}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
+              <div class="separador-15"> </div>
+              <label>{{field.label}}</label>
+              <select style="width:100%; display:inline; text-align:center; height:43px" id="account_type_id" name="account_type">
+                <option value="">Código Bancário</option>
+                {% for code in account_type %}
+                  {% if field.value == code.code %}
+                    <option value="{{code.code}}" selected>{{code.name}}</option>
+                  {% else %}
+                    <option value="{{code.code}}">{{code.name}}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
 
 
-          <div class="separador-20"> </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
-          </div>
+              <div class="separador-20"> </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+              </div>
 
-          <div class="separador-50"> </div>
-        </div>
+              <div class="separador-50"> </div>
 
 
 
@@ -97,40 +94,38 @@
         Conta Padrão
         ============================================================== -->
         {% elif field.name == "password_seller" %}
-          <label>Nova senha</label>
-          <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
-          <div class="separador-15"> </div>
-          <label>Confirme a senha</label>
-          <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
-          <div id="tooshort_seller" class="error_message">
-            A senha deve conter no mínimo 6 dígitos
-          </div>
-          <div id="nomatchpswd_seller" class="error_message">
-            As senhas não são correspondentes
-          </div>
-          <div class="separador-15"> </div>
+              <label>Nova senha</label>
+              <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
+              <div class="separador-15"> </div>
+              <label>Confirme a senha</label>
+              <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
+              <div id="tooshort_seller" class="error_message">
+                A senha deve conter no mínimo 6 dígitos
+              </div>
+              <div id="nomatchpswd_seller" class="error_message">
+                As senhas não são correspondentes
+              </div>
+              <div class="separador-15"> </div>
 
         {% elif field.name == "accepts_newsletter_seller" %}
-          <div class="separador-15"> </div>
-          <div class="center_element">
-            <label style="display:inline">{{field.label}}</label><br>
-            <div class="separador-5"> </div>
-            <label class="container_checkbox" style="display:inline">
-              <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
-              <span class="checkmark_checkbox"></span>
-            </label>
-          </div>
-          <div class="separador-15"> </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
-          </div>
+              <div class="separador-15"> </div>
+              <div class="center_element">
+                <label style="display:inline">{{field.label}}</label><br>
+                <div class="separador-5"> </div>
+                <label class="container_checkbox" style="display:inline">
+                  <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
+                  <span class="checkmark_checkbox"></span>
+                </label>
+              </div>
+              <div class="separador-15"> </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>
+              </div>
+              <div class="separador-70"> </div>
 
-        </div>
-      </div>
         {% else %}
           {% if field.name == "name_seller" %}
           
-            <div class="col-md-6">
               <div class="selleredit_title">Usuário</div>
               <hr class="line">
               <div class="separador-20"> </div>

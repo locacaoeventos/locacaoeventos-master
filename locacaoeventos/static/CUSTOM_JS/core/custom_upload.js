@@ -22,7 +22,7 @@ $(function () {
       if (data.result.is_valid) {
         div_str = '<div class="upload_image">'
         div_str +=    '<span class="x_option x_option_upload" pk="' + data.result.pk + '">&times;</span>'
-        div_str +=    '<img class="img_gallery" src="' + data.result.url + '">'
+        div_str +=    '<img class="img_gallery" pk="' + data.result.pk + '" src="' + data.result.url + '">'
         div_str += '</div>'
         $("#gallery").prepend(div_str)
         $("#upload_frame").remove()

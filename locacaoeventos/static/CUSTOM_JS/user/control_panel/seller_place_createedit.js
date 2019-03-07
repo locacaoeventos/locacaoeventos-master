@@ -59,7 +59,7 @@ $(document).ready(function(){
   				photo = data.photos[i]
 		        div_str += '<div class="upload_image">'
 		        div_str +=    '<span class="x_option x_option_upload" pk="' + photo.pk + '">&times;</span>'
-		        div_str +=    '<img class="img_gallery center-cropped img-center" src="/media/' + photo.url + '">'
+		        div_str +=    '<img class="img_gallery center-cropped img-center" pk="' + photo.pk + '" src="/media/' + photo.url + '">'
 		        div_str += '</div>'
   			}
   			if(data.photos.length>0) {
@@ -69,7 +69,12 @@ $(document).ready(function(){
 	        $("#gallery").prepend(div_str)
   		}
   	})
-
+  	$(document).on("click", ".img_gallery", function(){
+  		var pk = $(this).attr("pk")
+  		var src = $(this).attr("src")
+  		$("#id_first_photo").val(pk)
+  		$("#img_first_photo").attr("src", src)
+  	})
 
 
 
@@ -127,4 +132,8 @@ $(document).on("click", ".x_option_add", function(){
 	$(form_id).attr("value", current_array)
 
 })
+
+
+
+
 

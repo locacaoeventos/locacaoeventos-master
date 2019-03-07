@@ -14,6 +14,7 @@ from locacaoeventos.apps.place.placecore.models import Place, PlacePhoto
 from locacaoeventos.apps.place.placereservation.models import PlaceReservation, PlaceUnavailability
 from locacaoeventos.apps.place.placereview.models import PlaceReview
 
+from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile, FamilyMember
 
 class EditBuyer(View):
     def get(self, request, *args, **kwargs):
@@ -265,3 +266,38 @@ def context_review_placebought(reservation_pk, context, request):
     context["review_list"] = reviews_dic["review_list"]
     context["review_rates"] = reviews_dic["review_rates"]
 
+
+
+
+
+
+
+
+
+
+
+
+
+class FamilyBuyer(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["panel_type"] = "family_member"
+        context["basemenu"] = "family_member"
+        context["form"] = FamilyMemberForm()
+
+        context_familybuyer(context, request)
+
+        return render(request, "control_panel/buyer_family.html", context)
+    def post(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["panel_type"] = "family_member"
+        context["basemenu"] = "family_member"
+
+        context_familybuyer(context, request)
+
+        return render(request, "control_panel/buyer_family.html", context)
+
+
+def context_familybuyer(context, request):
+    related_to = BuyerProfile.objects.get(user=request.user)
+    context["familymembers"] = FamilyMember.objects.filter(related_to=related_to)

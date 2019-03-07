@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_createedit.css" type="text/css">
 
 
+  <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
   
 
 
@@ -113,6 +114,7 @@
 
 
           {% elif field.name == "photos" %}
+            <div class="separador-30"> </div>
             {{field.as_hidden}}<!-- hidden field -->
             <!-- ==================================================
               Upload multiple files 
@@ -145,8 +147,22 @@
               Limite de 12 Fotos para o estabelecimento
             {% endif %}
             <div class="separador-30"> </div>
-            <label>Selecine acima a foto da sua capa.</label>
-            
+          {% elif field.name == "first_photo" %}
+            <label id="first_photo_label">Selecine acima a foto da sua capa</label>
+            {{field.as_hidden}}
+            {% if field.errors %}
+              <div class="error_message" style="display:block">
+                {% for error in field.errors %}
+                  {{error}}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if photo_first_src %}
+              <img src="/media/{{photo_first_src}}" id="img_first_photo"/>
+            {% else %}
+              <img src="" id="img_first_photo"/>
+            {% endif %}
             <div class="separador-10"> </div>
             <div id="frame_first_photo"></div>
             <div class="separador-30"> </div>
@@ -179,25 +195,24 @@
 
 
           {% else %}
+
             {% if field.name == "alcoholic_drink" %}
               <label>Informações Adiconais</label>
             {% endif %}
-            {% if forloop.counter|divisibleby:2 %}
+
+
+            {% if not forloop.counter|divisibleby:2 %}
               <div class="row">
             {% endif %}
               <div class="col-md-6">
-                <ul class="list-unstyled checkboxes">
-                  <li>
-                    <div class="checkbox">
-                      <label>
-                        {{field}}
-                        {{field.label}}
-                      </label>
-                    </div>
-                  </li>
-                </ul>
+                <label class="container_checkbox" style="display:inline;">
+                  <input type="checkbox" class="additional_information_checkbox" name="{{field.name}}" {% if field.value %}checked{% endif %}>
+                  <span class="checkmark_checkbox"></span>
+                </label>
+                <label style="display:inline; color:#747474">{{field.label}}</label><br>
+
               </div>
-            {% if not forloop.counter|divisibleby:2 %}
+            {% if forloop.counter|divisibleby:2 %}
             </div>
             {% endif %}
 
@@ -211,7 +226,7 @@
             <p>Ao clicar em cadastrar, você concorda com os <a href="/termos-e-condicoes/" class="link">Termos & Condições</a> do sistema.</p>
           </figure>
           <div class="form-group">
-            <button type="submit" class="btn btn-default pull-right" id="submit">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
+            <button type="submit" class="btn btn-default pull-right" id="submit" style="background-color:#98d000">{% if is_editing %}Salvar{% else %}Cadastrar{% endif %}</button>
           </div>
         </section>
 

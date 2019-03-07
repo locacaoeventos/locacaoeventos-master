@@ -1,5 +1,5 @@
 $('#id_cpf_buyer').mask('000.000.000-00');
-$('#id_cellphone').mask('(00)00000-0000');
+$('#id_cellphone').mask('(00) 00000-0000');
 $('#id_cellphone').keyup(function(){
   if($(this).val().length < 14) {
     $("#cellphone_error").html("O número de celular é curto demais")

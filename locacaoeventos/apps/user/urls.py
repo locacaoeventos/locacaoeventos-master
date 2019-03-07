@@ -42,6 +42,7 @@ urlpatterns = [
     # url(r'^familia/$', FamilyMemberEdit.as_view()),
     url(r'^buffets-agendados/$', ListPlaceBought.as_view()),
     url(r'^avaliar-buffet/$', ReviewPlaceBought.as_view()),
+    url(r'^familia/$', FamilyBuyer.as_view()),
 
     # User General
     url(r'^favoritos/$', UserLoved.as_view()),

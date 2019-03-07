@@ -33,3 +33,5 @@ class FamilyMember(models.Model):
     birthday = models.DateField()
     relation = models.CharField("Relation", max_length=64)
     related_to = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE, related_name="Parentesco com+")
+    def __str__(self):
+        return self.related_to.name + " - " + self.name
