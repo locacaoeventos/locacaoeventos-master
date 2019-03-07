@@ -127,7 +127,7 @@ class ListPlaceBought(View):
                 "address": place.address,
             }
 
-            photo = PlacePhoto.objects.filter(place=place)
+            photo = PlacePhoto.objects.filter(place=place, is_first=True)
             if photo:
                 place_dic["photo"] = photo[0].photo.photo
 

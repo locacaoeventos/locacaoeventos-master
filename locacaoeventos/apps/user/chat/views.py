@@ -40,6 +40,7 @@ class Chat(View):
 
             if BuyerProfile.objects.filter(user=message.user_to):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_to)[0].pk
+                message_dic["buyerprofile_name"] = BuyerProfile.objects.filter(user=message.user_to)[0].name
             messages_from.append(message_dic)
 
         messages_to = []    
@@ -53,6 +54,7 @@ class Chat(View):
 
             if BuyerProfile.objects.filter(user=message.user_from):
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_from)[0].pk
+                message_dic["buyerprofile_name"] = BuyerProfile.objects.filter(user=message.user_from)[0].name
 
             messages_to.append(message_dic)
 
@@ -74,8 +76,10 @@ class Chat(View):
         # =================
         
         context["messages"] = messages_compiled
-
-        return render(request, "control_panel/chat/chat_seller.html", context)
+        if is_seller == "True" or is_seller == True:
+            return render(request, "control_panel/chat/chat_seller.html", context)
+        else:
+            return render(request, "control_panel/chat/chat.html", context)
 
 
 
