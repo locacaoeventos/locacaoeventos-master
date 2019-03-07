@@ -112,10 +112,6 @@ class ListPlaceOwned(View):
         context["has_finished_payment"] = context["seller"].has_finished_payment
         place_list = []
         for place in Place.objects.filter(sellerprofile=context["seller"]):
-            print(place.name)
-            print(place.pk)
-            print(PlacePhoto.objects.filter(place=place))
-            print(PlacePhoto.objects.filter(place=place, is_first=True))
             place_dic = {
                 "pk": place.pk,
                 "name": place.name,
@@ -128,8 +124,8 @@ class ListPlaceOwned(View):
                 "is_active": place.is_active,
                 "has_finished_basic": place.has_finished_basic,
             }
-            
-            photo = PlacePhoto.objects.filter(place=place)
+
+            photo = PlacePhoto.objects.filter(place=place, is_first=True)
             if photo:
                 place_dic["photo"] = photo[0].photo.photo
 
