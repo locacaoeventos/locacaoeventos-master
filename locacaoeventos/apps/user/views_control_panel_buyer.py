@@ -125,8 +125,11 @@ class ListPlaceBought(View):
                 "capacity": place.capacity,
                 "description": place.description,
                 "address": place.address,
-                "photo": PlacePhoto.objects.filter(place=place)[0].photo.photo,
             }
+
+            photo = PlacePhoto.objects.filter(place=place)
+            if photo:
+                place_dic["photo"] = photo[0].photo.photo
 
             reviews_dic = get_reviews_from_place(place)
             place_dic["review_list"] = reviews_dic["review_list"]
