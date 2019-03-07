@@ -9,8 +9,7 @@ from django.contrib.auth.models import User
 class PlaceReview(models.Model):
     reservation = models.OneToOneField(PlaceReservation, on_delete=models.CASCADE)
     buyerprofile = models.ForeignKey(BuyerProfile, on_delete=models.CASCADE)
-    creation = models.DateTimeField()
-    # creation = models.DateTimeField(auto_now=True)
+    creation = models.DateTimeField(auto_now=True)
     comment = models.CharField("Description", max_length=256, blank=True, null=True)
     rate_infraestructure = models.IntegerField()
     rate_rides = models.IntegerField()
