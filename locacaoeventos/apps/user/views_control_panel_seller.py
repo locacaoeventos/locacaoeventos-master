@@ -124,11 +124,15 @@ class ListPlaceOwned(View):
                 "capacity": place.capacity,
                 "creation": place.creation,
                 "modified": place.modified,
-                "photo": PlacePhoto.objects.filter(place=place, is_first=True)[0].photo.photo,
 
                 "is_active": place.is_active,
                 "has_finished_basic": place.has_finished_basic,
             }
+            
+            photo = PlacePhoto.objects.filter(place=place)
+            if photo:
+                place_dic["photo"] = photo[0].photo.photo
+
             place_list.append(place_dic)
             reviews_dic = get_reviews_from_place(place)
             place_dic["review_list"] = reviews_dic["review_list"]
