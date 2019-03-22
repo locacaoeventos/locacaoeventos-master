@@ -1,0 +1,84 @@
+<style>
+.feature_item {
+  cursor:pointer;
+}
+.feature_image {
+  height:200px;
+  vertical-align:bottom;
+  border-radius:10px 10px 0 0;
+}
+.feature_wrapper {
+  background-color:#94d600;
+  color:white;
+  text-align:center;
+  padding:15px 10px 15px 10px;
+  vertical-align:top;
+  border-radius:0 0 10px 10px;
+}
+.feature_name {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  line-height: 1.1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+}
+.feature_review_none {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:8px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-style:italic;
+  line-height: 1.1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+
+}
+
+</style>
+
+
+
+<section id="featured" class="block equal-height">
+    <header style="border-bottom:none">
+      <h2><span style="border-bottom:2px solid #94d600;">Buffets em Destaque</span></h2>
+    </header>
+      {% for feature in feature_list %}
+        <div class="feature_item" pk="{{feature.pk}}">
+          <div class="img-center center-cropped feature_image" style="background-image: url(/media/{{feature.photo}});"></div><!--
+          --><div class="feature_wrapper">
+              <div class="feature_name">{{feature.name}}</div>
+              {% if feature.review_list.review_rates.rate_average %}
+                <div class="separador-5"> </div>
+                <span style="color: white" class="stars" data-rating="{{feature.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
+              {% else %}
+                <div class="separador-5"> </div>
+                <div class="feature_review_none">Aguardando Primeira Avaliação!</div>
+              {% endif %}
+          </div>
+        </div>
+        <div class="separador-10"> </div>
+      {% endfor %}
+    <!--/.row-->
+  <!--/.container-->
+  <div class="background opacity-5">
+    <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
+  </div>
+</section>
+
+
+
+<script>
+
+  $(document).on("click", ".feature_item", function(){
+    var pk = $(this).attr("pk")
+    window.location.href = "/buffet/detalhar/?pk=" + pk;
+  })
+
+
+</script>

@@ -65,7 +65,10 @@ class ListPlace(View):
             context["capacity"] = 0
             context["capacity_exists"] = True
         else:
-            context["capacity"] = capacity
+            if float(capacity) > 500:
+                context["capacity"] = "500+"
+            else:
+                context["capacity"] = capacity
 
         return render(request, "place_list.html", context)
 

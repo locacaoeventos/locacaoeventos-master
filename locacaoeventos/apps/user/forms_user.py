@@ -181,7 +181,7 @@ class SellerForm(TOCForm):
 
         # E-mail
         email_seller = str(cleaned_data.get('email_seller'))
-        if BuyerProfile.objects.filter(email=email) or SellerProfile.objects.filter(email=email):
+        if BuyerProfile.objects.filter(email=email_seller) or SellerProfile.objects.filter(email=email_seller):
             error_message = forms.ValidationError("Já existe uma conta com este e-mail")
             self.add_error('email_seller', error_message)
 

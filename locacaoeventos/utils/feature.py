@@ -43,7 +43,6 @@ def update_feature_places():
 
         # Review
         review_value = 0
-        print(placefeature.review_factor_firstday)
         review_factor_firstday = placefeature.review_factor_firstday
         review_factor = placefeature.review_factor
 
@@ -58,8 +57,6 @@ def update_feature_places():
             
             # First-day-Factor for Review
             if delta_time <= 1:
-                print(review_factor_firstday)
-                print(placereview_average)
                 value = review_factor_firstday*placereview_average
             else:
                 value = placereview_average*1/(e**(delta_time*review_factor))
@@ -72,3 +69,39 @@ def update_feature_places():
         place.feature = visualization_value + review_value
         place.save()
     return place_list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def get_feature_list():
+    place_list = []
+    feature_list = []
+
+    for place in Place.objects.filter(is_active=True, has_finished_basic=True):
+        place_dic = get_single_place_dic(place)
+        place_list.append(place_dic)
+
+
+
+    place_list = sorted(place_list, key=lambda k: k['feature']) 
+    for i in range(4):
+        place = place_list[i]
+        feature_list.append(place)
+
+    return feature_list

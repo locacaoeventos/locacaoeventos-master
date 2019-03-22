@@ -85,9 +85,9 @@ def create_minutehour(number):
         else:
             hour = str(i)
 
-        for j in range(6):
+        for j in range(3):
             minute = ""
-            j = j*10
+            j = j*30
             if j == 0:
                 minute = "0" + str(j)
             else:

@@ -4,10 +4,12 @@ from django.contrib.auth import authenticate, login
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 
+from django.contrib.auth.models import User
+
 import datetime
 
 from locacaoeventos.utils.main import *
-from django.contrib.auth.models import User
+from locacaoeventos.utils.feature import *
 from .buyerprofile.models import BuyerProfile
 from .sellerprofile.models import SellerProfile
 
@@ -24,14 +26,14 @@ class ComingSoon(View):
 class Home(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        now = datetime.datetime.now()
-        tomorrow = now + datetime.timedelta(seconds=10)
-
-        print(now)
-        print(tomorrow)
+        # now = datetime.datetime.now()
+        # tomorrow = now + datetime.timedelta(seconds=10)
 
         # result = test.delay(2, 2)
         # result.ready()
+
+
+
         return render(request, "home.html", context)
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)
@@ -112,7 +114,7 @@ class TermsConditions(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        return render(request, "calendar-input.html", context)
+        return render(request, "teste.html", context)
 
 
 

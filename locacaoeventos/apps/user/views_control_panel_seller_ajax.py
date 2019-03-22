@@ -55,7 +55,8 @@ class PlacePriceCreateAjax(View):
         data = {"check":"check"}
         place_pk = request.GET.get("place_pk")
         name = request.GET.get("name")
-        description = request.GET.get("description")
+        description = str(request.GET.get("description").replace("[","").replace("]","").split(",")).replace("'", '"')
+        print(description)
         value = request.GET.get("value")
 
         capacity_1 = request.GET.get("capacity_min")

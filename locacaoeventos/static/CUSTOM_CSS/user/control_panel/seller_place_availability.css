@@ -64,6 +64,52 @@ Place Price
 
 
 
+
+
+
+
+/* Description */
+  #id_description_input {
+      width:90%;
+      float:left;
+  }
+  .add_button {
+      cursor:pointer;
+      background-color:#50a7bc;
+      width:10%;
+      transition: 0.3s;
+  }
+  .add_button:hover {
+      background-color:#021b5e; 
+  }
+  .add_container {
+      background-color:white;
+      border:1px solid #f2f2f2;
+      padding:5px 0 5px 0;
+      min-height:80px;
+      box-shadow: inset 0px 1px 0.5px rgba(0, 0, 0, 0.15);
+  }
+  .add_option {
+      padding:5px;
+      height:40px;
+
+      color:#51a7bc;
+      font-weight:bold;
+      position:relative;
+      width:100%;
+      cursor:pointer;
+
+  }
+  .x_option_add {
+      font-size:10px;
+      padding:2px 5px 2px 5px;
+      position:absolute;
+      top:5px;
+      right: 5px;
+  }
+
+
+
 /* ==================
 Availability
 ================== */

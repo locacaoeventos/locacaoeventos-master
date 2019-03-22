@@ -71,7 +71,7 @@
                     <span class="section_title">(selecione a data no calendário)</span>
                     <div class="subsection_availability">
 
-                        <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off">
+                        <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off" >
                         <div class="separador-15"> </div>
                         <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
                           <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period">
@@ -95,7 +95,7 @@
                             <option value="biweek">Quinzenalmente</option>
                             <option value="month">Todo Mês</option>
                         </select>
-                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Salvar</button>
+                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Adicionar</button>
 
                         <div class="separador-10"> </div>
                         <div class="error_message" id="error_unavailability">EXEMPLO</div>
@@ -125,8 +125,27 @@
                     <input type="text" required placeholder="Nome" class="placeprice_field" id="id_name" name="name" maxlength="32"/>
                     <div class="separador-20"> </div>
 
+
+
+
+
+
                     Descrição:<br>
-                    <textarea rows="4" cols="50" placeholder="Descrição" class="placeprice_field" id="id_description" name="name" maxlength="128"></textarea>
+                    <input type="text" id="id_description_input" placeholder="Descreva seu pacote de preço em pontos" />
+                    <div class="add_button" type="description">+</div>
+                    <br><br>
+                    <div class="separador-5"> </div>
+                    <div class="add_container" id="id_description_container"> </div>
+                    <input type="text" class="placeprice_field" id="id_description" name="name" style="display:none">
+
+
+
+
+
+
+
+
+
                     <div class="separador-20"> </div>
 
                     Preço:<br>

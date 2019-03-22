@@ -1,0 +1,86 @@
+<style>
+.feature_image {
+  height:200px;
+  vertical-align:bottom;
+  border-radius:10px 10px 0 0;
+}
+.feature_wrapper {
+  background-color:#94d600;
+  color:white;
+  text-align:center;
+  padding:15px 10px 15px 10px;
+  vertical-align:top;
+  border-radius:0 0 10px 10px;
+}
+.feature_name {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:15px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  line-height: 1.1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+}
+.feature_review_none {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:11px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-style:italic;
+  line-height: 1.1;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+
+}
+
+</style>
+
+
+
+<section id="featured" class="block equal-height">
+  <div class="container">
+    <header>
+      <h2><span style="border-bottom:2px solid #94d600;">Buffets em Destaque</span></h2>
+    </header>
+    <div class="row">
+      {% for feature in feature_list %}
+        <div class="col-md-3 col-sm-3">
+          <div class="item" style="margin:auto; margin-bottom:20px; cursor:pointer; max-width:300px" pk="{{feature.pk}}">
+            <div class="img-center center-cropped feature_image" style="background-image: url(/media/{{feature.photo}});"></div><!--
+            --><div class="feature_wrapper">
+                <div class="feature_name">{{feature.name}}</div>
+                <div class="separador-5"> </div>
+                {% if feature.review_list.review_rates.rate_average %}
+                  <span style="color: white" class="stars" data-rating="{{feature.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
+                {% else %}
+                  <div class="feature_review_none">Aguardando Primeira Avaliação!</div>
+                  <div class="separador-10"> </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <!--/.row-->
+  </div>
+  <!--/.container-->
+  <div class="background opacity-5">
+    <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
+  </div>
+</section>
+
+
+
+<script>
+
+  $(document).on("click", ".item", function(){
+    var pk = $(this).attr("pk")
+    window.location.href = "/buffet/detalhar/?pk=" + pk;
+  })
+
+
+</script>

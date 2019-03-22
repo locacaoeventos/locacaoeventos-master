@@ -6,6 +6,52 @@ $(document).ready(function(){
     unavailabilities_get()
 })
 
+// Description ===================================================
+$(".add_button").click(function(){
+    var type = $(this).attr("type")
+    var input_id = "#id_" + type + "_input"
+    var form_id = "#id_" + type
+    var container_id = "#id_" + type + "_container"
+
+    var input_val = $(input_id).val()
+    var current_val = $(form_id).val().replace("[", "").replace("]", "")
+
+    if(input_val!=""){
+        if(current_val==""){
+            $(form_id).val("[" + current_val + input_val + "]")
+        } else {
+            $(form_id).val("[" + current_val + "," + input_val + "]")
+        }
+        $(input_id).val("")     
+        div_str = '<div class="add_option" input_val="' + input_val + '" type="' + type + '">'
+        div_str     += input_val + '<span class="x_option x_option_add" input_val="' + input_val + '">&times;</span>'
+        div_str += '</div>'
+        $(container_id).append(div_str).hide().fadeIn(500)
+    }
+
+})
+
+$(document).on("click", ".x_option_add", function(){
+    var input_val = $(this).attr("input_val")
+    var type = $(this).parent().attr("type")
+    var form_id = "#id_" + type
+    $(this).parent().fadeOut(400, function() { $(this).remove();})
+
+    var form_val = $(form_id).val().replace("[", "").replace("]", "")
+    var current_array = form_val.split(",")
+    var index_object = current_array.indexOf(input_val)
+    current_array.splice(index_object, 1);
+    current_array = "[" + String(current_array) + "]"
+
+    if(current_array=="[]"){
+        current_array = ""
+    }
+    $(form_id).val(current_array)
+
+})
+
+
+
 // GET ===================================
 function placeprice_get(){
     var place_pk = $("#id_place_pk").val()
@@ -24,15 +70,29 @@ function placeprice_show(data){
     str_div = ""
     for(i=0;i<data.placeprice_list.length;i++){
         var placeprice = data.placeprice_list[i]
+        // console.log(placeprice.description)
+        try { // There were some prices which were not with lists
+            var descriptions = JSON.parse(placeprice.description)
+        }
+        catch(err) {
+            // console.log(err)
+            var descriptions = [placeprice.description]
+
+        }
         str_div += '<div class="col-md-6">'
         str_div += '<div class="placeprice_card">'
             str_div += '<div class="crossmark_delete" placeprice_pk="' + placeprice.pk + '" place_pk="' + placeprice.place_pk + '">&#10006;</div>'
-            str_div += '<div class="separador-10"> </div>'
+            str_div += '<div class="separador-20"> </div>'
             str_div += '<div class="placeprice_card_name">' + placeprice.name + '</div><br>'
-            str_div += '<span class="placeprice_card_attr">Valor: ' + placeprice.value + '</span><br>'
-            str_div += '<span class="placeprice_card_attr">Descrição: ' + placeprice.description + '</span><br>'
-            str_div += '<span class="placeprice_card_attr">Mínimo: ' + placeprice.capacity_min + ' pessoas</span><br>'
-            str_div += '<span class="placeprice_card_attr">Máximo: ' + placeprice.capacity_max + ' pessoas</span><br>'
+            for(j=0;j<descriptions.length;j++){
+                str_div += '<span class="placeprice_card_attr">- ' + descriptions[j] + '</span><br>'
+
+            }
+            str_div += '<div class="separador-10"> </div>'
+
+            str_div += '<span class="placeprice_card_attr"><b>Valor</b>: ' + placeprice.value + '</span><br>'
+            str_div += '<span class="placeprice_card_attr"><b>Mínimo</b>: ' + placeprice.capacity_min + ' pessoas</span><br>'
+            str_div += '<span class="placeprice_card_attr"><b>Máximo</b>: ' + placeprice.capacity_max + ' pessoas</span><br>'
             str_div += '<div class="separador-10"> </div>'
         str_div += '</div>'                
         str_div += '</div>'                
@@ -92,6 +152,7 @@ function placeprice_add(){
             $("#id_value").val("")
             $("#id_capacity_min").val("")
             $("#id_capacity_max").val("")
+            $("#id_description_container").html(" ")
 
         }
     })    
@@ -141,7 +202,7 @@ $(document).on("click", ".crossmark_delete", function(){
 // ===========================================================
 // Unavailability
 // ===========================================================
-$('#date_id').mask("00 / 00 / 0000",{placeholder:"Data"});
+$('#date_id').mask("00 / 00 / 0000",{placeholder:"DD / MM / AAAA"});
 
 // Erase Optional
 $("#unavailability_optional_erase").click(function(){
@@ -178,7 +239,6 @@ $("#unavailability_optional_erase").click(function(){
           } else {
             $(".calendar_wrapper").show("slide", { direction: "right" }, 500);
           }
-
         }
 
       }
