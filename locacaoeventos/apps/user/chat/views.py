@@ -231,7 +231,7 @@ class ChatGetViewAjax(View):
                         message_dic["from_this_user"] = True
 
 
-                    if "media" not in message["photo"] and "static" not in message["photo"]:
+                    if "media" not in message["photo"] and "static" not in message["photo"] and "http://graph.facebook.com/" not in message["photo"]:
                         message["photo"] = "/media/" + message["photo"]
                     message_dic["photo"] = message["photo"]
                     previous_from = message["from"]
