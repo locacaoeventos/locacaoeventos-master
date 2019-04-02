@@ -300,7 +300,7 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 if capacity == "500+":
                     capacity = 500
 
-                capacity_tolerance = 100
+                capacity_tolerance = 50
                 capacity = int(capacity)
                 capacity_place = int(place["capacity"])
 
@@ -317,16 +317,20 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
         place_list_filtered_date = []
         if date != "":
             date_analyse_prep = date.replace(" ", "")
-            date_analyse = datetime.strptime(date.replace(" ", "") + " 16", '%d/%m/%Y %H')
-
+            date_analyse = datetime.strptime(date.replace(" ", "") + " 0", '%d/%m/%Y %H')
+            day = date_analyse.day
+            month = date_analyse.month
+            year = date_analyse.year
+            print(day)
+            print(month)
+            print(year)
             for i in range(len(place_list)):
                 place_obj = Place.objects.get(pk=place_list[i]["pk"])
                 place_dic = place_list[i]
                 unavailabilities = PlaceUnavailability.objects.filter(place=place_obj)
                 is_occupied = False
                 for unavailability in unavailabilities:
-                    utc=pytz.UTC
-                    if date_analyse.replace(tzinfo=utc) == unavailability.day:
+                    if date_analyse.replace(tzinfo=pytz.UTC) == unavailability.day:
                         is_occupied = True
                     # if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
                     #     is_occupied = True
@@ -412,6 +416,8 @@ def order_by(option, places_pk):
             elif option == 6: # Z-A
                 place_list_sorted = sorted(place_list, key=lambda k: k['name'], reverse=True) 
 
+        for i in range(len(place_list_sorted)):
+                print(place_list_sorted[i])
 
         for i in range(len(place_list_sorted)):
             place_list_sorted[i]["placeprice_min"] = "%.2f"%place_list_sorted[i]["placeprice_min"]

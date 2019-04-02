@@ -1,6 +1,7 @@
 {% load general_tags %}
 {% load i18n %}
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+<link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
 <style>
   * {box-sizing: border-box;}
   ul {list-style-type: none;}
@@ -267,11 +268,21 @@
 <div class="separador-10"> </div>
 
 <div class="buyingflux_form_title">
-  Número de Convidados
+  Número de Convidados: <span id="capacity_string"></span>
 </div>
-<div class="separador-2"> </div>
-<input type="number" id="capacity_form"/>
+<input type="number" id="capacity_form" style="display:none"/>
+<div class="separador-15"> </div>
+<div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0; margin:auto"></div>
+
+
+
+
+
 <input type="text" id="date_form" style="display:none"/>
+            
+
+
+
 
 <div class="separador-20"> </div>
 
@@ -306,8 +317,15 @@
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
+<script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
 <script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
 <script>
+
+
+
+
+
+
   // Load Period
   $(".buyingflux_period").on("change", function(){
     var period = [0,0]
@@ -334,6 +352,9 @@
     }
     period = JSON.stringify(period)
     load_calendar("{{place_pk}}", 0, "none", period)
+
+
+
     if(some_selected==true){
       $(".calendar_wrapper").slideDown(300)
       console.log("a")
@@ -349,9 +370,33 @@
 
 
   // Capacity
-  $("#capacity_form").keyup(function(){
+  // source: https://refreshless.com/nouislider/
+  var slider_page = document.getElementById('search_capacity');
+  var start_value = parseInt(0)
+  noUiSlider.create(slider_page, {
+    start: [start_value],
+    range: {
+      'min': [0],
+      'max': [500]
+    },
+    step: 10,
+    connect: [true, false],
+  });
+  slider_page.noUiSlider.on("slide", function(values){
+    if(values<500){
+      $("#capacity_string").html(parseInt(values))
+      check_field_availability()
+    } else {
+      $("#capacity_string").html("500+")
+      check_field_availability()
+    }
+    $("#capacity_form").val(parseInt(values))
+  })
+  slider_page.noUiSlider.on("change", function(values){
     check_field_availability()
   })
+
+
 
   // Fields
   function check_field_availability(){
@@ -435,6 +480,14 @@
         $('.calendar_wrapper').hide('slide',{direction:'left'},500);
       }
     }
+
+
+
+
+
+
+
+    
     load_calendar("{{place_pk}}", months, elem, "none")
   })
 
@@ -459,13 +512,10 @@
         $("#days_ajax").html(str_days)
 
         // Animation
-        if(elem!="none"){
-          if(elem.attr("count") == -1) {
-            $(".calendar_wrapper").show("slide", { direction: "left" }, 500);
-          } else {
-            $(".calendar_wrapper").show("slide", { direction: "right" }, 500);
-          }
-
+        if(elem.attr("count") == -1) {
+          $(".calendar_wrapper").show("slide", { direction: "left" }, 500);
+        } else {
+          $(".calendar_wrapper").show("slide", { direction: "right" }, 500);
         }
 
       }
