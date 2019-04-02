@@ -152,11 +152,10 @@ class ChatGetViewAjax(View):
         user_buyer = buyerprofile.user
 
         if buyerprofile.photo:
-            buyerprofile_photo = str(buyerprofile.photo)
-            # if "graph.facebook.com" in buyerprofile.photo:
-            #     buyerprofile_photo = str(buyerprofile.photo)
-            # else:
-            #     buyerprofile_photo = "/media/" + str(buyerprofile.photo)
+            if "graph.facebook.com" in str(buyerprofile.photo):
+                buyerprofile_photo = str(buyerprofile.photo)
+            else:
+                buyerprofile_photo = "/media/" + str(buyerprofile.photo)
         else:
             buyerprofile_photo = "/static/img/icon/user.png"
         # Geting Seller
