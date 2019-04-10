@@ -45,8 +45,10 @@ class EditSeller(View):
             account = None,
             account_type = None,
         )
-        context["has_finished_payment"] = has_finished_payment
+        context["has_finished_payment"] = has_finished_payment[0]
         return render(request, "control_panel/seller_user_edit.html", context)
+
+
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)
         context = context_editseller(request, context)
@@ -61,6 +63,9 @@ class EditSeller(View):
             account = form.cleaned_data["account"],
             account_type = form.cleaned_data["account_type"],
         )
+
+        seller.has_finished_payment = has_finished_payment[0]
+
         seller.pagarme_id = has_finished_payment[1]
         seller.bank_code = form.cleaned_data["bank_code"]
         seller.agency = form.cleaned_data["agency"]
@@ -330,6 +335,16 @@ class UnavailabilityCreateAjax(View):
         data["error"] = error
         data["place_pk"] = place_pk
         return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
 
 
 
