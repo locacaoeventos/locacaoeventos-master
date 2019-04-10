@@ -223,7 +223,7 @@ class CreateUserFacebook(View):
             user = user_list[0]
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
-            Home.get(self, request, *args, **kwargs)
+            redirect("/home/")
         return render(request, "user_create_fb.html", context)
     def post(self, request, *args, **kwargs):
         context = {}
