@@ -3,12 +3,10 @@ from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
 
-import datetime
-import random
-import string
-import os
+import datetime, random, string, os
 
 from locacaoeventos.utils.main import *
+from .views_general import Home
 from django.contrib.auth.models import User
 
 from .forms_user import *
@@ -225,14 +223,14 @@ class CreateUserFacebook(View):
             user = user_list[0]
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
-            return render(request, "home.html", context)
+            Home.post(self, request, *args, **kwargs)
         return render(request, "user_create_fb.html", context)
     def post(self, request, *args, **kwargs):
         context = {}
         fb_id = str(request.GET.get("id"))
         fb_name = str(request.GET.get("name").replace("%20", " "))
         fb_picture = str(request.GET.get("picture"))
-
+        user_list = User.objects.filter(username="FACEBOOKUSER" + fb_id)
         user = User.objects.create(
             username="FACEBOOKUSER" + fb_id,
             password="rawrawraw"
