@@ -12,7 +12,8 @@ from itertools import chain
 import datetime
 
 
-class Chat(View):
+class Chat(View): # This view is the same for Buyer OR Seller
+
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         is_seller = request.GET.get("is_seller", False)
@@ -26,7 +27,7 @@ class Chat(View):
         user = request.user
 
         # =================
-        # Geting Messages
+        # Geting Messages from Seller to Buyer
         messages_from = []
         for message in Message.objects.filter(user_from=user):
             message_dic = {
@@ -35,14 +36,17 @@ class Chat(View):
                 "datetime": message.datetime,
                 "place": message.place,
             }
-
-
-
-            if BuyerProfile.objects.filter(user=message.user_to):
+            if BuyerProfile.objects.filter(user=message.user_to): # Here it filters if user_to = Buyer
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_to)[0].pk
                 message_dic["buyerprofile_name"] = BuyerProfile.objects.filter(user=message.user_to)[0].name
             messages_from.append(message_dic)
 
+
+
+
+
+        # =================
+        # Geting Messages to Seller from Buyer
         messages_to = []    
         for message in Message.objects.filter(user_to=user):
             message_dic = {
@@ -51,29 +55,56 @@ class Chat(View):
                 "datetime": message.datetime,
                 "place": message.place,
             }
-
-            if BuyerProfile.objects.filter(user=message.user_from):
+            if BuyerProfile.objects.filter(user=message.user_from): # Here it filters if user_from = Buyer
                 message_dic["buyerprofile_pk"] = BuyerProfile.objects.filter(user=message.user_from)[0].pk
                 message_dic["buyerprofile_name"] = BuyerProfile.objects.filter(user=message.user_from)[0].name
-
             messages_to.append(message_dic)
 
-        messages = messages_from + messages_to
-        if is_seller == True:
-            for message in messages:
-                message["photo"] = BuyerProfile.objects.get(user=message["user_contacted"]).photo
 
-        else:
-            for message in messages:
-                message["photo"] = PlacePhoto.objects.filter(place=message["place"], is_first=True)[0].photo
+        messages = messages_from + messages_to # We have all messages related with the Seller (from and to)
+
+
+        # There is no photo anymore
+        # if is_seller == True:
+        #     for message in messages:
+        #         message["photo"] = BuyerProfile.objects.get(user=message["user_contacted"]).photo
+
+        # else:
+        #     for message in messages:
+        #         message["photo"] = PlacePhoto.objects.filter(place=message["place"], is_first=True)[0].photo
 
             
-        messages = sorted(messages, key=lambda k: k['datetime'], reverse=True) 
-        messages_compiled = []
-        for message in messages:
-            if not get_dic_by_key(messages_compiled, "place", message["place"]):
-                messages_compiled.append(message)
+
+
+        messages = sorted(messages, key=lambda k: k['datetime'], reverse=True) # Sorting for datetime, for MOST RECENT
+
+
+
         # =================
+        # Compile the message so it shows the LAST message
+        messages_compiled = []
+        if is_seller == "True": # Compiling for Seller
+            for message in messages:
+                # We have to make sure it CAN NOT repeat SAME USER with SAME BUFFET
+                #   However, DIFFERENT USER with SAME BUFFET is alright
+                #   However, SAME USER with DIFFERENT BUFFET is alright
+                has_place_on_compiled = get_dic_by_key(messages_compiled, "place", message["place"])
+                if not has_place_on_compiled: # Here we check for BUFFET
+                    messages_compiled.append(message)
+
+                has_buyer_on_compiled = get_dic_by_key(messages_compiled, "buyerprofile_pk", message["buyerprofile_pk"])
+                if not has_buyer_on_compiled: # Here we check for BUYER
+                    messages_compiled.append(message)
+
+
+        else: # Compiling for Buyer
+            for message in messages:
+                if not get_dic_by_key(messages_compiled, "place", message["place"]):
+                    messages_compiled.append(message)
+
+
+
+
         
         context["messages"] = messages_compiled
         if is_seller == "True" or is_seller == True:

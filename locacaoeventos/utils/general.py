@@ -4,7 +4,7 @@ def get_dic_by_key(listdic, key, value):
     for i in range(len(listdic)):
         if listdic[i][key] == value:
             return listdic[i]
-
+    return None
 
 def get_latlng_from_address_str(address_str):
     gmaps = googlemaps.Client(key ='AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw')
