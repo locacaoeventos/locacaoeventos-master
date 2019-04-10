@@ -35,27 +35,23 @@
 
 <body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top">
 
-<!-- Outer Wrapper-->
 <div id="outer-wrapper">
-    <!-- Inner Wrapper -->
     <div id="inner-wrapper">
-        <!-- Navigation-->
         {% include "_header.html" %}
 
-        <!-- end Navigation-->
-        <!-- Page Canvas-->
+
+
+
         <div id="page-canvas">
-            <!--Off Canvas Navigation-->
             <nav class="off-canvas-navigation">
                 <header>Navigation</header>
                 <div class="main-navigation navigation-off-canvas"></div>
             </nav>
-            <!--end Off Canvas Navigation-->
-            <!--Page Content-->
+
+
+
             <div id="page-content" style="padding-bottom:0">
-                <!-- Map Canvas-->
                 <div class="map-canvas list-width-30">
-                    <!-- Map -->
                     <div class="map">
                         <div class="toggle-navigation">
                             <div class="icon">
@@ -64,9 +60,14 @@
                                 <div class="line"></div>
                             </div>
                         </div>
-                        <!--/.toggle-navigation-->
                         <div id="map" class="has-parallax"></div>
-                        <!--/#map-->
+
+
+
+
+                        <!-- ========================================================== -->
+                        <!-- Panel Top                                                  -->
+                        <!-- ========================================================== -->
                         <div class="search-bar horizontal">
                             <form class="main-search border-less-inputs" role="form" method="post">
                                 <div class="input-row">
@@ -74,13 +75,14 @@
                                         <input type="text" class="form-control" id="place_id" placeholder="Pesquisar...">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="date_id" placeholder="Data do Evento">
+                                        <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off" placeholder="DD / MM / AAAA  ">
+                                        {% include "calendar-input.html" %}
+
+
                                     </div>
                                     <div class="form-group" style="width:120px">
-                                        <input type="text" class="form-control" id="capacity_id" placeholder="Capacidade">
+                                        <input type="number" step="10" class="form-control" id="capacity_id" placeholder="Capacidade">
                                     </div>
-
-                                    <!-- /.form-group -->
                                     <div class="form-group">
                                         <select name="category" multiple id="additional_information" title="Informações Adicionais" data-live-search="true">
                                             {% for info in place_additional_information %}
@@ -91,17 +93,10 @@
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-default" id="search_button"><i class="fa fa-search"></i></button>
                                     </div>
-
-
-                                    <!-- /.form-group -->
                                 </div>
-                                <!-- /.input-row -->
                             </form>
-                            <!-- /.main-search -->
                         </div>
-                        <!-- /.search-bar -->
                     </div>
-                    <!-- end Map -->
 
 
 
@@ -120,45 +115,30 @@
 
 
 
-                    <!--Items List-->
+                    <!-- ========================================================== -->
+                    <!-- Panel Left                                                 -->
+                    <!-- ========================================================== -->
                     <div class="items-list">
+                        <div class="pull-right" style="position:relative; margin-top:-3px; cursor:pointer; color:white; background-color:#4fa7bc; padding:10px 30px" onclick="window.history.go(-1); return false;">
+                            <div style="margin-right:-20px;">
+                                Voltar Página
+                                <div style="position:absolute; left:10px; top:10px">
+                                    <i class="fa fa-arrow-left" style="font-size:16px;"> </i>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="separador-30"> </div>
+
                         <div class="inner">
                             <ul class="results list">
-
                             </ul>
                         </div>
-                        <!--results-->
                     </div>
-                    <!--end Items List-->
                 </div>
-                <!-- end Map Canvas-->
-                <!--Featured-->
-                <section id="featured" class="block equal-height" style="background-color:white">
-                  <div class="container">
-                    <header>
-                      <h2><span style="border-bottom:2px solid #94d600;">Buffets em Destaque</span></h2>
-                    </header>
-                    <div class="row">
-                      {% for i in "xxxx" %}
-                        <div class="col-md-3 col-sm-3">
-                          <div class="item" style="margin:auto; margin-bottom:20px; cursor:pointer; max-width:300px">
-                            <div class="img-center center-cropped feature_image" style="background-image: url(/static/img/background/FESTAS1-2.jpg);"></div><!--
-                            --><div class="feature_wrapper">
-                                <h3 style="margin:0">Benny’s Cafeteria</h3>
-                                <span style="color:white" class="stars" data-rating="3.8" data-num-stars="5"></span>
-                            </div>
-                          </div>
-                        </div>
-                      {% endfor %}
-                    </div>
-                    <!--/.row-->
-                  </div>
-                  <!--/.container-->
-                  <div class="background opacity-5">
-                    <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
-                  </div>
-                </section>
-                <!--end Featured-->
+
+
+                {% include "_feature.html" %}
                 {% include "_footer.html" %}
             </div>
         </div>

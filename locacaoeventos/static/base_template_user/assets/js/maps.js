@@ -614,7 +614,7 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
                     '</div>' +
                 '</div>' +
                 '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place wrapper">' +
-                    '<a href="#" id="' + json.data[a].id + '"><h3>' + json.data[a].title + '</h3></a>' +
+                    '<div class="result_title"><a href="#" id="' + json.data[a].id + '"><h3>' + json.data[a].title + '</h3></a></div>' +
                     '<figure style="font-size:11px">' + json.data[a].location + '</figure>' +
                     '<figure style="font-size:11px"><b>Capacidade</b>: ' + place.capacity + '</figure>' +
                     '<div class="separador-10"> </div>' +

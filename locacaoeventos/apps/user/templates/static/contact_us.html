@@ -10,13 +10,13 @@
             <form role="form" action="?" method="post">{% csrf_token %}
                 <div class="form-group">
                     <label for="faq-form-name">Nome completo *</label>
-                    <input type="text" class="form-control" id="faq-form-name" name="faq-form-name" required="">
+                    <input type="text" class="form-control" id="faq-form-name" name="faq-form-name" required oninvalid="this.setCustomValidity('Preencha este campo')">
                 </div>
                 <div class="separador-10"> </div>
 
                 <div class="form-group">
                     <label for="faq-form-email">E-mail *</label>
-                    <input type="email" class="form-control" id="faq-form-email" name="faq-form-email" required="">
+                    <input type="email" class="form-control" id="faq-form-email" name="faq-form-email" required oninvalid="this.setCustomValidity('Preencha este campo')">
                 </div>
                 <div class="separador-10"> </div>
                 <div class="form-group">
@@ -27,7 +27,7 @@
                 <div class="separador-10"> </div>
                 <div class="form-group">
                     <label for="faq-form-question">Questão *</label>
-                    <textarea class="form-control" id="faq-form-question" name="faq-form-question" name="faq-form-question"  rows="3" required=""></textarea>
+                    <textarea class="form-control" id="faq-form-question" name="faq-form-question" name="faq-form-question"  rows="3" required oninvalid="this.setCustomValidity('Preencha este campo')"></textarea>
                 </div>
                 <div class="separador-30"> </div>
                 <div class="form-group">

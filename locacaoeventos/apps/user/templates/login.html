@@ -1,81 +1,69 @@
-{% extends "_base_user.html" %}
+{% extends "_base_background_image.html" %}
+{% load user_tags %}
+{% load datetime_tags %}
+
 {% block page_title %}Login{% endblock page_title %}
-{% block content %}
+{% block container_with_background %}
+
 <link rel="stylesheet" href="/static/CUSTOM_CSS/user/login.css" type="text/css">
-
-
-<section class="container">
-    <div class="block">
-        <div class="row">
-            <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                <header>
-                    <div style="text-align:center; color:#411859; font-weight:bold">
-                      {% if wrong_user == True %}
-                          <span >Usuário não cadastrado no sistema</span>
-                      {% endif %}
-                      {% if wrong_password == True %}
-                          <span>Usuário cadastrado, mas senha inválida</span>
-                      {% endif %}
-                      {% if not_active == True %}
-                          <span>Usuário desativo; verifique seu e-mail ou contacte um administrador</span>
-                      {% endif %}
-                    </div>
-
-
-                </header>
-
-
-                <div class="separador-15"> </div>
-                <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
-                    {% include "_login_fb.html" %}
-
-                    <div class="separador-30"> </div>
-
-
-                    <div style="width: 100%; height: 11px; border-bottom: 1px solid #f0f0f0; text-align: center">
-                      <span style="font-size:14px; color:#474747; background-color:white; padding: 0 10px;">
-                        Ou...
-                      </span>
-                    </div>
-                    <div class="separador-30"> </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control form_input_text" id="username_id" name="username" placeholder="Endereço de E-mail" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control form_input_text" id="password_id" name="password" placeholder="Senha" required>
-                    </div>
-
-                    <div class="separador-10"> </div>
-                    <div class="form-group clearfix">
-                        <button type="submit" class="btn pull-right btn-default" id="account-submit" style="width:100%">Entrar</button>
-                    </div>
-
-                    <div style="width:100%; text-align:center">
-                      <a href="/usuario/esqueceu-senha/" class="login_options" style="font-size:12px">Esqueceu sua senha?</a>
-                    </div>
-                    <div class="separador-10"> </div>
-                    <hr class="line"/>
-                    <div class="separador-30"> </div>
-                    <div style="width:100%; text-align:center">
-                      Você ainda não tem uma conta? <a href="/usuario/cadastrar/" class="login_options" style="font-weight:bold; color:#98d000">Cadastre-se</a><br>
-                    </div>
+<style>
+    #page-content {
+        padding:0 !important;
+    }
+</style>
 
 
 
-                </form>
-            </div>
+
+<div class="separador-30"> </div>
+<div style="width:80%; min-width:300px; margin:auto">
+    <header>
+        <div style="text-align:center; color:#411859; font-weight:bold">
+            {% if wrong_user == True %}
+                <span >Usuário não cadastrado no sistema</span>
+            {% endif %}
+            {% if wrong_password == True %}
+                <span>Usuário cadastrado, mas senha inválida</span>
+            {% endif %}
+            {% if not_active == True %}
+                <span>Usuário desativo; verifique seu e-mail ou contacte um administrador</span>
+            {% endif %}
         </div>
-    </div>
-    <div class="separador-100"> </div>
-</section>
+    </header>
+    <div class="separador-15"> </div>
+    <form role="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {% include "_login_fb.html" %}
+        <div class="separador-30"> </div>
+        <div style="width: 100%; height: 11px; border-bottom: 1px solid #f0f0f0; text-align: center">
+            <span style="font-size:14px; color:#474747; background-color:white; padding: 0 10px;">
+            Ou...
+            </span>
+        </div>
+        <div class="separador-30"> </div>
+        <div class="form-group">
+            <input type="text" class="form-control form_input_text" id="username_id" name="username" placeholder="Endereço de E-mail" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control form_input_text" id="password_id" name="password" placeholder="Senha" required>
+        </div>
+        <div class="separador-10"> </div>
+        <div class="form-group clearfix">
+            <button type="submit" class="btn pull-right btn-default" id="account-submit" style="width:100%">Entrar</button>
+        </div>
+        <div style="width:100%; text-align:center">
+            <a href="/usuario/esqueceu-senha/" class="login_options" style="font-size:12px">Esqueceu sua senha?</a>
+        </div>
+        <div class="separador-10"> </div>
+        <hr class="line"/>
+        <div class="separador-30"> </div>
+        <div style="width:100%; text-align:center">
+            Você ainda não tem uma conta? <a href="/usuario/cadastrar/" class="login_options" style="font-weight:bold; color:#98d000">Cadastre-se</a><br>
+        </div>
+    </form>
+</div>
 
 
 
 
 
-
-
-
-
-{% endblock content %}
+{% endblock container_with_background %}

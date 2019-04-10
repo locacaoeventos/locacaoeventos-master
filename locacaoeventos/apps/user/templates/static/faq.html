@@ -2,53 +2,6 @@
 {% block page_title %}Perguntas Frequentes{% endblock page_title %}
 
 {% block content_static %}
-    {% if not sent_email %}
-        <section class="faq-form">
-            <figure class="clearfix">
-                <i class="fa fa-question"></i>
-                <div class="wrapper">
-                    <div class="pull-left">
-                        <strong>Didn't find an answer?</strong>
-                        <h3>Ask Your Question</h3>
-                    </div>
-                    <a href="#form-faq" class="btn btn-default pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="form-faq">Ask Question</a>
-                </div>
-            </figure>
-            <div class="collapse" id="form-faq">
-                <div class="">
-                    <form role="form" action="?" method="post">{% csrf_token %}
-                        <div class="form-group">
-                            <label for="faq-form-email">Email</label>
-                            <input type="email" class="form-control" id="faq-form-email" name="faq-form-email" required="">
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="faq-form-question">Question</label>
-                            <textarea class="form-control" id="faq-form-question" name="faq-form-question" name="faq-form-question"  rows="3" required=""></textarea>
-                        </div>
-                        <!-- /.form-group -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-default">Submit Question</button>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                    <!-- /form-->
-                </div>
-                <!-- /.content-->
-            </div>
-            <!-- /#form-faq-->
-        </section>
-    {% else %}
-        <section class="faq-form">
-            <figure class="clearfix">
-                <div class="wrapper">
-                    <div class="pull-left">
-                        <h3>Pergunta enviada!</h3>
-                    </div>
-                </div>
-            </figure>
-        </section>
-    {% endif %}
 
 
 
@@ -157,4 +110,41 @@
         </div>
     </article>
     <!-- /.faq-single-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <section class="faq-form">
+            <figure class="clearfix">
+                <i class="fa fa-question"></i>
+                <div class="wrapper">
+                    <div class="pull-left">
+                        <strong>Didn't find an answer?</strong>
+                        <h3>Ask Your Question</h3>
+                    </div>
+                    <a href="/usuario/fale-conosco/" class="btn btn-default pull-right">Ask Question</a>
+                </div>
+            </figure>
+        </section>
+
+
 {% endblock content_static %}

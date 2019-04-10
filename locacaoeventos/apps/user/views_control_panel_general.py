@@ -17,6 +17,7 @@ class UserLoved(View):
         for placelove in placeloves:
             place = placelove.place
             place_dic = placelove.place.__dict__
+            place_dic["pk"] = place.pk
             place_dic["photo"] = PlacePhoto.objects.filter(place=place)[0].photo.photo
             place_list.append(place_dic)
         context["panel_type"] = "loved"

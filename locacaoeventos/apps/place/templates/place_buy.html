@@ -25,7 +25,7 @@ Body code
     </div><!--
     --><div class="buyingflux_place_description">
       {{place.name}}<br>
-      Capacidade: {{place.capacity}}<br>
+      Capacidade: {{capacity}}<br>
       Endereço: {{place.address}}<br>
     </div>
   </div>
@@ -41,10 +41,13 @@ Body code
                 <div class="placeprice_card" pk="{{placeprice.pk}}" placeprice="{{placeprice.value|floatformat:2}}">
                   <div class="separador-10"> </div>
                   <div class="placeprice_card_name">{{placeprice.name}}</div><br>
-                  <span class="placeprice_card_attr">Valor: R${{placeprice.value|floatformat:2}}</span><br>
-                  <span class="placeprice_card_attr">Descrição: {{placeprice.description}}</span><br>
-                  <span class="placeprice_card_attr">Mínimo: {{placeprice.capacity_min}} pessoas</span><br>
-                  <span class="placeprice_card_attr">Máximo: {{placeprice.capacity_max}} pessoas</span><br>
+                  {% for description in placeprice.description %}
+                    <span class="placeprice_card_attr">- {{description}}</span><br>
+                  {% endfor %}
+                  <div class="separador-10"> </div>
+                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.value|floatformat:2}}</span><br>
+                  <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
+                  <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
                   <div class="separador-10"> </div>
                 </div>
               </div><!--
@@ -177,7 +180,9 @@ JS imports
         checkout.open({
           amount: $("#placeprice_value").val(),
           maxInstallments: 12,
-
+          uiColor: "#41b3bd",
+          headerText: "Hello!",
+          paymentButtonText: "Salut!",
           buttonText: 'Pagar',
           buttonClass: 'botao-pagamento',
           customerData: 'false',

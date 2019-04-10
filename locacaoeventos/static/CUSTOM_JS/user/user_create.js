@@ -102,7 +102,15 @@ function validarSenhaSeller(){
  }
 }
 
+$("#id_cpf").keyup(function(){
+  var cpf_valid = testCPF()
+  if(cpf_valid==true){
+    alert("A")
+  } else {
+    alert("B")
+  }
 
+})
 $("#seller_button").click(function(){
   $("#buyer_wrapper").css("display", "none")
   $("#seller_wrapper").fadeIn(300)
@@ -117,6 +125,34 @@ $("#seller_button").click(function(){
 
 
 
+function testCPF() {
+  var strCPF = $("#id_cpf").val().replace(".","").replace("-","").replace(".","").replace(".","")
+  var Soma;
+  var Resto;
+  Soma = 0;
+  if (strCPF == "00000000000") return false;
+     
+  for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+  Resto = (Soma * 10) % 11;
+   
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(9, 10)) ){
 
+      document.getElementById('cpf_error').style.display = 'inline-block';
+      document.getElementById("send_seller").disabled = true;
+    };
+   
+  Soma = 0;
+    for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+   
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != parseInt(strCPF.substring(10, 11) ) ){
+      document.getElementById('cpf_error').style.display = 'inline-block';
+      document.getElementById("send_seller").disabled = true;
+    };
+    document.getElementById('cpf_error').style.display = 'none';
+    document.getElementById("send_seller").disabled = false;
+}
 
 

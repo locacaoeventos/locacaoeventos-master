@@ -37,8 +37,12 @@ class BuyPlace(View):
         context["period"] = ast.literal_eval("[" + request.GET.get("period") + "]")
         context["place_pk"] = request.GET.get("place_pk")
 
-        placeprices = PlacePrice.objects.filter(place=place)
-        context["placeprices"] = placeprices
+        placeprices = get_placeprices(place)
+        placeprice_list = []
+        for placeprice in placeprices:
+            if int(capacity) <= int(placeprice["capacity_max"])+50 and int(capacity) >= int(placeprice["capacity_min"])-50:
+                placeprice_list.append(placeprice)
+        context["placeprices"] = placeprice_list
         context["place"] = get_single_place_dic(place)
         context["place_pk"] = place.pk
 

@@ -1,7 +1,26 @@
+/* =======================
+PnlLeft
+======================= */
+.result_title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
 .price {
 	background-color:white !important;
 	color:gray !important;
 	border:none !important;
 	box-shadow:none !important;
 	padding:0 !important;
+}
+
+/* =======================
+PnlTop
+======================= */
+.month {
+	background-color:#4fa7bc !important;
+}
+.month * {
+	color: white !important;
 }

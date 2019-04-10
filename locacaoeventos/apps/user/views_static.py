@@ -25,18 +25,19 @@ class FAQ(View):
         return render(request, "static/faq.html", context)
 
 
-    def post(self, request, *args, **kwargs):
-        context = base_context(request.user)
-        email = request.POST.get("faq-form-email")
-        text = request.POST.get("faq-form-question")
+    # No more post
+    # def post(self, request, *args, **kwargs):
+    #     context = base_context(request.user)
+    #     email = request.POST.get("faq-form-email")
+    #     text = request.POST.get("faq-form-question")
 
 
-        str_titulo = ('Pergunta de USUÁRIO')
-        str_body = ('De: ' + email + " >> " + text)
-        send_mail(str_titulo, str_body, 'christian.org96@gmail.com', ["christian.org96@gmail.com"], fail_silently=False)
+    #     str_titulo = ('Pergunta de USUÁRIO')
+    #     str_body = ('De: ' + email + " >> " + text)
+    #     send_mail(str_titulo, str_body, 'christian.org96@gmail.com', ["christian.org96@gmail.com"], fail_silently=False)
 
 
-        context["sent_email"] = True
+    #     context["sent_email"] = True
         return render(request, "static/faq.html", context)
 
 

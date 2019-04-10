@@ -314,6 +314,10 @@
         today_day = $(this).html()
       }
       today_day = String(today_day)
+      if(today_day.length==1){
+        today_day = "0" + today_day
+      }
+
 
       var today_month = String($("#month_ajax").attr("datemonth"))
       if(today_month.length==1) {

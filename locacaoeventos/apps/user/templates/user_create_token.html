@@ -26,7 +26,9 @@
             {% if not is_fb %}
               E-mail confirmado
               <div class="separador-10"> </div>
-              <i class="fa fa-check"> </i>
+              <i class="fa fa-check"> </i><br>
+              <div class="separador-10"> </div>
+              <a href="/home">Clique aqui para ir para a Home Page!</a>
             {% endif %}
             {% if create_family_member %}
               {% if not is_fb %}
@@ -34,13 +36,7 @@
               {% endif %}
               <div class="family_member_wrapper">
                 <div class="center_element">
-
-                  <div class="center-cropped img-center buyerprofile_photo" style="background-image: url({% if is_fb %}{{buyer_photo}}{% elif buyer_photo %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %});"></div>
-                  <div class="separador-10"> </div>
-                  Cadastre seus filhos, netos, sobrinhos, para receber as melhores novidades, <strong>{{buyer_name}}</strong> !
                 </div>
-                <div class="separador-20"> </div>
-                {% include "create_familymember.html" %}
 
               </div>
             {% endif %}

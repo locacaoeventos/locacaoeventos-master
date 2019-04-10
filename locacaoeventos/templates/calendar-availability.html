@@ -262,6 +262,8 @@
       $(".day_description").fadeOut(300)
     }
   })
+
+  // Select Date
   $(document).on("click", function(event){
     var class_name = event.target.className
     if(class_name.indexOf("day_option") >= 0){
@@ -269,6 +271,14 @@
         var month = $("#month_ajax").attr("month")
         var year = $("#year_ajax").html()
         var day = event.target.innerHTML
+
+        if(month.length==1){
+          month = "0" + month
+        }
+        if(day.length==1){
+          day = "0" + day
+        }
+        
         $("#date_id").val(day + " / " + month + " / " + year)
       }
     }

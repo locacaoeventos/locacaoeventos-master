@@ -1,7 +1,5 @@
-import math
-
 from datetime import datetime
-import pytz
+import pytz, math, ast
 
 from locacaoeventos.utils.general import *
 
@@ -188,9 +186,9 @@ def get_single_place_dic(place):
     place_dic = {
         "pk": place.pk,
         "name": place.name,
+        "description": place.description,
         "capacity": place.capacity,
         "address": place.address,
-        "description": place.description,
         "lat": place.lat,
         "lng": place.lng,
         "feature": place.feature,
@@ -344,6 +342,19 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
         return place_list_filtered_date
 
 
+
+def get_placeprices(place):
+    placeprices = []
+    for placeprice in PlacePrice.objects.filter(place=place):
+        placeprices.append({
+            "value": placeprice.value,
+            "name": placeprice.name,
+            "description": ast.literal_eval(placeprice.description),
+            "capacity_min": placeprice.capacity_min,
+            "capacity_max": placeprice.capacity_max,
+
+        })
+    return placeprices
 
 
 
