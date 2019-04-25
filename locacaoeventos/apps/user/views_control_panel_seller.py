@@ -204,9 +204,9 @@ class AvailabilityPlace(View):
                     place.period_soon_begin = soon_end
 
         late_begin = request.POST.get("late_begin")
-        if late_begin:
-            late_end = request.POST.get("late_end")
-            if late_end:
+        late_end = request.POST.get("late_end")
+        if late_begin or late_end:
+            if late_begin and late_end:
                 late_end = convert_to_time(late_end)
                 late_begin = convert_to_time(late_begin)
 
@@ -224,8 +224,8 @@ class AvailabilityPlace(View):
 
 
         else:
+            place.period_late_end = None
             place.period_late_begin = None
-
 
         place.save()
 
