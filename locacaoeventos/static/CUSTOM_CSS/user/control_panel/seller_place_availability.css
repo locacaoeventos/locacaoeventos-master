@@ -10,7 +10,9 @@ Main
 .subsection_availability {
     padding:0 0 0 5px;
 }
-
+.clockpicker {
+  width:120px !important;
+}
 
 
 /* ==================

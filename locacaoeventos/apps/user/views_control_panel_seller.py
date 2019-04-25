@@ -219,11 +219,13 @@ class AvailabilityPlace(View):
 
 
             else:
+                PlaceUnavailability.objects.filter(place=place, period="max").delete()
                 place.period_late_end = None
                 place.period_late_begin = None
 
 
         else:
+            PlaceUnavailability.objects.filter(place=place, period="max").delete()
             place.period_late_end = None
             place.period_late_begin = None
 
@@ -318,20 +320,29 @@ class UnavailabilityCreateAjax(View):
                 error = "A data está antes de agora"
         # All completed
         if not error:
+            # Delete current unavailability
+            PlaceUnavailability.objects.filter(
+                place=place,
+                day=day,
+            ).delete()
             # Create Unavailability
-            placeunavailability = PlaceUnavailability.objects.create(
-                place=place,
-                period="min",
-                day=day,
-                repeat=unavailability_repeat
-            )
-            placeunavailability = PlaceUnavailability.objects.create(
-                place=place,
-                period="max",
-                day=day,
-                repeat=unavailability_repeat
+            if id_min_period == "true":
 
-            )
+                placeunavailability = PlaceUnavailability.objects.create(
+                    place=place,
+                    period="min",
+                    day=day,
+                    repeat=unavailability_repeat
+                )
+
+            if id_max_period == "true":
+                placeunavailability = PlaceUnavailability.objects.create(
+                    place=place,
+                    period="max",
+                    day=day,
+                    repeat=unavailability_repeat
+                )
+
         data["error"] = error
         data["place_pk"] = place_pk
         return JsonResponse(data)

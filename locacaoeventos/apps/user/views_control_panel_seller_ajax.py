@@ -23,11 +23,11 @@ def get_placeprice_list(place):
         placeprice_dic = {
             "pk":placeprice.pk,
             "place_pk":placeprice.place.pk,
-            "value":placeprice.value,
             "name":placeprice.name,
             "description":placeprice.description,
             "capacity_min":placeprice.capacity_min,
             "capacity_max":placeprice.capacity_max,
+            "value":"{0:.2f}".format(placeprice.value),
         }
         placeprice_list.append(placeprice_dic)
     return placeprice_list

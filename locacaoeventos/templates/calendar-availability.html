@@ -87,6 +87,20 @@
     color:#eeeeee;
     cursor:pointer;
   }
+  .occupied_min {
+    background-color:#b6de57;
+    padding:5px;
+    color:#eeeeee;
+    cursor:pointer;
+  }
+  .occupied_max {
+    background-color:#85c3d2;
+    padding:5px;
+    color:#eeeeee;
+    cursor:pointer;
+  }
+
+
   .move {
     cursor:pointer;
   }
@@ -239,37 +253,39 @@
   })
 
   // Detail Unavailability
-  $(document).on("click", function(event){
-    if(String(event.target.className).indexOf("occupied") >= 0) {
-      var this_day = event.target.getAttribute("date_occupied")
-      $(".unavailability_container").html()
-      $.ajax({
-        url: "/usuario/ajax/unavailability/detail/",
-        dataType: 'json',
-        data: {
-          "pk": "{{place_pk}}",
-          "this_day": this_day
-        },
-        success: function (data) {
-          $("#day_description_date").html(data.this_day)
-          $(".day_description").fadeIn(300)
-          div_str = ""
-          for(i=0;i<data.unavailability_this_day.length;i++){
-            div_str += '<span class="day_description_unavailability">' + data.unavailability_this_day[i] + '</span><br>'
-          } 
-          $(".unavailability_container").html(div_str)
-        }
-      })
-    } else if(String(event.target.className) != "day_description") {
-      $(".day_description").fadeOut(300)
-    }
-  })
+  // $(document).on("click", function(event){
+  //   if(String(event.target.className).indexOf("occupied") >= 0) {
+  //     var this_day = event.target.getAttribute("date_occupied")
+  //     $(".unavailability_container").html()
+  //     $.ajax({
+  //       url: "/usuario/ajax/unavailability/detail/",
+  //       dataType: 'json',
+  //       data: {
+  //         "pk": "{{place_pk}}",
+  //         "this_day": this_day
+  //       },
+  //       success: function (data) {
+  //         $("#day_description_date").html(data.this_day)
+  //         $(".day_description").fadeIn(300)
+  //         div_str = ""
+  //         for(i=0;i<data.unavailability_this_day.length;i++){
+  //           div_str += '<span class="day_description_unavailability">' + data.unavailability_this_day[i] + '</span><br>'
+  //         } 
+  //         $(".unavailability_container").html(div_str)
+  //       }
+  //     })
+  //   } else if(String(event.target.className) != "day_description") {
+  //     $(".day_description").fadeOut(300)
+  //   }
+  // })
 
   // Select Date
   $(document).on("click", function(event){
     var class_name = event.target.className
+    console.log(class_name)
+
     if(class_name.indexOf("day_option") >= 0){
-      if(class_name.indexOf("day_colored") < 0){
+      // if(class_name.indexOf("day_colored") < 0){
         var month = $("#month_ajax").attr("month")
         var year = $("#year_ajax").html()
         var day = event.target.innerHTML
@@ -282,7 +298,21 @@
         }
         
         $("#date_id").val(day + " / " + month + " / " + year)
-      }
+
+
+        $("#id_min_period").attr("checked", false)
+        $("#id_max_period").attr("checked", false)
+
+        if(class_name.indexOf("occupied_min") >= 0){
+          $("#id_min_period").prop('checked', true);
+        } else if(class_name.indexOf("occupied_max") >= 0){
+          $("#id_max_period").prop('checked', true);
+
+        } else if(class_name.indexOf("occupied") >= 0){
+          $("#id_min_period").prop('checked', true);
+          $("#id_max_period").prop('checked', true);
+        }
+      // }
     }
   })
 

@@ -20,19 +20,28 @@ class CalendarExample(View):
 
 
 def get_unavailabilities(place, period):
-    place_unavailability_list = []
     if period != "none" and period != None:
         period = ast.literal_eval(period)
         placeunavailabilities = []
+
+        # Filtering period of unavailability (selected on place detail)
         if period[0] == 1:
             placeunavailabilities += PlaceUnavailability.objects.filter(place=place, period="min")
+        
+        # Filtering period of unavailability (selected on place detail)
         if period[1] == 1:
             placeunavailabilities += PlaceUnavailability.objects.filter(place=place, period="max")
+
+
+        # Treating data
+        place_unavailability_list_with_period = []
+        place_unavailability_list = []
         for unavailability in placeunavailabilities:
             day = unavailability.day
             str_date_unavailability = str(day.year) + "-" + str(day.month) + "-" + str(day.day)
             date_unavailability = datetime.datetime.strptime(str_date_unavailability, '%Y-%m-%d')
             place_unavailability_list.append(str_date_unavailability)
+            place_unavailability_list_with_period.append([str_date_unavailability, unavailability.period])
 
             unavailability_next_days = next_days(365, date_unavailability)
 
@@ -43,6 +52,7 @@ def get_unavailabilities(place, period):
                     if unavailability.day.weekday() == next_day.weekday():
                         str_date_unavailability = str(next_day.year) + "-" + str(next_day.month) + "-" + str(next_day.day)
                         place_unavailability_list.append(str_date_unavailability)
+                        place_unavailability_list_with_period.append([str_date_unavailability, unavailability.period])
 
             if unavailability.repeat == "biweek":
                 # Algorithm from week, but for biweeek
@@ -51,7 +61,8 @@ def get_unavailabilities(place, period):
                         next_day = unavailability_next_days[i]
                         if unavailability.day.weekday() == next_day.weekday():
                             str_date_unavailability = str(next_day.year) + "-" + str(next_day.month) + "-" + str(next_day.day)
-                            place_unavailability_list.append(str_date_unavailability)
+                        place_unavailability_list.append(str_date_unavailability)
+                        place_unavailability_list_with_period.append([str_date_unavailability, unavailability.period])
 
             if unavailability.repeat == "month":
                 for i in range(len(unavailability_next_days)):
@@ -59,8 +70,9 @@ def get_unavailabilities(place, period):
                     if unavailability.day.day == next_day.day:
                         str_date_unavailability = str(next_day.year) + "-" + str(next_day.month) + "-" + str(next_day.day)
                         place_unavailability_list.append(str_date_unavailability)
+                        place_unavailability_list_with_period.append([str_date_unavailability, unavailability.period])
     
-    return place_unavailability_list
+    return place_unavailability_list, place_unavailability_list_with_period
 
 
 
@@ -71,6 +83,29 @@ def get_unavailabilities(place, period):
 
 
 
+def get_str_occupied(this_day, place_unavailability_list_with_period):
+    index = []
+    for i in range(len(place_unavailability_list_with_period)):
+        if this_day == place_unavailability_list_with_period[i][0]:
+            index.append(i) 
+
+    period = [0,0]
+    for i in range(len(index)):
+        if place_unavailability_list_with_period[index[i]][1] == "min":
+            period[0] = 1
+        elif place_unavailability_list_with_period[index[i]][1] == "max":
+            period[1] = 1
+
+    str_occupied = ""
+    if period == [1,0]:
+        str_occupied = "occupied_min"
+    elif period == [0,1]:
+        str_occupied = "occupied_max"
+
+    elif period == [1,1]:
+        str_occupied = "occupied"
+    
+    return str_occupied
 
 class CalendarAjax(View):
     def get(self, request):
@@ -80,9 +115,7 @@ class CalendarAjax(View):
         period = request.GET.get("period")
         if period == None:
             period = "[1,1]"
-        place_unavailability_list = get_unavailabilities(place, period)
-
-
+        place_unavailability_list, place_unavailability_list_with_period = get_unavailabilities(place, period)
         # Today, this month, this year
         today = datetime.datetime.today()
         today_month = request.GET.get("meses", None) # Checking if it's changing month
@@ -118,16 +151,19 @@ class CalendarAjax(View):
                 elif day < today_day:
                     list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored pass'>" + str(i+1) + "</span></li>"
                 elif day > today_day and this_day in place_unavailability_list:
-                    list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                    str_occupied = get_str_occupied(this_day, place_unavailability_list_with_period)
+                    list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored " + str_occupied + "' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
             
             else:
                 # We are in a future month
                 if today_year > today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                        str_occupied = get_str_occupied(this_day, place_unavailability_list_with_period)
+                        list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored " + str_occupied + "' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 elif today_month > today.month and today_year >= today.year:
                     if this_day in place_unavailability_list:
-                        list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored occupied' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
+                        str_occupied = get_str_occupied(this_day, place_unavailability_list_with_period)
+                        list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored " + str_occupied + "' date_occupied='" + this_day + "'>" + str(i+1) + "</span></li>"
                 # We are in past month
                 elif today_year < today.year:
                     list_month[i] = "<li class='calendar_class_day'><span class='day_option day_colored pass'>" + str(i+1) + "</span></li>"

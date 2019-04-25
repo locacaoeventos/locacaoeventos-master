@@ -39,11 +39,15 @@ def translate_month(month_eng):
 
 
 def convert_to_time(str_time):
-    time = datetime.datetime.strptime(str_time, "%Hh%M")
+    try:
+        time = datetime.datetime.strptime(str_time, "%Hh%M")
+    except:
+        time = datetime.datetime.strptime(str_time, "%H:%M")
+
     return time 
 
 def convert_time_to_string(time):
-    time_str = time.strftime("%Hh%M")
+    time_str = time.strftime("%H:%M")
     return time_str
 
 

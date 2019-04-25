@@ -98,16 +98,12 @@ function placeprice_show(data){
     str_div = ""
     for(i=0;i<data.placeprice_list.length;i++){
         var placeprice = data.placeprice_list[i]
-        // console.log(placeprice.description)
         try { // There were some prices which were not with lists
             var descriptions = JSON.parse(placeprice.description)
         }
         catch(err) {
-            // console.log(err)
             var descriptions = [placeprice.description]
-
         }
-        str_div += '<div class="col-md-6">'
         str_div += '<div class="placeprice_card">'
             str_div += '<div class="crossmark_delete" placeprice_pk="' + placeprice.pk + '" place_pk="' + placeprice.place_pk + '">&#10006;</div>'
             str_div += '<div class="separador-20"> </div>'
@@ -118,11 +114,10 @@ function placeprice_show(data){
             }
             str_div += '<div class="separador-10"> </div>'
 
-            str_div += '<span class="placeprice_card_attr"><b>Valor</b>: ' + placeprice.value + '</span><br>'
             str_div += '<span class="placeprice_card_attr"><b>Mínimo</b>: ' + placeprice.capacity_min + ' pessoas</span><br>'
             str_div += '<span class="placeprice_card_attr"><b>Máximo</b>: ' + placeprice.capacity_max + ' pessoas</span><br>'
+            str_div += '<span class="placeprice_card_attr"><b>Valor</b>: R$ ' + placeprice.value + '</span><br>'
             str_div += '<div class="separador-10"> </div>'
-        str_div += '</div>'                
         str_div += '</div>'                
     }
 

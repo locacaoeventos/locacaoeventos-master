@@ -1,5 +1,4 @@
 $(document).ready(function(){
-            console.log("aaa")
     $("textarea").attr("rows", "7")
 
     // Children Rides
@@ -103,7 +102,6 @@ $(document).ready(function(){
     $('form input').keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault(); 
-            console.log("aaa")
             return false;
         }
     });
