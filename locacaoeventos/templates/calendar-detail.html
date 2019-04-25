@@ -219,8 +219,8 @@
 
 
 
-<div style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;">
-  <div class="calendar_wrapper">
+<div id="calendar_frame" style="width:100%; -webkit-box-align:center; -webkit-box-pack:center; display:-webkit-box;">
+  <div class="calendar_wrapper" style="height:250px">
     <div class="day_description">
       <span style="float:right; cursor:pointer;">&times;</span><br>
       <span id="day_description_date"></span>
@@ -351,6 +351,13 @@
       some_selected = true
     }
     period = JSON.stringify(period)
+
+    $("#calendar_frame").toggle(function(){
+        $(this).animate({height:250},300);
+    },function(){
+        $(this).animate({height:250},0);
+    });
+
     load_calendar("{{place_pk}}", 0, "none", period)
 
 
@@ -456,7 +463,6 @@
 
   // Load Calendar
   $(document).ready(function(){
-    console.log("aaaaaaaaaaaaa")
     load_calendar("{{place_pk}}", 0, "none", "none")
   })
 
@@ -501,7 +507,6 @@
         "period":period,
       },
       success: function (data) {
-        console.log(data)
         $("#month_ajax").html(data["month"])
         $("#month_ajax").attr("month", data["month_int"])
         $("#year_ajax").html(data["year"])

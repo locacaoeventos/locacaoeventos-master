@@ -6,12 +6,12 @@
         <section class="container">
             <div class="row">
                 <!--Content-->
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="separador-30"> </div>
                     {% block content_static %}{% endblock content_static %}
                 </div>
                 <!--Sidebar-->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <aside id="sidebar">
                         {% include "_feature_vertical.html" %}
                         <section>
@@ -23,6 +23,7 @@
                 <!-- /.col-md-3-->
                 <!--end Sidebar-->
             </div>
+            {% block how_it_works %}{% endblock how_it_works %}
         </section>
     </div>
 

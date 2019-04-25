@@ -14,6 +14,10 @@
           	<div class="separador-10"> </div>
           	<i class="fa fa-envelope-o"> </i>
           </h1>
+          <div class="separador-20"> </div>
+          <h3 style="text-align:center">
+          Você será redirecionado para<br>Home Page em 5 segundos.
+          </h3>
         </header>
       </div>
     </div>
@@ -25,5 +29,12 @@
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
+
+
+<script>
+setTimeout(function(){
+  window.location.href = "/home/"
+}, 5000)
+</script>
 
 {% endblock content %}

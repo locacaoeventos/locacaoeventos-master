@@ -20,30 +20,41 @@
     </style>
 
     {% for familymember in familymembers %}
-        <div class="item list" style="border: 1px solid #f9f9f9; padding:10px">
-            <div class="x_option" style="position:absolute; width:21px; padding:0 0px 0 6px; right:5px">×</div>
+      {% if not forloop.counter|divisibleby:2 %}
+        <div class="row">
+      {% endif %}
+        <div class="col-md-6">
+          <div class="item list" style="border: 1px solid #f9f9f9; padding:10px; margin-bottom:10px">
+            <div class="x_option" style="position:absolute; width:21px; padding:0 0px 0 6px; right:5px" pk="{{familymember.pk}}">×</div>
             <div class="separador-10"> </div>
             <b>Nome</b>: {{familymember.name}}<br>
             <b>Gênero</b>: {{familymember.gender}}<br>
             <b>Aniversário</b>: {{familymember.birthday}}<br>
             <b>Relação</b>: {{familymember.relation}}<br>
             <div class="separador-10"> </div>
+          </div>
         </div>
-        <br><br>
+      {% if forloop.counter|divisibleby:2 %}
+        </div>
+      {% endif %}
+      {% if forloop.last and not forloop.counter|divisibleby:2 %}
+        </div>
+      {% endif %}
     {% endfor %}
 
+    <div class="separador-20"> </div>
     <div class="buyerfamily_title">Cadastrar novos Familiares</div>
     <hr class="line">
 
 
 
-  <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+  <form role="form" method="post" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
           {% if field.name == "day" or field.name == "month" or field.name == "year" %}
             {% if field.name == "day" %}
               <div class="form-group">
                 <label>Data de Nascimento</label>
-                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day">
+                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
                   <option value="">Dia</option>
                   {% for i in 31|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -54,7 +65,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "month" %}
-                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month">
+                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
                   <option value="">Mês</option>
                   {% for i in 12|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -65,7 +76,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "year" %}
-                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year">
+                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
                   <option value="">Ano</option>
                   {% for i in 120|create_year_set_int_str %}
                     {% if request.method == "POST" %}
@@ -90,11 +101,11 @@
             <div class="form-group">
               <label>Gênero do Usuário</label>
               <label class="container_radio" style="font-weight:bold">Masculino
-                <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %}>
+                <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %} required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
                 <span class="checkmark_radio"></span>
               </label>
               <label class="container_radio" style="font-weight:bold">Feminino
-                <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %}>
+                <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %} required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
                 <span class="checkmark_radio"></span>
               </label>
             </div>
@@ -113,13 +124,6 @@
             <div class="form-group">
               <label>{{field.label}}</label>
               {{field}}
-              {% if field.errors %}
-                <div class="error_message" style="display:block">
-                  {% for error in field.errors %}
-                  {{error}}
-                  {% endfor %}
-                </div>
-              {% endif %}
             </div>
         {% endif %}
 
@@ -136,4 +140,28 @@
 
   </form>
 
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script>
+  $(document).ready(function(){
+    $("#id_name").attr("oninvalid", "this.setCustomValidity('Preencha este campo')")
+    $("#id_relation").attr("oninvalid", "this.setCustomValidity('Preencha este campo')")
+  })
+
+  $(".x_option").on("click", function(){
+
+    $.ajax({
+      url: "/usuario/ajax/familymember/create-delete/",
+      dataType: 'json',
+      data: {
+        "familymember_pk":$(this).attr("pk"),
+      },
+      success: function (data) {
+        
+        window.location.href = "/usuario/familia/";
+      }
+    }) 
+  })
+</script>
 {% endblock user_panel_content %}

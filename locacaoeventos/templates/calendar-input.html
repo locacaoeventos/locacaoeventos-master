@@ -151,31 +151,31 @@
 <!--                                         Body                                              -->
 <!--                                                                                           -->
 <!-- ========================================================================================= -->
-<div style="background-color:#fcfcfc">
-<div class="calendar_wrapper">
-    <div class="month">      
-      <ul>
-        <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
-        <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
-        <li class="calendar_class">
-          <span class="calendar_class" id="month_ajax"></span> - <span class="calendar_class" id="year_ajax"></span>
-        </li>
+<div id="calendar_frame" style="background-color:#fcfcfc">
+  <div class="calendar_wrapper">
+      <div class="month">      
+        <ul>
+          <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
+          <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
+          <li class="calendar_class">
+            <span class="calendar_class" id="month_ajax"></span> - <span class="calendar_class" id="year_ajax"></span>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="weekdays">
+        <li class="calendar_class">Seg</li><!--
+        --><li class="calendar_class">Ter</li><!--
+        --><li class="calendar_class">Qua</li><!--
+        --><li class="calendar_class">Qui</li><!--
+        --><li class="calendar_class">Sex</li><!--
+        --><li class="calendar_class">Sab</li><!--
+        --><li class="calendar_class">Dom</li>
       </ul>
-    </div>
 
-    <ul class="weekdays">
-      <li class="calendar_class">Seg</li><!--
-      --><li class="calendar_class">Ter</li><!--
-      --><li class="calendar_class">Qua</li><!--
-      --><li class="calendar_class">Qui</li><!--
-      --><li class="calendar_class">Sex</li><!--
-      --><li class="calendar_class">Sab</li><!--
-      --><li class="calendar_class">Dom</li>
-    </ul>
-
-    <ul class="days" id="days_ajax">  
-    </ul>
-</div>
+      <ul class="days" id="days_ajax">  
+      </ul>
+  </div>
 </div>
 
 
@@ -237,6 +237,10 @@
 
   })
 
+
+
+
+
   // Changing months
   $(".move").click(function(){
     var elem = $(this)
@@ -287,6 +291,10 @@
   })
 
 
+
+
+
+
   // Hide or Show Calendar
   $(document).click(function(event){
     var class_clicked = $(event.target).attr('class')
@@ -295,16 +303,27 @@
       if(class_clicked!="move" && class_clicked!="move" && class_clicked!="month" && class_clicked!="weekdays" && class_clicked!="days" && class_clicked!="pass" && class_clicked!="active" && class_clicked!="calendar_class" && class_clicked!="calendar_class_day"){
         if(class_clicked.indexOf("calendar_input")>=0){
           if(display_style!="block") {
+            // SHOWS Calendar
             $(".calendar_wrapper").slideToggle()
+            console.log("SHOW")
+            show_calendar_frame()
           }
         } else if(display_style=="block") {
+            // HIDES Calendar
           $(".calendar_wrapper").slideToggle()
+          console.log("HIDE")
+          hide_calendar_frame()
         }
       }
     } else if(display_style=="block") {
+          // HIDES Calendar
           $(".calendar_wrapper").slideToggle()
+          console.log("HIDE")
+          hide_calendar_frame()
     }
   })
+
+
 
   $(document).on("click", ".calendar_class_day", function(){
     var class_clicked = $(event.target).attr('class')
@@ -331,4 +350,23 @@
     }
 
   })
+
+
+
+
+
+
+
+  // AVOID BUG
+  function show_calendar_frame() {
+    setTimeout(function(){
+      $("#calendar_frame").css("height", "172px")
+    }, 300)
+  }
+  function hide_calendar_frame() {
+    setTimeout(function(){
+      $("#calendar_frame").css("height", "0")
+    }, 300)
+  }
+
 </script>

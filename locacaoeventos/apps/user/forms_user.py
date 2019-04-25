@@ -79,16 +79,18 @@ class BuyerForm(TOCForm):
 
 class FamilyMemberForm(TOCForm):
     name = fields.CharField(required=True, label="Nome do Familiar")
-    gender = fields.CharField(required=False, label="Gênero")
+    gender = fields.CharField(required=True, label="Gênero")
 
-    day = fields.CharField(required=False, label="Data de Nascimento")
-    month = fields.CharField(required=False, label="Data de Nascimento")
-    year = fields.CharField(required=False, label="Data de Nascimento")
+    day = fields.CharField(required=True, label="Data de Nascimento")
+    month = fields.CharField(required=True, label="Data de Nascimento")
+    year = fields.CharField(required=True, label="Data de Nascimento")
 
-    relation = fields.CharField(required=False, label="Relação Familiar")
+    relation = fields.CharField(required=True, label="Grau de Parentesco")
 
     def __init__(self, *args, **kwargs):
         super(FamilyMemberForm, self).__init__(*args, **kwargs)
+
+
     def clean(self):
         cleaned_data = super(FamilyMemberForm, self).clean()
 
@@ -105,7 +107,7 @@ class FamilyMemberForm(TOCForm):
             try:
                 datetime.datetime.strptime(birthday, '%Y-%m-%d')
             except:
-                error_message = forms.ValidationError("ERROR")
+                error_message = forms.ValidationError("Data inválida")
                 self.add_error('day', error_message)
 
 

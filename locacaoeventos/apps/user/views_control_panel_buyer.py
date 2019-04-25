@@ -30,6 +30,7 @@ class EditBuyer(View):
             "gender": buyer.gender,
             "civil_status": buyer.civil_status,
             "photo": buyer.photo,
+            "cpf_buyer": buyer.cpf,
         }
 
         if buyer.birthday != None:
@@ -284,23 +285,39 @@ def context_review_placebought(reservation_pk, context, request):
 class FamilyBuyer(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        context["panel_type"] = "family_member"
-        context["basemenu"] = "family_member"
+        context = context_familybuyer(context, request)
         context["form"] = FamilyMemberForm()
-
-        context_familybuyer(context, request)
 
         return render(request, "control_panel/buyer_family.html", context)
     def post(self, request, *args, **kwargs):
         context = base_context(request.user)
-        context["panel_type"] = "family_member"
-        context["basemenu"] = "family_member"
+        context = context_familybuyer(context, request)
 
-        context_familybuyer(context, request)
+        form = FamilyMemberForm(request.POST)
+        buyer = BuyerProfile.objects.get(user=request.user)
+        
+        if form.is_valid():
+            birthday = str(form.cleaned_data["year"]) + "-" + str(form.cleaned_data["month"]) + "-" + str(form.cleaned_data["day"])
+            familymember = FamilyMember.objects.create(
+                name=form.cleaned_data["name"],
+                gender=form.cleaned_data["gender"],
+                birthday=birthday,
+                relation=form.cleaned_data["relation"],
+                related_to=buyer,
+            )
+            context["form"] = FamilyMemberForm()
+        else:
+            context["form"] = FamilyMemberForm(request.POST)
+            context["is_valid_date"] = False
 
         return render(request, "control_panel/buyer_family.html", context)
 
 
 def context_familybuyer(context, request):
+    context["panel_type"] = "family_member"
+    context["basemenu"] = "family_member"
+
     related_to = BuyerProfile.objects.get(user=request.user)
     context["familymembers"] = FamilyMember.objects.filter(related_to=related_to)
+
+    return context

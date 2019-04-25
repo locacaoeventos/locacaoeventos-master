@@ -62,49 +62,51 @@
                         <button type="submit" class="btn btn-default pull-right" style="font-size:12px">Atualizar</button>
                         <div class="separador-30"> </div>
                     </form>
+                    {% if has_period %}
 
-                    <hr class="line"/>
-                    <div class="separador-30"> </div>
-                    {% include "calendar-availability.html" %}
-                    <div class="separador-10"> </div>
-                    <span class="section_title">Quando seu buffet estará ocupado?</span><br>
-                    <span class="section_title">(selecione a data no calendário)</span>
-                    <div class="subsection_availability">
+                        <hr class="line"/>
+                        <div class="separador-30"> </div>
+                        {% include "calendar-availability.html" %}
+                        <div class="separador-10"> </div>
+                        <span class="section_title">Quando seu buffet estará ocupado?</span><br>
+                        <span class="section_title">(selecione a data no calendário)</span>
+                        <div class="subsection_availability">
 
-                        <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off" >
-                        <div class="separador-15"> </div>
-                        <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
-                          <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period">
-                          <span class="checkmark_checkbox"></span>
-                          {{place.period_soon_begin}} - {{place.period_soon_end}}
-                        </label>
-                        {% if place.period_late_begin != None %}
-                            &nbsp;&nbsp;
+                            <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off" >
+                            <div class="separador-15"> </div>
                             <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
-                              <input class="unavailability_period" type="checkbox" name="max_period" id="id_max_period">
+                              <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period">
                               <span class="checkmark_checkbox"></span>
-                              {{place.period_late_begin}} - {{place.period_late_end}}
+                              {{place.period_soon_begin}} - {{place.period_soon_end}}
                             </label>
-                        {% endif %}
-                        <div class="separador-10"> </div>
+                            {% if place.period_late_begin != None %}
+                                &nbsp;&nbsp;
+                                <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
+                                  <input class="unavailability_period" type="checkbox" name="max_period" id="id_max_period">
+                                  <span class="checkmark_checkbox"></span>
+                                  {{place.period_late_begin}} - {{place.period_late_end}}
+                                </label>
+                            {% endif %}
+                            <div class="separador-10"> </div>
 
-                        <span class="section_title">Repete...</span><br>
-                        <select id="unavailability_repeat" name="" required>
-                            <option value="">-</option>
-                            <option value="week">Toda Semana</option>
-                            <option value="biweek">Quinzenalmente</option>
-                            <option value="month">Todo Mês</option>
-                        </select>
-                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Adicionar</button>
+                            <span class="section_title">Repete...</span><br>
+                            <select id="unavailability_repeat" name="" required>
+                                <option value="">-</option>
+                                <option value="week">Toda Semana</option>
+                                <option value="biweek">Quinzenalmente</option>
+                                <option value="month">Todo Mês</option>
+                            </select>
+                            <button type="submit" class="btn btn-default pull-right" style="font-size:12px" id="send_new_unavailability">Adicionar</button>
 
-                        <div class="separador-10"> </div>
-                        <div class="error_message" id="error_unavailability">EXEMPLO</div>
-                        <div class="separador-50"> </div>
+                            <div class="separador-10"> </div>
+                            <div class="error_message" id="error_unavailability">EXEMPLO</div>
+                            <div class="separador-50"> </div>
 
-                        <div class="row" id="unavailability_container">
+                            <div class="row" id="unavailability_container">
+                            </div>
+
                         </div>
-
-                    </div>
+                    {% endif %}
 
             </div>
 
@@ -131,7 +133,7 @@
 
 
                     Descrição:<br>
-                    <input type="text" id="id_description_input" placeholder="Descreva seu pacote de preço em pontos" />
+                    <input type="text" id="id_description_input" placeholder="Descreva seu pacote de preço em pontos" maxlength="64"/>
                     <div class="add_button" type="description">+</div>
                     <br><br>
                     <div class="separador-5"> </div>
@@ -149,7 +151,7 @@
                     <div class="separador-20"> </div>
 
                     Preço:<br>
-                    <input type="number" required placeholder="R$ 00.00" step="any" class="placeprice_field" id="id_value" name="value"/>
+                    <input type="text" required placeholder="R$ 00,00" step="any" class="placeprice_field" id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ "/>
                     <div class="separador-20"> </div>
 
                     Capacidade Mínima:&nbsp;&nbsp;
@@ -164,8 +166,12 @@
                     Capacidade Máxima:&nbsp;&nbsp;
                     <select class="placeprice_field" id="id_capacity_max" name="capacity_max">
                         <option value="">-</option>
-                        {% for i in 1000|create_range %}
-                            <option value="{{i}}">{{i}}</option>
+                        {% for i in 501|create_range %}
+                            {% if i == 500 %}
+                                <option value="{{i}}">500+</option>
+                            {% else %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <div class="separador-10"> </div>
@@ -197,56 +203,9 @@
 
 
 
-    <div class="separador-10"> </div>
-    <section>
-        <div class="row">
-            <div class="col-md-6">
-
-
-
-
-
-            <div class="col-md-6">
-
-
-
-
-
-
-
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-
-    </section>
-
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/static/CUSTOM_JS/core/maskmoney/src/jquery.maskMoney.js"></script>
 {% endblock jquery %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
 {% block old_custom_js %}{% endblock old_custom_js %}
@@ -280,5 +239,8 @@
     //   loading_icon()
     //   var get_places = get_places_pk()
     // })
+
+
+
 </script>
 {% endblock user_panel_content %}

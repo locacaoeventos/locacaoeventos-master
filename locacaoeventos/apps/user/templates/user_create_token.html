@@ -26,9 +26,11 @@
             {% if not is_fb %}
               E-mail confirmado
               <div class="separador-10"> </div>
-              <i class="fa fa-check"> </i><br>
-              <div class="separador-10"> </div>
-              <a href="/home">Clique aqui para ir para a Home Page!</a>
+              <i class="fa fa-check" style="margin-bottom:5px"> </i>
+
+              <h3 style="text-align:center;">
+              Você será redirecionado para<br>Home Page em 5 segundos.
+              </h3>
             {% endif %}
             {% if create_family_member %}
               {% if not is_fb %}
@@ -57,5 +59,13 @@
 
 
 <script type="text/javascript" src="/static/CUSTOM_JS/user/user_create_token.js"></script>
+
+
+<script>
+setTimeout(function(){
+  window.location.href = "/home/"
+}, 5000)
+</script>
+
 
 {% endblock content %}

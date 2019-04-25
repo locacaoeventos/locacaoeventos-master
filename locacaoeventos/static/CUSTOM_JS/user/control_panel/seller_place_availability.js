@@ -1,3 +1,5 @@
+
+
 // ===========================================================
 // Price
 // ===========================================================
@@ -7,8 +9,14 @@ $(document).ready(function(){
 })
 
 // Description ===================================================
-$(".add_button").click(function(){
-    var type = $(this).attr("type")
+    
+    // ======================================================== //
+    // ================== Adding Description ================== //
+    // ======================================================== //
+function add_description_to_container(){
+    // var type = $(this).attr("type")  ==========> I am seting as "description" bc there are no other options such as children_rides
+    var type = "description"
+
     var input_id = "#id_" + type + "_input"
     var form_id = "#id_" + type
     var container_id = "#id_" + type + "_container"
@@ -27,10 +35,25 @@ $(".add_button").click(function(){
         div_str     += input_val + '<span class="x_option x_option_add" input_val="' + input_val + '">&times;</span>'
         div_str += '</div>'
         $(container_id).append(div_str).hide().fadeIn(500)
-    }
-
+    }  
+}
+$(".add_button").click(function(){
+    add_description_to_container()
 })
 
+$("#id_description_input").keyup(function(e){
+    if(e.which == 13) { // enter key
+        e.stopPropagation()
+        add_description_to_container()
+    }
+})
+
+
+
+
+    // ======================================================== //
+    // ================ Subtracting Description =============== //
+    // ======================================================== //
 $(document).on("click", ".x_option_add", function(){
     var input_val = $(this).attr("input_val")
     var type = $(this).parent().attr("type")
@@ -50,6 +73,11 @@ $(document).on("click", ".x_option_add", function(){
 
 })
 
+
+// Place Price Price
+    $('#id_value').keyup(function(){
+        $('#id_value').maskMoney();
+    });    
 
 
 // GET ===================================
