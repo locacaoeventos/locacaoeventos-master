@@ -288,7 +288,7 @@ $("#send_new_unavailability").click(function(e){
     }
 
 
-    if(day != "" && has_period == true){ // All fields are filled
+    if(day != ""){ // All fields are filled
         e.preventDefault()
         place_pk = $("#id_place_pk").val()
 
