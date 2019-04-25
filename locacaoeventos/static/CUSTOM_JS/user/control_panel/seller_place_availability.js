@@ -322,6 +322,9 @@ $("#send_new_unavailability").click(function(e){
                     $("#error_unavailability").html(data.error)
                     $("#error_unavailability").css("display", "block")
                 }
+                $("#id_min_period").attr("checked", false)
+                $("#id_max_period").attr("checked", false)
+                
             }
         })
 
