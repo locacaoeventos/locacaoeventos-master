@@ -319,9 +319,6 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
             day = date_analyse.day
             month = date_analyse.month
             year = date_analyse.year
-            print(day)
-            print(month)
-            print(year)
             for i in range(len(place_list)):
                 place_obj = Place.objects.get(pk=place_list[i]["pk"])
                 place_dic = place_list[i]
