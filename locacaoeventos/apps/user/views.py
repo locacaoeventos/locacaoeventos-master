@@ -12,6 +12,7 @@ from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile, FamilyMem
 
 class UploadFile(View):
     def post(self, request):
+        print(self.request.FILES["photo"])
         form = PhotoProvisoryForm(self.request.POST, self.request.FILES)
 
         if form.is_valid():

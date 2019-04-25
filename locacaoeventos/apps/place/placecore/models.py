@@ -80,7 +80,7 @@ class PlaceVisualization(models.Model):
 
 
 class PhotoProvisory(models.Model):
-    photo = models.FileField('Foto', upload_to='place/photoprovisory')
+    photo = models.ImageField('Foto', upload_to='place/photoprovisory', max_length=10485760)
     def __str__(self):
         return str(self.photo)
 
@@ -95,8 +95,8 @@ class PhotoProvisory(models.Model):
         image = Image.open(self.photo)
         (width, height) = image.size
 
-        if width > 700 or height > 700: # Needs resizing
-            max_width_height = 400 # Max width or Height
+        if width > 1000 or height > 1000: # Needs resizing
+            max_width_height = 700 # Max width or Height
             if max_width_height/width < max_width_height/height: # Height is bigger and will be resized
                 factor = max_width_height/height
             else:

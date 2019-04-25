@@ -125,40 +125,42 @@
 
 </style>
 
-<div class="calendar_wrapper">
-  <div class="day_description">
-    <span style="float:right; cursor:pointer;">&times;</span><br>
-    <span id="day_description_date"></span>
-    <div class="separador-10"> </div>
-    Ocupado:
-    <div class="separador-10"> </div>
-    <div class="unavailability_container">
+<div style="height:260px">
+  <div class="calendar_wrapper">
+    <div class="day_description">
+      <span style="float:right; cursor:pointer;">&times;</span><br>
+      <span id="day_description_date"></span>
+      <div class="separador-10"> </div>
+      Ocupado:
+      <div class="separador-10"> </div>
+      <div class="unavailability_container">
+      </div>
     </div>
-  </div>
-  <div class="month">      
-    <ul>
-      <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
-      <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
-      <li>
-        <span id="month_ajax">{{month}}</span><br>
-        <span id="year_ajax">{{year}}</span>
-      </li>
+    <div class="month">      
+      <ul>
+        <li class="prev"><a class="move" value-count="0" count="-1">&#10094;</a></li>
+        <li class="next"><a class="move" value-count="0" count="1">&#10095;</a></li>
+        <li>
+          <span id="month_ajax">{{month}}</span><br>
+          <span id="year_ajax">{{year}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <ul class="weekdays">
+      <li>Seg</li><!--
+      --><li>Ter</li><!--
+      --><li>Qua</li><!--
+      --><li>Qui</li><!--
+      --><li>Sex</li><!--
+      --><li>Sab</li><!--
+      --><li>Dom</li>
+    </ul>
+
+    <ul class="days" id="days_ajax">  
+      {% for day in list_month %}{{day|safe}}{% endfor %}
     </ul>
   </div>
-
-  <ul class="weekdays">
-    <li>Seg</li><!--
-    --><li>Ter</li><!--
-    --><li>Qua</li><!--
-    --><li>Qui</li><!--
-    --><li>Sex</li><!--
-    --><li>Sab</li><!--
-    --><li>Dom</li>
-  </ul>
-
-  <ul class="days" id="days_ajax">  
-    {% for day in list_month %}{{day|safe}}{% endfor %}
-  </ul>
 </div>
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
@@ -283,6 +285,8 @@
       }
     }
   })
+
+
 
 
 
