@@ -54,7 +54,7 @@
             {% if field.name == "day" %}
               <div class="form-group">
                 <label>Data de Nascimento</label>
-                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
+                <select style="width:100px; display:inline; text-align:center" id="day_id" name="day" required="required">
                   <option value="">Dia</option>
                   {% for i in 31|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -65,7 +65,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "month" %}
-                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
+                <select style="width:100px; display:inline; text-align:center" id="month_id" name="month" required="required">
                   <option value="">Mês</option>
                   {% for i in 12|create_monthday_set_int_str %}
                     {% if request.method == "POST" %}
@@ -76,7 +76,7 @@
                   {% endfor %}
                 </select>
             {% elif field.name == "year" %}
-                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
+                <select style="width:100px; display:inline; text-align:center" id="year_id" name="year" required="required">
                   <option value="">Ano</option>
                   {% for i in 120|create_year_set_int_str %}
                     {% if request.method == "POST" %}
@@ -101,11 +101,11 @@
             <div class="form-group">
               <label>Gênero do Usuário</label>
               <label class="container_radio" style="font-weight:bold">Masculino
-                <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %} required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
+                <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %} required="required">
                 <span class="checkmark_radio"></span>
               </label>
               <label class="container_radio" style="font-weight:bold">Feminino
-                <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %} required="required" oninvalid="this.setCustomValidity('Preencha este campo')">
+                <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %} required="required">
                 <span class="checkmark_radio"></span>
               </label>
             </div>
@@ -134,20 +134,14 @@
 
 
     {% endfor %}
-    
     <div class="separador-20"> </div>
     <button type="submit" class="btn btn-default pull-right" id="submit">Cadastrar</button>
-
   </form>
 
 {% block jquery %}
     <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
 {% endblock jquery %}
 <script>
-  $(document).ready(function(){
-    $("#id_name").attr("oninvalid", "this.setCustomValidity('Preencha este campo')")
-    $("#id_relation").attr("oninvalid", "this.setCustomValidity('Preencha este campo')")
-  })
 
   $(".x_option").on("click", function(){
 
