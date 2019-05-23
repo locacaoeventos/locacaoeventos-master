@@ -333,8 +333,6 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 if not is_occupied:
                     place_list_filtered_date.append(place_dic)
 
-        else:
-            place_list_filtered_date = place_list_filtered_capacity
 
         return place_list_filtered_date
 

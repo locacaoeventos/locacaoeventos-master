@@ -50,24 +50,27 @@
     })
   }
   function send_message_visualize(place_pk, buyerprofile_pk) {
-    $.ajax({
-      url: "/usuario/chat/contact/",
-      dataType: 'json',
-      data: {
-        "place_pk":place_pk,
-        "message_text":$("#message_input").val(),
-        "buyerprofile_pk":buyerprofile_pk,
-      },
-      success: function (data) {
-        $("#message_input").val("")
+    var message_text = $("#message_input").val()
+    if(message_text != ""){
+      $.ajax({
+        url: "/usuario/chat/contact/",
+        dataType: 'json',
+        data: {
+          "place_pk":place_pk,
+          "message_text":message_text,
+          "buyerprofile_pk":buyerprofile_pk,
+        },
+        success: function (data) {
+          $("#message_input").val("")
 
-        load_messages_visualize(place_pk, buyerprofile_pk)
-        setTimeout(function(){
-          var objDiv = document.getElementById("chat_conversation_container")
-          objDiv.scrollTop = objDiv.scrollHeight
-        }, 1000)
-      }
-    })  
+          load_messages_visualize(place_pk, buyerprofile_pk)
+          setTimeout(function(){
+            var objDiv = document.getElementById("chat_conversation_container")
+            objDiv.scrollTop = objDiv.scrollHeight
+          }, 1000)
+        }
+      })
+    }  
   }
   function load_messages_detail(place_pk, buyerprofile_pk){
     $.ajax({

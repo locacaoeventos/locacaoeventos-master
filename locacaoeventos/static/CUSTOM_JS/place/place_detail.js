@@ -33,6 +33,7 @@ $("#detail_header_loved_not_logged").click(function(){
 // ==========================================
 // Buying Flux
 // ==========================================
+// ADJUST height to be FIXED on PC
 var window_width  = $(window).width();
 if(window_width>=992){
   var top_offset = $('#buying_flux').offset().top - 50;

@@ -123,9 +123,22 @@
     color:#eeeeee;
     cursor:pointer;
   }
-  .occupied {
+  .occupied, .occupied_min {
     cursor:default !important;
   }
+  .occupied_min {
+    background-color:#b6de57;
+    padding:5px;
+    color:#eeeeee;
+    cursor:pointer;
+  }
+  .occupied_max {
+    background-color:#85c3d2;
+    padding:5px;
+    color:#eeeeee;
+    cursor:pointer;
+  }
+
   .move {
     cursor:pointer;
     color:white;
@@ -206,14 +219,15 @@
 --><div class="buyingflux_period_label_container">
   <label class="buyingflux_period_label">{{place.period_soon_begin}} - {{place.period_soon_end}}</label>&nbsp;&nbsp;
 </div>
-<label class="container_checkbox" style="display:inline;">
-  <input type="checkbox" class="buyingflux_period" name="max_period" id="id_max_period">
-  <span class="checkmark_checkbox"></span>
-</label><!--
---><div class="buyingflux_period_label_container">
-  <label class="buyingflux_period_label">{{place.period_late_begin}} - {{place.period_late_end}}</label>
-</div>
-
+{% if place.period_late_begin and place.period_late_end %}
+  <label class="container_checkbox" style="display:inline;">
+    <input type="checkbox" class="buyingflux_period" name="max_period" id="id_max_period">
+    <span class="checkmark_checkbox"></span>
+  </label><!--
+  --><div class="buyingflux_period_label_container">
+    <label class="buyingflux_period_label">{{place.period_late_begin}} - {{place.period_late_end}}</label>
+  </div>
+{% endif %}
 
 <div class="separador-20"> </div>
 
@@ -300,6 +314,7 @@
 {% endif %}
 
 
+<div class="separador-50"> </div>
 
 
 
@@ -326,8 +341,12 @@
 
 
 
-  // Load Period
-  $(".buyingflux_period").on("change", function(){
+
+
+  // ==========================================================
+  // Load Period (click on box, appears calendar)
+  // ==========================================================
+    $(".buyingflux_period").on("change", function(){
     var period = [0,0]
     var some_selected = false
     var needs_js_input_fix = "{{needs_js_input_fix}}"
@@ -352,21 +371,22 @@
     }
     period = JSON.stringify(period)
 
-    $("#calendar_frame").toggle(function(){
-        $(this).animate({height:250},300);
-    },function(){
-        $(this).animate({height:250},0);
-    });
+    // $("#calendar_frame").toggle(function(){
+    // },function(){
+    // });
+    months = $(".move").attr("value-count")
 
-    load_calendar("{{place_pk}}", 0, "none", period)
+    load_calendar("{{place_pk}}", months, "none", period)
 
 
 
     if(some_selected==true){
+      $(this).animate({height:300},200);
       $(".calendar_wrapper").slideDown(300)
       console.log("a")
     } else {
       $(".calendar_wrapper").slideUp(300)
+      $(this).animate({height:300},0);
       console.log("b")
     }
     $("#date_form").val("")
@@ -463,7 +483,10 @@
 
   // Load Calendar
   $(document).ready(function(){
-    load_calendar("{{place_pk}}", 0, "none", "none")
+    var period = [0,0]
+    period = JSON.stringify(period)
+
+    load_calendar("{{place_pk}}", 0, "none", period)
   })
 
   // Changing months
@@ -487,17 +510,48 @@
       }
     }
 
+    var period = [0,0]
+    if($("#id_min_period").attr("checked")=="checked"){
+      period[0] = 1
+    }
+    if($("#id_max_period").attr("checked")=="checked"){
+      period[1] = 1
+    }
+    period = JSON.stringify(period)
 
-
-
-
-
-
-    
-    load_calendar("{{place_pk}}", months, elem, "none")
+    load_calendar("{{place_pk}}", months, elem, period)
   })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   function load_calendar(place_pk, months, elem, period){
+
+
     $.ajax({
       url: "/usuario/ajax/calendario/",
       dataType: 'json',
@@ -529,6 +583,18 @@
 
   }
 
+
+
+
+
+
+
+
+
+
+
+
+  // Selecting a date
   $(document).on("click", ".calendar_class_day", function(){
     var this_div = $(this).children(1)
     if(!this_div.hasClass("day_colored")) {
@@ -544,13 +610,23 @@
     var today_year = String($("#year_ajax").html())
     
 
+    // Color when selected
+    var dia = event.target.innerHTML
     $(".calendar_class_day").each(function(){
       var this_each = $(this).children(1)
-      if(this_each.css("background-color")!="rgb(79, 167, 188)" && this_each.css("background-color")!="rgb(221, 221, 221)") {
+      if(this_each.css("background-color")!="rgb(79, 167, 188)" && 
+        this_each.css("background-color")!="rgb(221, 221, 221)" &&
+        !String(this_each.attr("class")).includes("occupied_min") &&
+        !String(this_each.attr("class")).includes("occupied_max")
+        ) {
         this_each.css("background-color","white")
         this_each.css("color","#rgb(119, 119, 119)")        
       }
-
+      if(dia == this_each.html()){
+        this_each.css("background-color", "#98d000")
+        this_each.css("color", "#ffffff")
+        this_each.css("padding","5px")
+      }
     })
 
     if(this_div.hasClass("day_colored")==0){
@@ -568,7 +644,6 @@
         this_div.attr("is_selected", null)
         $("#date_form").val("")
         check_field_availability()
-
       }
     } else {
       $("#date_form").val("")

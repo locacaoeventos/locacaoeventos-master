@@ -283,6 +283,30 @@
   $(document).on("click", function(event){
     var class_name = event.target.className
 
+    
+
+
+    // Color when selected
+    var dia = event.target.innerHTML
+    $(".calendar_class_day").each(function(){
+      var this_each = $(this).children(1)
+      if(this_each.css("background-color")!="rgb(79, 167, 188)" && 
+        this_each.css("background-color")!="rgb(221, 221, 221)" &&
+        !String(this_each.attr("class")).includes("occupied_min") &&
+        !String(this_each.attr("class")).includes("occupied_max")
+        ) {
+        this_each.css("background-color","white")
+        this_each.css("color","#rgb(119, 119, 119)")        
+      }
+      if(dia == this_each.html()){
+        this_each.css("background-color", "#98d000")
+        this_each.css("color", "#ffffff")
+        this_each.css("padding","5px")
+      }
+    })
+
+
+
     if(class_name.indexOf("day_option") >= 0){
       // if(class_name.indexOf("day_colored") < 0){
         var month = $("#month_ajax").attr("month")
@@ -296,6 +320,7 @@
           day = "0" + day
         }
         
+        $(this).css("background-color","#98d000")
         $("#date_id").val(day + " / " + month + " / " + year)
 
 
@@ -313,6 +338,32 @@
         }
       // }
     }
+
+
+
+
+
+
+      // if(this_div.attr("is_selected")==undefined){ // Add
+      //   this_div.css("color","white")
+      //   $("#date_form").val(date_value_selected)
+      //   this_div.attr("is_selected", "True")
+      //   check_field_availability()
+      // } else { // Remove
+      //   this_div.css("background-color","white")
+      //   this_div.css("color","#rgb(119, 119, 119)")
+      //   this_div.attr("is_selected", null)
+      //   $("#date_form").val("")
+      //   check_field_availability()
+
+      // }
+
+
+
+
+
+
+
   })
 
 

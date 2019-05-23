@@ -12,7 +12,9 @@
             <li><a href="/administrador/home/">Administrador</a></li>
           {% endif %}
           <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
-          <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+          {% if buyer %}
+            <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+          {% endif %}
           {% if user.is_authenticated %}
             {% if buyer %}
               <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>

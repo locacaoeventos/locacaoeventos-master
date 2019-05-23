@@ -300,8 +300,7 @@
     var class_clicked = $(event.target).attr('class')
     var display_style = $(".calendar_wrapper").css("display")
     if(class_clicked != undefined) {
-      // if(class_clicked!="move" && class_clicked!="move" && class_clicked!="month" && class_clicked!="weekdays" && class_clicked!="days" && class_clicked!="pass" && class_clicked!="active" && class_clicked!="calendar_class" && class_clicked!="calendar_class_day"){
-      if(class_clicked!="move" && class_clicked!="move" && class_clicked!="month" && class_clicked!="weekdays" && class_clicked!="days" && class_clicked!="pass" && class_clicked!="active" && class_clicked!="calendar_class"){
+      if(class_clicked!="move" && class_clicked!="move" && class_clicked!="month" && class_clicked!="weekdays" && class_clicked!="days" && class_clicked!="pass" && class_clicked!="active" && class_clicked!="calendar_class" && class_clicked!="calendar_class_day"){
         if(class_clicked.indexOf("calendar_input")>=0){
           if(display_style!="block") {
             // SHOWS Calendar
@@ -325,8 +324,43 @@
 
 
 
-  $(document).on("click", ".calendar_class_day", function(){
+  $(document).on("click", ".calendar_class_day", function(event){
     var class_clicked = $(event.target).attr('class')
+
+    // Color when selected
+    var dia = event.target.innerHTML
+    $(".calendar_class_day").each(function(){
+      var this_each = $(this)
+      if(this_each.css("background-color")!="rgb(79, 167, 188)" && 
+        this_each.css("background-color")!="rgb(221, 221, 221)" &&
+        !String(this_each.attr("class")).includes("occupied_min") &&
+        !String(this_each.attr("class")).includes("occupied_max")
+        ) {
+        this_each.css("background-color","#fcfcfc")
+        this_each.css("color","#rgb(119, 119, 119)")        
+      }
+      var this_each = $(this).children()
+      if(this_each.css("background-color")!="rgb(79, 167, 188)" && 
+        this_each.css("background-color")!="rgb(221, 221, 221)" &&
+        !String(this_each.attr("class")).includes("occupied_min") &&
+        !String(this_each.attr("class")).includes("occupied_max")
+        ) {
+        this_each.css("background-color","#fcfcfc")
+        this_each.css("color","#rgb(119, 119, 119)")        
+      }
+
+      var this_each = $(this)
+      if(dia == this_each.html()){
+        this_each.html("<span>"+this_each.html()+"</span>")
+        this_each.children(1).css("background-color", "#98d000")
+        this_each.children(1).css("color", "#ffffff")
+        this_each.children(1).css("padding", "5px")
+      }
+    })
+
+
+
+
     if(class_clicked != "pass"){
       var today_day = $(this).children(1).html()
       if(today_day==undefined) {

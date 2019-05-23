@@ -360,9 +360,9 @@ Body code
     <div id="chat_container">
       <div id="chat_opener"><i class="fa fa-comment"></i>&nbsp;&nbsp;Conversa</div>
       {% if user_type == "buyer" %}
-        <div id="chat_conversation">
+        <div id="chat_conversation" style="z-index:99999999999999999">
 
-          <div id="chat_conversation_container">
+          <div id="chat_conversation_container" style="z-index:99999999999999999">
           </div>
 
           <div style="width:100%; position:fixed; bottom:0; right:0; width:280px;">
@@ -411,23 +411,27 @@ Body code
 
     // For some reason, the function won't pull messages to bottom if on JS file
     function send_message_detail(place_pk, buyerprofile_pk) {
-      $.ajax({
-        url: "/usuario/chat/contact/",
-        dataType: 'json',
-        data: {
-          "place_pk":place_pk,
-          "message_text":$("#message_input").val(),
-          "buyerprofile_pk":buyerprofile_pk,
-        },
-        success: function (data) {
-          $("#message_input").val("")
-          load_messages_detail(place_pk, buyerprofile_pk)
-        setTimeout(function(){
-          var objDiv = document.getElementById("chat_conversation")
-          objDiv.scrollTop = objDiv.scrollHeight
-        }, 1000)
-        }
-      })  
+      var message_text = $("#message_input").val()
+      if(message_text != ""){
+        $.ajax({
+          url: "/usuario/chat/contact/",
+          dataType: 'json',
+          data: {
+            "place_pk":place_pk,
+            "message_text":$("#message_input").val(),
+            "buyerprofile_pk":buyerprofile_pk,
+          },
+          success: function (data) {
+            $("#message_input").val("")
+            load_messages_detail(place_pk, buyerprofile_pk)
+          setTimeout(function(){
+            var objDiv = document.getElementById("chat_conversation")
+            objDiv.scrollTop = objDiv.scrollHeight
+          }, 1000)
+          }
+        })          
+      }
+
     }
 
 

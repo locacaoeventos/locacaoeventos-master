@@ -24,6 +24,12 @@ def get_unavailabilities(place, period):
         period = ast.literal_eval(period)
         placeunavailabilities = []
 
+
+
+
+            
+
+
         # Filtering period of unavailability (selected on place detail)
         if period[0] == 1:
             placeunavailabilities += PlaceUnavailability.objects.filter(place=place, period="min")
@@ -71,7 +77,9 @@ def get_unavailabilities(place, period):
                         str_date_unavailability = str(next_day.year) + "-" + str(next_day.month) + "-" + str(next_day.day)
                         place_unavailability_list.append(str_date_unavailability)
                         place_unavailability_list_with_period.append([str_date_unavailability, unavailability.period])
-    
+    else:
+        place_unavailability_list = []
+        place_unavailability_list_with_period = []
     return place_unavailability_list, place_unavailability_list_with_period
 
 
