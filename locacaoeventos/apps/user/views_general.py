@@ -18,10 +18,11 @@ from .sellerprofile.models import SellerProfile
 
 class ComingSoon(View):
     def get(self, request, *args, **kwargs):
-        context = base_context(request.user)
+        # context = base_context(request.user)
 
         
-        return render(request, "coming_soon.html", context)
+        # return render(request, "coming_soon.html", context)
+        return render(request, "coming_soon.html")
 
 class Home(View):
     def get(self, request, *args, **kwargs):
