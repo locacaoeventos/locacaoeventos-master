@@ -12,7 +12,7 @@ DATABASES = {
          'NAME': 'locacao_eventos3',
          'USER': 'locacao123f',
          'PASSWORD': 'locacaoqwe',
-         'HOST': 'web596.webfaction.com',
+         'HOST': '127.0.0.1',
          'PORT': '5432',
     }
 }
