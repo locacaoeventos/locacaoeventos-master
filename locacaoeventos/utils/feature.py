@@ -100,8 +100,9 @@ def get_feature_list():
 
 
     place_list = sorted(place_list, key=lambda k: k['feature']) 
-    for i in range(4):
-        place = place_list[i]
-        feature_list.append(place)
+    if len(place_list)>0:
+        for i in range(4):
+            place = place_list[i]
+            feature_list.append(place)
 
     return feature_list
