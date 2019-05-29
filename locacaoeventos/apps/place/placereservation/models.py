@@ -13,7 +13,7 @@ class PlacePrice(models.Model):
     capacity_min = models.IntegerField()
     capacity_max = models.IntegerField()
     def __str__(self):
-        return self.place.name + " - " + str(self.value)
+        return self.place.name + " - " + str(self.value_min)
 
 
 class PlaceUnavailability(models.Model):

@@ -108,6 +108,9 @@ $(document).on("click", ".x_option_add", function(){
     $('#id_value').keyup(function(){
         $('#id_value').maskMoney();
     });    
+    $('#id_value_min').keyup(function(){
+        $('#id_value_min').maskMoney();
+    });    
 
 
 // GET ===================================
@@ -148,6 +151,7 @@ function placeprice_show(data){
             str_div += '<span class="placeprice_card_attr"><b>Mínimo</b>: ' + placeprice.capacity_min + ' pessoas</span><br>'
             str_div += '<span class="placeprice_card_attr"><b>Máximo</b>: ' + placeprice.capacity_max + ' pessoas</span><br>'
             str_div += '<span class="placeprice_card_attr"><b>Valor</b>: R$ ' + placeprice.value + '</span><br>'
+            str_div += '<span class="placeprice_card_attr"><b>Valor Mínimo</b>: R$ ' + placeprice.value_min + '</span><br>'
             str_div += '<div class="separador-10"> </div>'
         str_div += '</div>'                
     }
@@ -192,6 +196,7 @@ function placeprice_add(){
     var description = $("#id_description").val()
     var description_long = $("#id_description_long").val()
     var value = $("#id_value").val()
+    var value_min = $("#id_value_min").val()
     var capacity_min = $("#id_capacity_min").val()
     var capacity_max = $("#id_capacity_max").val()
 
@@ -204,6 +209,7 @@ function placeprice_add(){
             "description":description,
             "description_long":description_long,
             "value":value,
+            "value_min":value_min,
             "capacity_min":capacity_min,
             "capacity_max":capacity_max,
         },
@@ -214,6 +220,7 @@ function placeprice_add(){
             $("#id_description").val("")
             $("#id_description_long").val("")
             $("#id_value").val("")
+            $("#id_value_min").val("")
             $("#id_capacity_min").val("")
             $("#id_capacity_max").val("")
             $("#id_description_container").html(" ")
