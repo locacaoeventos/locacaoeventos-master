@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 class PlacePrice(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     value = models.FloatField()
+    value_min = models.FloatField()
     name = models.CharField(max_length=32)
-    description_long = models.CharField(max_length=256)
-    description = models.CharField(max_length=256)
+    description_long = models.CharField(max_length=2048)
+    description = models.CharField(max_length=2048)
     capacity_min = models.IntegerField()
     capacity_max = models.IntegerField()
     def __str__(self):

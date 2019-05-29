@@ -30,17 +30,30 @@ $(document).ready(function(){
     // ======================================================== //
     // ================== Adding Description ================== //
     // ======================================================== //
+function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+       // You do not need to check if i is larger than splitStr length, as your for does that for you
+       // Assign it back to the array
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+   // Directly return the joined string
+   return splitStr.join(' '); 
+}
+
+
+
 function add_description_to_container(){
     // var type = $(this).attr("type")  ==========> I am seting as "description" bc there are no other options such as children_rides
+    $("#placeholder_description").remove()
     var type = "description"
 
     var input_id = "#id_" + type + "_input"
     var form_id = "#id_" + type
     var container_id = "#id_" + type + "_container"
 
-    var input_val = $(input_id).val()
+    var input_val = titleCase($(input_id).val())
     var current_val = $(form_id).val().replace("[", "").replace("]", "")
-
     if(input_val!=""){
         if(current_val==""){
             $(form_id).val("[" + current_val + input_val + "]")
