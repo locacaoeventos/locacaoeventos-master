@@ -7,7 +7,8 @@ class PlacePrice(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     value = models.FloatField()
     name = models.CharField(max_length=32)
-    description = models.CharField(max_length=128)
+    description_long = models.CharField(max_length=256)
+    description = models.CharField(max_length=256)
     capacity_min = models.IntegerField()
     capacity_max = models.IntegerField()
     def __str__(self):

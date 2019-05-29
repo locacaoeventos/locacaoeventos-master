@@ -125,6 +125,7 @@ function placeprice_show(data){
             str_div += '<div class="crossmark_delete" placeprice_pk="' + placeprice.pk + '" place_pk="' + placeprice.place_pk + '">&#10006;</div>'
             str_div += '<div class="separador-20"> </div>'
             str_div += '<div class="placeprice_card_name">' + placeprice.name + '</div><br>'
+            str_div += '<div class="placeprice_card_description_long">' + placeprice.description_long + '</div><br>'
             for(j=0;j<descriptions.length;j++){
                 str_div += '<span class="placeprice_card_attr">- ' + descriptions[j] + '</span><br>'
 
@@ -176,6 +177,7 @@ function placeprice_add(){
     var place_pk = $("#id_place_pk").val()
     var name = $("#id_name").val()
     var description = $("#id_description").val()
+    var description_long = $("#id_description_long").val()
     var value = $("#id_value").val()
     var capacity_min = $("#id_capacity_min").val()
     var capacity_max = $("#id_capacity_max").val()
@@ -187,6 +189,7 @@ function placeprice_add(){
             "place_pk":place_pk,
             "name":name,
             "description":description,
+            "description_long":description_long,
             "value":value,
             "capacity_min":capacity_min,
             "capacity_max":capacity_max,
@@ -196,6 +199,7 @@ function placeprice_add(){
 
             $("#id_name").val("")
             $("#id_description").val("")
+            $("#id_description_long").val("")
             $("#id_value").val("")
             $("#id_capacity_min").val("")
             $("#id_capacity_max").val("")

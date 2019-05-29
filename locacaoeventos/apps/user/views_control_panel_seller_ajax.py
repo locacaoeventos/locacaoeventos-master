@@ -25,6 +25,7 @@ def get_placeprice_list(place):
             "place_pk":placeprice.place.pk,
             "name":placeprice.name,
             "description":placeprice.description,
+            "description_long":placeprice.description_long,
             "capacity_min":placeprice.capacity_min,
             "capacity_max":placeprice.capacity_max,
             "value":"{0:.2f}".format(placeprice.value),
@@ -56,6 +57,7 @@ class PlacePriceCreateAjax(View):
         place_pk = request.GET.get("place_pk")
         name = request.GET.get("name")
         description = str(request.GET.get("description").replace("[","").replace("]","").split(",")).replace("'", '"')
+        description_long = request.GET.get("description_long")
         value = float(request.GET.get("value").replace(".", "").replace(",", ".").replace("R$", "").replace(" ", ""))
 
 
@@ -77,6 +79,7 @@ class PlacePriceCreateAjax(View):
             value=value,
             name=name,
             description=description,
+            description_long=description_long,
             capacity_min=capacity_min,
             capacity_max=capacity_max,
         )
