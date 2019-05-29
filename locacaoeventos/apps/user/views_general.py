@@ -13,6 +13,8 @@ from locacaoeventos.utils.feature import *
 from .buyerprofile.models import BuyerProfile
 from .sellerprofile.models import SellerProfile
 
+from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability
+
 # Celery
 # from locacaoeventos.apps.user.tasks import test
 
@@ -116,6 +118,9 @@ class TermsConditions(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
+        for placeprice in PlacePrice.objects.all():
+            placeprice.description_long = "awefawefwae"
+            placeprice.save()
         return render(request, "teste.html", context)
 
 
