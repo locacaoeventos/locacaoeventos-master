@@ -32,8 +32,18 @@ Body code
   <div class="separador-50"> </div>
   <div id="buyingflux_checkout">
     <div class="row">
-      <div class="col-md-6">
-        <div class="page_title">Selecione agora um pacote!</div>
+      <div class="{% if not placeprices_none %}col-md-12{% else %}col-md-6{% endif %}">
+        <div class="page_title">
+          {% if not placeprices_none %}Selecione agora um pacote!
+          {% else %}Não existem pacotes para a quantidade de pessoas desejada...
+          {% endif %}
+        </div>
+        {% if placeprices_none %}
+          <div class="separador-10"> </div>
+          <div class="page_title" style="font-size:14px">
+            Mas existem essas opções:
+          </div>
+        {% endif %}
         <div class="separador-20"> </div>
         <div><!--
           {% for placeprice in placeprices %}
@@ -53,6 +63,7 @@ Body code
               </div><!--
           {% endfor %}
         --></div>
+        <div class="separador-20"> </div>
         <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Efetuar Compra</div>
       </div>
 
@@ -62,11 +73,13 @@ Body code
 
 
 
-      <div class="col-md-6">
-        <div class="page_title">Ou selecione outra opção</div>
-        <div class="separador-20"> </div>
-        {% include "calendar-detail.html" %}
-      </div>
+      {% if placeprices_none %}
+        <div class="col-md-6">
+          <div class="page_title">Ou selecione outra opção</div>
+          <div class="separador-20"> </div>
+          {% include "calendar-detail.html" %}
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -89,12 +102,13 @@ Body code
     <button id="backto_selectprice">Voltar</button>
     <div class="separador-20"> </div>
 
-    <div class="pay_col pay_col_editable" style="padding-left:0px;">
-      <div class="pay_title">Código Postal</div>
+    <div class="pay_col pay_col_editable" style="padding-left:0px;" id="col_zip">
+      <div class="pay_title" style="position:relative">Código Postal {% include "_question_mark.html" %}</div>
+
       <input class="pay_editable_field" type="text" id="zip_code" maxlength="9"/>
       {# <br><div class="error_message" style="float:left" id="zip_code_error">CEP não encontrado</div> #}
     </div><!--
-    --><div class="pay_col pay_col_editable">
+    --><div class="pay_col pay_col_editable" id="col_number">
       <div class="pay_title">Número</div>
       <input class="pay_editable_field pay_noneditable_field" type="text" id="number" readonly/>
     </div>
@@ -143,6 +157,13 @@ JS imports
     <script src="https://assets.pagar.me/pagarme-js/3.0/pagarme.min.js"></script>
     <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
     <script>
+      // Help tip
+      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/'>aqui</a>.")
+      $("#help_tip").css("position", "absolute")
+      $("#help_tip").css("top", "0")
+      $("#help_tip").css("right", "0")
+
+
       // Credit Card
       $(document).on('click', "#pay-credit-card", function() {
         var checkout = new PagarMeCheckout.Checkout({

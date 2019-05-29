@@ -29,6 +29,7 @@ Place Prices
 }
 .placeprice_card_container {
   width:50% !important;
+  max-width:200px !important;
   cursor:pointer;
   display:inline-block !important;    
   padding:5px;
@@ -152,3 +153,6 @@ Pay
   background-color:#dddddd;
 }
 
+.pay_button_green {
+  background-color: #98d00!important;
+}

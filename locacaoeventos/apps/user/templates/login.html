@@ -19,6 +19,10 @@
 <div style="width:80%; min-width:300px; margin:auto">
     <header>
         <div style="text-align:center; color:#411859; font-weight:bold">
+            {% if compra_buffet == true %}
+                <span >Cadastra-se para poder agendar seu buffet!</span>
+            {% endif %}
+
             {% if wrong_user == True %}
                 <span >Usuário não cadastrado no sistema</span>
             {% endif %}

@@ -303,14 +303,14 @@
 {% if user_type == "buyer" %}
   {% if has_finished_payment %}
     <div id="check_availability" class="check_availability_disabled">Fazer a Minha Festa!</div>
-  {% else %}
-    <div><a href="/usuario/conta/">Conclua seu cadastro para poder agendar uma festa!</a></div>
+  {% else %}<!-- Needs to complete profile -->
+    <div id="check_availability" class="check_availability_disabled" urlred="/usuario/conta/?compra_buffet=completar">Fazer a Minha Festa!</div>
   {% endif %}
 
-{% elif user_type == "seller" %}
-  <div>Entre com uma conta de Comprador, para agendar sua festa!</div>
-{% else %}
-  <div><a href="/login/?next=/buffet/detalhar/?pk={{place_pk}}">Faça seu login, para poder agendar uma festa!</a></div>
+{% elif user_type == "seller" %}<!-- It's seller account -->
+  <div id="check_availability" class="check_availability_disabled" urlred="/usuario/anunciante/conta/?compra_buffet=buyer">Fazer a Minha Festa!</div>
+{% else %}<!-- Needs to login -->
+    <div id="check_availability" class="check_availability_disabled" urlred="/login/?compra_buffet=true&next=/buffet/detalhar/?pk={{place_pk}}">Fazer a Minha Festa!</div>
 {% endif %}
 
 
@@ -452,7 +452,13 @@
 
 
       var url_str = "/buffet/comprar/?place_pk=" + "{{place_pk}}" +  "&capacidade=" + capacity_form + "&date=" + date_form + "&period=" + period_form
-      $("#check_availability").attr("onClick", "location='" + url_str + "'")
+      var urlred = $("#check_availability").attr("urlred")
+      if(urlred == undefined){
+        $("#check_availability").attr("onClick", "location='" + url_str + "'")
+
+      } else {
+        $("#check_availability").attr("onClick", "location='" + urlred + "'")
+      }
     } else {
       $("#check_availability").addClass("check_availability_disabled")
       $("#check_availability").attr("onClick", "")

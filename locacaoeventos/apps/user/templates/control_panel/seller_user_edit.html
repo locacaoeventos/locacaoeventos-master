@@ -16,6 +16,11 @@
       Preencha os dados bancários, para que você possa divulgar seus buffets!
     </div>
   {% endif %}
+  {% if compra_buffet == "buyer" %}
+    <div class="error_message" style="display:block; float:none">
+      Troque para uma conta de Anunciante para poder realizar um agendamento
+    </div><br>
+  {% endif %}
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
 

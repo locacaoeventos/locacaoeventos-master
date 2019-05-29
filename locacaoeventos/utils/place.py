@@ -323,14 +323,20 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 place_obj = Place.objects.get(pk=place_list[i]["pk"])
                 place_dic = place_list[i]
                 unavailabilities = PlaceUnavailability.objects.filter(place=place_obj)
-                is_occupied = False
+                is_occupied = 0
                 for unavailability in unavailabilities:
-                    if date_analyse.replace(tzinfo=pytz.UTC) == unavailability.day:
-                        is_occupied = True
+                    print("==============")
+                    print(str(date_analyse.replace(tzinfo=pytz.UTC)).replace(" 00:00:00+00:00", ""))
+                    print(str(unavailability.day))
+                    if str(date_analyse.replace(tzinfo=pytz.UTC)).replace(" 00:00:00+00:00", "") == str(unavailability.day):
+                        print("OCCUPY")
+                        print("OCCUPY")
+                        print("OCCUPY")
+                        is_occupied += 1
                     # if date_analyse.replace(tzinfo=utc) > unavailability.datetime_begin.replace(tzinfo=utc) and date_analyse.replace(tzinfo=utc) < unavailability.datetime_end.replace(tzinfo=utc):
                     #     is_occupied = True
                 
-                if not is_occupied:
+                if is_occupied < 2:
                     place_list_filtered_date.append(place_dic)
 
 
@@ -418,12 +424,13 @@ def order_by(option, places_pk):
         # =============================
         elif option == 5 or option == 6:
             if option == 5: # A-Z
-                place_list_sorted = sorted(place_list, key=lambda k: k['name']) 
+                place_list_sorted = sorted(place_list, key=lambda k: k['name'].upper()) 
             elif option == 6: # Z-A
-                place_list_sorted = sorted(place_list, key=lambda k: k['name'], reverse=True) 
+                place_list_sorted = sorted(place_list, key=lambda k: k['name'].upper(), reverse=True) 
 
-        for i in range(len(place_list_sorted)):
-                print(place_list_sorted[i])
+        # for i in range(len(place_list_sorted)):
+        #     print(place_list_sorted[i])
+        #     print()
 
         for i in range(len(place_list_sorted)):
             place_list_sorted[i]["placeprice_min"] = "%.2f"%place_list_sorted[i]["placeprice_min"]

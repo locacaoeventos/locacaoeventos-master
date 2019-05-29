@@ -38,53 +38,65 @@ $(document).on("click", "#place_checkout", function () {
 // =====================================
 $('#zip_code').mask('00000-000');
 
-$(document).on("keyup", "#zip_code", function(){
-    if($(this).val().length == 9){
-        var cep = $("#zip_code").val().replace("-", "")
-        $.getJSON("https://viacep.com.br/ws/" + cep + "/json/").done(function( data ) {
-            if(data.erro) {
-                disable_button()
 
+
+$(document).ready(function(){
+    $(document).on("keyup", ".pay_col_editable", function(){
+        console.log($(this).attr("id"))
+        if($(this).attr("id").includes("zip")){
+            if($("#zip_code").val().length >= 9){
+                var cep = $("#zip_code").val().replace("-", "")
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/").done(function( data ) {
+                    if(data.erro) {
+                        disable_button()
+
+                    } else {
+                        $("#number").removeClass("pay_noneditable_field")               
+                        $("#number").attr("readonly", false)
+
+
+
+                        $("#id_state").val(data.uf)
+                        $("#id_city").val(data.localidade)
+                        $("#id_neighbourhood").val(data.bairro)
+                        $("#id_street").val(data.logradouro)
+                        
+                    }
+                });
             } else {
-                $("#number").removeClass("pay_noneditable_field")               
-                $("#number").attr("readonly", false)
-
-
-
-                $("#id_state").val(data.uf)
-                $("#id_city").val(data.localidade)
-                $("#id_neighbourhood").val(data.bairro)
-                $("#id_street").val(data.logradouro)
-                
+                disable_button()
             }
+        } else {            
+            console.log($("#number").val())
+            if($("#number").val() != ""){
+                console.log("foi")
+                $(".pay_button").removeClass("pay_button_disabled")
+                $(".pay_button").addClass("pay_button_green")
+            } else {
+                console.log("fn oi")
+                $(".pay_button").addClass("pay_button_disabled")
+                $(".pay_button").removeClass("pay_button_green")
+
+            }
+        }
+
+
+    })
+    // Back To Price button
+    $(document).on("click", "#backto_selectprice", function () {
+
+        $('#buyingflux_checkout').fadeOut(400, function () {
+            var div_str_buyingflux_checkout = $("#buyingflux_checkout").html()
+            $("#buyingflux_checkout").html("")
+            var div_str_payment_container = $("#payment_container").html()
+
+            $(this).html(div_str_payment_container).fadeIn(800)
+            $("#payment_container").html(div_str_buyingflux_checkout)
         });
-    } else {
-        disable_button()
-    }
-})
-
-// Back To Price button
-$(document).on("click", "#backto_selectprice", function () {
-
-    $('#buyingflux_checkout').fadeOut(400, function () {
-        var div_str_buyingflux_checkout = $("#buyingflux_checkout").html()
-        $("#buyingflux_checkout").html("")
-        var div_str_payment_container = $("#payment_container").html()
-
-        $(this).html(div_str_payment_container).fadeIn(800)
-        $("#payment_container").html(div_str_buyingflux_checkout)
-    });
 
 
-})
+    })
 
-$(document).on("keyup", "#number", function(){
-    if($(this).val().length > 0){
-        $(".pay_button").removeClass("pay_button_disabled")
-    } else {
-        $(".pay_button").addClass("pay_button_disabled")
-
-    }
 })
 
 
@@ -99,5 +111,5 @@ function disable_button(){
     $("#id_neighbourhood").val("")
     $("#id_street").val("")
     $(".pay_button").addClass("pay_button_disabled")
-    $('.pay_button').animate({backgroundColor: '#dddddd'}, 'slow');
+    // $('.pay_button').animate({backgroundColor: '#dddddd'}, 'slow');
 }

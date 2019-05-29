@@ -1,4 +1,21 @@
 
+// ===========================================================
+// Menu
+// ===========================================================
+$(".bread").click(function(){
+    var id = $(this).attr("id")
+    var option = $(this).attr("option")
+    $(".bread").removeClass("breadcrumbs_selected")
+    $("#"+id).addClass("breadcrumbs_selected")
+    $(".options_menu").css("display", "none")
+    $("#"+option).css("display", "block")
+    console.log("#"+option)
+})
+
+
+
+
+
 
 // ===========================================================
 // Price
@@ -122,7 +139,14 @@ function placeprice_show(data){
     }
 
 
-    $("#placeprice_container").html(str_div)
+    $("#placeprice_container").html(str_div);
+
+    if(data.placeprice_list.length==0){
+        $("#has_place_price_list").css("display", "block")
+    } else {
+        $("#has_place_price_list").css("display", "none")
+    }
+
 }
 
 
@@ -176,7 +200,6 @@ function placeprice_add(){
             $("#id_capacity_min").val("")
             $("#id_capacity_max").val("")
             $("#id_description_container").html(" ")
-
         }
     })    
 

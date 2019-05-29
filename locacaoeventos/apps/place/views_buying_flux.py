@@ -38,10 +38,18 @@ class BuyPlace(View):
         context["place_pk"] = request.GET.get("place_pk")
 
         placeprices = get_placeprices(place)
+
         placeprice_list = []
         for placeprice in placeprices:
             if int(capacity) <= int(placeprice["capacity_max"])+50 and int(capacity) >= int(placeprice["capacity_min"])-50:
                 placeprice_list.append(placeprice)
+
+        if len(placeprice_list) == 0:
+            context["placeprices_none"] = True
+
+            for placeprice in placeprices:
+                placeprice_list.append(placeprice)
+
         context["placeprices"] = placeprice_list
         context["place"] = get_single_place_dic(place)
         context["place_pk"] = place.pk

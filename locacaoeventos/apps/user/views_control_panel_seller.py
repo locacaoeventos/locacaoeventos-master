@@ -22,6 +22,8 @@ class EditSeller(View):
         context = base_context(request.user)
         context = context_editseller(request, context)
         seller = context["seller"]
+        context["compra_buffet"] = request.GET.get("compra_buffet")
+
         context["form"] = SellerForm(initial={
             "bank_code": seller.bank_code,
             "agency": seller.agency,
