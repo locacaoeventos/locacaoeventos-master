@@ -31,6 +31,27 @@ Body code
   </div>
   <div class="separador-50"> </div>
   <div id="buyingflux_checkout">
+    <div class="row">
+      <div class="{% if not placeprices_none %}col-md-12{% else %}col-md-6{% endif %}">
+        <div class="page_title">
+          {% if not placeprices_none %}Selecione agora um pacote!
+          {% else %}Não existem pacotes para a quantidade de pessoas desejada...
+          {% endif %}
+        </div>
+        {% if placeprices_none %}
+          <div class="separador-10"> </div>
+          <div class="page_title" style="font-size:14px">
+            Mas existem essas opções:
+          </div>
+        {% endif %}
+        <div class="separador-20"> </div>
+        <div><!--
+        --></div>
+        <div class="separador-20"> </div>
+        <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Efetuar Compra</div>
+      </div>
+
+
 
 
 
