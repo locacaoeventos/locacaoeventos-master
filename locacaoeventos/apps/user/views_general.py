@@ -119,7 +119,7 @@ class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         for placeprice in PlacePrice.objects.all():
-            placeprice.value_min = 1.50
+            placeprice.description = '["aefawe fawef awef"]'
             placeprice.save()
         return render(request, "teste.html", context)
 
