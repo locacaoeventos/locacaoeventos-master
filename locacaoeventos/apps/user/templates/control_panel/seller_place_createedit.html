@@ -127,7 +127,10 @@
             <!-- ==================================================
               Upload multiple files 
             ================================================== -->
-            <label>Carregue as fotos do estabelecimento</label>
+            <div style="position:relative">
+              <label>Carregue as fotos do estabelecimento</label>
+              {% include "_question_mark.html" %}
+            </div>
             <div class="separador-10"> </div>
             <input id="fileupload" type="file" name="photo" multiple
               style="display: none;"
@@ -272,6 +275,13 @@
 
 
 <script>
+      // Help tip
+      $("#help_tip p").html("A proporção ideal da foto é de 3:2 (ex: altura de 450px por 300 de largura).")
+      $("#help_tip").css("position", "absolute")
+      $("#help_tip").css("top", "-10px")
+      $("#help_tip").css("left", "310px")
+
+
   function initAutocomplete() {
     //----autocomplete start
     var input = (document.getElementById('id_address'));

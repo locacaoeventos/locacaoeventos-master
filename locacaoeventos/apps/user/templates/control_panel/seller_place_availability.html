@@ -39,13 +39,24 @@
         <section>
             <div class="center_element">
                 <div style="text-align:left; width:100%;">
-                    <div class="options_menu" id="times">
-                        
-                        <div id="has_place_price_list" {% if placeprice_list %}style="display:none"{% endif %}>
-                            <span style="color:red">Crie um pacote de preço para concluir, na aba <b>Preços</b>.</span>
-                            <div class="separador-20"> </div>
+
+
+                    {% if not has_period %}
+                        <div class="error_message" style="display:block; float:left">
+                            Preencha os horários de funcionamento, na aba <b>Horários</b>.
                         </div>
-                        
+                        <div class="separador-20"> </div>
+                    {% endif %}
+
+                    <div id="has_place_price_list" {% if placeprice_list %}style="display:none"{% endif %}>
+                        <span style="color:red">Crie um pacote de preço para concluir, na aba <b>Preços</b>.</span>
+                        <div class="separador-20"> </div>
+                    </div>
+                    
+                    
+                    <div class="options_menu" id="times">
+                
+
 
                         <h1>Disponibilidade e horários</h1>
                         <hr class="line"/>
@@ -246,6 +257,7 @@
                             </span>
 
                             <button class="btn btn-default pull-right" style="font-size:12px" id="placeprice_add">Adicionar</button>
+                            <div class="separador-90"> </div>
 
                         </div>
                         <div class="col-md-6">
@@ -255,9 +267,6 @@
                             <div class="separador-20"> </div>
                             <div id="placeprice_container">
                             </div>
-
-                {% else %}
-                    <div class="error_message" style="display:block; float:left">Preencha os horários de funcionamento.</div>
                 {% endif %}
             </div>
 

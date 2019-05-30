@@ -28,8 +28,8 @@ def get_placeprice_list(place):
             "description_long":placeprice.description_long,
             "capacity_min":placeprice.capacity_min,
             "capacity_max":placeprice.capacity_max,
-            "value":"{0:.2f}".format(placeprice.value),
-            "value_min":"{0:.2f}".format(placeprice.value_min),
+            "value":str("{0:.2f}".format(placeprice.value)).replace(".", ","),
+            "value_min":str("{0:.2f}".format(placeprice.value_min)).replace(".", ","),
         }
         placeprice_list.append(placeprice_dic)
     return placeprice_list
