@@ -349,8 +349,10 @@ def get_placeprices(place):
     for placeprice in PlacePrice.objects.filter(place=place):
         placeprices.append({
             "value": placeprice.value,
+            "value_min": placeprice.value_min,
             "name": placeprice.name,
             "description": ast.literal_eval(placeprice.description),
+            "description_long": placeprice.description_long,
             "capacity_min": placeprice.capacity_min,
             "capacity_max": placeprice.capacity_max,
 
