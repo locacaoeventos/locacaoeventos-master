@@ -31,41 +31,6 @@ Body code
   </div>
   <div class="separador-50"> </div>
   <div id="buyingflux_checkout">
-    <div class="row">
-      <div class="{% if not placeprices_none %}col-md-12{% else %}col-md-6{% endif %}">
-        <div class="page_title">
-          {% if not placeprices_none %}Selecione agora um pacote!
-          {% else %}Não existem pacotes para a quantidade de pessoas desejada...
-          {% endif %}
-        </div>
-        {% if placeprices_none %}
-          <div class="separador-10"> </div>
-          <div class="page_title" style="font-size:14px">
-            Mas existem essas opções:
-          </div>
-        {% endif %}
-        <div class="separador-20"> </div>
-        <div><!--
-          {% for placeprice in placeprices %}
-            --><div class="placeprice_card_container">
-                  <div class="separador-10"> </div>
-                  <div class="placeprice_card_name">{{placeprice.name}}</div><br>
-                  {% for description in placeprice.description %}
-                    <span class="placeprice_card_attr">- {{description}}</span><br>
-                  {% endfor %}
-                  <div class="separador-10"> </div>
-                  <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
-                  <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
-                  <div class="separador-10"> </div>
-                </div>
-              </div><!--
-          {% endfor %}
-        --></div>
-        <div class="separador-20"> </div>
-        <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Efetuar Compra</div>
-      </div>
-
-
 
 
 
