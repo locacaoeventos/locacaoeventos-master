@@ -48,7 +48,6 @@ Body code
         <div><!--
           {% for placeprice in placeprices %}
             --><div class="placeprice_card_container">
-                <div class="placeprice_card" pk="{{placeprice.pk}}" placeprice="{{placeprice.value|floatformat:2}}">
                   <div class="separador-10"> </div>
                   <div class="placeprice_card_name">{{placeprice.name}}</div><br>
                   {% for description in placeprice.description %}
