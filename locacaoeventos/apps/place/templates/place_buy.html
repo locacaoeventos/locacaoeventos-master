@@ -46,6 +46,22 @@ Body code
         {% endif %}
         <div class="separador-20"> </div>
         <div><!--
+          {% for placeprice in placeprices %}
+            --><div class="placeprice_card_container">
+                <div class="placeprice_card" pk="{{placeprice.pk}}" placeprice="{{placeprice.value|floatformat:2}}">
+                  <div class="separador-10"> </div>
+                  <div class="placeprice_card_name">{{placeprice.name}}</div><br>
+                  {% for description in placeprice.description %}
+                    <span class="placeprice_card_attr">- {{description}}</span><br>
+                  {% endfor %}
+                  <div class="separador-10"> </div>
+                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.value|floatformat:2}}</span><br>
+                  <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
+                  <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
+                  <div class="separador-10"> </div>
+                </div>
+              </div><!--
+          {% endfor %}
         --></div>
         <div class="separador-20"> </div>
         <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Efetuar Compra</div>
@@ -61,6 +77,7 @@ Body code
         <div class="col-md-6">
           <div class="page_title">Ou selecione outra opção</div>
           <div class="separador-20"> </div>
+          {% include "calendar-detail.html" %}
         </div>
       {% endif %}
     </div>
