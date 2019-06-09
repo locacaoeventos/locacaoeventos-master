@@ -1,43 +1,46 @@
-<div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white; ">
-  <div class="wrapper" style="">
-    <div class="brand">
-      <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 15px 40px" alt="logo"></a>
-    </div>
-    <nav class="navigation-items">
-      <div class="wrapper" style="padding-top:32px">
-        <ul class="main-navigation navigation-top-header"></ul>
-        <ul class="user-area">
+<!DOCTYPE html>
+<html>
+  <div class="header" style="border-bottom:1px solid #d0c5d6; background-color:white; ">
+    <div class="wrapper" style="">
+      <div class="brand">
+        <a href="/home/"><img src="/static/img/123festas/logo_horizontal.png" style="width:170px; margin:2px 0 15px 40px" alt="logo"></a>
+      </div>
+      <nav class="navigation-items">
+        <div class="wrapper" style="padding-top:32px">
+          <ul class="main-navigation navigation-top-header"></ul>
+          <ul class="user-area">
 
-          {% if user.is_superuser %}
-            <li><a href="/administrador/home/">Administrador</a></li>
-          {% endif %}
-          <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
-          {% if buyer %}
-            <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
-          {% endif %}
-          {% if user.is_authenticated %}
-            {% if buyer %}
-              <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
+            {% if user.is_superuser %}
+              <li><a href="/administrador/home/">Administrador</a></li>
             {% endif %}
-          <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
-          <li><a href="/buffet/mapa/">Mapa</a></li>
-          <li><a href="/usuario/favoritos/">Favoritos</a></li>
-          <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
-          {% else %}
-            <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
+            <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
+            {% if buyer %}
+              <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+            {% endif %}
+            {% if user.is_authenticated %}
+              {% if buyer %}
+                <li><a {% if basemenu == "listbought" %}class="menu_selected"{% endif %} href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
+              {% endif %}
+            <li><a {% if basemenu == "myaccount" %}class="menu_selected"{% endif %} href="/usuario/{% if user_type == "seller" %}anunciante/{% endif %}conta/">Minha Conta</a></li>
             <li><a href="/buffet/mapa/">Mapa</a></li>
-            <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
-          {% endif %}
+            <li><a href="/usuario/favoritos/">Favoritos</a></li>
+            <li><a href="/usuario/chat/?is_seller={% if user_type == "seller" %}True{% else %}False{% endif %}/">Mensagens</a></li>
+            {% else %}
+              <li><a href="/usuario/cadastrar/">Anuncie seu Espaço</a></li>
+              <li><a href="/buffet/mapa/">Mapa</a></li>
+              <li><a {% if basemenu == "login" %}class="menu_selected"{% endif %} href="/login/">Login</a></li>
+            {% endif %}
 
-        </ul>
-        <div class="toggle-navigation">
-          <div class="icon">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
+          </ul>
+          <div class="toggle-navigation">
+            <div class="icon">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   </div>
-</div>
+</html>

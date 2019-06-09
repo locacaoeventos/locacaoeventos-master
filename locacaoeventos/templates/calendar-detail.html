@@ -1,6 +1,9 @@
 {% load general_tags %}
 {% load i18n %}
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox_opt1.css" type="text/css">
+<link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox_opt2.css" type="text/css">
+
 <link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
 <style>
   * {box-sizing: border-box;}
@@ -127,15 +130,15 @@
     cursor:default !important;
   }
   .occupied_min {
-    background-color:#b6de57;
+    background-color:#dcef9f;
     padding:5px;
-    color:#eeeeee;
+    /*color:#eeeeee;*/
     cursor:pointer;
   }
   .occupied_max {
-    background-color:#85c3d2;
+    background-color:#a0e3fe;
     padding:5px;
-    color:#eeeeee;
+    /*color:#eeeeee;*/
     cursor:pointer;
   }
 
@@ -212,17 +215,17 @@
 </style>
 <span class="buyingflux_form_title">Horário da Festa</span>
 <div class="separador-10"> </div>
-<label class="container_checkbox" style="display:inline;">
+<label class="container_checkbox_opt1" style="display:inline;">
   <input type="checkbox" class="buyingflux_period" name="min_period" id="id_min_period">
-  <span class="checkmark_checkbox"></span>
+  <span class="checkmark_checkbox_opt1"></span>
 </label><!--
 --><div class="buyingflux_period_label_container">
   <label class="buyingflux_period_label">{{place.period_soon_begin}} - {{place.period_soon_end}}</label>&nbsp;&nbsp;
 </div>
 {% if place.period_late_begin and place.period_late_end %}
-  <label class="container_checkbox" style="display:inline;">
+  <label class="container_checkbox_opt2" style="display:inline;">
     <input type="checkbox" class="buyingflux_period" name="max_period" id="id_max_period">
-    <span class="checkmark_checkbox"></span>
+    <span class="checkmark_checkbox_opt2"></span>
   </label><!--
   --><div class="buyingflux_period_label_container">
     <label class="buyingflux_period_label">{{place.period_late_begin}} - {{place.period_late_end}}</label>

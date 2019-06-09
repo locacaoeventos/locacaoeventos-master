@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
+from django.template import loader
 
 import datetime, random, string, os
 
@@ -142,11 +143,32 @@ class CreateUser(View):
                 if "accepts_newsletter" in form_buyer.cleaned_data:
                     buyer.accepts_newsletter = True
                     buyer.save()
-                str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
+                str_subject = ('Confirmar cadastro no LOCACAO EVENTOS')
                 user_pk = BuyerProfile.objects.get(email=form_buyer.cleaned_data["email"]).user.pk
                 str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user_pk) + "&token=" + key
-                send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_buyer.cleaned_data["email"]], fail_silently=False)
+                # send_mail(str_subject, str_body, 'christian.org96@gmail.com', [form_buyer.cleaned_data["email"]], fail_silently=False)
+                # return redirect("/usuario/cadastro-concluido/")
+            
+
+
+
+
+
+                html_message = loader.render_to_string(
+                    'emails/email_registration.html',
+                    {
+                        'user_name': form_buyer.cleaned_data["name"],
+                        'token': key,
+                        'user_pk': user_pk
+
+                    }
+                )
+                send_mail(str_subject,"",'christian.org96@gmail.com',[form_buyer.cleaned_data["email"]],fail_silently=True,html_message=html_message)
+
                 return redirect("/usuario/cadastro-concluido/")
+
+
+
             else:
                 return render(request, "user_create.html", context)
         elif "seller_form" in request.POST:

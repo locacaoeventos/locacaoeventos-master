@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse 
 
 from django.contrib.auth.models import User
 
@@ -21,10 +21,22 @@ from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceU
 class ComingSoon(View):
     def get(self, request, *args, **kwargs):
         # context = base_context(request.user)
+        # return render(request, "coming_soon.html", context)
+        return render(request, "coming_soon.html")
+
+
+class Blog(View):
+    def get(self, request, *args, **kwargs):
+        # context = base_context(request.user)
 
         
         # return render(request, "coming_soon.html", context)
-        return render(request, "coming_soon.html")
+        return HttpResponse("Blog")
+
+class Email(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_registration.html")
+
 
 class Home(View):
     def get(self, request, *args, **kwargs):

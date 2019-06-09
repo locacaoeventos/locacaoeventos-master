@@ -6,6 +6,8 @@
 
 {% block user_panel_content %}
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox_opt1.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/radio_checkbox_opt2.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/seller_place_availability.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/calendar_colored.css" type="text/css">
     <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
@@ -123,19 +125,18 @@
                             <span style="font-size:11px; font-style:italic">(Selecione a data no calendário)</span>
                             <div class="separador-10"> </div>
                             <div class="subsection_availability">
-
                                 <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off" >
                                 <div class="separador-15"> </div>
-                                <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
+                                <label class="container_checkbox_opt1" style="display:inline-block; font-size:12px; line-height:24px">
                                   <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period">
-                                  <span class="checkmark_checkbox"></span>
+                                  <span class="checkmark_checkbox_opt1"></span>
                                   {{place.period_soon_begin}} - {{place.period_soon_end}}
                                 </label>
                                 {% if place.period_late_begin != None %}
                                     &nbsp;&nbsp;
-                                    <label class="container_checkbox" style="display:inline-block; font-size:12px; line-height:24px">
+                                    <label class="container_checkbox_opt2" style="display:inline-block; font-size:12px; line-height:24px">
                                       <input class="unavailability_period" type="checkbox" name="max_period" id="id_max_period">
-                                      <span class="checkmark_checkbox"></span>
+                                      <span class="checkmark_checkbox_opt2"></span>
                                       {{place.period_late_begin}} - {{place.period_late_end}}
                                     </label>
                                 {% endif %}
