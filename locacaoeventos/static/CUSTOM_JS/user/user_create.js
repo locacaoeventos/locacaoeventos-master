@@ -105,9 +105,9 @@ function validarSenhaSeller(){
 $("#id_cpf").keyup(function(){
   var cpf_valid = testCPF()
   if(cpf_valid==true){
-    alert("A")
+    // alert("A")
   } else {
-    alert("B")
+    // alert("B")
   }
 
 })

@@ -202,9 +202,23 @@ class CreateUser(View):
 
 
                 user_pk = SellerProfile.objects.get(email=form_seller.cleaned_data["email_seller"]).user.pk
-                str_titulo = ('Confirmar cadastro no LOCACAO EVENTOS')
+                str_subject = ('Confirmar cadastro no LOCACAO EVENTOS')
                 str_body = ('Obrigado pelo interesse no LOCACAO EVENTOS, por favor acesse esse site, para utilizar nossos serviços') + ' 123festas.com/usuario/confirmar-email/?user=' + str(user_pk) + "&token=" + key + "&seller=true"
-                send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
+                # send_mail(str_titulo, str_body, 'christian.org96@gmail.com', [form_seller.cleaned_data["email_seller"]], fail_silently=False)
+
+
+                html_message = loader.render_to_string(
+                    'emails/email_registration.html',
+                    {
+                        'user_name': form_seller.cleaned_data["name_seller"],
+                        'token': key,
+                        'user_pk': user_pk
+
+                    }
+                )
+                send_mail(str_subject,"",'christian.org96@gmail.com',[form_seller.cleaned_data["email_seller"]],fail_silently=True,html_message=html_message)
+
+
 
                 # DEBUG
                 # seller = SellerProfile.objects.create(
