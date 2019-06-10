@@ -10,7 +10,7 @@
 		Seu endereço de e-mail foi cadastrado com sucesso.<br><br>
 		Falta pouco para começar sua Festa, clique no link abaixo para confirmar sua conta:<br><br><br>
 		<div style="width:100%; text-align:center">
-			<a style="background-color:#009ca6; display:inline-block; color:white; padding:10px 30px; cursor:pointer; border-color:transparent; font-size:20px; text-decoration:none" href="http://www.123festas.com/usuario/confirmar-email/?user={{user_pk}}&token={{token}}">
+			<a style="background-color:#009ca6; display:inline-block; color:white; padding:10px 30px; cursor:pointer; border-color:transparent; font-size:20px; text-decoration:none" href="http://www.123festas.com/usuario/confirmar-email/?user={{user_pk}}&token={{token}}{% if is_seller == True %}&seller=true{% endif %}">
 				CONFIRME SEU E-MAIL
 			</a>
 		</div><br><br>

@@ -159,7 +159,8 @@ class CreateUser(View):
                     {
                         'user_name': form_buyer.cleaned_data["name"],
                         'token': key,
-                        'user_pk': user_pk
+                        'user_pk': user_pk,
+                        'is_seller': False
 
                     }
                 )
@@ -212,7 +213,8 @@ class CreateUser(View):
                     {
                         'user_name': form_seller.cleaned_data["name_seller"],
                         'token': key,
-                        'user_pk': user_pk
+                        'user_pk': user_pk,
+                        'is_seller': True
 
                     }
                 )
