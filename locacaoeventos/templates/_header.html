@@ -14,7 +14,7 @@
               <li><a href="/administrador/home/">Administrador</a></li>
             {% endif %}
             <li><a {% if basemenu == "aboutus" %}class="menu_selected"{% endif %} href="/usuario/sobre-nos/">Sobre Nós</a></li>
-            {% if buyer %}
+            {% if not seller %}
               <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
             {% endif %}
             {% if user.is_authenticated %}

@@ -8,7 +8,7 @@ var mapStyles = [ {"featureType":"road","elementType":"labels","stylers":[{"visi
 var $body = $('body');
 if( $body.hasClass('map-fullscreen') ) {
     if( $(window).width() > 768 ) {
-        $('.map-canvas').height( $(window).height() - $('.header').height() );
+        $('.map-canvas').height( $(window).height() - $('.header').height() - 0 );
     }
     else {
         $('.map-canvas #map').height( $(window).height() - $('.header').height() );
@@ -607,10 +607,10 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
     var itemPrice;
     var place = json.data[a].place
     var div_str = '<li class="result_place" pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '">' +
-            '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place item" id="' + json.data[a].id + '">' +
+            '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place item_new" id="' + json.data[a].id + '">' +
                 '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place image">' +
-                    '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place inner" style="height:200px">' +
-                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[a].gallery[0] + '); width:100%; height:200px"></div>' +
+                    '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place inner" style="height:250px">' +
+                        '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place img-center center-cropped" style="background-image: url(' + json.data[a].gallery[0] + '); width:100%; height:250px"></div>' +
                     '</div>' +
                 '</div>' +
                 '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place wrapper">' +

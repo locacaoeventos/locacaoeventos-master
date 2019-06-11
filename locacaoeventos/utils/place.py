@@ -68,58 +68,70 @@ def get_reviews_from_place(place):
 
 
 def get_additional_information_important_attributes():
-    return [
+    additional_informations = [ # label_ordered = "Área" was put as last, 'cause it's special char
         {
             "name": "alcoholic_drink",
             "id_name": "id_alcoholic_drink",
-            "label": "Serve bebidas alcólicas"
+            "label": "Serve bebidas alcólicas",
+            "label_ordered": "Serve bebidas alcólicas"
         },
         {
             "name": "has_entertainment",
             "id_name": "id_has_entertainment",
-            "label": "Entretenimento"
+            "label": "Entretenimento",
+            "label_ordered": "Entretenimento"
         },
         {
             "name": "has_thematicdecoration",
             "id_name": "id_has_thematicdecoration",
-            "label": "Decoração Temática"
+            "label": "Decoração Temática",
+            "label_ordered": "Decoração Temática"
         },
         {
             "name": "has_childrenrides",
             "id_name": "id_has_childrenrides",
-            "label": "Brinquedo pra Crianças"
+            "label": "Brinquedo pra Crianças",
+            "label_ordered": "Brinquedo pra Crianças"
         },
         {
             "name": "has_costumes",
             "id_name": "id_has_costumes",
-            "label": "Fantasias para os Atores"
+            "label": "Fantasias para os Atores",
+            "label_ordered": "Fantasias para os Atores"
         },
         {
             "name": "has_parking",
             "id_name": "id_has_parking",
-            "label": "Estacionamento"
+            "label": "Estacionamento",
+            "label_ordered": "Estacionamento"
         },
         {
             "name": "has_externalarea",
             "id_name": "id_has_externalarea",
-            "label": "Área externa"
+            "label": "Área externa",
+            "label_ordered": "Area externa"
         },
         {
             "name": "has_music",
             "id_name": "id_has_music",
-            "label": "Música"
+            "label": "Música",
+            "label_ordered": "Música"
         },
         {
             "name": "has_illumination",
             "id_name": "id_has_illumination",
-            "label": "Iluminação"
+            "label": "Iluminação",
+            "label_ordered": "Iluminação"
         },
         {
             "name": "has_babychangingroom",
             "id_name": "id_has_babychangingroom",
-            "label": "Fraldário"
+            "label": "Fraldário",
+            "label_ordered": "Fraldário"
         },
     ]
+    additional_informations = sorted(additional_informations, key=lambda k: k['label_ordered']) 
+    return additional_informations
 
 
 

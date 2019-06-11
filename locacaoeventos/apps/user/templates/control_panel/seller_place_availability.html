@@ -242,13 +242,21 @@
                             <div class="separador-20"> </div>
 
 
-                            Valor unitário (por convidado):<br>
+                            <div style="position:relative">
+                                Valor unitário (por convidado):
+                                {% include "_question_mark.html" %}
+                            </div>
                             <input type="text" required placeholder="R$ 00,00" step="any" class="placeprice_field" id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="9" />
                             <div class="separador-20"> </div>
 
 
 
-                            Valor mínimo (absoluto, opcional):<br>
+                            <div style="position:relative">
+                                Valor mínimo (absoluto, opcional):
+                                <div class="help-tip" id="help_tip2"><!-- ID is only for JS -->
+                                    <p>This is the inline help tip! You can explain to your users what this section of your web app is about.</p>
+                                </div>
+                            </div>
                             <input type="text" required placeholder="R$ 0000,00" step="any" class="placeprice_field" id="id_value_min" name="value_min" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="11" />
                             <div class="separador-20"> </div>
 
@@ -301,6 +309,21 @@
 <script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/seller_place_availability.js"></script>
 <script type="text/javascript" src="/static/clockpicker/dist_folder/bootstrap-clockpicker.min.js"></script>
 <script type="text/javascript">
+      // Help tip
+      $("#help_tip p").html("O valor unitário será multiplicado pelo número total de convidados da festa, resultando no valor final que vai ser cobrado do aniversariante.")
+      $("#help_tip").css("position", "absolute")
+      $("#help_tip").css("top", "-10px")
+      $("#help_tip").css("right", "0px")
+
+      // Help tip
+      $("#help_tip2 p").html("O preço mínimo é o valor cobrado do anversariante pelo evento completo, caso o preo do valor unitário x convidados seja inferior ao desejado pelo buffet.")
+      $("#help_tip2").css("position", "absolute")
+      $("#help_tip2").css("top", "-10px")
+      $("#help_tip2").css("right", "0px")
+
+
+
+
 $('.clockpicker').clockpicker().find('input').change(function(){
     console.log(this.value);
 });

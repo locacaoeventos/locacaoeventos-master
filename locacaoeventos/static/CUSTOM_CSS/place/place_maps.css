@@ -15,6 +15,129 @@ PnlLeft
 	padding:0 !important;
 }
 
+
+
+.items-list .inner .results li .item_new {
+    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    -moz-transition: 0.4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    background-color: #fff;
+    cursor: pointer;
+    display: table;
+    margin-bottom: 10px;
+    width: 100%;
+
+        }
+
+
+.map-canvas .results.list li .item_new {
+    display: table;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+
+
+
+
+/* =======================
+ERROR ON CLICK FIXED
+======================= */
+.item_new {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    display: block;
+    margin-bottom: 60px;
+    position: relative;
+    height: auto;
+}
+
+
+.map-canvas .results.list li .item_new > .image {
+    display: table-cell;
+    height: 100%;
+    width: 200px;
+}
+
+.map-canvas .results .item_new > .image {
+    position: relative;
+}
+.items-list .inner .results li .item_new .image.loaded .inner {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+}
+
+.items-list .inner .results li .item_new .image .inner {
+    -moz-transition: 0.4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    overflow: hidden;
+}
+.map-canvas .results.list li .item_new .inner {
+    height: 150px;
+}
+.item_new .image a, .item_new .image > .inner {
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.item_new .image a:after, .item_new .image > .inner:after {
+    -moz-transition: 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+    background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.8)));
+    background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: -ms-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 );
+    width: 100%;
+    height: 45px;
+    display: block;
+    content: "";
+    position: absolute;
+    bottom: 0;
+}
+
+.map-canvas .results.list li .item_new .wrapper {
+    display: table-cell;
+    padding: 20px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.item_new .wrapper {
+    padding: 20px 20px 10px;
+    position: initial;
+    text-align: center;
+}
+
+.result_place.image.loaded {
+    padding-bottom: 0!important    
+}
+
+
+
+
+
+
+
+
+
 /* =======================
 PnlTop
 ======================= */
@@ -24,3 +147,11 @@ PnlTop
 .month * {
 	color: white !important;
 }
+
+
+
+
+
+
+
+

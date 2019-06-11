@@ -58,7 +58,7 @@
 
           <div class="pnleft_card">
             <label class="pnleft_label">
-              Convidados: <span id="capacity_val">{% if not capacity_exists %}{{capacity}}{% else %}sem{% endif %}</span> pessoas
+              Convidados: <span id="capacity_val">{% if not capacity_exists %}{{capacity}}{% else %}X{% endif %}</span> pessoas
             </label>
             <div class="separador-5"> </div>
             <div id="search_capacity" class="pnleft_input" style="width:90%; min-width:10px; border-radius:0; margin:auto"></div>
@@ -134,10 +134,10 @@
                 </select>
               </aside>
 
-              <div class="pull-right" style="position:relative; margin-right:20px; margin-top:-3px; cursor:pointer; color:white; background-color:#4fa7bc; padding:10px 30px" onclick="location.href='/buffet/mapa/';">
+              <div class="pull-right" style="position:relative; margin-right:20px; margin-top:2px; cursor:pointer; color:white; background-color:#4fa7bc; padding:7px 26px; font-size:14px" onclick="location.href='/buffet/mapa/';">
                 <div style="margin-right:-20px;" onclick="location.href='/buffet/mapa/';">
-                  Acessar o Mapa
-                  <div style="position:absolute; left:10px; top:8px" onclick="location.href='/buffet/mapa/';">
+                  Visualizar no Mapa
+                  <div style="position:absolute; left:7px; top:5px" onclick="location.href='/buffet/mapa/';">
                     <i class="fa fa-map-marker" style="font-size:24px;"> </i>
                   </div>
 

@@ -30,7 +30,6 @@
 
 
 
-
 </head>
 
 <body onunload="" class="map-fullscreen page-homepage navigation-off-canvas" id="page-top">
@@ -51,7 +50,7 @@
 
 
             <div id="page-content" style="padding-bottom:0">
-                <div class="map-canvas list-width-30">
+                <div class="map-canvas list-width-30" style="height:200px">
                     <div class="map">
                         <div class="toggle-navigation">
                             <div class="icon">
@@ -234,15 +233,15 @@
         // alert("oi")
     })
     $(document).ready(function(){
-        $(document).on("click", ".result_place", function(){
+        $(document).on("click", ".result_place", function(e){
+            e.preventDefault()
+            e.stopPropagation()
             var lat = parseFloat($(this).attr("lat"))+0.008
             var lng = parseFloat($(this).attr("lng"))+0.008
             var pk = $(this).attr("pk")
             createHomepageGoogleMap(lat,lng,data, zoom=14, get_marker=pk);
-
-
+            e.preventDefault()
             e.stopPropagation()
-
         })  
     })
 </script>

@@ -29,14 +29,15 @@
 .help-tip p{
 	display: none;
 	text-align: left;
-	background-color: #1E2021;
+	background-color: black;
 	padding: 20px;
 	width: 300px;
 	position: absolute;
 	border-radius: 3px;
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 	right: -4px;
-	color: #a3a3a3;
+	bottom:17px;
+	color: white;
 	font-size: 13px;
 	line-height: 1.4;
 }
@@ -49,7 +50,12 @@
 	border:6px solid transparent;
 	border-bottom-color:#1E2021;
 	right:10px;
-	top:-12px;
+	bottom:-10px;
+
+	-ms-transform: rotate(180deg); /* IE 9 */
+	-webkit-transform: rotate(180deg); /* Safari prior 9.0 */
+	transform: rotate(180deg); /* Standard syntax */
+
 }
 
 .help-tip p:after{
