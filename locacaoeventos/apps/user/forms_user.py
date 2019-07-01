@@ -1,7 +1,7 @@
 from django.forms import ModelForm, PasswordInput, fields
 from django.core.mail import send_mail
 from django import forms
-
+import re
 import datetime
 
 from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
@@ -9,6 +9,7 @@ from locacaoeventos.apps.user.sellerprofile.models import SellerProfile
 from locacaoeventos.utils.forms import *
 
 class BuyerForm(TOCForm):
+    photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
 
     name = fields.CharField(required=True, label="Nome Completo")
     cpf_buyer = fields.CharField(required=False, label="CPF do responsável")
@@ -21,10 +22,9 @@ class BuyerForm(TOCForm):
     gender = fields.CharField(required=False, label="Gênero")
     civil_status = fields.CharField(required=False, label="Status Civil")
     
-    photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
 
-
-    password = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
+    confirm = fields.CharField(required=True, widget=forms.PasswordInput,label="Senha", min_length="6")
+    password = fields.CharField(required=True, widget=forms.PasswordInput,label="Senha", min_length="6")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
 
 
@@ -73,9 +73,13 @@ class BuyerForm(TOCForm):
             if len(cpf) != 14:
                 error_message = forms.ValidationError("CPF digitado incorretamente")
                 self.add_error('cpf_buyer', error_message)
-
-
-
+        
+        # Password
+        password = str(cleaned_data.get('password'))
+        confirm = str(cleaned_data.get('confirm'))
+        if password != confirm:
+            error_message = forms.ValidationError("Senhas diferentes!")
+            self.add_error('password', error_message)
 
 class FamilyMemberForm(TOCForm):
     name = fields.CharField(required=True, label="Nome do Familiar")
@@ -155,6 +159,8 @@ class SellerForm(TOCForm):
     cnpj = fields.CharField(label="CNPJ do estabelecimento")
 
     password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
+    confirm_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
+
     accepts_newsletter_seller = forms.BooleanField(required=False, initial="checked", label="Aceita receber Newsletter")
 
     # PagarMe
@@ -171,7 +177,8 @@ class SellerForm(TOCForm):
         if len(cpf) != 14:
             error_message = forms.ValidationError("CPF digitado incorretamente")
             self.add_error('cpf', error_message)
-
+        cpf_num = int(re.sub('[^0-9]', '', cpf))
+        
 
         # CNPJ
         cnpj = str(cleaned_data.get('cnpj'))
@@ -187,3 +194,8 @@ class SellerForm(TOCForm):
             error_message = forms.ValidationError("Já existe uma conta com este e-mail")
             self.add_error('email_seller', error_message)
 
+        password_seller = str(cleaned_data.get('password_seller'))
+        confirm_seller = str(cleaned_data.get('confirm_seller'))
+        if password_seller != confirm_seller:
+            error_message = forms.ValidationError("Senhas diferentes!")
+            self.add_error('password_seller', error_message)

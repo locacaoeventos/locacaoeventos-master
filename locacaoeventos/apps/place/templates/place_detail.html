@@ -304,7 +304,6 @@ Body code
         bottom:0;
         right:0;
         border-right:none;
-        z-index:999999999999999999999;
         border-radius:15px 15px 0 0;
         width:280px;
 
@@ -315,7 +314,7 @@ Body code
         padding:13px 10px;
         font-size:16px;
         color:white;
-        cursor:pointer
+        cursor:pointer;
       }
       #chat_conversation {
         background-color: white;
@@ -360,9 +359,9 @@ Body code
     <div id="chat_container">
       <div id="chat_opener"><i class="fa fa-comment"></i>&nbsp;&nbsp;Conversa</div>
       {% if user_type == "buyer" %}
-        <div id="chat_conversation" style="z-index:99999999999999999">
+        <div id="chat_conversation">
 
-          <div id="chat_conversation_container" style="z-index:99999999999999999">
+          <div id="chat_conversation_container">
           </div>
 
           <div style="width:100%; position:fixed; bottom:0; right:0; width:280px;">

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     # Celery
     'djcelery',
 
+    #Django Extensions
+    'django_extensions',
 
 ]
 # PAYPAL_TEST = True

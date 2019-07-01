@@ -21,8 +21,35 @@
       <div class="separador-20"> </div>
   {% endif %}
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+  <div class ="col-md-3 form-group">
+  {% for field in form %}  
+    {% if field.name == "photo" %}
+      <div class="form-group">
+        <label>Foto (opcional)</label>
+        <div class="row ">
+          <div class="row ">
+          <div class="col-md-2 " style="text-align:center; vertical-align:middle">
+            <div class="center-cropped img-center " style="background-image: url({% if buyer_photo_str %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %}); width:50px; height:50px; border-radius:50%; margin-top:10px"></div>
+            &nbsp;&nbsp;&nbsp;
+          </div>
+          </div>
+          <div class="row ">
+          <div class="col-md-10" style="padding-top:15px">
+            <label class="btn btn-default btn-file" id="menu_click">
+                Carregar Arquivo{{field}} <!-- hidden field -->
+            </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_photo_path" style="color:#999999">{{buyer_photo_str}}</span>
+          </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+    </div>
+    
+  <div class ="col-md-9 form-group">
     {% for field in form %}
-      {% if field.name != "email" %}
+      {% if field.name != "email" and  field.name != "photo" %}
+
           {% if field.name == "password" %}
             <div class="form-group">
               <label>Nova senha</label>
@@ -37,12 +64,6 @@
                 As senhas não são correspondentes
               </div>
             </div>
-
-
-
-
-
-
           {% elif field.name == "day" or field.name == "month" or field.name == "year" %}
             {% if field.name == "day" %}
               <div class="form-group">
@@ -135,23 +156,6 @@
             </div>
             <div class="separador-10"> </div>
 
-          {% elif field.name == "photo" %}
-            <div class="form-group">
-                <label>Foto (opcional)</label>
-              <div class="row">
-                <div class="col-md-2" style="text-align:center; vertical-align:middle">
-                  <div class="center-cropped img-center" style="background-image: url({% if buyer_photo_str %}/media/{{buyer_photo}}{% else %}/static/img/icon/user.png{% endif %}); width:50px; height:50px; border-radius:50%; margin-top:10px"></div>
-                  &nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-md-10" style="padding-top:15px">
-                  <label class="btn btn-default btn-file" id="menu_click">
-                      Carregar Arquivo{{field}} <!-- hidden field -->
-                  </label>&nbsp;&nbsp;&nbsp;&nbsp;<span id="id_photo_path" style="color:#999999">{{buyer_photo_str}}</span>
-                </div>
-              </div>
-            </div>
-
-
           {% elif field.name == "accepts_newsletter" %}
             <div class="form-group">
               <div class="separador-10"> </div>
@@ -187,6 +191,7 @@
 
         {% endif %}
     {% endfor %}
+    </div>
     <section>
       <div class="form-group">
         <button type="submit" class="btn btn-default pull-right" id="submit">Salvar</button>

@@ -58,8 +58,8 @@ Body code
                   <div class="separador-10"> </div>
                   <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
                   <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
-                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.value|floatformat:2}}</span><br>
-                  <span class="placeprice_card_attr"><b>Valor Mínimo:</b> R${{placeprice.value_min|floatformat:2}}</span><br>
+                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value | floatformat:2}}</span><br>
+                  {% comment %} <span class="placeprice_card_attr"><b>Valor Mínimo:</b> R${{capacity|floatformat:2}}</span><br> {% endcomment %}
                   <div class="separador-10"> </div>
                 </div>
               </div><!--
@@ -160,7 +160,7 @@ JS imports
     <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
     <script>
       // Help tip
-      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/'>aqui</a>.")
+      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank'>aqui</a>.")
       $("#help_tip").css("position", "absolute")
       $("#help_tip").css("top", "0")
       $("#help_tip").css("right", "0")

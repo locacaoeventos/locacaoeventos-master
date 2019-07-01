@@ -44,7 +44,7 @@
 
 
                     {% if not has_period %}
-                        <div class="error_message" style="display:block; float:left">
+                        <div style="color:red" style="display:block; float:left">
                             Preencha os horários de funcionamento, na aba <b>Horários</b>.
                         </div>
                         <div class="separador-20"> </div>
@@ -178,12 +178,12 @@
                             <input type="text" required placeholder="Nome" class="placeprice_field" id="id_name" name="name" maxlength="32"/>
                             <div class="separador-20"> </div>
 
-
+                            <div style="display: none;">
                             Descrição:<br>
                             <span style="font-size:11px; font-style:italic">(Pequena descrição do Buffet)</span>
                             <textarea type="text" required placeholder="Nome" class="placeprice_field" id="id_description_long" name="description_long" maxlength="128"> </textarea>
                             <div class="separador-20"> </div>
-
+                            </div>
 
 
 

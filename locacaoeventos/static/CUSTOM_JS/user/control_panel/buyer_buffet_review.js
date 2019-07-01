@@ -1,4 +1,6 @@
 // Rewriting function rating
+
+
 function rating(element){
     var ratingElement =
         '<span class="stars">'+
@@ -63,8 +65,11 @@ function rating(element){
 
         return false;
     });
-
 }
+
+$(document).ready(function(){
+    check_average();
+})
 
 $("#comment_id").keyup(function(){
     check_average()
@@ -72,12 +77,14 @@ $("#comment_id").keyup(function(){
 
 // Calculate average
 function check_average() {
-    var rate_sum = 0
+    var flag = false;
+
     $(".rate").each(function(){
-        rate_sum += parseInt($(this).attr("value"))
+        if(parseInt($(this).attr("value"))<=2){
+            flag = true;
+        }
     })
-    rate_average = rate_sum/5
-    if(rate_average<2.5 && $("#comment_id").val() == "") {
+    if(flag && $("#comment_id").val() == "") {
         if($("#comment_obligatory").css("display")=="none") {
             $("#comment_obligatory").fadeIn(500)   
             $("#send_button").attr("disabled", "disabled")            

@@ -43,7 +43,10 @@ class BuyPlace(View):
         for placeprice in placeprices:
             if int(capacity) <= int(placeprice["capacity_max"])+50 and int(capacity) >= int(placeprice["capacity_min"])-50:
                 placeprice_list.append(placeprice)
-
+            placeprice["final_value"] = int(capacity) * int(placeprice["value"])
+            if int(placeprice["value_min"]) > placeprice["final_value"]:
+                placeprice["final_value"] = placeprice["value_min"]
+            
         if len(placeprice_list) == 0:
             context["placeprices_none"] = True
 
@@ -53,7 +56,7 @@ class BuyPlace(View):
         context["placeprices"] = placeprice_list
         context["place"] = get_single_place_dic(place)
         context["place_pk"] = place.pk
-
+        print
         context["needs_js_input_fix"] = True
 
         # PAGARME

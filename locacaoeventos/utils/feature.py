@@ -100,8 +100,9 @@ def get_feature_list():
 
 
     place_list = sorted(place_list, key=lambda k: k['feature']) 
+    print("LEMBRAR DE MUDAR EM utils.feature O 1 NO RANGE PRA 4!!!!!!!!!111!")
     if len(place_list)>0:
-        for i in range(4):
+        for i in range(1):
             place = place_list[i]
             feature_list.append(place)
 

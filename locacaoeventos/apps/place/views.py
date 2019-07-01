@@ -94,7 +94,6 @@ class DetailPlace(View):
         context["place_pk"] = place_obj.pk
         context["place_obj"] = place_obj
 
-
         # PHOTOs Detail
         photo_first = str(PlacePhoto.objects.filter(place=place_obj, is_first=True)[0].photo.photo)
         context["photo_list_html"] = [str(photo.photo.photo) for photo in PlacePhoto.objects.filter(place=place_obj, is_first=False)]

@@ -43,8 +43,10 @@
 
     <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
       {% for field in form_buyer %}
+          {% if field.name == "confirm" %}
 
-          {% if field.name == "password" %}
+          {% elif field.name == "password" %}
+            {{field.name}}
             <div class="form-group">
               <label>{{field.label}}</label>
 
@@ -59,6 +61,13 @@
               <div id="nomatchpswd" class="error_message">
                 As senhas não são correspondentes
               </div>
+              {% if field.errors %}
+                <div class="error_message" style="display:block">
+                  {% for error in field.errors %}
+                    {{error}}
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
             <div class="separador-20"> </div>
 
@@ -176,7 +185,7 @@
     <div id="seller_wrapper" {% if form_type == "seller" %}style="display:block"{% endif %}>
       <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
         {% for field in form_seller %}
-            {% if field.name != "bank_code" and field.name != "agency" and field.name != "account" and field.name != "account_type" %}
+            {% if field.name != "bank_code" and field.name != "agency" and field.name != "account" and field.name != "account_type" and field.name != "confirm_seller" %}
 
               <div class="form-group">
                 {% if field.name == "password_seller" %}
@@ -184,13 +193,17 @@
                   <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
                   <div class="separador-15"> </div>
                   <label>Confirme a senha</label>
-                  <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+                  <input type="password" name="confirm_seller" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
                   <div id="tooshort_seller" class="error_message">
                     A senha deve conter no mínimo 6 dígitos
                   </div>
-                  <div id="nomatchpswd_seller" class="error_message">
-                    As senhas não são correspondentes
-                  </div>
+                  {% if field.errors %}
+                    <div class="error_message" style="display:block">
+                      {% for error in field.errors %}
+                        {{error}}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
 
 
 
