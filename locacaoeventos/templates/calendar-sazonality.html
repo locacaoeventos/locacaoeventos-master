@@ -1,0 +1,304 @@
+{% load general_tags %}
+{% load i18n %}
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         CSS                                               -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
+<style>
+  * {box-sizing: border-box;}
+  ul {list-style-type: none;}
+  body {font-family: Verdana, sans-serif; margin:0;}
+  .calendar_wrapper_season {
+    position:relative;
+  }
+  .month_season {
+      padding: 5px 4px 5px 4px;
+      width: 100%;
+      background: #4fa7bc;
+      text-align: center;
+  }
+  #month_ajax_season .year_ajax_season {
+    color:white;
+  }
+
+  .month_season ul {
+      margin: 0;
+      padding: 0;
+  }
+
+  .month_season ul li {
+      color:#484848;
+      font-size: 13px;
+      text-transform: capitalize;
+      letter-spacing: 3px;
+  }
+
+  .month_season .prev_season {
+      float: left;
+      padding-top: 0px;
+  }
+
+  .month_season .next_season {
+      float: right;
+      padding-top: 0px;
+  }
+  .next_season a, .prev_season a {
+    color: 484848;
+    text-decoration:none;
+  }
+  .weekdays_season {
+      margin: 0;
+      padding: 5px 0;
+      background-color: white;
+      font-weight:bold;   
+  }
+
+  .weekdays_season li {
+      display: inline-block;
+      width: 14.28%;
+      font-size:11px;
+      color: #666;
+      text-align: center;
+  }
+
+  .days_season {
+      padding: 5px 0;
+      background: white;
+      margin: 0;
+      text-align:left;
+      cursor:pointer;
+  }
+
+  .days_season li {
+      list-style-type: none;
+      display: inline-block;
+      width: 14.28%;
+      text-align: center;
+      margin-bottom: 3px;
+      font-size:12px;
+      color: #777;
+  }
+
+  .days_season li .active {
+      padding: 5px;
+      /*background: #4fa7bc;
+      color: white !important*/
+  }
+  .calendar_class_day_season {
+    cursor:pointer;
+  }
+  .move_season {
+    cursor:pointer;
+    color:white;
+  }
+
+
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         Body                                              -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
+<div id="calendar_frame_season" style="background-color:#fcfcfc">
+  <div class="calendar_wrapper_season">
+      <div class="month_season">      
+        <ul>
+          <li class="prev_season"><a class="move_season" value-count="0" count="-1">&#10094;</a></li>
+          <li class="next_season"><a class="move_season" value-count="0" count="1">&#10095;</a></li>
+          <li class="calendar_class_season" style="color:white"> 
+            <span class="calendar_class_season" id="month_ajax_season"></span> - <span class="calendar_class_season" id="year_ajax_season"></span>
+          </li>
+        </ul>
+      </div>
+
+      <ul class="weekdays_season">
+        <li class="calendar_class_season">Seg</li><!--
+        --><li class="calendar_class_season">Ter</li><!--
+        --><li class="calendar_class_season">Qua</li><!--
+        --><li class="calendar_class_season">Qui</li><!--
+        --><li class="calendar_class_season">Sex</li><!--
+        --><li class="calendar_class_season">Sab</li><!--
+        --><li class="calendar_class_season">Dom</li>
+      </ul>
+
+      <ul class="days_season" id="days_ajax_season">
+
+      </ul>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================================================================= -->
+<!--                                                                                           -->
+<!--                                         JQuery                                            -->
+<!--                                                                                           -->
+<!-- ========================================================================================= -->
+{% block jquery %}
+  <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
+<script>
+  // Load Calendar
+  $(document).ready(function(){
+    $.ajax({
+      url: "/usuario/ajax/calendario-sazonalidade/",
+      dataType: 'json',
+      data: {
+        "pk": "{{place_pk}}"
+      },
+      success: function (data) {
+        $("#month_ajax_season").html(data["month"])
+        $("#month_ajax_season").attr("datemonth", data["month_int"])
+        $("#year_ajax_season").html(data["year"])
+        str_days = ""
+        for(i=0;i<data["list_month"].length;i++){
+          str_days += data["list_month"][i]
+        }
+        $("#days_ajax_season").html(str_days)
+      }
+    })
+
+  })
+
+
+
+
+
+  // Changing months
+  $(".move_season").click(function(){
+    var elem = $(this)
+    var months = parseInt($(this).attr("value-count")) + parseInt($(this).attr("count"))
+    $(".move_season").attr("value-count", months)
+
+    // Animation
+    if($(this).attr("count") == -1) {
+      if ($('.calendar_wrapper_season').is(':hidden')) {
+        $('.calendar_wrapper_season').show('slide',{direction:'left'},500);
+      } else {
+        $('.calendar_wrapper_season').hide('slide',{direction:'right'},500);
+      }
+    } else {
+      if ($('.calendar_wrapper_season').is(':hidden')) {
+        $('.calendar_wrapper_season').show('slide',{direction:'right'},500);
+      } else {
+        $('.calendar_wrapper_season').hide('slide',{direction:'left'},500);
+      }
+    }
+
+    $.ajax({
+      url: "/usuario/ajax/calendario-sazonalidade/",
+      dataType: 'json',
+      data: {
+        "pk": "{{place_pk}}",
+        "meses":months
+      },
+      success: function (data) {
+        $("#month_ajax_season").html(data["month"])
+        $("#month_ajax_season").attr("datemonth", data["month_int"])
+        $("#year_ajax_season").html(data["year"])
+        str_days = ""
+        for(i=0;i<data["list_month"].length;i++){
+          str_days += data["list_month"][i]
+        }
+        $("#days_ajax_season").html(str_days)
+
+        // Animation
+        if(elem.attr("count") == -1) {
+          $(".calendar_wrapper_season").show("slide", { direction: "left" }, 500);
+        } else {
+          $(".calendar_wrapper_season").show("slide", { direction: "right" }, 500);
+        }
+
+      }
+    })
+  })
+
+
+
+
+
+
+
+  $(document).on("click", ".calendar_class_day_season", function(){
+    var class_clicked = $(event.target).attr('class')
+    if(class_clicked != "pass"){
+      var today_day = $(this).children(1).html()
+      if(today_day==undefined) {
+        today_day = $(this).html()
+      }
+      today_day = String(today_day)
+      if(today_day.length==1){
+        today_day = "0" + today_day
+      }
+
+
+      var today_month = String($("#month_ajax_season").attr("datemonth"))
+      if(today_month.length==1) {
+        today_month = "0" + today_month
+      }
+      var today_year = String($("#year_ajax_season").html())
+
+
+      
+      $(".calendar_input").val(today_day + " / " + today_month + " / " + today_year)      
+    }
+
+  })
+
+
+
+
+
+
+
+
+
+</script>
