@@ -1,6 +1,7 @@
 // Rewriting function rating
 
 
+
 function rating(element){
     var ratingElement =
         '<span class="stars">'+
@@ -67,7 +68,12 @@ function rating(element){
     });
 }
 
+var i;
+
 $(document).ready(function(){
+    $("#send_button").attr("disabled",true)  
+    i=0;
+
     check_average();
 })
 
@@ -78,19 +84,21 @@ $("#comment_id").keyup(function(){
 // Calculate average
 function check_average() {
     var flag = false;
-
+    i++;
     $(".rate").each(function(){
         if(parseInt($(this).attr("value"))<=2){
             flag = true;
         }
     })
-    if(flag && $("#comment_id").val() == "") {
+
+    if(flag && $("#comment_id").val() == "" || i<4) {
+        $("#send_button").attr("disabled",true)               
+
         if($("#comment_obligatory").css("display")=="none") {
-            $("#comment_obligatory").fadeIn(500)   
-            $("#send_button").attr("disabled", "disabled")            
+            $("#comment_obligatory").fadeIn(500)
         }
     } else {
         $("#comment_obligatory").fadeOut(500)    
-        $("#send_button").removeAttr("disabled") 
+        $("#send_button").prop("disabled", false) 
     }  
 }
