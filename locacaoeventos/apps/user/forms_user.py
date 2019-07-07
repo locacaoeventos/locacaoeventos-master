@@ -8,6 +8,8 @@ from locacaoeventos.apps.user.buyerprofile.models import BuyerProfile
 from locacaoeventos.apps.user.sellerprofile.models import SellerProfile
 from locacaoeventos.utils.forms import *
 
+valida_cpf = True
+
 class BuyerForm(TOCForm):
     photo = forms.FileField(required=False, widget=forms.FileInput, label="Foto de Perfil (opcional)")
 
@@ -73,7 +75,15 @@ class BuyerForm(TOCForm):
             if len(cpf) != 14:
                 error_message = forms.ValidationError("CPF digitado incorretamente")
                 self.add_error('cpf_buyer', error_message)
-        
+       
+        cpf_num = re.sub('[^0-9]', '', cpf)
+        if not validate_cpf(cpf_num) and valida_cpf:
+            error_message = forms.ValidationError("CPF digitado incorretamente")
+            self.add_error('cpf', error_message)
+
+        cellphone = str(cleaned_data.get('cellphone'))
+        print(cellphone)
+
         # Password
         password = str(cleaned_data.get('password'))
         confirm = str(cleaned_data.get('confirm'))
@@ -177,8 +187,10 @@ class SellerForm(TOCForm):
         if len(cpf) != 14:
             error_message = forms.ValidationError("CPF digitado incorretamente")
             self.add_error('cpf', error_message)
-        cpf_num = int(re.sub('[^0-9]', '', cpf))
-        
+        cpf_num = re.sub('[^0-9]', '', cpf)
+        if not validate_cpf(cpf_num):
+            error_message = forms.ValidationError("CPF digitado incorretamente")
+            self.add_error('cpf', error_message)
 
         # CNPJ
         cnpj = str(cleaned_data.get('cnpj'))
@@ -186,7 +198,10 @@ class SellerForm(TOCForm):
             error_message = forms.ValidationError("CNPJ digitado incorretamente")
             self.add_error('cnpj', error_message)
 
-
+        cellphone = str(cleaned_data.get('cellphone_seller'))
+        if len(cellphone) != 14:
+            error_message = forms.ValidationError("Celular digitado incorretamente")
+            self.add_error('cellphone_seller', error_message)
 
         # E-mail
         email_seller = str(cleaned_data.get('email_seller'))
@@ -199,3 +214,27 @@ class SellerForm(TOCForm):
         if password_seller != confirm_seller:
             error_message = forms.ValidationError("Senhas diferentes!")
             self.add_error('password_seller', error_message)
+
+
+
+
+
+
+
+def validate_cpf(cpf):
+    sum_tot = 0
+    for i in range(1,10):
+        sum_tot += int(cpf[i-1])*(11-i)
+    dig1 = str((sum_tot*10)%11)
+    if dig1 == '10':
+        dig1 = '0'
+    sum_tot = 0
+    for i in range(1,11):
+        sum_tot += int(cpf[i-1])*(12-i)
+    dig2 = str((sum_tot*10)%11)
+    if dig2 == '10':
+        dig2 = '0'
+    if dig1 == cpf[9] and dig2 == cpf[10]:
+        return True
+    else:
+        return False
