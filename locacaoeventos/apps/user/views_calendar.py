@@ -272,7 +272,6 @@ class CalendarSeasonAjax(View):
 
 
         # Declaring Variables - Others
-        buffet = request.GET.get("pk")
         today = datetime.datetime.today()
         today_month = request.GET.get("meses", None) # Checking if it's changing month
         if today_month == None:
@@ -298,25 +297,12 @@ class CalendarSeasonAjax(View):
         for i in range(len(list_month)):
             day = i+1
             this_day = str(today_year) + "-" + str(today_month) + "-" + str(day)
-
             # We are in the current month
             if today_day:
                 if day == today_day:
                     list_month[i] = "<li class='calendar_class_day_season'><span class='active'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
                     list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
-                    seazons_past = PlaceSazonality.objects.filter(day=this_day).delete()
-                # data = datetime.datetime.strptime(today_day, "%Y-%m-%d").date()
-                periods = PlaceSazonality.objects.filter(day=this_day).filter(place = Place.objects.get(pk=buffet))
-                if len(periods)==0:
-                    pass
-                elif len(periods)==2:
-                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:orange'>" + str(i+1) + "</span></li>"
-                elif periods[0].period=="max":
-                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:#96FEC4'>" + str(i+1) + "</span></li>"
-                elif periods[0].period=="min":
-                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:#F68971'>" + str(i+1) + "</span></li>"
-
             else:
                 # We are in past month
                 if today_year < today.year:
