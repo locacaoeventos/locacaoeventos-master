@@ -2,6 +2,7 @@
 // ===========================================================
 // Menu
 // ===========================================================
+$('.calendar_input').mask("00 / 00 / 0000",{placeholder:"Data"});
 $(".bread").click(function(){
     var id = $(this).attr("id")
     var option = $(this).attr("option")

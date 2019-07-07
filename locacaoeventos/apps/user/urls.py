@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^ajax/calendario/$', CalendarAjax.as_view()),
     url(r'^ajax/calendario-input/$', CalendarInputAjax.as_view()),
     url(r'^ajax/familymember/create-delete/$', CreateDeleteFamilyMemberAjax.as_view()),
+    url(r'^ajax/calendario-sazonalidade/$', CalendarSeasonAjax.as_view()),
     
 
 

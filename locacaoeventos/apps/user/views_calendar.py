@@ -91,6 +91,17 @@ def get_unavailabilities(place, period):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 def get_str_occupied(this_day, place_unavailability_list_with_period):
     index = []
     for i in range(len(place_unavailability_list_with_period)):
@@ -227,6 +238,132 @@ class UnavailabilityDetailAjax(View):
         this_month_eng = datetime_this_day.strftime('%B')
         data["this_day"] = this_day + " de " + translate_month(this_month_eng) + " de " + this_year
         return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class CalendarSeasonAjax(View):
+    def get(self, request):
+
+
+        # Declaring Variables - Others
+        today = datetime.datetime.today()
+        today_month = request.GET.get("meses", None) # Checking if it's changing month
+        if today_month == None:
+            today_month = str(0)
+        if today_month == str(0):
+            today_day = int(today.day)
+            today_month = int(today.month)
+            today_year = int(today.year)
+        else:
+            today_day = None
+            today_month = int(today.month) + int(today_month)
+            if today_month > 12:
+                today_month -= 12
+                today_year = int(today.year) + 1
+            else:
+                today_year = int(today.year)
+            
+
+        # Correct size of month
+        count_day = calendar.monthrange(today_year, today_month)
+        list_month = ["<li class='calendar_class_day_season'>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
+        
+
+        # Seting colors and markers
+        for i in range(len(list_month)):
+            day = i+1
+            this_day = str(today_year) + "-" + str(today_month) + "-" + str(day)
+            # We are in the current month
+            if today_day:
+                if day == today_day:
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='active'>" + str(i+1) + "</span></li>"
+                elif day < today_day:
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
+            
+            else:
+                # We are in past month
+                if today_year < today.year:
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
+                elif today_month < today.month:
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
+
+        # Geting the first day of the month fiting with weekday
+        weekday = datetime.datetime.strptime(str(today_year) + "-" + str(today_month) + "-1", "%Y-%m-%d").weekday()
+        for i in range(weekday):
+            list_month.insert(0, "<li class='calendar_class_day_season'></li>")
+
+        data = {
+            "today": today,
+            "month": translate_month(calendar.month_name[today_month]),
+            "month_int": today_month,
+            "year": today_year,
+            "list_month": list_month,
+
+        }
+        return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

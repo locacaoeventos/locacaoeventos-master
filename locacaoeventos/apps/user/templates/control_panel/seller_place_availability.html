@@ -25,7 +25,7 @@
     <ul class="breadcrumbs-two">
         <li id="bread1" option="times" class="bread bread1 breadcrumbs_selected"><a><span>Horários&nbsp;</span></a></li>
         <li id="bread2" option="prices" class="bread bread2"><a><span>Preços&nbsp;</span></a></li>
-        <li id="bread3" class="bread bread3"><a><span>Sazonalidade&nbsp;</span></a></li>
+        <li id="bread3" option="season" class="bread bread3"><a><span>Sazonalidade&nbsp;</span></a></li>
     </ul>
 
 
@@ -56,7 +56,7 @@
                     </div>
                     
                     
-                    <div class="options_menu" id="times">
+                    <div class="options_menu" id="times" style="display:none">
                 
 
 
@@ -161,48 +161,46 @@
 
                         {% endif %}
                     </div>
-                </div>
-            </div>
 
-            <div class="options_menu" id="prices" style="text-align:left; display:none">
-                {% if has_period %}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h1>Pacotes de festa e valores</h1>
-                            <hr class="line"/>
-                            Como cada buffet tem os seus próprios serviços e produtos, é importante uma boa apresentação sobre os  pacotes de festa que serão disponibilizados ao cliente.
-                            <div class="separador-20"> </div>
+                    <div class="options_menu" id="prices" style="text-align:left; display:none">
+                        {% if has_period %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h1>Pacotes de festa e valores</h1>
+                                    <hr class="line"/>
+                                    Como cada buffet tem os seus próprios serviços e produtos, é importante uma boa apresentação sobre os  pacotes de festa que serão disponibilizados ao cliente.
+                                    <div class="separador-20"> </div>
 
 
-                            Nome:<br>
-                            <input type="text" required placeholder="Nome" class="placeprice_field" id="id_name" name="name" maxlength="32"/>
-                            <div class="separador-20"> </div>
+                                    Nome:<br>
+                                    <input type="text" required placeholder="Nome" class="placeprice_field" id="id_name" name="name" maxlength="32"/>
+                                    <div class="separador-20"> </div>
 
-                            <div style="display: none;">
-                            Descrição:<br>
-                            <span style="font-size:11px; font-style:italic">(Pequena descrição do Buffet)</span>
-                            <textarea type="text" required placeholder="Nome" class="placeprice_field" id="id_description_long" name="description_long" maxlength="128"> </textarea>
-                            <div class="separador-20"> </div>
-                            </div>
+                                    <div style="display: none;">
+                                    Descrição:<br>
+                                    <span style="font-size:11px; font-style:italic">(Pequena descrição do Buffet)</span>
+                                    <textarea type="text" required placeholder="Nome" class="placeprice_field" id="id_description_long" name="description_long" maxlength="128"> </textarea>
+                                    <div class="separador-20"> </div>
+                                    </div>
 
 
 
 
-                            Detalhes do Pacote:<br>
-                            <span style="font-size:11px; font-style:italic">(Descreva em tópicos o que compõe este pacote)</span>
-                            <div class="separador-5"> </div>
-                            <input type="text" id="id_description_input" placeholder="Descreva seu pacote de preço em pontos" maxlength="32"/>
-                            <div class="add_button" type="description">+</div>
-                            <br><br>
-                            <div class="separador-5"> </div>
-                            <div class="add_container" id="id_description_container">
-                                <span id="placeholder_description" style="margin-left:5px; color:#858585">
-                                    ex: "Apresentação de Atores"
-                                </span>
+                                    Detalhes do Pacote:<br>
+                                    <span style="font-size:11px; font-style:italic">(Descreva em tópicos o que compõe este pacote)</span>
+                                    <div class="separador-5"> </div>
+                                    <input type="text" id="id_description_input" placeholder="Descreva seu pacote de preço em pontos" maxlength="32"/>
+                                    <div class="add_button" type="description">+</div>
+                                    <br><br>
+                                    <div class="separador-5"> </div>
+                                    <div class="add_container" id="id_description_container">
+                                        <span id="placeholder_description" style="margin-left:5px; color:#858585">
+                                            ex: "Apresentação de Atores"
+                                        </span>
 
 
-                            </div>
-                            <input type="text" class="placeprice_field" id="id_description" name="name" style="display:none">
+                                    </div>
+                                    <input type="text" class="placeprice_field" id="id_description" name="name" style="display:none">
 
 
 
@@ -212,71 +210,88 @@
 
 
 
-                            <div class="separador-20"> </div>
+                                    <div class="separador-20"> </div>
 
 
-                            Convidados Mínimos:&nbsp;&nbsp;
-                            <select class="placeprice_field" id="id_capacity_min" name="capacity_min">
-                                <option value="">-</option>
-                                {% for i in 501|create_range %}
-                                    {% if i == 500 %}
-                                        <option value="{{i}}">500+</option>
-                                    {% else %}
-                                        <option value="{{i}}">{{i}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <div class="separador-20"> </div>
+                                    Convidados Mínimos:&nbsp;&nbsp;
+                                    <select class="placeprice_field" id="id_capacity_min" name="capacity_min">
+                                        <option value="">-</option>
+                                        {% for i in 501|create_range %}
+                                            {% if i == 500 %}
+                                                <option value="{{i}}">500+</option>
+                                            {% else %}
+                                                <option value="{{i}}">{{i}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <div class="separador-20"> </div>
 
-                            Convidados Máximos:&nbsp;&nbsp;
-                            <select class="placeprice_field" id="id_capacity_max" name="capacity_max">
-                                <option value="">-</option>
-                                {% for i in 501|create_range %}
-                                    {% if i == 500 %}
-                                        <option value="{{i}}">500+</option>
-                                    {% else %}
-                                        <option value="{{i}}">{{i}}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            <div class="separador-20"> </div>
-
-
-                            <div style="position:relative">
-                                Valor unitário (por convidado):
-                                {% include "_question_mark.html" %}
-                            </div>
-                            <input type="text" required placeholder="R$ 00,00" step="any" class="placeprice_field" id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="9" />
-                            <div class="separador-20"> </div>
+                                    Convidados Máximos:&nbsp;&nbsp;
+                                    <select class="placeprice_field" id="id_capacity_max" name="capacity_max">
+                                        <option value="">-</option>
+                                        {% for i in 501|create_range %}
+                                            {% if i == 500 %}
+                                                <option value="{{i}}">500+</option>
+                                            {% else %}
+                                                <option value="{{i}}">{{i}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <div class="separador-20"> </div>
 
 
+                                    <div style="position:relative">
+                                        Valor unitário (por convidado):
+                                        {% include "_question_mark.html" %}
+                                    </div>
+                                    <input type="text" required placeholder="R$ 00,00" step="any" class="placeprice_field" id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="9" />
+                                    <div class="separador-20"> </div>
 
-                            <div style="position:relative">
-                                Valor mínimo (absoluto, opcional):
-                                <div class="help-tip" id="help_tip2"><!-- ID is only for JS -->
-                                    <p>This is the inline help tip! You can explain to your users what this section of your web app is about.</p>
+
+
+                                    <div style="position:relative">
+                                        Valor mínimo (absoluto, opcional):
+                                        <div class="help-tip" id="help_tip2"><!-- ID is only for JS -->
+                                            <p>This is the inline help tip! You can explain to your users what this section of your web app is about.</p>
+                                        </div>
+                                    </div>
+                                    <input type="text" required placeholder="R$ 0000,00" step="any" class="placeprice_field" id="id_value_min" name="value_min" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="11" />
+                                    <div class="separador-20"> </div>
+
+
+                                    <span class="error_message" id="placeprice_add_error">
+                                        Preencha todos os espaços!
+                                    </span>
+
+                                    <button class="btn btn-default pull-right" style="font-size:12px" id="placeprice_add">Adicionar</button>
+                                    <div class="separador-90"> </div>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <h1>Meus pacotes de festa</h1>
+                                    <hr class="line"/>
+                                    <div class="separador-20"> </div>
+                                    <div id="placeprice_container">
+                                    </div>
                                 </div>
                             </div>
-                            <input type="text" required placeholder="R$ 0000,00" step="any" class="placeprice_field" id="id_value_min" name="value_min" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="11" />
-                            <div class="separador-20"> </div>
-
-
-                            <span class="error_message" id="placeprice_add_error">
-                                Preencha todos os espaços!
-                            </span>
-
-                            <button class="btn btn-default pull-right" style="font-size:12px" id="placeprice_add">Adicionar</button>
-                            <div class="separador-90"> </div>
-
-                        </div>
-                        <div class="col-md-6">
-
-                            <h1>Meus pacotes de festa</h1>
-                            <hr class="line"/>
-                            <div class="separador-20"> </div>
-                            <div id="placeprice_container">
+                        {% endif %}
+                    </div>
+                    <div class="options_menu" id="season" style="text-align:left; display:block">
+                        {% if has_period %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {% include "calendar-sazonality.html" %}
+                                </div>
+                                <div class="col-md-6">
+                                    <input type"text" class="calendar_input">
+                                </div>
                             </div>
-                {% endif %}
+
+                        {% endif %}
+                    </div>
+                </div>
             </div>
 
         </section>
