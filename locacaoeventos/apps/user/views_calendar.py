@@ -9,7 +9,7 @@ from locacaoeventos.utils.datetime import translate_month, next_days
 from locacaoeventos.utils.general import remove_left_zero
 
 from locacaoeventos.apps.place.placecore.models import Place
-from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability
+from locacaoeventos.apps.place.placereservation.models import PlaceUnavailability, PlaceSazonality
 
 
 
@@ -272,6 +272,7 @@ class CalendarSeasonAjax(View):
 
 
         # Declaring Variables - Others
+        buffet = request.GET.get("pk")
         today = datetime.datetime.today()
         today_month = request.GET.get("meses", None) # Checking if it's changing month
         if today_month == None:
@@ -288,8 +289,6 @@ class CalendarSeasonAjax(View):
                 today_year = int(today.year) + 1
             else:
                 today_year = int(today.year)
-            
-
         # Correct size of month
         count_day = calendar.monthrange(today_year, today_month)
         list_month = ["<li class='calendar_class_day_season'>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
@@ -299,13 +298,17 @@ class CalendarSeasonAjax(View):
         for i in range(len(list_month)):
             day = i+1
             this_day = str(today_year) + "-" + str(today_month) + "-" + str(day)
+
             # We are in the current month
             if today_day:
                 if day == today_day:
                     list_month[i] = "<li class='calendar_class_day_season'><span class='active'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
                     list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
-            
+                # data = datetime.datetime.strptime(today_day, "%Y-%m-%d").date()
+
+                if len(PlaceSazonality.objects.filter(day=this_day).filter(place = Place.objects.get(pk=buffet))):
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min'>" + str(i+1) + "</span></li>"
             else:
                 # We are in past month
                 if today_year < today.year:
@@ -415,7 +418,6 @@ class CalendarInputAjax(View):
         count_day = calendar.monthrange(today_year, today_month)
         list_month = ["<li class='calendar_class_day'>" + str(item+1) + "</li>" for item in range(calendar.monthrange(today_year,today_month)[1])]
         
-
         # Seting colors and markers
         for i in range(len(list_month)):
             day = i+1
@@ -426,7 +428,6 @@ class CalendarInputAjax(View):
                     list_month[i] = "<li class='calendar_class_day'><span class='active'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
                     list_month[i] = "<li class='calendar_class_day'><span class='pass'>" + str(i+1) + "</span></li>"
-            
             else:
                 # We are in past month
                 if today_year < today.year:

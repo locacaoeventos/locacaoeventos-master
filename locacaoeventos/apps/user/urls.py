@@ -36,6 +36,9 @@ urlpatterns = [
     url(r'^ajax/placeprice/get/$', PlacePriceGetAjax.as_view()),
     url(r'^ajax/placeprice/create/$', PlacePriceCreateAjax.as_view()),
     url(r'^ajax/placeprice/delete/$', PlacePriceDeleteAjax.as_view()),
+    url(r'^ajax/sazonality/create/$', SazonalityCreateAjax.as_view()),
+    url(r'^ajax/sazonality/get/$', SazonalityGetAjax.as_view()),
+    url(r'^ajax/sazonality/delete/$', SazonalityDeleteAjax.as_view()),
 
     # Buyer
     url(r'^conta/$', EditBuyer.as_view()),

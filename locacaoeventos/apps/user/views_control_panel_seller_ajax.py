@@ -6,7 +6,7 @@ import datetime
 from locacaoeventos.utils.datetime import unavailability_repeat
 
 from locacaoeventos.apps.place.placecore.models import Place
-from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability
+from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability, PlaceSazonality
 
 
 
@@ -182,4 +182,84 @@ class UnavailabilityDeleteAjax(View):
         placeunavailability_pk = request.GET.get("placeunavailability_pk")
         PlaceUnavailability.objects.get(pk=placeunavailability_pk).delete()
         return JsonResponse(data)
+
+
+
+
+
+
+
+def get_sazonality_list(place):
+    sazonality_list = []
+    for sazonality in PlaceSazonality.objects.filter(place=place):
+        sazonality_dic = {
+            "pk":sazonality.pk,
+            "place_pk":sazonality.place.pk,
+            "modifier":sazonality.modifier,
+            "day":sazonality.day.strftime("%d/%m/%Y")
+        }
+        sazonality_list.append(sazonality_dic)
+    return sazonality_list
+
+
+
+
+class SazonalityGetAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {}
+        place_pk = request.GET.get("place_pk")
+        place = Place.objects.get(pk=place_pk)
+        # Sazonality
+        data["placesazonality_list"] = get_sazonality_list(place)
+
+        return JsonResponse(data)
+
+
+
+
+
+
+class SazonalityCreateAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {"check":"check"}
+        place_pk = request.GET.get("place")
+        place = Place.objects.get(pk=place_pk)
+        modifier = request.GET.get("modifier")
+        modifier = int(float(modifier))
+        day = request.GET.get("day")
+        day = datetime.datetime.strptime(day, "%d / %m / %Y").date()
+        print(day)
+        
+        PlaceSazonality.objects.create(
+            place=place,
+            modifier=modifier,
+            day=day
+        )
+
+
+        data["placesazonality_list"] = get_sazonality_list(place)
+
+
+        return JsonResponse(data)
+
+
+
+
+class SazonalityDeleteAjax(View):
+    def get(self, request, *args, **kwargs):
+        data = {}
+        sazonality_pk = request.GET.get("sazonality_pk")
+        place = request.GET.get("place_pk")
+        sazonality = PlaceSazonality.objects.get(pk=sazonality_pk)
+        sazonality.delete()
+        print(place)
+        data["placesazonality_list"] = get_sazonality_list(place)
+
+
+        return JsonResponse(data)
+
+
+
+
+
 

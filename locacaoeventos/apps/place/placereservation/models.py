@@ -34,3 +34,14 @@ class PlaceReservation(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.place.name
+
+
+
+
+class PlaceSazonality(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    day = models.DateField()
+    modifier = models.IntegerField(max_length=5, blank=True, null=True) # min or max
+
+    def __str__(self):
+        return self.place.name + " - " + str(self.modifier)+'%'

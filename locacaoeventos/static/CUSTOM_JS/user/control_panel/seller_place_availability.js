@@ -10,7 +10,6 @@ $(".bread").click(function(){
     $("#"+id).addClass("breadcrumbs_selected")
     $(".options_menu").css("display", "none")
     $("#"+option).css("display", "block")
-    console.log("#"+option)
 })
 
 
@@ -24,6 +23,7 @@ $(".bread").click(function(){
 $(document).ready(function(){
     placeprice_get()
     unavailabilities_get()
+    sazonality_get()
 })
 
 // Description ===================================================
@@ -157,7 +157,6 @@ function placeprice_show(data){
         str_div += '</div>'                
     }
 
-
     $("#placeprice_container").html(str_div);
 
     if(data.placeprice_list.length==0){
@@ -165,6 +164,31 @@ function placeprice_show(data){
     } else {
         $("#has_place_price_list").css("display", "none")
     }
+
+}
+
+
+
+function placesazonality_show(data){
+    div_str = ""
+
+    $("#sazonality_container").empty();
+
+    for(i=0;i<data.placesazonality_list.length;i++){
+        var placesazonality = data.placesazonality_list[i]
+        div_str += '<div class="placesazonality_card">'
+        div_str += '<div class="col-md-6">'
+        div_str += '<div class="unavailability_card">'
+            div_str += '<div class="sazonality_crossmark_delete" sazonality_pk="' + placesazonality.pk + '">&#10006;</div>'
+            div_str += 'Dia: ' + placesazonality.day + '<br>'
+            div_str += 'Modificador: ' + placesazonality.modifier +'%'+ '<br>'
+        div_str += '</div>'
+        div_str += '</div>'        
+        div_str += '</div>'        
+          
+    }
+    $("#sazonality_container").html(div_str)      
+
 
 }
 
@@ -181,9 +205,31 @@ $(document).on("click", "#placeprice_add", function(){
 
 })
 
+$(document).on("click", "#placesazonality_add", function(){
+    var is_valid = placesazonality_validade_form()
+    if(is_valid==false){
+        $("#placesazonality_add_error").css("display", "block")
+    } else {
+        $("#placesazonality_add_error").css("display", "none")
+        placesazonality_add()
+    }
+})
+
+
 function placeprice_validade_form(){
     var is_valid = true
     $(".placeprice_field").each(function(){
+        if($(this).val()==""){
+            is_valid = false
+        }
+    })
+    return is_valid
+}
+
+
+function placesazonality_validade_form(){
+    var is_valid = true
+    $(".placesazonality_input").each(function(){
         if($(this).val()==""){
             is_valid = false
         }
@@ -225,6 +271,29 @@ function placeprice_add(){
             $("#id_capacity_min").val("")
             $("#id_capacity_max").val("")
             $("#id_description_container").html(" ")
+        }
+    })    
+
+}
+
+
+function placesazonality_add(){
+    var place_pk = $("#id_place_pk").val()
+    var modifier = $("#modifier_percent").val()
+    var date = $("#date_id").val()
+
+    $.ajax({
+        url: "/usuario/ajax/sazonality/create/",
+        dataType: 'json',
+        data: {
+            "place":place_pk,
+            "modifier":modifier,
+            "day":date
+        },
+        success: function (data) {
+            placesazonality_show(data)
+            $("#modifier_percent").val("")
+            $("#date_id").val("")
         }
     })    
 
@@ -284,7 +353,6 @@ $("#unavailability_optional_erase").click(function(){
 
 // Forms new Unavailability
   function load_calendar(place_pk, months, elem, period){
-    console.log(place_pk)
     $.ajax({
       url: "/usuario/ajax/calendario/",
       dataType: 'json',
@@ -442,6 +510,21 @@ $(document).on("click", ".unavailability_crossmark_delete", function(){
     })
 })
 
+$(document).on("click", ".sazonality_crossmark_delete", function(){
+    $.ajax({
+        url: "/usuario/ajax/sazonality/delete/",
+        dataType: 'json',
+        data: {
+            "sazonality_pk":$(this).attr("sazonality_pk"),
+            "place_pk":$("#id_place_pk").val(),
+        },
+        success: function (data) {
+            placesazonality_show(data)
+            load_calendar($("#id_place_pk").val(), 0, "none", [1,1])
+
+        }
+    })
+})
 
 
 // Show unavailabilities
@@ -472,5 +555,31 @@ function unavailabilities_get(){
         }
     })
 }
+
+function sazonality_get(){
+    $.ajax({
+        url: "/usuario/ajax/sazonality/get/",
+        dataType: 'json',
+        data: {
+            "place_pk":$("#id_place_pk").val(),
+        },
+        success: function (data) {
+            div_str = ""
+            sazonalities = data.placesazonality_list
+            for(i=0;i<sazonalities.length;i++){
+                sazonality = sazonalities[i]
+                div_str += '<div class="col-md-6">'
+                    div_str += '<div class="unavailability_card">'
+                        div_str += '<div class="sazonality_crossmark_delete" sazonality_pk="' + sazonality.pk + '">&#10006;</div>'
+                        div_str += 'Dia: ' + sazonality.day + '<br>'
+                        div_str += 'Modificador: ' + sazonality.modifier +'%'+ '<br>'
+                    div_str += '</div>'
+                div_str += '</div>'                
+            }
+            $("#sazonality_container").html(div_str)
+        }
+    })
+}
+
 
 

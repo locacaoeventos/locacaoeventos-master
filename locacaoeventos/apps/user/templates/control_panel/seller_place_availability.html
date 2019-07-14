@@ -15,13 +15,16 @@
 
 
 
+
     <!-- CLOCK PICKER -->
     <link rel="stylesheet" type="text/css" href="/static/clockpicker/dist_folder/bootstrap-clockpicker.min.css">
     <link rel="stylesheet" type="text/css" href="/static/clockpicker/assets/css/github.min.css">
+    
 
-
-
-
+    <!-- SLIDER -->
+    <link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
+    <script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
+    
     <ul class="breadcrumbs-two">
         <li id="bread1" option="times" class="bread bread1 breadcrumbs_selected"><a><span>Horários&nbsp;</span></a></li>
         <li id="bread2" option="prices" class="bread bread2"><a><span>Preços&nbsp;</span></a></li>
@@ -244,7 +247,7 @@
                                         Valor unitário (por convidado):
                                         {% include "_question_mark.html" %}
                                     </div>
-                                    <input type="text" required placeholder="R$ 00,00" step="any" class="placeprice_field" id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="9" />
+                                    <input type="text" required placeholder="R$ 00,00" step="any"id="id_value" name="value" data-thousands="." data-decimal="," data-prefix="R$ " maxlength="9" />
                                     <div class="separador-20"> </div>
 
 
@@ -280,15 +283,41 @@
                     </div>
                     <div class="options_menu" id="season" style="text-align:left; display:block">
                         {% if has_period %}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {% include "calendar-sazonality.html" %}
-                                </div>
-                                <div class="col-md-6">
-                                    <input type"text" class="calendar_input">
-                                </div>
+                            <h1>Disponibilidade e horários</h1>
+                            <hr class="line"/>
+                            <h4>Sazonalidade</h4>
+                            Selecione as datas em que haverá uma modificação no preço.
+                            <div class="separador-10"> </div>
+                            
+                            <div style="text-align:left; width:90%; min-width:300px; max-width:500px; margin:auto; margin-left:0px">
+                                {% include "calendar-sazonality.html" %}
                             </div>
+                            <div class="separador-10"> </div>
+                            <span class="section_title">Quando haverá modificação?</span>
+                            <span style="font-size:11px; font-style:italic">(Selecione a data no calendário)</span>
+                            <div class="separador-10"> </div>
+                            <input type="text" style="width:30%" class="form-control calendar_input placesazonality_input" id="date_id" name="date" autocomplete="off" >
+                            <div class="separador-30"></div>
+                            <div class="separador-30"></div>
+                            <span class="section_title ">Qual porcentagem de modificação será utilizada? (Até 50%)</span>
+                            <div class="separador-10"> </div>
+                            <div class="separador-10"> </div>
+                            <div id="slider_modifier" class="pnleft_input" style="width:30%; min-width:10px; border-radius:0; margin:auto; margin-left:0px;"></div>
+                            <div class="separador-10"> </div>
+                            <div class="separador-10"> </div>
 
+                            <input type="number" class="form-control placesazonality_input" style="width:30%" id="modifier_percent" name="modifier" autocomplete="off" >
+                            <button class="btn btn-default pull-right" style="font-size:12px" id="placesazonality_add">Adicionar</button>
+
+                            <span class="error_message" id="placesazonality_add_error">
+                                Preencha todos os espaços!
+                            </span>
+                    
+                    
+
+                            <hr class="line"/>
+                            <div class="row" id="sazonality_container">
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -337,6 +366,20 @@
       $("#help_tip2").css("right", "0px")
 
 
+var slider_modifier = document.getElementById('slider_modifier');
+noUiSlider.create(slider_modifier, {
+    start: [0],
+      range: {
+        'min': [-50],
+        'max': [50]
+      },
+      step: 1,
+      connect: [false,false],
+});
+
+slider_modifier.noUiSlider.on('update', function (values, handle) {
+    $("#modifier_percent").val(values[handle])
+});
 
 
 $('.clockpicker').clockpicker().find('input').change(function(){
