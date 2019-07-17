@@ -19,17 +19,13 @@
 <div style="width:80%; min-width:300px; margin:auto">
     <header>
         <div style="text-align:center; color:#411859; font-weight:bold">
-            {% if compra_buffet == true %}
-                <span >Cadastra-se para poder agendar seu buffet!</span>
-            {% endif %}
-
-            {% if wrong_user == True %}
+            {% if compra_buffet == True %}
+                <span >Cadastre-se para poder agendar seu buffet!</span>
+            {% elif wrong_user == True %}
                 <span >Usuário não cadastrado no sistema</span>
-            {% endif %}
-            {% if wrong_password == True %}
+            {% elif wrong_password == True %}
                 <span>Usuário cadastrado, mas senha inválida</span>
-            {% endif %}
-            {% if not_active == True %}
+            {% elif not_active == True %}
                 <span>Usuário desativo; verifique seu e-mail ou contacte um administrador</span>
             {% endif %}
         </div>
