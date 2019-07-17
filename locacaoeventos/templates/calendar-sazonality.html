@@ -187,7 +187,8 @@
 <script type="text/javascript" src="/static/CUSTOM_JS/core/general.js"></script>
 <script>
   // Load Calendar
-  $(document).ready(function(){
+  function loan_calendar_sazonality() {
+
     $.ajax({
       url: "/usuario/ajax/calendario-sazonalidade/",
       dataType: 'json',
@@ -206,6 +207,10 @@
       }
     })
 
+  }
+
+  $(document).ready(function(){
+    loan_calendar_sazonality()
   })
 
 

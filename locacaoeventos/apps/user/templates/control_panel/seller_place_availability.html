@@ -281,18 +281,21 @@
                             </div>
                         {% endif %}
                     </div>
-                    <div class="options_menu" id="season" style="text-align:left; display:block">
-                        {% if has_period %}
+                    <div class="options_menu" id="season" style="text-align:left; display:block;">
+                        {% if has_period %} 
                             <h1>Disponibilidade e horários</h1>
                             <hr class="line"/>
                             <h4>Sazonalidade</h4>
                             Selecione as datas em que haverá uma modificação no preço.
-                            <div class="separador-10"> </div>
+                            <div class="separador-20"> </div>
                             
-                            <div style="text-align:left; width:90%; min-width:300px; max-width:500px; margin:auto; margin-left:0px">
-                                {% include "calendar-sazonality.html" %}
+
+                            <div style="width:100%; text-align:center">
+                                <div style="display:inline-block; width:100%; max-width:400px">
+                                    {% include "calendar-sazonality.html" %}
+                                </div>
                             </div>
-                            <div class="separador-10"> </div>
+                            <div class="separador-20"> </div>
                             <span class="section_title">Quando haverá modificação?</span>
                             <span style="font-size:11px; font-style:italic">(Selecione a data no calendário)</span>
                             <div class="separador-10"> </div>
@@ -313,9 +316,13 @@
                                 Preencha todos os espaços!
                             </span>
                     
-                    
+                                
+
+                            <div class="separador-30"> </div>
 
                             <hr class="line"/>
+                            <div class="separador-20"> </div>
+
                             <div class="row" id="sazonality_container">
                             </div>
                         {% endif %}

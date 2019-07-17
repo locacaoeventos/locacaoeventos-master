@@ -212,6 +212,7 @@ $(document).on("click", "#placesazonality_add", function(){
     } else {
         $("#placesazonality_add_error").css("display", "none")
         placesazonality_add()
+        loan_calendar_sazonality()
     }
 })
 
