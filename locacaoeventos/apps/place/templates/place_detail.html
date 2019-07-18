@@ -80,6 +80,7 @@ Body code
             {% for info in additionalinformation %}
               {% if not forloop.first %}-->{% endif %}
               <div class="detail_description_card detail_additionalinformation">
+                <img style="position:absolute; left:2px; width:25px; top:13px; padding:5px; border-radius:50%; border:2px solid #00a8b6" src="/static/img/icon/checked.png"/>
                 <div>{{info.name}}</div>
               </div>
               {% if not forloop.last %}&nbsp;&nbsp;<!--{% endif %}
@@ -97,6 +98,7 @@ Body code
               {% for decoration in place.decoration.0 %}
                 {% if not forloop.first %}-->{% endif %}
                 <div class="detail_description_card decoration_childrenrides">
+                  <img style="position:absolute; left:2px; width:25px; top:13px; padding:5px; border-radius:50%; border:2px solid #8eba30" src="/static/img/icon/checked.png"/>
                   <div>{{decoration}}</div>
                 </div>
                 {% if not forloop.last %}&nbsp;<!--{% endif %}
@@ -113,6 +115,7 @@ Body code
               {% for children_rides in place.children_rides.0 %}
                 {% if not forloop.first %}-->{% endif %}
                 <div class="detail_description_card decoration_childrenrides">
+                  <img style="position:absolute; left:2px; width:25px; top:13px; padding:5px; border-radius:50%; border:2px solid #f0533e" src="/static/img/icon/checked.png"/>
                   <div>{{children_rides}}</div>
                 </div>
                 {% if not forloop.last %}&nbsp;<!--{% endif %}
