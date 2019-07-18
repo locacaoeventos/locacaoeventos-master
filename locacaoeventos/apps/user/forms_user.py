@@ -81,7 +81,6 @@ class BuyerForm(TOCForm):
             error_message = forms.ValidationError("CPF digitado incorretamente")
             self.add_error('cpf_buyer', error_message)
 
-
         cellphone = str(cleaned_data.get('cellphone'))
         print(cellphone)
 
