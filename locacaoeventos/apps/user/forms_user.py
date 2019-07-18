@@ -81,6 +81,7 @@ class BuyerForm(TOCForm):
             error_message = forms.ValidationError("CPF digitado incorretamente")
             self.add_error('cpf_buyer', error_message)
 
+
         cellphone = str(cleaned_data.get('cellphone'))
         print(cellphone)
 
@@ -222,19 +223,22 @@ class SellerForm(TOCForm):
 
 
 def validate_cpf(cpf):
-    sum_tot = 0
-    for i in range(1,10):
-        sum_tot += int(cpf[i-1])*(11-i)
-    dig1 = str((sum_tot*10)%11)
-    if dig1 == '10':
-        dig1 = '0'
-    sum_tot = 0
-    for i in range(1,11):
-        sum_tot += int(cpf[i-1])*(12-i)
-    dig2 = str((sum_tot*10)%11)
-    if dig2 == '10':
-        dig2 = '0'
-    if dig1 == cpf[9] and dig2 == cpf[10]:
-        return True
-    else:
+    if len(cpf) < 10:
         return False
+    else:
+        sum_tot = 0
+        for i in range(1,10):
+            sum_tot += int(cpf[i-1])*(11-i)
+        dig1 = str((sum_tot*10)%11)
+        if dig1 == '10':
+            dig1 = '0'
+        sum_tot = 0
+        for i in range(1,11):
+            sum_tot += int(cpf[i-1])*(12-i)
+        dig2 = str((sum_tot*10)%11)
+        if dig2 == '10':
+            dig2 = '0'
+        if dig1 == cpf[9] and dig2 == cpf[10]:
+            return True
+        else:
+            return False
