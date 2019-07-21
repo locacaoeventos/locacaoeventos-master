@@ -71,7 +71,6 @@ class Login(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         compra_buffet = request.GET.get("compra_buffet", None)
-        context["compra_buffet"] = compra_buffet
         context["basemenu"] = "login"
         if not request.user.is_authenticated:
             return render(request, "login.html", context)

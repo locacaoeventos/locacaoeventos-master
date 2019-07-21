@@ -305,10 +305,18 @@ class CalendarSeasonAjax(View):
                     list_month[i] = "<li class='calendar_class_day_season'><span class='active'>" + str(i+1) + "</span></li>"
                 elif day < today_day:
                     list_month[i] = "<li class='calendar_class_day_season'><span class='pass'>" + str(i+1) + "</span></li>"
+                    seazons_past = PlaceSazonality.objects.filter(day=this_day).delete()
                 # data = datetime.datetime.strptime(today_day, "%Y-%m-%d").date()
+                periods = PlaceSazonality.objects.filter(day=this_day).filter(place = Place.objects.get(pk=buffet))
+                if len(periods)==0:
+                    pass
+                elif len(periods)==2:
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:orange'>" + str(i+1) + "</span></li>"
+                elif periods[0].period=="max":
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:#96FEC4'>" + str(i+1) + "</span></li>"
+                elif periods[0].period=="min":
+                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min' style='background-color:#F68971'>" + str(i+1) + "</span></li>"
 
-                if len(PlaceSazonality.objects.filter(day=this_day).filter(place = Place.objects.get(pk=buffet))):
-                    list_month[i] = "<li class='calendar_class_day_season'><span class='day_option day_colored occupied_min'>" + str(i+1) + "</span></li>"
             else:
                 # We are in past month
                 if today_year < today.year:

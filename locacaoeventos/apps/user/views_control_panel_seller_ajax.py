@@ -8,7 +8,7 @@ from locacaoeventos.utils.datetime import unavailability_repeat
 from locacaoeventos.apps.place.placecore.models import Place
 from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability, PlaceSazonality
 
-
+from django.http import HttpResponse
 
 
 
@@ -191,13 +191,21 @@ class UnavailabilityDeleteAjax(View):
 
 def get_sazonality_list(place):
     sazonality_list = []
-    for sazonality in PlaceSazonality.objects.filter(place=place):
+    sazonalities = PlaceSazonality.objects.filter(place=place).order_by('day')
+    for sazonality in sazonalities:
+        period = ""
+        if sazonality.period == "min":
+            period=str(sazonality.place.period_soon_begin.strftime('%H:%M'))+" - "+str(sazonality.place.period_soon_end.strftime('%H:%M'))
+        if sazonality.period == "max":
+            period=str(sazonality.place.period_late_begin.strftime('%H:%M'))+" - "+str(sazonality.place.period_late_end.strftime('%H:%M'))
         sazonality_dic = {
             "pk":sazonality.pk,
             "place_pk":sazonality.place.pk,
             "modifier":sazonality.modifier,
-            "day":sazonality.day.strftime("%d/%m/%Y")
+            "day":sazonality.day.strftime("%d/%m/%Y"),
+            "period":period
         }
+
         sazonality_list.append(sazonality_dic)
     return sazonality_list
 
@@ -224,23 +232,49 @@ class SazonalityCreateAjax(View):
         data = {"check":"check"}
         place_pk = request.GET.get("place")
         place = Place.objects.get(pk=place_pk)
+        print(request.GET)
         modifier = request.GET.get("modifier")
         modifier = int(float(modifier))
         day = request.GET.get("day")
         day = datetime.datetime.strptime(day, "%d / %m / %Y").date()
-        print(day)
+        max_check = False
+        if request.GET.get("id_max_period")=="true":
+            max_check=True
         
-        PlaceSazonality.objects.create(
-            place=place,
-            modifier=modifier,
-            day=day
-        )
+        erro_max = False
+        min_check = False
+        if request.GET.get("id_min_period")=="true":
+            min_check=True
+        erro_min = False
+        if max_check:
+            sazonalities = PlaceSazonality.objects.filter(day=day).filter(period="max")
+            if len(sazonalities)==0:
+                PlaceSazonality.objects.create(
+                    place=place,
+                    modifier=modifier,
+                    day=day,
+                    period="max"
+                )
+            else:
+                erro_max=True
 
+        if min_check:
+            sazonalities = PlaceSazonality.objects.filter(day=day).filter(period="min")
+            if len(sazonalities)==0:
+                PlaceSazonality.objects.create(
+                    place=place,
+                    modifier=modifier,
+                    day=day,
+                    period="min"
+                )
+            else:
+                erro_min=True
 
         data["placesazonality_list"] = get_sazonality_list(place)
-
-
-        return JsonResponse(data)
+        if not erro_max and not erro_min:
+            return JsonResponse(data)
+        else:
+            return HttpResponse(status=500)
 
 
 
