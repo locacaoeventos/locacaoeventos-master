@@ -168,10 +168,8 @@ function placeprice_show(data){
 }
 
 
-
 function placesazonality_show(data){
     div_str = ""
-
     $("#sazonality_container").empty();
 
     for(i=0;i<data.placesazonality_list.length;i++){
@@ -182,6 +180,7 @@ function placesazonality_show(data){
             div_str += '<div class="sazonality_crossmark_delete" sazonality_pk="' + placesazonality.pk + '">&#10006;</div>'
             div_str += 'Dia: ' + placesazonality.day + '<br>'
             div_str += 'Modificador: ' + placesazonality.modifier +'%'+ '<br>'
+            div_str += 'Período: ' + placesazonality.period +'<br>'
         div_str += '</div>'
         div_str += '</div>'        
         div_str += '</div>'        
@@ -212,7 +211,6 @@ $(document).on("click", "#placesazonality_add", function(){
     } else {
         $("#placesazonality_add_error").css("display", "none")
         placesazonality_add()
-        loan_calendar_sazonality()
     }
 })
 
@@ -230,6 +228,7 @@ function placeprice_validade_form(){
 
 function placesazonality_validade_form(){
     var is_valid = true
+    console.log(sazonalities)
     $(".placesazonality_input").each(function(){
         if($(this).val()==""){
             is_valid = false
@@ -282,6 +281,16 @@ function placesazonality_add(){
     var place_pk = $("#id_place_pk").val()
     var modifier = $("#modifier_percent").val()
     var date = $("#date_id").val()
+    var id_min_period = false
+    var id_max_period = false
+    console.log($("#id_min_period_mod"))
+    if($("#id_min_period_mod").is(':checked')){
+        id_min_period = true
+    }
+    
+    if($("#id_max_period_mod").is(':checked')){
+        id_max_period = true
+    }
 
     $.ajax({
         url: "/usuario/ajax/sazonality/create/",
@@ -289,13 +298,21 @@ function placesazonality_add(){
         data: {
             "place":place_pk,
             "modifier":modifier,
-            "day":date
+            "day":date,
+            "id_min_period":id_min_period,
+            "id_max_period":id_max_period,
         },
         success: function (data) {
+            $("#placesazonality_add_error_date").css("display", "none")
             placesazonality_show(data)
             $("#modifier_percent").val("")
             $("#date_id").val("")
+        },
+        error: function(){
+            $("#placesazonality_add_error_date").css("display", "block")
+
         }
+
     })    
 
 }
@@ -574,6 +591,7 @@ function sazonality_get(){
                         div_str += '<div class="sazonality_crossmark_delete" sazonality_pk="' + sazonality.pk + '">&#10006;</div>'
                         div_str += 'Dia: ' + sazonality.day + '<br>'
                         div_str += 'Modificador: ' + sazonality.modifier +'%'+ '<br>'
+                        div_str += 'Período: ' + sazonality.period +'<br>'
                     div_str += '</div>'
                 div_str += '</div>'                
             }

@@ -222,22 +222,19 @@ class SellerForm(TOCForm):
 
 
 def validate_cpf(cpf):
-    if len(cpf) < 10:
-        return False
+    sum_tot = 0
+    for i in range(1,10):
+        sum_tot += int(cpf[i-1])*(11-i)
+    dig1 = str((sum_tot*10)%11)
+    if dig1 == '10':
+        dig1 = '0'
+    sum_tot = 0
+    for i in range(1,11):
+        sum_tot += int(cpf[i-1])*(12-i)
+    dig2 = str((sum_tot*10)%11)
+    if dig2 == '10':
+        dig2 = '0'
+    if dig1 == cpf[9] and dig2 == cpf[10]:
+        return True
     else:
-        sum_tot = 0
-        for i in range(1,10):
-            sum_tot += int(cpf[i-1])*(11-i)
-        dig1 = str((sum_tot*10)%11)
-        if dig1 == '10':
-            dig1 = '0'
-        sum_tot = 0
-        for i in range(1,11):
-            sum_tot += int(cpf[i-1])*(12-i)
-        dig2 = str((sum_tot*10)%11)
-        if dig2 == '10':
-            dig2 = '0'
-        if dig1 == cpf[9] and dig2 == cpf[10]:
-            return True
-        else:
-            return False
+        return False

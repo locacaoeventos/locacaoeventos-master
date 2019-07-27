@@ -59,7 +59,7 @@
                     </div>
                     
                     
-                    <div class="options_menu" id="times" style="display:block">
+                    <div class="options_menu" id="times" style="display:none">
                 
 
 
@@ -90,7 +90,7 @@
 
 
                             <div class="separador-20"> </div>
-                            Funcionamento Opcional&nbsp;&nbsp;&nbsp;<i id="unavailability_optional_erase" style="display:inline-block; background-color:#4fa7bc; padding:3px 5px; font-weight:bold; color:white; font-style:normal; font-size:10px">Apagar</i><br>
+                            Funcionamento Opcional <i id="unavailability_optional_erase">(apagar)</i><br>
                             <div style="display:inline-block">
                                 <span style="font-size:11px;">Das:</span>
                                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
@@ -281,21 +281,18 @@
                             </div>
                         {% endif %}
                     </div>
-                    <div class="options_menu" id="season" style="text-align:left; display:none;">
-                        {% if has_period %} 
+                    <div class="options_menu" id="season" style="text-align:left; display:block">
+                        {% if has_period %}
                             <h1>Disponibilidade e horários</h1>
                             <hr class="line"/>
                             <h4>Sazonalidade</h4>
                             Selecione as datas em que haverá uma modificação no preço.
-                            <div class="separador-20"> </div>
+                            <div class="separador-10"> </div>
                             
-
-                            <div style="width:100%; text-align:center">
-                                <div style="display:inline-block; width:100%; max-width:400px">
-                                    {% include "calendar-sazonality.html" %}
-                                </div>
+                            <div style="text-align:left; width:90%; min-width:300px; max-width:500px; margin:auto; margin-left:0px">
+                                {% include "calendar-sazonality.html" %}
                             </div>
-                            <div class="separador-20"> </div>
+                            <div class="separador-10"> </div>
                             <span class="section_title">Quando haverá modificação?</span>
                             <span style="font-size:11px; font-style:italic">(Selecione a data no calendário)</span>
                             <div class="separador-10"> </div>
@@ -308,21 +305,35 @@
                             <div id="slider_modifier" class="pnleft_input" style="width:30%; min-width:10px; border-radius:0; margin:auto; margin-left:0px;"></div>
                             <div class="separador-10"> </div>
                             <div class="separador-10"> </div>
-
                             <input type="number" class="form-control placesazonality_input" style="width:30%" id="modifier_percent" name="modifier" autocomplete="off" >
+
+                            <div class="subsection_availability">
+                                <div class="separador-15"> </div>
+                                <label class="container_checkbox_opt1" style="display:inline-block; font-size:12px; line-height:24px">
+                                  <input class="unavailability_period" type="checkbox" name="min_period" id="id_min_period_mod">
+                                  <span class="checkmark_checkbox_opt1"></span>
+                                  {{place.period_soon_begin}} - {{place.period_soon_end}}
+                                </label>
+                                {% if place.period_late_begin != None %}
+                                    &nbsp;&nbsp;
+                                    <label class="container_checkbox_opt2" style="display:inline-block; font-size:12px; line-height:24px">
+                                      <input class="unavailability_period" type="checkbox" name="max_period" id="id_max_period_mod">
+                                      <span class="checkmark_checkbox_opt2"></span>
+                                      {{place.period_late_begin}} - {{place.period_late_end}}
+                                    </label>
+                                {% endif %}
+
                             <button class="btn btn-default pull-right" style="font-size:12px" id="placesazonality_add">Adicionar</button>
 
                             <span class="error_message" id="placesazonality_add_error">
                                 Preencha todos os espaços!
                             </span>
+                            <span class="error_message" id="placesazonality_add_error_date">
+                                Já existe um modificador nessa data!
+                            </span>
                     
-                                
-
-                            <div class="separador-30"> </div>
 
                             <hr class="line"/>
-                            <div class="separador-20"> </div>
-
                             <div class="row" id="sazonality_container">
                             </div>
                         {% endif %}
