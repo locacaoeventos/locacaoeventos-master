@@ -4,7 +4,9 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.conf import settings
 
-from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs, GoDaddyVerification, Blog, Email
+from locacaoeventos.apps.user.views_general import *
+
+# from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs, GoDaddyVerification, Blog, Email
 from locacaoeventos.apps.user.views import UploadFile, GetPhoto
 
 import locacaoeventos.apps.user.urls
@@ -20,6 +22,13 @@ urlpatterns = [
     
     url(r'^blog/$', Blog.as_view()),
     url(r'^email/$', Email.as_view()),
+
+    url(r'^email-recebe-buffet/$', EmailBuffetRecebe.as_view()),
+    url(r'^email-cliente-recebe/$', EmailClienteRecebe.as_view()),
+    url(r'^email-buffet-reserva/$', EmailBuffetReserva.as_view()),
+    url(r'^email-buffet-cadastro/$', EmailBuffetCadastro.as_view()),
+    url(r'^email-cliente-cadastro/$', EmailClienteCadastro.as_view()),
+    url(r'^email-cliente-aguardo/$', EmailClienteAguardo.as_view()),
 
     url(r'^teste/$', Teste.as_view()),
     url(r'^sobre-nos/$', AboutUs.as_view()),

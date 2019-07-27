@@ -37,6 +37,30 @@ class Email(View):
     def get(self, request, *args, **kwargs):
         return render(request, "emails/email_registration.html")
 
+class EmailBuffetRecebe(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_buffet_recebe.html")
+
+class EmailClienteRecebe(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_cliente_recebe.html")
+
+class EmailBuffetReserva(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_buffet_reserva.html")
+
+class EmailBuffetCadastro(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_buffet_cadastro.html")
+
+class EmailClienteCadastro(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_cliente_cadastro.html")
+
+class EmailClienteAguardo(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_cliente_cadastro.html")
+
 
 class Home(View):
     def get(self, request, *args, **kwargs):
