@@ -209,7 +209,7 @@ class CreateUser(View):
 
 
                 html_message = loader.render_to_string(
-                    'emails/email_registration.html',
+                    'emails/email_cliente_cadastro.html',
                     {
                         'user_name': form_seller.cleaned_data["name_seller"],
                         'token': key,
