@@ -1,14 +1,23 @@
 <div style="width:100%">
 	<div style="width:100%; text-align:center">
-		<img src="/static/img/emails/layout-e-mail-cliente-aguardando-aprovaçao-de-evento_01.jpg" style="width:100%;height: auto; margin: 0 auto;"/>
+		<img src="/static/img/emails/layout-e-mail-buffet-pedido-de-reserva---reforço_01.jpg" style="width:100%;height: auto; margin: 0 auto;"/>
 		<hr style="width:100%; border-top: 4px solid #001e62;"/>
 	</div>
 	<div style="max-width:80%; margin:auto; width:100%; font-family: 'Arial', sans-serif; color:#383838; font-size:20px; text-align:center">
 		<br>
 		<div style="width:100%;  text-align:center">
 		<h2><b>Olá, <span style="font-weight:bold">Gabriel dos Anjos</span>.</h2></b><br>
-		Sua solicitação de reserva para o BUFFET X foi enviada com sucesso!<br><br>
-		Dentro de alguns instantes você receberá a confirmação da sua festa!<br><br>
+		O Buffet X recebeu uma solicitação de reserva a mais de X horas.<br><br>
+		Lembre-se de que uma confirmação rápida é muito importante para a decisão do cliente. Não perca esta festa!<br><br>
+		
+		<div style="width:100%; height:6%; display: flex;justify-content: center;align-items: center;">
+			<a style="background-color:#7fbd2f; height:100%; width:80%; display: flex;justify-content: center;align-items: center;  color:white; cursor:pointer; border-color:transparent; font-size:2em; text-decoration:none" href="http://www.123festas.com/usuario/confirmar-email/?user={{user_pk}}&token={{token}}{% if is_seller == True %}&seller=true{% endif %}">
+				<div style="width:100%; height:auto;vertical-align: middle;   ">
+				<b >ACEITE ESTE EVENTO</b>
+				</div>
+			</a>
+		</div>
+		<br>
 
 		Obrigado e boas Festa!<br><br>
 		Equipe 123festas

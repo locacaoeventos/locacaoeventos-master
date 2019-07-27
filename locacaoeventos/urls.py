@@ -23,12 +23,13 @@ urlpatterns = [
     url(r'^blog/$', Blog.as_view()),
     url(r'^email/$', Email.as_view()),
 
-    url(r'^email-recebe-buffet/$', EmailBuffetRecebe.as_view()),
+    url(r'^email-buffet-recebe/$', EmailBuffetRecebe.as_view()),
     url(r'^email-cliente-recebe/$', EmailClienteRecebe.as_view()),
     url(r'^email-buffet-reserva/$', EmailBuffetReserva.as_view()),
     url(r'^email-buffet-cadastro/$', EmailBuffetCadastro.as_view()),
     url(r'^email-cliente-cadastro/$', EmailClienteCadastro.as_view()),
     url(r'^email-cliente-aguardo/$', EmailClienteAguardo.as_view()),
+    url(r'^email-buffet-reserva-reforco/$', EmailBuffetReservaReforco.as_view()),
 
     url(r'^teste/$', Teste.as_view()),
     url(r'^sobre-nos/$', AboutUs.as_view()),

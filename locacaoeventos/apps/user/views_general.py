@@ -59,8 +59,11 @@ class EmailClienteCadastro(View):
 
 class EmailClienteAguardo(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "emails/email_cliente_cadastro.html")
+        return render(request, "emails/email_cliente_aguardo.html")
 
+class EmailBuffetReservaReforco(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "emails/email_buffet_reserva_reforco.html")
 
 class Home(View):
     def get(self, request, *args, **kwargs):
