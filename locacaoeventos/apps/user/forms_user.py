@@ -79,7 +79,7 @@ class BuyerForm(TOCForm):
         cpf_num = re.sub('[^0-9]', '', cpf)
         if not validate_cpf(cpf_num) and valida_cpf:
             error_message = forms.ValidationError("CPF digitado incorretamente")
-            self.add_error('cpf_num', error_message)
+            self.add_error('cpf_buyer', error_message)
 
         cellphone = str(cleaned_data.get('cellphone'))
         print(cellphone)
