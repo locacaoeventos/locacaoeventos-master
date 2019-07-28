@@ -19,15 +19,94 @@ Body code
 <section class="container">
   <input type="text" id="placeprice_pk" style="display:none"/>
   <input type="text" id="placeprice_value" style="display:none"/>
-  <div class="buyingflux_place_container">
-    <div class="buyingflux_place_photo">
-        <div class="center-cropped img-center" style="width:100%; height:100px;background-image: url(/media/{{place.photo}});"></div>
-    </div><!--
-    --><div class="buyingflux_place_description">
-      {{place.name}}<br>
-      Capacidade: {{capacity}}<br>
-      Endereço: {{place.address}}<br>
+  <div class="row">
+    <div class="col-md-4">
+          <div class="center-cropped img-center" style="width:100%; height:200px;background-image: url(/media/{{place.photo}});"></div>
     </div>
+    <div class="col-md-4">
+      <span class="place_title" style="font-size:16px">{{place.name}}</span><br>
+      <div class="separador-5"> </div>
+      <span class="place_title">Capacidade:</span> {{capacity}}<br>
+      <div class="separador-5"> </div>
+      <span class="place_title">Endereço:</span> {{place.address}}<br> 
+    </div>
+    <div class="col-md-4">
+
+
+
+
+
+
+
+                        <!-- ========================= Block Avaliação ========================= -->
+                        {% if place.review_list.review_rates != "None" %}
+                            <figure class="pull-left" style="vertical-align:top; font-weight:bold">
+                                Avaliação <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_average}})</div><br>
+
+                            <div class="separador-20"> </div>
+                            <figure style="display:inline-block;">
+                                Infraestrutura 
+                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_infraestructure}})</div>
+
+                            <div class="separador-5"> </div>
+                            <figure style="display:inline-block;">
+                                Brinquedos 
+                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_rides}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_rides}})</div>
+
+                            <div class="separador-5"> </div>
+                            <figure style="display:inline-block;">
+                                Custo-Benefício 
+                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_cost_benefit}})</div>
+
+                            <div class="separador-5"> </div>
+                            <figure style="display:inline-block;">
+                                Atendimento 
+                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_attendance}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_attendance}})</div>
+
+                            <div class="separador-5"> </div>
+                            <figure style="display:inline-block;">
+                                Opinião das Crianças 
+                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
+
+                                
+                            </figure>
+                            <div class="pull-right">({{place.review_list.review_rates.rate_children_opinion}})</div>
+
+                        {% endif %}
+
+
+
+
+
+
+
+</div>  
+
+
+
+
+
+
   </div>
   <div class="separador-50"> </div>
   <div id="buyingflux_checkout">

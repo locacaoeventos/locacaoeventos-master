@@ -69,6 +69,18 @@ class BuyPlace(View):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 class PurchasePlace(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)

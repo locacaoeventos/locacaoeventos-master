@@ -1,21 +1,11 @@
 /* ==================
 Place Description
 ================== */
-.buyingflux_place_container {
-  width:100%;
+.place_title {
+  color:#011a5d;
+  font-weight:bold;
+  font-size:14px;
 }
-.buyingflux_place_photo {
-  display:inline-block;
-  width:20%;
-}
-.buyingflux_place_description {
-  display:inline-block;
-  width:80%;
-  padding:5px;
-  vertical-align:top;
-}
-
-
 
 
 /* ==================
