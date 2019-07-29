@@ -142,7 +142,7 @@ Body code
       {% if not placeprices_none %}
         <div class="separador-10"> </div>
         <div class="buyingflux_form_title">
-          Número de Convidados: <span id="capacity_string">{{capacity}}</span>
+          Número de convidados: <span id="capacity_string">{{capacity}}</span>
         </div>
         <input type="number" id="capacity_form" style="display:none" value="{{capacity}}"/>
         <div class="separador-15"> </div>
@@ -190,9 +190,10 @@ Body code
                     <span class="placeprice_card_attr">- {{description}}</span><br>
                   {% endfor %}
                   <div class="separador-10"> </div>
-                  <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
-                  <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
+                  <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} convidados</span><br>
+                  <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} convidados</span><br>
                   <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value|my_float_format }}</span><br>
+                  <span class="placeprice_card_attr"><b>Por convidado:</b> R${{placeprice.final_value_per_person|my_float_format }}</span><br>
                   {% comment %} <span class="placeprice_card_attr"><b>Valor Mínimo:</b> R${{capacity|floatformat:2}}</span><br> {% endcomment %}
                   <div class="separador-10"> </div>
                 </div>
@@ -200,7 +201,10 @@ Body code
           {% endfor %}
         --></div>
         <div class="separador-20"> </div>
-        <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Efetuar Compra</div>
+        <div style="width:100%; text-align:center">
+          <div class="place_back" onclick="window.history.back()">Voltar</div>&nbsp;&nbsp;
+          <div id="place_checkout" class="place_checkout_disable pay_button_disabled">Reservar Buffet</div>&nbsp;&nbsp;
+        </div>
       </div>
 
 

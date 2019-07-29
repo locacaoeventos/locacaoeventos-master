@@ -46,6 +46,7 @@ class BuyPlace(View):
             placeprice["final_value"] = int(capacity) * int(placeprice["value"])
             if int(placeprice["value_min"]) > placeprice["final_value"]:
                 placeprice["final_value"] = placeprice["value_min"]
+            placeprice["final_value_per_person"] = placeprice["final_value"]/int(capacity)
             
         if len(placeprice_list) == 0:
             context["placeprices_none"] = True

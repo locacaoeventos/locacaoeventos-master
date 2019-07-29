@@ -19,7 +19,7 @@ Place Prices
 }
 .placeprice_card_container {
   width:50% !important;
-  max-width:200px !important;
+  max-width:250px !important;
   cursor:pointer;
   display:inline-block !important;    
   padding:5px;
@@ -66,8 +66,19 @@ Place Prices
   font-size:12px;
   border-radius:10px;
   cursor:pointer;
-  float:right;
+  display:inline-block;
   background-color:#dddddd;
+}
+.place_back {
+  padding:10px;
+  text-align:center;
+  color:white;
+  font-weight:bold;
+  font-size:12px;
+  border-radius:10px;
+  cursor:pointer;
+  display:inline-block;
+  background-color:#f0533e;
 }
 .place_checkout_disable {
   background-color:#dddddd;
