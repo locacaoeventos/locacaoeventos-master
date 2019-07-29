@@ -3,7 +3,7 @@
 {% block js_select_customize %}{% endblock js_select_customize %}
 {% block content %}
 {% load datetime_tags %}
-
+{% load general_tags %}
 <!-- =====================================================
 CSS imports
 ===================================================== -->  
@@ -192,7 +192,7 @@ Body code
                   <div class="separador-10"> </div>
                   <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} pessoas</span><br>
                   <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} pessoas</span><br>
-                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value | floatformat:2}}</span><br>
+                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value|my_float_format }}</span><br>
                   {% comment %} <span class="placeprice_card_attr"><b>Valor Mínimo:</b> R${{capacity|floatformat:2}}</span><br> {% endcomment %}
                   <div class="separador-10"> </div>
                 </div>
