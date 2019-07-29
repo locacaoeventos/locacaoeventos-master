@@ -9,6 +9,7 @@ CSS imports
 ===================================================== -->  
 <link rel="stylesheet" href="/static/CUSTOM_CSS/core/custom_container.css" type="text/css">
 <link rel="stylesheet" href="/static/CUSTOM_CSS/place/place_buy.css" type="text/css">
+<link rel="stylesheet" href="/static/slider/nouislider.min.css" type="text/css">
 
 
 
@@ -34,65 +35,63 @@ Body code
 
 
 
+      <!-- ========================= Block Avaliação ========================= -->
+      {% if place.review_list.review_rates != "None" %}
+          <figure class="pull-left" style="vertical-align:top; font-weight:bold">
+              Avaliação <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
 
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_average}})</div><br>
 
+          <div class="separador-20"> </div>
+          <figure style="display:inline-block;">
+              Infraestrutura 
+              <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
 
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_infraestructure}})</div>
 
-                        <!-- ========================= Block Avaliação ========================= -->
-                        {% if place.review_list.review_rates != "None" %}
-                            <figure class="pull-left" style="vertical-align:top; font-weight:bold">
-                                Avaliação <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
+          <div class="separador-5"> </div>
+          <figure style="display:inline-block;">
+              Brinquedos 
+              <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_rides}}" data-num-stars="5"></span>
 
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_average}})</div><br>
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_rides}})</div>
 
-                            <div class="separador-20"> </div>
-                            <figure style="display:inline-block;">
-                                Infraestrutura 
-                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_infraestructure}}" data-num-stars="5"></span>
+          <div class="separador-5"> </div>
+          <figure style="display:inline-block;">
+              Custo-Benefício 
+              <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
 
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_infraestructure}})</div>
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_cost_benefit}})</div>
 
-                            <div class="separador-5"> </div>
-                            <figure style="display:inline-block;">
-                                Brinquedos 
-                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_rides}}" data-num-stars="5"></span>
+          <div class="separador-5"> </div>
+          <figure style="display:inline-block;">
+              Atendimento 
+              <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_attendance}}" data-num-stars="5"></span>
 
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_rides}})</div>
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_attendance}})</div>
 
-                            <div class="separador-5"> </div>
-                            <figure style="display:inline-block;">
-                                Custo-Benefício 
-                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_cost_benefit}}" data-num-stars="5"></span>
+          <div class="separador-5"> </div>
+          <figure style="display:inline-block;">
+              Opinião das Crianças 
+              <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
 
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_cost_benefit}})</div>
+              
+          </figure>
+          <div class="pull-right">({{place.review_list.review_rates.rate_children_opinion}})</div>
 
-                            <div class="separador-5"> </div>
-                            <figure style="display:inline-block;">
-                                Atendimento 
-                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_attendance}}" data-num-stars="5"></span>
-
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_attendance}})</div>
-
-                            <div class="separador-5"> </div>
-                            <figure style="display:inline-block;">
-                                Opinião das Crianças 
-                                <span style="color:#70b7c8;" class="stars" data-rating="{{place.review_list.review_rates.rate_children_opinion}}" data-num-stars="5"></span>
-
-                                
-                            </figure>
-                            <div class="pull-right">({{place.review_list.review_rates.rate_children_opinion}})</div>
-
-                        {% endif %}
+      {% else %}
+        <span class="place_title" style="font-size:16px">Este Buffet ainda não foi avaliado!</span><br>
+      {% endif %}
 
 
 
@@ -113,7 +112,7 @@ Body code
     <div class="row">
       <div class="{% if not placeprices_none %}col-md-12{% else %}col-md-6{% endif %}">
         <div class="page_title">
-          {% if not placeprices_none %}Selecione agora um pacote!
+          {% if not placeprices_none %}Selecione o pacote que mais se encaixa para você!
           {% else %}Não existem pacotes para a quantidade de pessoas desejada...
           {% endif %}
         </div>
@@ -123,6 +122,62 @@ Body code
             Mas existem essas opções:
           </div>
         {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {% if not placeprices_none %}
+        <div class="separador-10"> </div>
+        <div class="buyingflux_form_title">
+          Número de Convidados: <span id="capacity_string">{{capacity}}</span>
+        </div>
+        <input type="number" id="capacity_form" style="display:none" value="{{capacity}}"/>
+        <div class="separador-15"> </div>
+        <div id="search_capacity" class="pnleft_input" style="width:100%; max-width:300px;"></div>
+        <input type="text" id="date_form" style="display:none"/>
+        <div class="separador-10"> </div>
+
+        <div id="check_availability" style="background-color:#00a8b6; font-weight:bold; color:white; padding:10px; display:inline-block; cursor:pointer">Recalcular Convidados</div>
+                    
+      {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="separador-20"> </div>
         <div><!--
           {% for placeprice in placeprices %}
@@ -237,7 +292,79 @@ JS imports
     <!-- SCRIPT PAGAR.ME -->
     <script src="https://assets.pagar.me/pagarme-js/3.0/pagarme.min.js"></script>
     <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
+    <script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
     <script>
+      // Capacity
+      update_capacity()
+      // source: https://refreshless.com/nouislider/
+      var slider_page = document.getElementById('search_capacity');
+      var start_value = parseInt({{capacity}})
+      noUiSlider.create(slider_page, {
+        start: [start_value],
+        range: {
+          'min': [0],
+          'max': [500]
+        },
+        step: 10,
+        connect: [true, false],
+      });
+      slider_page.noUiSlider.on("slide", function(values){
+        if(values<500){
+          $("#capacity_string").html(parseInt(values))
+        } else {
+          $("#capacity_string").html("500+")
+        }
+        $("#capacity_form").val(parseInt(values))
+        update_capacity()
+      })
+      slider_page.noUiSlider.on("change", function(values){
+      })
+
+
+
+      function update_capacity(){
+        var url_string = window.location.href
+        var url = new URL(url_string);
+        var place_pk = url.searchParams.get("place_pk");
+
+        var capacidade = $("#capacity_form").val()
+
+        var date = url.searchParams.get("date");
+        date_form = encodeURIComponent(date)
+
+        var period = url.searchParams.get("period");
+        period_form = encodeURIComponent(period)
+
+
+        var url_str = "/buffet/comprar/?place_pk=" + "{{place_pk}}" +  "&capacidade=" + capacidade + "&date=" + date_form + "&period=" + period_form
+
+
+        console.log(url_str)
+
+        $("#check_availability").attr("onClick", "location='" + url_str + "'")
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       // Help tip
       $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank'>aqui</a>.")
       $("#help_tip").css("position", "absolute")
@@ -351,10 +478,6 @@ JS imports
       // });
 
     </script>
-<script>
-
-
-</script>
 
 
 
