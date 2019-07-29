@@ -12,13 +12,22 @@ $(document).on("click", ".placeprice_card", function () {
     }
 
 
+    $(this).attr("pk")
     $("#placeprice_pk").val($(this).attr("pk"))
+    console.log($(this).attr("name-price"))
+    console.log($(this).attr("value-price"))
+    $("#placeprice_chosen_name").html($(this).attr("name-price"))
+    $("#placeprice_chosen_value").html($(this).attr("value-price"))
+
     $("#placeprice_value").val($(this).attr("placeprice").replace(".", "").replace(",", ""))
 })
 
 $(document).on("click", "#place_checkout", function () {
     if (!$(this).hasClass("place_checkout_disable")) { // PRICE SELECTED
 
+        
+        
+        
         $('#buyingflux_checkout').fadeOut(400, function () {
             var div_str_payment_container = $("#payment_container").html()
             $("#payment_container").html("")

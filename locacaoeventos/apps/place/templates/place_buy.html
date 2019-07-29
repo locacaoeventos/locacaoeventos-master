@@ -182,7 +182,7 @@ Body code
         <div><!--
           {% for placeprice in placeprices %}
             --><div class="placeprice_card_container">
-                <div class="placeprice_card" pk="{{placeprice.pk}}" placeprice="{{placeprice.value|floatformat:2}}">
+                <div class="placeprice_card" pk="{{placeprice.pk}}" placeprice="{{placeprice.value|floatformat:2}}" name-price="{{placeprice.name}}" value-price="{{placeprice.final_value|my_float_format}}">
                   <div class="separador-10"> </div>
                   <div class="placeprice_card_name">{{placeprice.name}}</div><br>
                   <div class="placeprice_card_description_long">{{placeprice.description_long}}</div><br>
@@ -238,10 +238,23 @@ Body code
 
 
   <div id="payment_container">
-    <div class="page_title">Pagamento</div>
-    <button id="backto_selectprice">Voltar</button>
-    <div class="separador-20"> </div>
+    <div class="page_title">Detalhes da Reserva</div>
+    <i style="font-size:12px">*A cobrança de sua reserva só será realizada mediante a confirmação da reserva por parte do buffet selecionado.</i><br>
+    <div class="separador-5"> </div>
+    <span class="place_title">Nome do Pacote escolhido:</span> <span id="placeprice_chosen_name"></span>
+    <div class="separador-5"> </div>
+    <span class="place_title">Data do Evento:</span> {{day}}/{{month}}/{{year}} das {{begin}} às {{end}}
+    <div class="separador-5"> </div>
+    <span class="place_title">Capacidade:</span> {{capacity}} convidados
+    <div class="separador-5"> </div>
+    <span class="place_title">Valor:</span> <span id="placeprice_chosen_value"></span>
+    <div class="separador-15"> </div>
 
+
+    <hr class="line"/>
+    <div class="separador-15"> </div>
+    <div class="page_title">Reserva</div>
+    <div class="separador-20"> </div>
     <div class="pay_col pay_col_editable" style="padding-left:0px;" id="col_zip">
       <div class="pay_title" style="position:relative">Código Postal {% include "_question_mark.html" %}</div>
 
@@ -277,6 +290,7 @@ Body code
 
 
     
+      <div class="place_back pull-left" onclick="window.history.back()">Voltar</div>&nbsp;&nbsp;
 
     <button id="pay-boleto" class="pay_button pay_button_disabled">Pagar por Boleto Bancário</button>
     <button id="pay-credit-card" class="pay_button pay_button_disabled">Pagar por Cartão</button>
@@ -370,10 +384,10 @@ JS imports
 
 
       // Help tip
-      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank'>aqui</a>.")
+      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank' style='text-decoration:underline'>aqui</a>.")
       $("#help_tip").css("position", "absolute")
-      $("#help_tip").css("top", "0")
-      $("#help_tip").css("right", "0")
+      $("#help_tip").css("top", "-5px")
+      $("#help_tip").css("left", "120px")
 
 
       // Credit Card

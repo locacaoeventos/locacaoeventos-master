@@ -34,7 +34,18 @@ class BuyPlace(View):
         place = Place.objects.get(pk=place_pk)
         date = datetime.strptime(date[0] + date[1] + date[2], "%d%m%Y")
 
-        context["period"] = ast.literal_eval("[" + request.GET.get("period") + "]")
+        period = ast.literal_eval("[" + request.GET.get("period") + "]")
+        context["period"] = period
+        if period == [1,0]:
+            context["begin"] = place.period_soon_begin
+            context["end"] = place.period_soon_end
+
+        elif period == [0,1]:
+            context["begin"] = place.period_late_begin
+            context["end"] = place.period_late_end
+
+
+
         context["place_pk"] = request.GET.get("place_pk")
 
         placeprices = get_placeprices(place)
