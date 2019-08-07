@@ -537,6 +537,13 @@ class CreateEditPlace(View):
                     has_music=form.cleaned_data["has_music"],
                     has_illumination=form.cleaned_data["has_illumination"],
                     has_babychangingroom=form.cleaned_data["has_babychangingroom"],
+                    has_actors=form.cleaned_data["has_actors"],
+                    has_generator=form.cleaned_data["has_generator"],
+                    has_aircon=form.cleaned_data["has_aircon"],
+                    has_handicapped_acess=form.cleaned_data["has_handicapped_acess"],
+                    has_wifi=form.cleaned_data["has_wifi"],
+                    has_valet=form.cleaned_data["has_valet"],
+                    has_acoustics=form.cleaned_data["has_acoustics"],
                 )
                 # ===================== Photos
                 photos = form.cleaned_data["photos"]

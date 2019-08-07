@@ -82,6 +82,12 @@ def get_additional_information_important_attributes():
             "label_ordered": "Entretenimento"
         },
         {
+            "name": "has_plays",
+            "id_name": "id_has_plays",
+            "label": "Gincanas",
+            "label_ordered": "Gincanas"
+        },
+        {
             "name": "has_thematicdecoration",
             "id_name": "id_has_thematicdecoration",
             "label": "Decoração Temática",
@@ -128,6 +134,48 @@ def get_additional_information_important_attributes():
             "id_name": "id_has_babychangingroom",
             "label": "Fraldário",
             "label_ordered": "Fraldário"
+        },
+        {
+            "name": "has_actors",
+            "id_name": "id_has_actors",
+            "label": "Animadores",
+            "label_ordered": "Animadores"
+        },
+        {
+            "name": "has_generator",
+            "id_name": "id_has_generator",
+            "label": "Gerador de energia",
+            "label_ordered": "Gerador de energia"
+        },
+        {
+            "name": "has_aircon",
+            "id_name": "id_has_aircon",
+            "label": "Ar Condicionado",
+            "label_ordered": "Ar Condicionado"
+        },
+        {
+            "name": "has_handicapped_acess",
+            "id_name": "id_has_handicapped_acess",
+            "label": "Acessível para deficientes",
+            "label_ordered": "Acessível para deficientes"
+        },
+        {
+            "name": "has_wifi",
+            "id_name": "id_has_wifi",
+            "label": "Wi-Fi",
+            "label_ordered": "Wi-Fi"
+        },
+        {
+            "name": "has_valet",
+            "id_name": "id_has_valet",
+            "label": "Manobrista e/ou valet",
+            "label_ordered": "Manobrista e/ou valet"
+        },
+        {
+            "name": "has_acoustics",
+            "id_name": "id_has_acoustics",
+            "label": "Isolamento acústico",
+            "label_ordered": "Isolamento acústico"
         },
     ]
     additional_informations = sorted(additional_informations, key=lambda k: k['label_ordered']) 

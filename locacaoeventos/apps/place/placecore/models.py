@@ -63,6 +63,15 @@ class PlaceAdditionalInformation(models.Model):
     has_illumination = models.BooleanField("Iluminação")
     has_music = models.BooleanField("Música")
     alcoholic_drink = models.BooleanField("Serve bebidas alcólicas")
+    has_plays = models.BooleanField("Gincanas")
+    has_actors = models.BooleanField("Animadores")
+    has_generator = models.BooleanField("Gerador de energia")
+    has_aircon = models.BooleanField("Ar Condicionado")
+    has_handicapped_acess = models.BooleanField("Acessível para deficientes")
+    has_wifi = models.BooleanField("Wi-Fi")
+    has_valet = models.BooleanField("Manobrista e/ou valet")
+    has_acoustics = models.BooleanField("Isolamento acústico")
+
 
     def __str__(self):
         return "Additional Info of " + self.place.name
