@@ -61,7 +61,40 @@
         <div id="page-canvas">
             <!--Off Canvas Navigation-->
             <nav class="off-canvas-navigation">
-                <header>Navigation</header>
+                <ul>
+    {% if user.is_superuser %}
+    <li><a href="/administrador/home/">{{Administrador}}</a></li>
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+    <li><a href="/sobre-nos/">Sobre nós</a></li>
+    <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+    <li><a href="/usuario/cadastrar/">Anuncie seu espaço</a></li>
+    <li><a href="/buffet/mapa/">Mapas</a></li>
+    <li><a href="/login/">Login</a></li>
+    <li><a href="/usuario/cadastrar/">Cadastrar</a></li>
+
+    {% else %}
+
+    {% if buyer %}
+    <li><a href="/sobre-nos/">Sobre nós</a></li>
+    <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+    <li><a href="/buffet/mapa/">Mapas</a></li>
+    <li><a href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
+    <li><a href="/usuario/conta/">Minha Conta</a></li>
+    <li><a href="/logout/">Logout</a></li>
+
+    {% elif seller %}
+    <li><a href="/sobre-nos/">Sobre nós</a></li>
+    <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+    <li><a href="/buffet/mapa/">Mapas</a></li>
+    <li><a href="/usuario/buffets-agendados/">Minhas Reservas</a></li>
+    <li><a href="/usuario/anunciante/conta/">Minha Conta</a></li>
+    <li><a href="/logout/">Logout</a></li>
+    {%endif%}
+    {%endif%}
+
+</ul>
                 <div class="main-navigation navigation-off-canvas"></div>
             </nav>
             <!--end Off Canvas Navigation-->

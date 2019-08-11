@@ -38,13 +38,45 @@
     <div id="inner-wrapper">
         {% include "_header.html" %}
 
-
-
-
         <div id="page-canvas">
-            <nav class="off-canvas-navigation">
-                <header>Navigation</header>
-                <div class="main-navigation navigation-off-canvas"></div>
+            <nav class="off-canvas-navigation" style="position:fixed !important; height:100vh; padding-top:5%">
+            <header>Menu</header>
+                <ul>
+                {% if user.is_superuser %}
+                <li><a href="/administrador/home/">{{Administrador}}</a></li>
+                {% endif %}
+
+                {% if not user.is_authenticated %}
+                <li><a href="/sobre-nos/">Sobre nós</a></li>
+                <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+                <li><a href="/usuario/cadastrar/">Anuncie seu espaço</a></li>
+                <li><a href="/buffet/mapa/">Mapa</a></li>
+                <li><a href="/login/">Login</a></li>
+                <li><a href="/usuario/cadastrar/">Cadastrar</a></li>
+
+                {% else %}
+
+                {% if buyer %}
+                <li><a href="/sobre-nos/">Sobre nós</a></li>
+                <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+                <li><a href="/usuario/buffets-agendados/">Minhas reservas</a></li>
+                <li><a href="/usuario/conta/">Minha Conta</a></li>
+                <li><a href="/buffet/mapa/">Mapa</a></li>
+                <li><a href="/usuario/favoritos/">Favoritos</a></li>
+                <li><a href="/usuario/chat/?is_seller=False/">Mensagens</a></li>
+                <li><a href="/logout/">Logout</a></li>
+
+                {% elif seller %}
+                <li><a href="/sobre-nos/">Sobre nós</a></li>
+                <li><a href="/usuario/anunciante/conta/">Minha Conta</a></li>
+                <li><a href="/buffet/listar/?buffet=&date=&capacity=">Buffets</a></li>
+                <li><a href="/buffet/mapa/">Mapa</a></li>
+                <li><a href="/usuario/favoritos/">Favoritos</a></li>
+                <li><a href="/usuario/chat/?is_seller=True/">Mensagens</a></li>
+                <li><a href="/logout/">Logout</a></li>
+                {%endif%}
+                {%endif%}
+                </ul>
             </nav>
 
 
