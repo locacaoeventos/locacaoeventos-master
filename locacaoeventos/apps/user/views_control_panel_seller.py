@@ -488,6 +488,17 @@ class CreateEditPlace(View):
                 placeadditionalinformation.has_music = form.cleaned_data["has_music"]
                 placeadditionalinformation.has_illumination = form.cleaned_data["has_illumination"]
                 placeadditionalinformation.has_babychangingroom = form.cleaned_data["has_babychangingroom"]
+                placeadditionalinformation.has_plays = form.cleaned_data["has_plays"]
+                placeadditionalinformation.has_actors = form.cleaned_data["has_actors"]
+                placeadditionalinformation.has_generator = form.cleaned_data["has_generator"]
+                placeadditionalinformation.has_aircon = form.cleaned_data["has_aircon"]
+                placeadditionalinformation.has_handicapped_acess = form.cleaned_data["has_handicapped_acess"]
+                placeadditionalinformation.has_wifi = form.cleaned_data["has_wifi"]
+                placeadditionalinformation.has_valet = form.cleaned_data["has_valet"]
+                placeadditionalinformation.has_acoustics = form.cleaned_data["has_acoustics"]
+
+
+                
                 placeadditionalinformation.save()
                 # ===================== Photos
                 photos = form.cleaned_data["photos"]

@@ -33,7 +33,7 @@ class PlaceForm(TOCForm):
 
     # Additional Informations
     alcoholic_drink = forms.BooleanField(required=False, label="Serve bebidas alcólicas")
-    has_entertainment = forms.BooleanField(required=False, label="Enterteinimento")
+    has_entertainment = forms.BooleanField(required=False, label="Entretenimento")
     has_thematicdecoration = forms.BooleanField(required=False, label="Decoração Temática")
     has_childrenrides = forms.BooleanField(required=False, label="Brinquedo pra Crianças")
     has_costumes = forms.BooleanField(required=False, label="Fantasias para os Atores")

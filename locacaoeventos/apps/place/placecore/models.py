@@ -56,7 +56,7 @@ class PlaceAdditionalInformation(models.Model):
     has_externalarea = models.BooleanField("Área externa")
     has_childrenrides = models.BooleanField("Brinquedo pra Crianças")
     has_thematicdecoration = models.BooleanField("Decoração Temática")
-    has_entertainment = models.BooleanField("Enterteinimento")
+    has_entertainment = models.BooleanField("Entretenimento")
     has_parking = models.BooleanField("Estacionamento")
     has_costumes = models.BooleanField("Fantasias para os Atores")
     has_babychangingroom = models.BooleanField("Fraldário")

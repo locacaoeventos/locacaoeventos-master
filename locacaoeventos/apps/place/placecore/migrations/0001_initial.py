@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                 ('has_externalarea', models.BooleanField(verbose_name='Área externa')),
                 ('has_childrenrides', models.BooleanField(verbose_name='Brinquedo pra Crianças')),
                 ('has_thematicdecoration', models.BooleanField(verbose_name='Decoração Temática')),
-                ('has_entertainment', models.BooleanField(verbose_name='Enterteinimento')),
+                ('has_entertainment', models.BooleanField(verbose_name='Entretenimento')),
                 ('has_parking', models.BooleanField(verbose_name='Estacionamento')),
                 ('has_costumes', models.BooleanField(verbose_name='Fantasias para os Atores')),
                 ('has_babychangingroom', models.BooleanField(verbose_name='Fraldário')),
