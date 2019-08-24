@@ -419,6 +419,14 @@ class CreateEditPlace(View):
                     "has_music": additionalinformation.has_music,
                     "has_illumination": additionalinformation.has_illumination,
                     "has_babychangingroom": additionalinformation.has_babychangingroom,
+                    "has_plays" = additionalinformation.has_plays,
+                    "has_actors" = models.BooleanField("Animadores")
+                    "has_generator" = models.BooleanField("Gerador de energia")
+                    "has_aircon" = models.BooleanField("Ar Condicionado")
+                    "has_handicapped_acess" = models.BooleanField("Acessível para deficientes")
+                    "has_wifi" = models.BooleanField("Wi-Fi")
+                    "has_valet" = models.BooleanField("Manobrista e/ou valet")
+                    "has_acoustics" = models.BooleanField("Isolamento acústico")
                 })
                 context["photo_first_src"] = photo_first_src
                 context["menu_url"] = str(place.menu).replace("place/menu/", "")
