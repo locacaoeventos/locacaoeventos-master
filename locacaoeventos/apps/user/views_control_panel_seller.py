@@ -419,14 +419,14 @@ class CreateEditPlace(View):
                     "has_music": additionalinformation.has_music,
                     "has_illumination": additionalinformation.has_illumination,
                     "has_babychangingroom": additionalinformation.has_babychangingroom,
-                    "has_plays" = additionalinformation.has_plays,
-                    "has_actors" = models.BooleanField("Animadores")
-                    "has_generator" = models.BooleanField("Gerador de energia")
-                    "has_aircon" = models.BooleanField("Ar Condicionado")
-                    "has_handicapped_acess" = models.BooleanField("Acessível para deficientes")
-                    "has_wifi" = models.BooleanField("Wi-Fi")
-                    "has_valet" = models.BooleanField("Manobrista e/ou valet")
-                    "has_acoustics" = models.BooleanField("Isolamento acústico")
+                    "has_plays" : additionalinformation.has_plays,
+                    "has_actors" : additionalinformation.has_actors,
+                    "has_generator" : additionalinformation.has_generator,
+                    "has_aircon" : additionalinformation.has_aircon,
+                    "has_handicapped_acess" : additionalinformation.has_handicapped_acess,
+                    "has_wifi" : additionalinformation.has_wifi,
+                    "has_valet" : additionalinformation.has_valet,
+                    "has_acoustics" : additionalinformation.has_acoustics,
                 })
                 context["photo_first_src"] = photo_first_src
                 context["menu_url"] = str(place.menu).replace("place/menu/", "")
@@ -556,6 +556,7 @@ class CreateEditPlace(View):
                     has_music=form.cleaned_data["has_music"],
                     has_illumination=form.cleaned_data["has_illumination"],
                     has_babychangingroom=form.cleaned_data["has_babychangingroom"],
+                    has_plays=form.cleaned_data["has_plays"],
                     has_actors=form.cleaned_data["has_actors"],
                     has_generator=form.cleaned_data["has_generator"],
                     has_aircon=form.cleaned_data["has_aircon"],
