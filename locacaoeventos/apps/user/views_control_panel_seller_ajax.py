@@ -76,6 +76,8 @@ class PlacePriceCreateAjax(View):
         
         if place.cancellation_policy is not None:
             place.has_finished_basic = True
+        else:
+            place.has_finished_basic = False
         place.save()
 
         PlacePrice.objects.create(

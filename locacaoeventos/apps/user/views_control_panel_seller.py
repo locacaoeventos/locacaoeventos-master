@@ -276,11 +276,18 @@ def context_availabilityplace(request, context, place_pk):
         context["has_period"] = True
 
 
-    # Price
+    # Place Cancellation Policy
     if place.cancellation_policy:
         context["cancellation_policy"] = place.cancellation_policy
-    if PlacePrice.objects.filter(place=place) and place.cancellation_policy is not None:
+        place.has_finished_basic = True
+    else:
+        place.has_finished_basic = False
+
+    # Price
+    if PlacePrice.objects.filter(place=place) is not None:
         context["placeprice_list"] = True
+    place.save()
+
     return context
 
 

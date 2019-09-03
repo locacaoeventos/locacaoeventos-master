@@ -54,13 +54,17 @@
                     {% endif %}
 
                     <div id="has_place_price_list" {% if placeprice_list %}style="display:none"{% endif %}>
-                        <span style="color:red">Selecione a política de cancelamento e crie um pacote de preços para concluir, na aba <b>Preços</b>.</span>
+                        <span style="color:red">Crie ao menos um pacote de preços para concluir, na aba <b>Preços</b>.</span>
+                        <div class="separador-20"> </div>
+                    </div>
+
+                    <div {% if cancellation_policy %}style="display:none"{% endif %}>
+                        <span style="color:red">Selecione a política de cancelamento para concluir, na aba <b>Preços</b>.</span>
                         <div class="separador-20"> </div>
                     </div>
                     
-                    
-                    <div class="options_menu" id="times" style="display:none">
-                
+                    <div class="options_menu" id="times" style="display:block">
+                        
 
 
                         <h1>Disponibilidade e horários</h1>
@@ -165,7 +169,7 @@
                         {% endif %}
                     </div>
 
-                    <div class="options_menu" id="prices" style="text-align:left; display:block">
+                    <div class="options_menu" id="prices" style="text-align:left; display:None">
                         {% if has_period %}
                             <div class="row">
                                 <div class="col-md-12">
