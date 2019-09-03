@@ -284,8 +284,11 @@ def context_availabilityplace(request, context, place_pk):
         place.has_finished_basic = False
 
     # Price
-    if PlacePrice.objects.filter(place=place) is not None:
+    if len(PlacePrice.objects.filter(place=place)) > 0:
         context["placeprice_list"] = True
+        place.has_finished_basic = True
+    else:
+        place.has_finished_basic = False
     place.save()
 
     return context
