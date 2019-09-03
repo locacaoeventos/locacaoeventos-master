@@ -41,7 +41,7 @@ class PlaceReservation(models.Model):
 class PlaceSazonality(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     day = models.DateField()
-    modifier = models.IntegerField(max_length=5, blank=True, null=True) # min or max
+    modifier = models.IntegerField(blank=True, null=True) # min or max
     period = models.CharField(max_length=4, null=True) # min or max
 
     def __str__(self):

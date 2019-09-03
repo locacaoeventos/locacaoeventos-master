@@ -158,9 +158,9 @@ class TermsConditions(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        for placeprice in PlacePrice.objects.all():
-            placeprice.description = '["aefawe fawef awef"]'
-            placeprice.save()
+        for place in Place.objects.all():
+            place.cancellation_policy = "flexivel"
+            place.save()
         return render(request, "teste.html", context)
 
 

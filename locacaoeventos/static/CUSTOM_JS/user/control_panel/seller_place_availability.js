@@ -159,11 +159,11 @@ function placeprice_show(data){
 
     $("#placeprice_container").html(str_div);
 
-    if(data.placeprice_list.length==0){
-        $("#has_place_price_list").css("display", "block")
-    } else {
-        $("#has_place_price_list").css("display", "none")
-    }
+    // if(data.placeprice_list.length==0){
+    //     $("#has_place_price_list").css("display", "block")
+    // } else {
+    //     $("#has_place_price_list").css("display", "none")
+    // }
 
 }
 
@@ -219,7 +219,10 @@ function placeprice_validade_form(){
     var is_valid = true
     $(".placeprice_field").each(function(){
         if($(this).val()==""){
-            is_valid = false
+            if($(this).attr("id" != "id_value_min")) {
+                is_valid = false
+
+            }
         }
     })
     return is_valid

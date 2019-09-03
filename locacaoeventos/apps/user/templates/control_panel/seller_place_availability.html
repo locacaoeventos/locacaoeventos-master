@@ -54,12 +54,12 @@
                     {% endif %}
 
                     <div id="has_place_price_list" {% if placeprice_list %}style="display:none"{% endif %}>
-                        <span style="color:red">Crie um pacote de preço para concluir, na aba <b>Preços</b>.</span>
+                        <span style="color:red">Selecione a política de cancelamento e crie um pacote de preços para concluir, na aba <b>Preços</b>.</span>
                         <div class="separador-20"> </div>
                     </div>
                     
                     
-                    <div class="options_menu" id="times" style="display:block">
+                    <div class="options_menu" id="times" style="display:none">
                 
 
 
@@ -165,8 +165,44 @@
                         {% endif %}
                     </div>
 
-                    <div class="options_menu" id="prices" style="text-align:left; display:none">
+                    <div class="options_menu" id="prices" style="text-align:left; display:block">
                         {% if has_period %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1>Política de Cancelamento</h1>
+                                    <hr class="line"/>
+                                    Selecione abaixo uma política de cancelamento abaixo para que, caso o cliente queira cancelar sua festa.
+                                    <div class="separador-20"> </div>
+                                    <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
+                                        <input type="text" name="place_pk" value="{{place_pk}}" style="display:none"/>
+                                        <div class="row">
+                                            <div class="col-md-4" style="text-align:justify">
+                                                <label class="container_radio" style="font-weight:bold">Flexível
+                                                    <input type="radio" name="cancellation_policy" value="flexivel" {% if cancellation_policy == "flexivel" %}checked{% endif %}>
+                                                    <span class="checkmark_radio"></span>
+                                                </label>
+                                                Cancelamento até 48 horas após fazer a reserva e até 7 dias antes do evento, após este período pagamento integral do valor da reserva.
+                                            </div>
+                                            <div class="col-md-4" style="text-align:justify">
+                                                <label class="container_radio" style="font-weight:bold">Moderada
+                                                        <input type="radio" name="cancellation_policy" value="moderada" {% if cancellation_policy == "moderada" %}checked{% endif %}>
+                                                    <span class="checkmark_radio"></span>
+                                                </label>
+                                                Cancelamento até 48 horas após fazer a reserva e até 14 dias antes do evento, após este período pagamento integral do valor da reserva.
+                                            </div>
+                                            <div class="col-md-4" style="text-align:justify">
+                                                <label class="container_radio" style="font-weight:bold">Rigorosa
+                                                    <input type="radio" name="cancellation_policy" value="rigorosa" {% if cancellation_policy == "rigorosa" %}checked{% endif %}>
+                                                    <span class="checkmark_radio"></span>
+                                                </label>
+                                                50% do reembolso caso o cancelamento ocorra ate 48 horas após fazer a reserva e até 21 dias antes do evento, após este período pagamento integral do valor da reserva.
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-default pull-right" style="font-size:12px">Atualizar</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="separador-60"> </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h1>Pacotes de festa e valores</h1>

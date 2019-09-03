@@ -73,7 +73,9 @@ class PlacePriceCreateAjax(View):
             capacity_min = capacity_1
 
         place = Place.objects.get(pk=place_pk)
-        place.has_finished_basic = True
+        
+        if place.cancellation_policy is not None:
+            place.has_finished_basic = True
         place.save()
 
         PlacePrice.objects.create(

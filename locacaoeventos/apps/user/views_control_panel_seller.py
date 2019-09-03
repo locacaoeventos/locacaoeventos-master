@@ -191,45 +191,50 @@ class AvailabilityPlace(View):
         place_pk = request.POST.get("place_pk")
         place = Place.objects.get(pk=place_pk)
 
-        soon_begin = request.POST.get("soon_begin")
-        if soon_begin:
-            soon_begin = convert_to_time(soon_begin)
-            soon_end = request.POST.get("soon_end")
-            if soon_end:
-                soon_end = convert_to_time(soon_end)
+        cancellation_policy = request.POST.get("cancellation_policy")
 
-                if soon_end > soon_begin:
-                    place.period_soon_end = soon_end
-                    place.period_soon_begin = soon_begin
+        if cancellation_policy is not None:
+            place.cancellation_policy = cancellation_policy
+        else:
+            soon_begin = request.POST.get("soon_begin")
+            if soon_begin:
+                soon_begin = convert_to_time(soon_begin)
+                soon_end = request.POST.get("soon_end")
+                if soon_end:
+                    soon_end = convert_to_time(soon_end)
+
+                    if soon_end > soon_begin:
+                        place.period_soon_end = soon_end
+                        place.period_soon_begin = soon_begin
+                    else:
+                        place.period_soon_end = soon_begin
+                        place.period_soon_begin = soon_end
+
+            late_begin = request.POST.get("late_begin")
+            late_end = request.POST.get("late_end")
+            if late_begin or late_end:
+                if late_begin and late_end:
+                    late_end = convert_to_time(late_end)
+                    late_begin = convert_to_time(late_begin)
+
+                    if late_end > late_begin:
+                        place.period_late_end = late_end
+                        place.period_late_begin = late_begin
+                    else:
+                        place.period_late_end = late_begin
+                        place.period_late_begin = late_end
+
+
                 else:
-                    place.period_soon_end = soon_begin
-                    place.period_soon_begin = soon_end
-
-        late_begin = request.POST.get("late_begin")
-        late_end = request.POST.get("late_end")
-        if late_begin or late_end:
-            if late_begin and late_end:
-                late_end = convert_to_time(late_end)
-                late_begin = convert_to_time(late_begin)
-
-                if late_end > late_begin:
-                    place.period_late_end = late_end
-                    place.period_late_begin = late_begin
-                else:
-                    place.period_late_end = late_begin
-                    place.period_late_begin = late_end
+                    PlaceUnavailability.objects.filter(place=place, period="max").delete()
+                    place.period_late_end = None
+                    place.period_late_begin = None
 
 
             else:
                 PlaceUnavailability.objects.filter(place=place, period="max").delete()
                 place.period_late_end = None
                 place.period_late_begin = None
-
-
-        else:
-            PlaceUnavailability.objects.filter(place=place, period="max").delete()
-            place.period_late_end = None
-            place.period_late_begin = None
 
         place.save()
 
@@ -272,7 +277,9 @@ def context_availabilityplace(request, context, place_pk):
 
 
     # Price
-    if PlacePrice.objects.filter(place=place):
+    if place.cancellation_policy:
+        context["cancellation_policy"] = place.cancellation_policy
+    if PlacePrice.objects.filter(place=place) and place.cancellation_policy is not None:
         context["placeprice_list"] = True
     return context
 

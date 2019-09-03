@@ -38,10 +38,14 @@ class Place(models.Model):
     period_late_begin = models.TimeField(blank=True,null=True)
     period_late_end = models.TimeField(blank=True,null=True)
 
+    cancellation_policy = models.CharField("Video URL", max_length=128,blank=True,null=True) # flexivel, moderada ou rigorosa
+
+
     # Auto-Fill
     sellerprofile = models.ForeignKey(SellerProfile, on_delete=models.CASCADE, related_name="SellerProfile")
     lat = models.FloatField("Latitude")
     lng = models.FloatField("Longitude")
+
 
 
     def __str__(self):
