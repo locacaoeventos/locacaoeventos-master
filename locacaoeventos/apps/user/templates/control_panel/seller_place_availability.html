@@ -421,19 +421,22 @@
 
 
 var slider_modifier = document.getElementById('slider_modifier');
-noUiSlider.create(slider_modifier, {
-    start: [0],
-      range: {
-        'min': [-50],
-        'max': [50]
-      },
-      step: 1,
-      connect: [false,false],
-});
+if(slider_modifier != null) {
+    noUiSlider.create(slider_modifier, {
+        start: [0],
+          range: {
+            'min': [-50],
+            'max': [50]
+          },
+          step: 1,
+          connect: [false,false],
+    });
 
-slider_modifier.noUiSlider.on('update', function (values, handle) {
-    $("#modifier_percent").val(values[handle])
-});
+    slider_modifier.noUiSlider.on('update', function (values, handle) {
+        $("#modifier_percent").val(values[handle])
+    });
+    
+}
 
 
 $('.clockpicker').clockpicker().find('input').change(function(){
