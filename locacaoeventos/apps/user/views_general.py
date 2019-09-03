@@ -92,7 +92,7 @@ class AboutUs(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["basemenu"] = "aboutus"
-        return render(request, "about_us.html", context)
+        return render(request, "static/about_us.html", context)
 
 class Login(View):
     def get(self, request, *args, **kwargs):

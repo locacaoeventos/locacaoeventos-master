@@ -66,8 +66,8 @@ Body code
     <!--                                                           CONTENT                                                          -->
 
     <!-- ========================================================================================================================== -->
-    <nav class="off-canvas-navigation" style="position:fixed !important; height:100vh; padding-top:5%">
-            <header>Menu</header>
+    <nav class="off-canvas-navigation" >
+            <header style="line-height:104px">Menu</header>
                 <ul>
                 {% if user.is_superuser %}
                 <li><a href="/administrador/home/">{{Administrador}}</a></li>
