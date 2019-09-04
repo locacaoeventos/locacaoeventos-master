@@ -12,15 +12,12 @@ $(document).on("click", ".placeprice_card", function () {
     }
 
 
-    $(this).attr("pk")
     $("#placeprice_pk").val($(this).attr("pk"))
-    console.log($(this).attr("name-price"))
-    console.log($(this).attr("value-price"))
+    $("#placeprice_value").val($(this).attr("value-price").replace(".", "").replace(",", ""))
     $("#placeprice_chosen_name").html($(this).attr("name-price"))
     $("#placeprice_chosen_value").html($(this).attr("value-price"))
 
-    $("#placeprice_value").val($(this).attr("placeprice").replace(".", "").replace(",", ""))
-})
+})              
 
 $(document).on("click", "#place_checkout", function () {
     if (!$(this).hasClass("place_checkout_disable")) { // PRICE SELECTED
@@ -51,7 +48,6 @@ $('#zip_code').mask('00000-000');
 
 $(document).ready(function(){
     $(document).on("keyup", ".pay_col_editable", function(){
-        console.log($(this).attr("id"))
         if($(this).attr("id").includes("zip")){
             if($("#zip_code").val().length >= 9){
                 var cep = $("#zip_code").val().replace("-", "")
@@ -76,13 +72,10 @@ $(document).ready(function(){
                 disable_button()
             }
         } else {            
-            console.log($("#number").val())
             if($("#number").val() != ""){
-                console.log("foi")
                 $(".pay_button").removeClass("pay_button_disabled")
                 $(".pay_button").addClass("pay_button_green")
             } else {
-                console.log("fn oi")
                 $(".pay_button").addClass("pay_button_disabled")
                 $(".pay_button").removeClass("pay_button_green")
 

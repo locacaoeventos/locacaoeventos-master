@@ -58,7 +58,6 @@ class BuyPlace(View):
             if int(placeprice["value_min"]) > placeprice["final_value"]:
                 placeprice["final_value"] = placeprice["value_min"]
             placeprice["final_value_per_person"] = placeprice["final_value"]/int(capacity)
-            
         if len(placeprice_list) == 0:
             context["placeprices_none"] = True
 
@@ -108,6 +107,9 @@ class PurchasePlace(View):
 
         buyer = context["buyer"]
         birthday = buyer.birthday
+
+        print(request.GET)
+        print(placeprice_pk)
 
         placeprice = PlacePrice.objects.get(pk=placeprice_pk)
         pagarme.authentication_key(settings.PAGARME_API_KEY)

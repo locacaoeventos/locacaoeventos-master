@@ -19,7 +19,7 @@ Body code
 <div class="separador-30"> </div>
 <section class="container">
   <input type="text" id="placeprice_pk" style="display:none"/>
-  <input type="text" id="placeprice_value" style="display:none"/>
+  <input type="text" id="placeprice_value" style="display:block"/>
   <div class="row">
     <div class="col-md-4">
           <div class="center-cropped img-center" style="width:100%; height:200px;background-image: url(/media/{{place.photo}});"></div>
@@ -192,7 +192,7 @@ Body code
                   <div class="separador-10"> </div>
                   <span class="placeprice_card_attr"><b>Mínimo:</b> {{placeprice.capacity_min}} convidados</span><br>
                   <span class="placeprice_card_attr"><b>Máximo:</b> {{placeprice.capacity_max}} convidados</span><br>
-                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value|my_float_format }}</span><br>
+                  <span class="placeprice_card_attr"><b>Valor:</b> R${{placeprice.final_value|my_float_format}}</span><br>
                   <span class="placeprice_card_attr"><b>Por convidado:</b> R${{placeprice.final_value_per_person|my_float_format }}</span><br>
                   {% comment %} <span class="placeprice_card_attr"><b>Valor Mínimo:</b> R${{capacity|floatformat:2}}</span><br> {% endcomment %}
                   <div class="separador-10"> </div>
@@ -292,7 +292,7 @@ Body code
     
       <div class="place_back pull-left" onclick="window.history.back()">Voltar</div>&nbsp;&nbsp;
 
-    <button id="pay-boleto" class="pay_button pay_button_disabled">Pagar por Boleto Bancário</button>
+    <!--<button id="pay-boleto" class="pay_button pay_button_disabled">Pagar por Boleto Bancário</button>-->
     <button id="pay-credit-card" class="pay_button pay_button_disabled">Pagar por Cartão</button>
 
   </div>
@@ -356,8 +356,6 @@ JS imports
 
         var url_str = "/buffet/comprar/?place_pk=" + "{{place_pk}}" +  "&capacidade=" + capacidade + "&date=" + date_form + "&period=" + period_form
 
-
-        console.log(url_str)
 
         $("#check_availability").attr("onClick", "location='" + url_str + "'")
 

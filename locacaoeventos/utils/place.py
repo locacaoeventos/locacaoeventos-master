@@ -408,6 +408,7 @@ def get_placeprices(place):
     placeprices = []
     for placeprice in PlacePrice.objects.filter(place=place):
         placeprices.append({
+            "pk": placeprice.pk,
             "value": placeprice.value,
             "value_min": placeprice.value_min,
             "name": placeprice.name,
