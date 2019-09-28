@@ -58,42 +58,44 @@ class EditSeller(View):
 
         form = SellerForm(request.POST)
         form.is_valid()
-        has_finished_payment = check_seller_has_finished_payment(
-            seller_pk = seller.pk,
-            bank_code = form.cleaned_data["bank_code"],
-            agency = form.cleaned_data["agency"],
-            account = form.cleaned_data["account"],
-            account_type = form.cleaned_data["account_type"],
-        )
+        if form.is_valid():
+            has_finished_payment = check_seller_has_finished_payment(
+                seller_pk = seller.pk,
+                bank_code = form.cleaned_data["bank_code"],
+                agency = form.cleaned_data["agency"],
+                account = form.cleaned_data["account"],
+                account_type = form.cleaned_data["account_type"],
+            )
 
-        seller.has_finished_payment = has_finished_payment[0]
+            seller.has_finished_payment = has_finished_payment[0]
 
-        seller.pagarme_id = has_finished_payment[1]
-        seller.bank_code = form.cleaned_data["bank_code"]
-        seller.agency = form.cleaned_data["agency"]
-        seller.account = form.cleaned_data["account"]
-        seller.account_type = form.cleaned_data["account_type"]
+            seller.pagarme_id = has_finished_payment[1]
+            seller.bank_code = form.cleaned_data["bank_code"]
+            seller.agency = form.cleaned_data["agency"]
+            seller.account = form.cleaned_data["account"]
+            seller.account_type = form.cleaned_data["account_type"]
+            seller.name = form.cleaned_data["name_seller"]
+            seller.cpf = form.cleaned_data["cpf"]
+            seller.cnpj = form.cleaned_data["cnpj"]
+            seller.cellphone = form.cleaned_data["cellphone_seller"]
+            
 
-        seller.name = form.cleaned_data["name_seller"]
-        seller.cpf = form.cleaned_data["cpf"]
-        seller.cnpj = form.cleaned_data["cnpj"]
-        seller.cellphone = form.cleaned_data["cellphone_seller"]
-        
 
+            if "accepts_newsletter_seller" in form.cleaned_data:
+                seller.accepts_newsletter = True
+                context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True})
+            else:
+                seller.accepts_newsletter = False
+                context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False})
 
-        if "accepts_newsletter_seller" in form.cleaned_data:
-            seller.accepts_newsletter = True
-            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True})
+            if "password_seller" in form.cleaned_data:
+                seller.user.set_password(form.cleaned_data["password_seller"])
+                seller.user.save()
+            seller.save()
+
+            context["has_finished_payment"] = has_finished_payment[0]
         else:
-            seller.accepts_newsletter = False
-            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False})
-
-        if "password_seller" in form.cleaned_data:
-            seller.user.set_password(form.cleaned_data["password_seller"])
-            seller.user.save()
-        seller.save()
-
-        context["has_finished_payment"] = has_finished_payment[0]
+            context["form"] = SellerForm(request.POST)
         return render(request, "control_panel/seller_user_edit.html", context)
 
 

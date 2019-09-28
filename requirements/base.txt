@@ -3,8 +3,9 @@ psycopg2
 pillow
 googlemaps
 xlwt
-requests==2.18.2
+requests
 pagarme-python
 celery
 django-celery
 django_extensions
+anyjson
