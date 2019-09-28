@@ -80,7 +80,6 @@ class EditSeller(View):
             seller.cellphone = form.cleaned_data["cellphone_seller"]
             
 
-
             if "accepts_newsletter_seller" in form.cleaned_data:
                 seller.accepts_newsletter = True
                 context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True})
@@ -145,11 +144,16 @@ class ListPlaceOwned(View):
 
             count_reservation = 0
             total_profit = 0
-            for placereservation in PlaceReservation.objects.filter(place=place):
-                total_profit += placereservation.placeprice.value
-                count_reservation += 1
-            place_dic["total_profit"] = "%.2f"%total_profit
-            place_dic["count_reservation"] = count_reservation
+            print(PlaceReservation.objects.filter(place=place))
+            if len(PlaceReservation.objects.filter(place=place)) > 0:
+                for placereservation in PlaceReservation.objects.filter(place=place):
+                    total_profit += placereservation.placeprice.value
+                    count_reservation += 1
+                place_dic["total_profit"] = "%.2f"%total_profit
+                place_dic["count_reservation"] = count_reservation
+            else:
+                place_dic["total_profit"] = 0
+                place_dic["count_reservation"] = 0
         place_list = sorted(place_list, key=lambda k: k['modified'], reverse=True) 
         context["place_list"] = place_list
         return render(request, "control_panel/seller_place_list_owned.html", context)
@@ -469,8 +473,12 @@ class CreateEditPlace(View):
             if "http" not in video and video != "":
                 video = "https://" + video
             # Coordinates
-            coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
-            # coordinates = [-23.5500827, -46.6540044]
+            
+            # coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
+            coordinates = [-23.5500827, -46.6540044]
+
+
+
             # Children Rides
             children_rides = str(form.cleaned_data["children_rides"]).replace("[","").replace("]","")
             children_rides = "{" + children_rides + "}"

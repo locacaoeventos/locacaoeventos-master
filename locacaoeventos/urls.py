@@ -6,7 +6,7 @@ from django.conf import settings
 
 from locacaoeventos.apps.user.views_general import *
 
-# from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs, GoDaddyVerification, Blog, Email
+from locacaoeventos.apps.user.views_general import Home, Teste, Login, Logout, TermsConditions, ComingSoon, AboutUs, GoDaddyVerification, Blog, Email
 from locacaoeventos.apps.user.views import UploadFile, GetPhoto
 
 import locacaoeventos.apps.user.urls
