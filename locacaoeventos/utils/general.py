@@ -7,7 +7,7 @@ def get_dic_by_key(listdic, key, value):
     return None
 
 def get_latlng_from_address_str(address_str):
-    gmaps = googlemaps.Client(key ='AIzaSyCgsG2vhClFly8kadgTOHCX4wucOwgTiuw')
+    gmaps = googlemaps.Client(key ='AIzaSyDTLggGLWyHNMXZAymnIUBOCrHVHoboVcE')
     geocode_result = gmaps.geocode(address_str)
     return [geocode_result[0]['geometry']['location']['lat'], geocode_result[0]['geometry']['location']['lng']]
 
