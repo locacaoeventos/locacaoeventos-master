@@ -44,6 +44,9 @@ urlpatterns = [
     url(r'^conta/$', EditBuyer.as_view()),
     # url(r'^familia/$', FamilyMemberEdit.as_view()),
     url(r'^buffets-agendados/$', ListPlaceBought.as_view()),
+    url(r'^cancelar-buffet/$', CancelPlaceReservation.as_view()),
+    url(r'^cancelar-buffet-confirmado/$', CancelPlaceReservationConfirmed.as_view()),
+
     url(r'^avaliar-buffet/$', ReviewPlaceBought.as_view()),
     url(r'^familia/$', FamilyBuyer.as_view()),
 

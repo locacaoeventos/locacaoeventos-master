@@ -1,7 +1,9 @@
 import datetime, pytz
+import pagarme
 
 from django.views.generic import View
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 from locacaoeventos.utils.main import *
 from locacaoeventos.utils.datetime import *
@@ -114,7 +116,6 @@ class ListPlaceBought(View):
         context = base_context(request.user)
         context["panel_type"] = "listbought"
         context["basemenu"] = "listbought"
-
         buyer = context["buyer"]
         place_list = []
         for reservation in PlaceReservation.objects.filter(buyer=buyer):
@@ -143,16 +144,51 @@ class ListPlaceBought(View):
                 place_dic["has_passed"] = True
             place_dic["day"] = reservation.unavailability.day
 
-
+            place_dic["canceled"] = reservation.canceled
 
 
             place_list.append(place_dic)
         place_list = sorted(place_list, key=lambda k: k['day'], reverse=True) 
         context["place_list"] = place_list
+        context["can_refund"] = True
 
         return render(request, "control_panel/buyer_buffet_bought.html", context)
 
 
+
+
+
+ 
+class CancelPlaceReservation(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        context["placereservation_pk"] = request.GET.get("placereservation_pk")
+        return render(request, "control_panel/buyer_placereservation_cancelled.html", context)
+
+class CancelPlaceReservationConfirmed(View):
+    def get(self, request, *args, **kwargs):
+        context = base_context(request.user)
+        # =========== BEGIN REFUND
+        placereservation_pk = request.GET.get("placereservation_pk")
+        placereservation = PlaceReservation.objects.get(pk=placereservation_pk)
+        pagarme_transaction = placereservation.pagarme_transaction
+        pagarme.authentication_key(settings.PAGARME_API_KEY)
+        trx = pagarme.transaction.find_by({
+          'id': pagarme_transaction
+        })[0]
+        print(trx)
+        amount = trx["authorized_amount"]
+        refunded = trx["refunded_amount"]
+
+        params_refund = {
+            # 'amount': amount-refunded
+            'amount': 1
+        }
+        refunded_trx = pagarme.transaction.refund(trx['id'], params_refund)
+        # =========== END REFUND
+
+        placereservation.canceled = True
+        return render(request, "control_panel/buyer_placereservation_cancelled_confirmed.html", context)
 
 
 

@@ -67,7 +67,6 @@ class BuyPlace(View):
         context["placeprices"] = placeprice_list
         context["place"] = get_single_place_dic(place)
         context["place_pk"] = place.pk
-        print
         context["needs_js_input_fix"] = True
 
         # PAGARME
@@ -103,13 +102,11 @@ class PurchasePlace(View):
         data = json.loads(request.GET.get("data"))
 
         place = Place.objects.get(pk=place_pk)
+        context["place"] = place
         seller = place.sellerprofile
 
         buyer = context["buyer"]
         birthday = buyer.birthday
-
-        print(request.GET)
-        print(placeprice_pk)
 
         placeprice = PlacePrice.objects.get(pk=placeprice_pk)
         pagarme.authentication_key(settings.PAGARME_API_KEY)
@@ -188,8 +185,7 @@ class PurchasePlace(View):
             ]
         }
         trx = pagarme.transaction.create(params)
-
-
+        pagarme_transaction = trx["id"]
         if period == [0,1]:
             period = "max"
         else:
@@ -207,6 +203,7 @@ class PurchasePlace(View):
             buyer=buyer,
             unavailability=unavailability,
             creation=datetime.now(),
+            pagarme_transaction=pagarme_transaction     
         )
 
 
@@ -231,18 +228,6 @@ class PurchasePlace(View):
 
 
         context["encryption_key"] = settings.PAGARME_ENCRYPTION_KEY
-
-        return render(request, "place_purchase.html", context)
-
-
-    def post(self, request, *args, **kwargs):
-        pagarme.authentication_key(settings.PAGARME_API_KEY)
-
-
-
-        trx = pagarme.transaction.create(params)
-
-
 
         return render(request, "place_purchase.html", context)
 

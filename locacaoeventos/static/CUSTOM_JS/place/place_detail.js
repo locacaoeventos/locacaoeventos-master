@@ -49,7 +49,7 @@ if(window_width>=992){
         $('#buying_flux').removeClass('fixed');
         $('#buying_flux').addClass('absolute');
         $('#buying_flux').css('top', featured_offset-580);
-        console.log(featured_offset)
+        // console.log(featured_offset)
 
       }
       else {

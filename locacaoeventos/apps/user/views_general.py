@@ -13,7 +13,7 @@ from locacaoeventos.utils.feature import *
 from .buyerprofile.models import BuyerProfile
 from .sellerprofile.models import SellerProfile
 
-from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability
+from locacaoeventos.apps.place.placereservation.models import PlacePrice, PlaceUnavailability, PlaceReservation
 
 # Celery
 # from locacaoeventos.apps.user.tasks import test
@@ -158,9 +158,23 @@ class TermsConditions(View):
 class Teste(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
-        for place in Place.objects.all():
-            place.cancellation_policy = "flexivel"
-            place.save()
+        # =========== BEGIN REFUND
+        placereservation_pk = request.GET.get("placereservation_pk")
+        placereservation = PlaceReservation.objects.get(pk=placereservation_pk)
+        pagarme_transaction = placereservation.pagarme_transaction
+        pagarme.authentication_key(settings.PAGARME_API_KEY)
+        trx = pagarme.transaction.find_by({
+          'id': pagarme_transaction
+        })[0]
+        print(trx)
+        amount = trx["authorized_amount"]
+        refunded = trx["refunded_amount"]
+
+        params_refund = {
+            'amount': amount-refunded
+        }
+        refunded_trx = pagarme.transaction.refund(trx['id'], params_refund)
+        # =========== END REFUND
         return render(request, "teste.html", context)
 
 
