@@ -49,11 +49,18 @@ class ListPlace(View):
 
 
 
-
-
         # filter
         place_list = sorted(filter_place_information(place_list_not_filtered, capacity, buffet, date), key=lambda k: k['feature'], reverse=True) 
 
+
+        print("aaaaaa")
+        print("aaaaaa")
+        print("aaaaaa")
+        print("aaaaaa")
+        print("aaaaaa")
+        print("aaaaaa")
+        print("aaaaaa")
+        print(place_list)
         places_pk = []
         for place in place_list:
             places_pk.append(place["pk"])

@@ -40,38 +40,39 @@
 </style>
 
 
-
-<section id="featured" class="block equal-height">
-  <div class="container">
-    <header>
-      <h2><span style="border-bottom:2px solid #94d600;">Buffets em Destaque</span></h2>
-    </header>
-    <div class="row">
-      {% for feature in feature_list %}
-        <div class="col-md-3 col-sm-3">
-          <div class="item" style="margin:auto; margin-bottom:20px; cursor:pointer; max-width:300px" pk="{{feature.pk}}">
-            <div class="img-center center-cropped feature_image" style="background-image: url(/media/{{feature.photo}});"></div><!--
-            --><div class="feature_wrapper">
-                <div class="feature_name">{{feature.name}}</div>
-                <div class="separador-5"> </div>
-                {% if feature.review_list.review_rates.rate_average %}
-                  <span style="color: white" class="stars" data-rating="{{feature.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
-                {% else %}
-                  <div class="feature_review_none">Aguardando Primeira Avaliação!</div>
-                  <div class="separador-10"> </div>
-                {% endif %}
+{% if feature_list %}
+  <section id="featured" class="block equal-height">
+    <div class="container">
+      <header>
+          <h2><span style="border-bottom:2px solid #94d600;">Buffets em Destaque</span></h2>
+      </header>
+      <div class="row">
+        {% for feature in feature_list %}
+          <div class="col-md-3 col-sm-3">
+            <div class="item" style="margin:auto; margin-bottom:20px; cursor:pointer; max-width:300px" pk="{{feature.pk}}">
+              <div class="img-center center-cropped feature_image" style="background-image: url(/media/{{feature.photo}});"></div><!--
+              --><div class="feature_wrapper">
+                  <div class="feature_name">{{feature.name}}</div>
+                  <div class="separador-5"> </div>
+                  {% if feature.review_list.review_rates.rate_average %}
+                    <span style="color: white" class="stars" data-rating="{{feature.review_list.review_rates.rate_average}}" data-num-stars="5"></span>
+                  {% else %}
+                    <div class="feature_review_none">Aguardando Primeira Avaliação!</div>
+                    <div class="separador-10"> </div>
+                  {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
+      <!--/.row-->
     </div>
-    <!--/.row-->
-  </div>
-  <!--/.container-->
-  <div class="background opacity-5">
-    <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
-  </div>
-</section>
+    <!--/.container-->
+    <div class="background opacity-5">
+      <img src="/static/base_template_user/assets/img/restaurants-bg2.jpg" alt="">
+    </div>
+  </section>
+{% endif %}
 
 
 

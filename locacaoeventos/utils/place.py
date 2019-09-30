@@ -296,9 +296,13 @@ def get_place_pricemin(place):
 def filter_place_information(place_list_not_filtered, capacity, buffet, date):
     place_list = []
     if capacity == "" and buffet == "" and date == "":
+        print("MERDA1")
         return place_list_not_filtered
     else:
+        print("DEU")
         if buffet != "":
+            print("DEU2")
+            print(buffet)
             try:
                 latlng = get_latlng_from_address_str(buffet)
             except:
@@ -344,12 +348,14 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                         break
 
         else:
+            print("TESTE 1")
             place_list = place_list_not_filtered
 
 
 
         # Filter by Capacity
         if capacity != "" and capacity != "sem":
+            print("TESTE 2")
             place_list_filtered_capacity = []
 
 
@@ -369,11 +375,13 @@ def filter_place_information(place_list_not_filtered, capacity, buffet, date):
                 elif capacity == 0:
                     place_list_filtered_capacity.append(place)
         else:
+            print("TESTE 3")
             place_list_filtered_capacity = place_list
 
         # Filter by Date
         place_list_filtered_date = []
         if date != "":
+            print("TESTE 4")
             date_analyse_prep = date.replace(" ", "")
             date_analyse = datetime.strptime(date.replace(" ", "") + " 0", '%d/%m/%Y %H')
             day = date_analyse.day

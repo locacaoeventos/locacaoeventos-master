@@ -168,8 +168,8 @@ class SellerForm(TOCForm):
     cpf = fields.CharField(required=True, label="CPF do responsável")
     cnpj = fields.CharField(label="CNPJ do estabelecimento")
 
-    password_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
-    confirm_seller = fields.CharField(required=True, widget=PasswordInput,label="Senha", min_length="6")
+    password_seller = fields.CharField(required=False, widget=PasswordInput,label="Senha", min_length="6")
+    confirm_seller = fields.CharField(required=False, widget=PasswordInput,label="Senha", min_length="6")
 
     accepts_newsletter_seller = forms.BooleanField(required=False, initial="checked", label="Aceita receber Newsletter")
 
@@ -199,7 +199,7 @@ class SellerForm(TOCForm):
             self.add_error('cnpj', error_message)
 
         cellphone = str(cleaned_data.get('cellphone_seller'))
-        if len(cellphone) != 14:
+        if len(cellphone) != 15:
             error_message = forms.ValidationError("Celular digitado incorretamente")
             self.add_error('cellphone_seller', error_message)
 

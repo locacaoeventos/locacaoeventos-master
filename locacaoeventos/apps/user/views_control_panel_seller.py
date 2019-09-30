@@ -58,42 +58,43 @@ class EditSeller(View):
 
         form = SellerForm(request.POST)
         form.is_valid()
-        has_finished_payment = check_seller_has_finished_payment(
-            seller_pk = seller.pk,
-            bank_code = form.cleaned_data["bank_code"],
-            agency = form.cleaned_data["agency"],
-            account = form.cleaned_data["account"],
-            account_type = form.cleaned_data["account_type"],
-        )
+        if form.is_valid():
+            has_finished_payment = check_seller_has_finished_payment(
+                seller_pk = seller.pk,
+                bank_code = form.cleaned_data["bank_code"],
+                agency = form.cleaned_data["agency"],
+                account = form.cleaned_data["account"],
+                account_type = form.cleaned_data["account_type"],
+            )
 
-        seller.has_finished_payment = has_finished_payment[0]
+            seller.has_finished_payment = has_finished_payment[0]
 
-        seller.pagarme_id = has_finished_payment[1]
-        seller.bank_code = form.cleaned_data["bank_code"]
-        seller.agency = form.cleaned_data["agency"]
-        seller.account = form.cleaned_data["account"]
-        seller.account_type = form.cleaned_data["account_type"]
+            seller.pagarme_id = has_finished_payment[1]
+            seller.bank_code = form.cleaned_data["bank_code"]
+            seller.agency = form.cleaned_data["agency"]
+            seller.account = form.cleaned_data["account"]
+            seller.account_type = form.cleaned_data["account_type"]
+            seller.name = form.cleaned_data["name_seller"]
+            seller.cpf = form.cleaned_data["cpf"]
+            seller.cnpj = form.cleaned_data["cnpj"]
+            seller.cellphone = form.cleaned_data["cellphone_seller"]
+            
 
-        seller.name = form.cleaned_data["name_seller"]
-        seller.cpf = form.cleaned_data["cpf"]
-        seller.cnpj = form.cleaned_data["cnpj"]
-        seller.cellphone = form.cleaned_data["cellphone_seller"]
-        
+            if "accepts_newsletter_seller" in form.cleaned_data:
+                seller.accepts_newsletter = True
+                context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True})
+            else:
+                seller.accepts_newsletter = False
+                context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False})
 
+            if "password_seller" in form.cleaned_data:
+                seller.user.set_password(form.cleaned_data["password_seller"])
+                seller.user.save()
+            seller.save()
 
-        if "accepts_newsletter_seller" in form.cleaned_data:
-            seller.accepts_newsletter = True
-            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": True})
+            context["has_finished_payment"] = has_finished_payment[0]
         else:
-            seller.accepts_newsletter = False
-            context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False})
-
-        if "password_seller" in form.cleaned_data:
-            seller.user.set_password(form.cleaned_data["password_seller"])
-            seller.user.save()
-        seller.save()
-
-        context["has_finished_payment"] = has_finished_payment[0]
+            context["form"] = SellerForm(request.POST)
         return render(request, "control_panel/seller_user_edit.html", context)
 
 
@@ -143,11 +144,16 @@ class ListPlaceOwned(View):
 
             count_reservation = 0
             total_profit = 0
-            for placereservation in PlaceReservation.objects.filter(place=place):
-                total_profit += placereservation.placeprice.value
-                count_reservation += 1
-            place_dic["total_profit"] = "%.2f"%total_profit
-            place_dic["count_reservation"] = count_reservation
+            print(PlaceReservation.objects.filter(place=place))
+            if len(PlaceReservation.objects.filter(place=place)) > 0:
+                for placereservation in PlaceReservation.objects.filter(place=place):
+                    total_profit += placereservation.placeprice.value
+                    count_reservation += 1
+                place_dic["total_profit"] = "%.2f"%total_profit
+                place_dic["count_reservation"] = count_reservation
+            else:
+                place_dic["total_profit"] = 0
+                place_dic["count_reservation"] = 0
         place_list = sorted(place_list, key=lambda k: k['modified'], reverse=True) 
         context["place_list"] = place_list
         return render(request, "control_panel/seller_place_list_owned.html", context)
@@ -467,8 +473,12 @@ class CreateEditPlace(View):
             if "http" not in video and video != "":
                 video = "https://" + video
             # Coordinates
-            coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
-            # coordinates = [-23.5500827, -46.6540044]
+            
+            # coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
+            coordinates = [-23.5500827, -46.6540044]
+
+
+
             # Children Rides
             children_rides = str(form.cleaned_data["children_rides"]).replace("[","").replace("]","")
             children_rides = "{" + children_rides + "}"

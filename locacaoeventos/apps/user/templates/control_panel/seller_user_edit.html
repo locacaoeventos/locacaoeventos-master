@@ -100,10 +100,10 @@
         ============================================================== -->
         {% elif field.name == "password_seller" %}
               <label>Nova senha</label>
-              <input type="password" name="password_seller" minlength="6" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
+              <input type="password" name="password_seller" class="form-control" id="id_password_seller" onblur="validarSenhaSeller()">
               <div class="separador-15"> </div>
               <label>Confirme a senha</label>
-              <input type="password" name="confirm" minlength="6" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
+              <input type="password" name="confirm" class="form-control" id="confirm_seller" onblur="validarSenhaSeller()">
               <div id="tooshort_seller" class="error_message">
                 A senha deve conter no mínimo 6 dígitos
               </div>
@@ -128,6 +128,7 @@
               </div>
               <div class="separador-70"> </div>
 
+        {% elif field.name == "confirm_seller" %}
         {% else %}
           {% if field.name == "name_seller" %}
           
