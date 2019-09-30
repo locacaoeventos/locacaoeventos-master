@@ -11,6 +11,7 @@
 
 
 <section class="block listing" style="padding-top:0">
+
   {% if has_finished_payment == False %}
     <div class="error_message" style="display:block; float:none">
       Preencha os dados bancários, para que você possa divulgar seus buffets!
@@ -21,6 +22,7 @@
       Troque para uma conta de Anunciante para poder realizar um agendamento
     </div><br>
   {% endif %}
+{# {{form.as_p}} #}
   <form role="form" method="post" action="?" enctype="multipart/form-data">{% csrf_token %}
     {% for field in form %}
 
@@ -147,6 +149,8 @@
           {% endif %}
           <div class="separador-15"> </div>
         {% endif %}
+      {% else %}
+        {{field}}
       {% endif %}
     {% endfor %}
 

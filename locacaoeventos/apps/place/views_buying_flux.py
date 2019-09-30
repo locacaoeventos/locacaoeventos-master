@@ -155,7 +155,7 @@ class PurchasePlace(View):
                     }
                 ],
                 "phone_numbers": ["+" + buyer.cellphone.replace("(", "").replace(")", "").replace("-", "")],
-                "birthday": str(birthday.year) + "-" + add_left_zero(str(birthday.month)) + "-" + str(birthday.day)
+                "birthday": str(birthday.year) + "-" + add_left_zero(str(birthday.month)) + "-" + add_left_zero(str(birthday.day))
             },
             "billing": {
                 "name": buyer.name,

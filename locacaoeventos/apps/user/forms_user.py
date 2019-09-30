@@ -91,6 +91,10 @@ class BuyerForm(TOCForm):
             error_message = forms.ValidationError("Senhas diferentes!")
             self.add_error('password', error_message)
 
+
+
+
+
 class FamilyMemberForm(TOCForm):
     name = fields.CharField(required=True, label="Nome do Familiar")
     gender = fields.CharField(required=True, label="Gênero")
@@ -181,7 +185,7 @@ class SellerForm(TOCForm):
 
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()
-
+        print(cleaned_data)
         # CPF
         cpf = str(cleaned_data.get('cpf'))
         if len(cpf) != 14:
@@ -204,17 +208,18 @@ class SellerForm(TOCForm):
             self.add_error('cellphone_seller', error_message)
 
         # E-mail
-        email_seller = str(cleaned_data.get('email_seller'))
-        if BuyerProfile.objects.filter(email=email_seller) or SellerProfile.objects.filter(email=email_seller):
-            error_message = forms.ValidationError("Já existe uma conta com este e-mail")
-            self.add_error('email_seller', error_message)
+        if "bank_code" not in cleaned_data:
+            email_seller = str(cleaned_data.get('email_seller'))
+            if BuyerProfile.objects.filter(email=email_seller) or SellerProfile.objects.filter(email=email_seller):
+                error_message = forms.ValidationError("Já existe uma conta com este e-mail")
+                self.add_error('email_seller', error_message)
 
         password_seller = str(cleaned_data.get('password_seller'))
         confirm_seller = str(cleaned_data.get('confirm_seller'))
-        if password_seller != confirm_seller:
-            error_message = forms.ValidationError("Senhas diferentes!")
-            self.add_error('password_seller', error_message)
-
+        if password_seller is not None and confirm_seller is not None:
+            if password_seller != confirm_seller:
+                error_message = forms.ValidationError("Senhas diferentes!")
+                self.add_error('password_seller', error_message)
 
 
 

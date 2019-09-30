@@ -57,7 +57,6 @@ class EditSeller(View):
         seller = context["seller"]
 
         form = SellerForm(request.POST)
-        form.is_valid()
         if form.is_valid():
             has_finished_payment = check_seller_has_finished_payment(
                 seller_pk = seller.pk,
@@ -87,7 +86,7 @@ class EditSeller(View):
                 seller.accepts_newsletter = False
                 context["form"] = SellerForm(request.POST, initial={"accepts_newsletter_seller": False})
 
-            if "password_seller" in form.cleaned_data:
+            if "password_seller" in form.cleaned_data and form.cleaned_data["password_seller"] != "":
                 seller.user.set_password(form.cleaned_data["password_seller"])
                 seller.user.save()
             seller.save()
