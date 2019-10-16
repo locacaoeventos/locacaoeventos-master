@@ -16,7 +16,7 @@
 
 
 <div class="separador-30"> </div>
-<div style="width:80%; min-width:300px; margin:auto">
+<div style="width:60%; min-width:300px; margin:auto">
     <header>
         <div style="text-align:center; color:#411859; font-weight:bold">
             {% if compra_buffet == True %}
@@ -32,13 +32,6 @@
     </header>
     <div class="separador-15"> </div>
     <form role="form" method="post" enctype="multipart/form-data">{% csrf_token %}
-        {% include "_login_fb.html" %}
-        <div class="separador-30"> </div>
-        <div style="width: 100%; height: 11px; border-bottom: 1px solid #f0f0f0; text-align: center">
-            <span style="font-size:14px; color:#474747; background-color:white; padding: 0 10px;">
-            Ou...
-            </span>
-        </div>
         <div class="separador-30"> </div>
         <div class="form-group">
             <input type="text" class="form-control form_input_text" id="username_id" name="username" placeholder="Endereço de E-mail" required>
@@ -48,16 +41,23 @@
         </div>
         <div class="separador-10"> </div>
         <div class="form-group clearfix">
-            <button type="submit" class="btn pull-right btn-default" id="account-submit" style="width:100%">Entrar</button>
+            <button type="submit" class="btn center-block btn-default" id="account-submit" style="width:30%">Entrar</button>
         </div>
         <div style="width:100%; text-align:center">
-            <a href="/usuario/esqueceu-senha/" class="login_options" style="font-size:12px">Esqueceu sua senha?</a>
+            <a href="/usuario/esqueceu-senha/" class="login_options" style="font-size:14px; color:white">Esqueceu sua senha?</a>
         </div>
         <div class="separador-10"> </div>
-        <hr class="line"/>
+        <div style="width: 100%; height: 11px; border-bottom: 1px solid #f0f0f0; text-align: center">
+        </div>
         <div class="separador-30"> </div>
-        <div style="width:100%; text-align:center">
-            Você ainda não tem uma conta? <a href="/usuario/cadastrar/" class="login_options" style="font-weight:bold; color:#98d000">Cadastre-se</a><br>
+
+        {% include "_login_fb.html" %}
+        <div class="separador-30"> </div>
+        <div style="width:100%; text-align:center; color:white">
+            Você ainda não tem uma conta?
+        </div>
+        <div style="width:100%; text-align:center;">
+            <b><a href="/usuario/cadastrar/" class="login_options" style="font-weight:bold; color:white">Cadastre-se</a><br></b>
         </div>
     </form>
 </div>
