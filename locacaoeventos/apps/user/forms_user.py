@@ -186,6 +186,7 @@ class SellerForm(TOCForm):
     def clean(self):
         cleaned_data = super(SellerForm, self).clean()
         print(cleaned_data)
+        
         # CPF
         cpf = str(cleaned_data.get('cpf'))
         if len(cpf) != 14:

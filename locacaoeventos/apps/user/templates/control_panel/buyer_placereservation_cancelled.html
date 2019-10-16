@@ -1,0 +1,30 @@
+{% extends "control_panel/buyer_base.html" %}
+{% load general_tags %}
+{% load i18n %}
+
+{% block page_title %}Agendados{% endblock page_title %}
+{% block panel_title %}Cancelamento da Festa{% endblock panel_title %}
+
+{% block user_panel_content %}
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/user/control_panel/buyer_buffet_bought.css" type="text/css">
+    <link rel="stylesheet" href="/static/CUSTOM_CSS/core/review.css" type="text/css">
+
+    <section class="listing">
+        Você tem certeza que deseja cancelar sua festa, e pedir o valor estornado?
+        <div class="separador-20"> </div>
+        <div style="width:100%; text-align:center">
+            <a href="/usuario/cancelar-buffet-confirmado/?placereservation_pk={{placereservation_pk}}" style="font-size:12px; padding: 7px 12px 7px 12px" class="btn btn-default">
+                Cancelar Festa
+            </a>
+        </div>
+    </section>
+
+
+{% block jquery %}
+    <script type="text/javascript" src="/static/base_template_user/assets/js/jquery-2.1.0.min.js"></script>
+{% endblock jquery %}
+<script type="text/javascript" src="/static/CUSTOM_JS/user/control_panel/buyer_buffet_bought.js"></script>
+{% block old_custom_js %}{% endblock old_custom_js %}
+
+
+{% endblock user_panel_content %}

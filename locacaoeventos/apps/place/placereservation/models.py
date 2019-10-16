@@ -32,7 +32,8 @@ class PlaceReservation(models.Model):
     buyer = models.ForeignKey("buyerprofile.BuyerProfile", on_delete=models.CASCADE)
     unavailability= models.OneToOneField(PlaceUnavailability, on_delete=models.CASCADE)
     creation = models.DateTimeField(auto_now_add=True)
-    # pagarme_transaction = models.CharField(max_length=64, blank=True, null=True)
+    pagarme_transaction = models.CharField(max_length=64, blank=True, null=True)
+    canceled = models.BooleanField(default=False)
     def __str__(self):
         return self.place.name
 
