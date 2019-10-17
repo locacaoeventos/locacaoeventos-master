@@ -7,12 +7,14 @@
 
   <div class="checkbox" style="margin-bottom:13px; display:none"><input type="checkbox" name="features[]" value="1"></div>
   <header>
-    <h1 class="page-title" style="padding:0px; color:#00195c">Eu quero...</h1>
+    <h1 class="page-title" style="padding:0px; color:white; text-align:center">Eu quero...</h1>
   </header>
-  <hr>
+  <div class="separador-20"> </div>
+
   <div style="text-align:center; width:100%">
-    <div class="btn btn-default" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
-    <div class="btn btn-default" id="seller_button" {% if form_type == "seller" %}style="background-color:#98d000"{% endif %}>Anunciar meu Buffet</div><br>
+
+    <div class="btn btn-default" style="width:30%; margin-right:5%" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
+    <div class="btn btn-default" style= "width:30%; margin-left:5%" id="seller_button" {% if form_type == "seller" %}style="background-color: background-color:#98d000"{% endif %}>Anunciar meu Buffet</div><br>
     <div class="separador-40"> </div>
   </div>
 
@@ -47,12 +49,10 @@
 
           {% elif field.name == "password" %}
             <div class="form-group">
-              <label>{{field.label}}</label>
 
-              <input type="password" name="password" minlength="6" class="form-control" required="" id="id_password">
-              <div class="separador-15"> </div>
-              <label>Confirme a senha</label>
-              <input type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm"onblur="validarSenha()">
+              <input placeholder= "Senha" type="password" name="password" minlength="6" class="form-control" required="" id="id_password">
+              <div class="separador-20"> </div>
+              <input placeholder= "Confirme a senha" type="password" name="confirm" minlength="6" class="form-control" required="" id="confirm"onblur="validarSenha()">
               <div id="tooshort" class="error_message">
                 A senha deve conter no mínimo 6 dígitos
               </div>
@@ -79,7 +79,7 @@
           {% elif field.name == "civil_status" %}
 
           {% elif field.name == "photo" %}
-            <div class="form-group">
+            {% comment %} <div class="form-group">
               <label>{{field.label}}</label>
 
               <input name="photo_hidden" id="id_photo_hidden" value="{{photo_url}}" class="hidden"/><!-- hidden field -->
@@ -96,16 +96,14 @@
               {% endif %}
               <div class="separador-10"> </div>
             </div>
-            <div class="separador-20"> </div>
+            <div class="separador-20"> </div>  {% endcomment %}
 
 
 
 
           {% elif field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" and field.name != "cpf_buyer" and field.name != "cellphone" %}
             <div class="form-group">
-              <label>{{field.label}}</label>
-
-              {{field}}
+              <input placeholder="{{field.label}}"  type="text" name="{{field.name}}" class="form-control" required="{{field.required}}" id="{{field.auto_id}}">
               {% if field.errors %}
                 <div class="error_message" style="display:block">
                   {% for error in field.errors %}
@@ -125,7 +123,7 @@
 
             <div class="separador-30"> </div>
             <div class="form-group clearfix" style="width:100%; text-align:center">
-              <input type="submit" method="post" class="btn btn-default" name="buyer_form" value="Criar Conta" style="width:100%; max-width:400px; background-color:#f74537"/>
+              <input type="submit" method="post" class="btn btn-default" name="buyer_form" value="Criar Conta" style="width:100%; max-width:400px; background-color:#98d000"/>
             </div>
           </form>
           <div class="separador-10"> </div>
@@ -136,16 +134,16 @@
               <input id="id_accepts_newsletter" type="checkbox" name="accepts_newsletter" {% if field.value %}checked="True"{% endif %}>
               <span class="checkmark_checkbox" style="display:inline-block; margin-top:-5px"></span>
             </label>
-            <figure class="note" style="display:inline-block;">Aceita receber newsletter</figure>
+            <figure class="note" style="display:inline-block; color:white">Aceita receber newsletter</figure>
             <div class="separador-10"> </div>
 
 
-            <figure class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
+            <figure style="color:white" class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
           </div>          
         </div>
 
 
-          {% endif %}
+                {% endif %}
 
 
       {% endfor %}
@@ -188,11 +186,9 @@
 
               <div class="form-group">
                 {% if field.name == "password_seller" %}
-                  <label>{{field.label}}</label>
-                  <input type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
-                  <div class="separador-15"> </div>
-                  <label>Confirme a senha</label>
-                  <input type="password" name="confirm_seller" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
+                  <input placeholder = "{{field.label}}" type="password" name="password_seller" minlength="6" class="form-control" required="" id="id_password_seller">
+                  <div class="separador-20"> </div>
+                  <input placeholder="Confirme a senha" type="password" name="confirm_seller" minlength="6" class="form-control" required="" id="confirm_seller" onblur="validarSenhaSeller()">
                   <div id="tooshort_seller" class="error_message">
                     A senha deve conter no mínimo 6 dígitos
                   </div>
@@ -215,7 +211,7 @@
                 {% elif field.name == "accepts_newsletter_seller" %}
                   <div class="separador-20"> </div>
                   <div class="form-group clearfix" style="width:100%; text-align:center">
-                    <input type="submit" method="post" class="btn btn-default" id="send_seller" name="seller_form" value="Criar Conta" style="width:100%; max-width:400px; background-color:#f74537"/>
+                    <input type="submit" method="post" class="btn btn-default" id="send_seller" name="seller_form" value="Criar Conta" style="width:100%; max-width:400px; background-color:#98d000"/>
                   </div>
                 </form>
                 <div class="separador-10"> </div>
@@ -227,10 +223,10 @@
                     <input id="id_accepts_newsletter_seller" type="checkbox" name="accepts_newsletter_seller" {% if field.value %}checked{% endif %}>
                     <span class="checkmark_checkbox" style="display:inline-block; margin-top:-5px"></span>
                   </label>
-                  <figure class="note" style="display:inline-block;">Aceita receber novidades e promoções do 123Festas</figure>
+                  <figure class="note" style="display:inline-block; color:white">Aceita receber novidades e promoções do 123Festas</figure>
                   <div class="separador-10"> </div>
 
-                  <figure class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
+                  <figure style=" color:white" class="note">Ao clicar em “Criar Conta”, eu concordo com os <a href="#" onclick='window.open("/termos-e-condicoes");return false;' class="link">Termos & Condições</a> do site</figure>
                 </div>
               </div>
 
@@ -238,8 +234,7 @@
                 Other Fields  
                 =========================================================== -->
                 {% else %}
-                  <label>{{field.label}}</label>
-                  {{field}}
+                  <input placeholder="{{field.label}}"  type="text" name="{{field.name}}" class="form-control" required="{{field.required}}" id="{{field.auto_id}}">
                   <div id="{{field.name}}_error" class="error_message"></div>
                   {% if field.errors %}
                     <div class="error_message" style="display:block">
