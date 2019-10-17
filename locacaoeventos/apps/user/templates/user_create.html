@@ -13,8 +13,8 @@
 
   <div style="text-align:center; width:100%">
 
-    <div class="btn btn-default" style="width:40%; margin-right:5%" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
-    <div class="btn btn-default" style= "width:40%; margin-left:5%" id="seller_button" {% if form_type == "seller" %}style="background-color: background-color:#98d000"{% endif %}>Anunciar meu Buffet</div><br>
+    <div class="btn btn-default" style="width:50%; margin-right:2%" id="buyer_button" {% if form_type == "buyer" %}style="background-color:#98d000"{% endif %}>Buscar Buffets</div>
+    <div class="btn btn-default" style= "width:50%; margin-left:2%" id="seller_button" {% if form_type == "seller" %}style="background-color: background-color:#98d000"{% endif %}>Anunciar meu Buffet</div><br>
     <div class="separador-40"> </div>
   </div>
 
@@ -41,7 +41,7 @@
                                          BUYER FORM  
 
 ========================================================================================== -->
-  <div id="buyer_wrapper" {% if form_type == "buyer" %}style="display:block; width:60%"{% endif %}>
+  <div id="buyer_wrapper" {% if form_type == "buyer" %}style="display:block; width:100%"{% endif %}>
 
     <form role="form" method="post" enctype="multipart/form-data">{%csrf_token%}
       {% for field in form_buyer %}
@@ -101,7 +101,7 @@
 
 
 
-          {% elif field.name != "month" and field.name != "year" and field.name != "accepts_newsletter" and field.name != "cpf_buyer" and field.name != "cellphone" %}
+          {% elif field.name != "month" and field.name != "year" and field.name != "accepts_newsletter"  and field.name != "cellphone" %}
             <div class="form-group">
               <input placeholder="{{field.label}}"  type="text" name="{{field.name}}" class="form-control" required="{{field.required}}" id="{{field.auto_id}}">
               {% if field.errors %}
