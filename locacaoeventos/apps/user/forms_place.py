@@ -92,3 +92,25 @@ class PlaceForm(TOCForm):
                 "Clique em alguma foto acima como capa!"
             )
             self.add_error('first_photo', error_message)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            

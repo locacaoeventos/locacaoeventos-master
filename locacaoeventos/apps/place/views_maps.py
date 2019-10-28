@@ -28,11 +28,12 @@ class MapsPlace(View):
                 "category": "real_estate",
                 "title": place.name,
                 "location": place.address,
+                "capacity": place.capacity,
                 "latitude": place.lat,
                 "longitude": place.lng,
                 "url": "/buffet/detalhar/?pk=" + str(place.pk),
                 "type": "Apartment",
-                "type_icon": "/static/base_template_user/assets/icons/hotels/villa.png",
+                # "type_icon": "/static/base_template_user/assets/icons/hotels/villa.png",
             }
 
             gallery = []
@@ -42,6 +43,11 @@ class MapsPlace(View):
             data_dic["gallery"] = gallery
 
             place = get_single_place_dic(place)
+            
+            if place['review_list']['review_rates'] != 'None':
+                data_dic['rate_average'] = place['review_list']['review_rates']['rate_average']
+            else:
+                data_dic['rate_average'] = "Não há avaliações!"
 
             for i in range(len(place["review_list"]["review_list"])):
                 place["review_list"]["review_list"][i]["buyerprofile"] = ""
@@ -80,6 +86,7 @@ class MapsPlaceAjax(View):
                 "id": place.pk,
                 "category": "real_estate",
                 "title": place.name,
+                "capacity": place.capacity,
                 "location": place.address,
                 "latitude": place.lat,
                 "longitude": place.lng,
@@ -96,6 +103,13 @@ class MapsPlaceAjax(View):
 
             place = get_single_place_dic(place)
 
+            if place['review_list']['review_rates'] != 'None':
+                data_dic['rate_average'] = place['review_list']['review_rates']['rate_average']
+            else:
+                data_dic['rate_average'] = "Não há avaliações!"
+
+
+            place['rate_average'] = place['review_list']['review_rates']['rate_average']
             for i in range(len(place["review_list"]["review_list"])):
                 place["review_list"]["review_list"][i]["buyerprofile"] = ""
                 place["review_list"]["review_list"][i]["creation"] = ""

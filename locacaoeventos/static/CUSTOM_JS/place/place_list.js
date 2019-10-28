@@ -30,55 +30,66 @@ function load_places(items_pk){
         for(i=0;i<list_places.length;i++){
           place = list_places[i]
           str_item = ''
-          str_item += '<div class="col-md-4 col-sm-6">'
-            str_item += '<div class="place_item" pk="' + place.pk + '">'
-              str_item += '<div class="image">'
-                str_item += '<a href="/buffet/detalhar/?pk=' + place.pk + '">'
-                  str_item += '<div class="overlay" id="overlay_' + place.pk + '">'
-                    str_item += '<div class="inner">'
-                      str_item += '<div class="content">'
-                        str_item += '<p>' + place.description + '</p>'
-                      str_item += '</div>'
-                    str_item += '<div class="separador-20"> </div>'
-                    str_item += '<div class="center_element">'
-                      str_item += '<span style="color:#b4b5b4"><img src="/static/img/icon/person.png" alt="" style="width:10px;">&nbsp;&nbsp;' + place.capacity + ' pessoas</span>'
-                    str_item += '</div>'
+          // str_item += '<div class="col-md-4 col-sm-6">'
+          //   str_item += '<div class="place_item" pk="' + place.pk + '">'
+          //     str_item += '<div class="image">'
+          //       str_item += '<a href="/buffet/detalhar/?pk=' + place.pk + '">'
+          //         str_item += '<div class="overlay" id="overlay_' + place.pk + '">'
+          //           str_item += '<div class="inner">'
+          //             str_item += '<div class="content">'
+          //               str_item += '<p>' + place.description + '</p>'
+          //             str_item += '</div>'
+          //           str_item += '<div class="separador-20"> </div>'
+          //           str_item += '<div class="center_element">'
+          //             str_item += '<span style="color:#b4b5b4"><img src="/static/img/icon/person.png" alt="" style="width:10px;">&nbsp;&nbsp;' + place.capacity + ' pessoas</span>'
+          //           str_item += '</div>'
 
-                    str_item += '</div>'
-                  str_item += '</div>'
-                  str_item += '<div class="place_featured">'
-                    str_item += '<img src="/static/img/123festas/logo_white_squared.png">'
-                  str_item += '</div>'
-                  str_item += '<div class="img-center center-cropped place_image" style="background-image: url(/media/' + place.photo + ');"></div>'
-                str_item += '</a>'
-              str_item += '</div>'
-              str_item += '<div class="wrapper place_description_wrapper" pk="' + place.pk + '">'
-                str_item += '<div class="place_description_cell" pk="' + place.pk + '">'
-                  str_item += '<div class="place_name_container"><a class="place_name">'
-                    str_item += place.name
-                  str_item += '</a></div>'
-                  str_item += '<div class="separador-2"> </div>'
-                  str_item += '<figure class="place_address">' + place.address + '</figure>'
-                  str_item += '<h4 class="place_price">R$</h4>'
-                  str_item += '<h3 class="place_price">' + place.placeprice_min
-                  if(data.is_superuser==true){
-                    str_item += ' - ' + place.feature.toFixed(2) + '</h3>'
-                  }
-                str_item += '</div>'
-                str_item += '<div class="place_description_cell" style="height:50px;">'
-                  str_item += '<div class="separador-5"> </div>'
+          //           str_item += '</div>'
+          //         str_item += '</div>'
+          //         str_item += '<div class="place_featured">'
+          //           str_item += '<img src="/static/img/123festas/logo_white_squared.png">'
+          //         str_item += '</div>'
+          //         str_item += '<div class="img-center center-cropped place_image" style="background-image: url(/media/' + place.photo + ');"></div>'
+          //       str_item += '</a>'
+          //     str_item += '</div>'
+          //     str_item += '<div class="wrapper place_description_wrapper" pk="' + place.pk + '">'
+          //       str_item += '<div class="place_description_cell" pk="' + place.pk + '">'
+          //         str_item += '<div class="place_name_container"><a class="place_name">'
+          //           str_item += place.name
+          //         str_item += '</a></div>'
+          //         str_item += '<div class="separador-2"> </div>'
+          //         str_item += '<figure class="place_address">' + place.address + '</figure>'
+          //         str_item += '<h4 class="place_price">R$</h4>'
+          //         str_item += '<h3 class="place_price">' + place.placeprice_min
+          //         if(data.is_superuser==true){
+          //           str_item += ' - ' + place.feature.toFixed(2) + '</h3>'
+          //         }
+          //       str_item += '</div>'
+          //       str_item += '<div class="place_description_cell" style="height:50px;">'
+          //         str_item += '<div class="separador-5"> </div>'
+          //         if(place.review_list.review_rates == "None") {
+          //           str_item += '<figure style="font-size:12px; color:#888888">Aguardando Primeira Avaliaçao!</figure>'
+          //         } else {
+          //           str_item += '<div style="display:block">'
+          //             str_item += '<span style="color:#70b7c8; dislay:inline" class="stars" data-rating="' + place.review_list.review_rates.rate_average + '" data-num-stars="5"></span>&nbsp;'
+          //             str_item += '<span style="font-size:12px; color:#888888">' + place.review_list.review_rates.rate_average + '&nbsp;(' + place.review_list.review_rates.n_review + ')</span>'
+          //           str_item += '</div>'                
+          //         }
+
+          //       str_item += '</div>'
+          //     str_item += '</div>'
+          //   str_item += '</div>'
+          // str_item += '</div>'
+
+
                   if(place.review_list.review_rates == "None") {
-                    str_item += '<figure style="font-size:12px; color:#888888">Aguardando Primeira Avaliaçao!</figure>'
+                    rating = 'Aguardando Primeira Avaliaçao!'
                   } else {
                     str_item += '<div style="display:block">'
-                      str_item += '<span style="color:#70b7c8; dislay:inline" class="stars" data-rating="' + place.review_list.review_rates.rate_average + '" data-num-stars="5"></span>&nbsp;'
-                      str_item += '<span style="font-size:12px; color:#888888">' + place.review_list.review_rates.rate_average + '&nbsp;(' + place.review_list.review_rates.n_review + ')</span>'
-                    str_item += '</div>'                
+                    rating = place.review_list.review_rates.rate_average
                   }
-
-                str_item += '</div>'
-              str_item += '</div>'
-            str_item += '</div>'
+          str_item += '<div class="col-md-4 col-sm-6">'
+          str_item += create_card(place.pk, place.photo, place.name,place.placeprice_min, place.address, rating)
           str_item += '</div>'
 
           str_total += str_item

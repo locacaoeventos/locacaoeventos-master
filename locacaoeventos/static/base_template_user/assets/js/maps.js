@@ -67,19 +67,22 @@ function createHomepageGoogleMap(_latitude,_longitude,json, zoom, get_marker){
             var markerContent = document.createElement('DIV');
             if( json.data[i].featured == 1 ) {
                 markerContent.innerHTML =
-                    '<div class="map-marker featured' + color + '">' +
-                        '<div class="icon">' +
-                        '<img src="' + json.data[i].type_icon +  '">' +
-                        '</div>' +
-                    '</div>';
+                    '<i class="fa fa-map-marker" style="font-size:32px; color:#00A9B7;"> </i>'
+                    // '<div class="map-marker featured' + color + '">' +
+                    //     '<div class="icon">' +
+
+                        // '<img src="' + json.data[i].type_icon +  '">' +
+                    //     '</div>' +
+                    // '</div>';
             }
             else {
                 markerContent.innerHTML =
-                    '<div class="map-marker ' + json.data[i].color + '">' +
-                        '<div class="icon">' +
-                        '<img src="' + json.data[i].type_icon +  '">' +
-                        '</div>' +
-                    '</div>';
+                    '<i class="fa fa-map-marker" style="font-size:32px; color:#00A9B7;"> </i>'
+                    // '<div class="map-marker ' + json.data[i].color + '">' +
+                    //     '<div class="icon">' +
+                        // '<img src="' + json.data[i].type_icon +  '">' +
+                    //     '</div>' +
+                    // '</div>';
             }
 
             // Create marker on the map ------------------------------------------------------------------------------------
@@ -100,14 +103,15 @@ function createHomepageGoogleMap(_latitude,_longitude,json, zoom, get_marker){
             var infoboxOptions = {
                 content: infoboxContent,
                 disableAutoPan: false,
-                pixelOffset: new google.maps.Size(-18, -42),
+                pixelOffset: new google.maps.Size(-140, -50),
                 zIndex: null,
                 alignBottom: true,
                 boxClass: "infobox",
                 enableEventPropagation: true,
                 closeBoxMargin: "0px 0px -30px 0px",
                 closeBoxURL: "/static/base_template_user/assets/img/close.png",
-                infoBoxClearance: new google.maps.Size(1, 1)
+
+                infoBoxClearance: new google.maps.Size(40, -10)
             };
 
             // Infobox HTML element ----------------------------------------------------------------------------------------
@@ -621,9 +625,7 @@ function pushItemsToArray(json, a, category, visibleItemsArray){
                     drawPrice(json.data[a].place.placeprice_min) +
                     '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place info">' +
                         '<div pk="' + place.pk + '" lat="' + place.lat + '" lng="' + place.lng + '" class="result_place rating" data-rating="' + place.review_list.review_rates.rate_average + '"></div>'
-                        if(place.review_list.review_rates.rate_average!=undefined){
-                            div_str += '<figure style="font-size:11px; margin-top:5px">(' + place.review_list.review_rates.rate_average + ')</figure>'
-                        }
+                            // '<figure style="font-size:11px; margin-top:5px">(' + place.rate_average + ')</figure>'
         div_str += '</div>' +
                 '</div>' +
             '</div>' +

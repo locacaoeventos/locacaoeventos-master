@@ -473,8 +473,8 @@ class CreateEditPlace(View):
                 video = "https://" + video
             # Coordinates
             
-            # coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
-            coordinates = [-23.5500827, -46.6540044]
+            coordinates = get_latlng_from_address_str(form.cleaned_data["address"])
+            # coordinates = [-23.5500827, -46.6540044]
 
 
 

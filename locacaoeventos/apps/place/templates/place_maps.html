@@ -7,7 +7,33 @@
 
 
     <link rel="stylesheet" href="/static/base_template_user/assets/css/jquery.mCustomScrollbar.css" type="text/css">
+    <style>
+        .items-list.mCustomScrollbar._mCS_1.mCS_no_scrollbar, .mCSB_container, .items-list.mCustomScrollbar._mCS_1 {
+            background-color:#00A9B7 !important;
+        }
 
+        @media(max-width:1050px) {
+            .items-list.mCustomScrollbar._mCS_1.mCS_no_scrollbar, .mCSB_container, .items-list.mCustomScrollbar._mCS_1 {
+                display:none !important;
+            }
+            .map {
+                width:100% !important;
+            }
+        }
+
+
+        @media(max-width:767px) {
+            .map-canvas.map.search-bar, .search-bar.horizontal {
+                top:-440px !important;
+            }
+            #map {
+                top:270px !important;
+            }
+            #footer_id {
+                margin-top:490px !important;
+            }
+        }
+    </style>
 
 
 
@@ -100,7 +126,7 @@
                         <!-- ========================================================== -->
                         <!-- Panel Top                                                  -->
                         <!-- ========================================================== -->
-                        <div class="search-bar horizontal">
+                        <div class="search-bar horizontal" style="background-color:#00A9B7!important">
                             <form class="main-search border-less-inputs" role="form" method="post">
                                 <div class="input-row">
                                     <div class="form-group">
@@ -123,7 +149,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-default" id="search_button"><i class="fa fa-search"></i></button>
+                                        <button type="submit" class="btn btn-default" id="search_button" style="background-color:#FF543B"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -134,7 +160,7 @@
                     <!-- Panel Left                                                 -->
                     <!-- ========================================================== -->
                     <div class="items-list">
-                        <div class="pull-right" style="position:relative; margin-top:-3px; cursor:pointer; color:white; background-color:#4fa7bc; padding:10px 30px" onclick="window.history.go(-1); return false;">
+                        <div class="pull-right" style="position:relative; margin-top:-3px; cursor:pointer; color:white; background-color:#FF543B; padding:10px 30px" onclick="window.history.go(-1); return false;">
                             <div style="margin-right:-20px;">
                                 Voltar Página
                                 <div style="position:absolute; left:10px; top:10px">
