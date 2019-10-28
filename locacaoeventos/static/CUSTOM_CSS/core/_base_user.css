@@ -41,7 +41,7 @@ Footer
 
 
 .user-area li a {
-	font-size:13px !important;
+	font-size:16px !important;
 }
 
 
@@ -58,7 +58,7 @@ Footer
 Footer 
 ================================================ */
 #footer_id > .inner {
-	background-color:#41b3bd !important;
+	background-color:white !important;
 	padding-top:20px !important;
 	color:white !important;
 }
@@ -81,7 +81,7 @@ Footer
 }
 #base_newsletter_send {
 	width: 100%;
-	background-color: #94d600;
+	background-color: #FF513F;
 	height:40px;
 	border-radius:0 5px 5px 0;
 	font-weight:bold;

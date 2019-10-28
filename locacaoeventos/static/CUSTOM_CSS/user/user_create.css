@@ -12,14 +12,13 @@ General
 Page
 =============================== */
 .create_user_background {
-	background-image: url(/static/img/background/IMG_0046-reduced.jpg);
+	background-image: url(/static/img/background/login.jpg);
 	width:100%;
 	height:600px;
 	margin-bottom:-5px;
 }
 .create_user_container{
-	background-color:white;
-	width:50%;
+	width:30%;
 	min-width:380px;
 	height:520px;
 	margin:auto;

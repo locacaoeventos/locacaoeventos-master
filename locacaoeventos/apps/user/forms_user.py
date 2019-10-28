@@ -52,6 +52,7 @@ class BuyerForm(TOCForm):
                 datetime.datetime.strptime(birthday, '%Y-%m-%d')
             except:
                 error_message = forms.ValidationError("ERROR")
+                print("ERRO!1")
                 self.add_error('day', error_message)
 
         # E-mail
@@ -79,6 +80,7 @@ class BuyerForm(TOCForm):
         cpf_num = re.sub('[^0-9]', '', cpf)
         if not validate_cpf(cpf_num) and valida_cpf:
             error_message = forms.ValidationError("CPF digitado incorretamente")
+            print("ERRO!2/")
             self.add_error('cpf_buyer', error_message)
 
         cellphone = str(cleaned_data.get('cellphone'))
@@ -204,7 +206,7 @@ class SellerForm(TOCForm):
             self.add_error('cnpj', error_message)
 
         cellphone = str(cleaned_data.get('cellphone_seller'))
-        if len(cellphone) != 15:
+        if len(cellphone) < 10:
             error_message = forms.ValidationError("Celular digitado incorretamente")
             self.add_error('cellphone_seller', error_message)
 
