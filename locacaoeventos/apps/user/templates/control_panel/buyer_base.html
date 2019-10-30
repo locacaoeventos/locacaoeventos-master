@@ -13,14 +13,14 @@ CSS imports
 Body code
 ===================================================== -->
   <section class="container">
-      <header>
+      {% comment %} <header>
           <ul class="nav nav-pills">
               <li id="control_panel_username"><a href="/usuario/conta/"><h1 class="page-title">{{profile.name}}</h1></a></li>
               <li class="active"><a><h1 class="page-title">{% block panel_title %}{% endblock panel_title %}</h1></a></li>
           </ul>
-      </header>
-      <div class="row">
-          <div class="col-md-3 col-sm-3">
+      </header> {% endcomment %}
+      <div class="row" style="margin-top:5%">
+          <div style="background-color:#00A8B5" class="col-md-2 col-sm-2">
               <aside id="sidebar">
                   <ul class="navigation-sidebar list-unstyled option_container_buyer_seller">
                     <div class="toggle_buyer_seller_base">
@@ -34,49 +34,51 @@ Body code
                   <ul class="navigation-sidebar list-unstyled buyer_seller_base_menu">
                       <li {% if panel_type == "user" %}class="active"{% endif %}>
                           <a href="/usuario/conta/">
-                              <i class="icon_menu fa fa-user"></i>
-                              <span>Perfil</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-user"></i>
+                              <span  style="color:white">Perfil</span>
                           </a>
                       </li>
                       <li {% if panel_type == "family_member" %}class="active"{% endif %}>
                           <a href="/usuario/familia/">
-                              <i class="icon_menu fa fa-child" style="font-size:16px"></i>
-                              <span>Família</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-child" style="font-size:16px"></i>
+                              <span  style="color:white">Família</span>
                           </a>
                       </li>
 
                       <li {% if panel_type == "listbought" %}class="active"{% endif %}>
                           <a href="/usuario/buffets-agendados/">
-                              <i class="icon_menu fa fa-book"></i>
-                              <span>Buffets Agendados</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-book"></i>
+                              <span  style="color:white">Buffets Agendados</span>
                           </a>
                       </li>
                       
                       <li {% if panel_type == "chat" %}class="active"{% endif %}>
                           <a href="/usuario/chat/?is_seller=False">
-                              <i class="icon_menu fa fa-envelope"></i>
-                              <span>Mensagens</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-envelope"></i>
+                              <span  style="color:white">Mensagens</span>
                           </a>
                       </li>
 
                       <li {% if panel_type == "loved" %}class="active"{% endif %}>
                           <a href="/usuario/favoritos/">
-                              <i class="icon_menu fa fa-heart"></i>
-                              <span>Amei</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-heart"></i>
+                              <span  style="color:white">Amei</span>
                           </a>
                       </li>
 
                       <li>
                           <a href="/logout/">
-                              <i class="icon_menu fa fa-power-off"></i>
-                              <span>Logout</span>
+                              <i style="color:white; border: 2px solid white" class="icon_menu fa fa-power-off"></i>
+                              <span  style="color:white">Logout</span>
                           </a>
                       </li>
                   </ul>
                   <div class="separador-20"> </div>
               </aside>
           </div>
-          <div class="col-md-9 col-sm-9">
+                    <div class="col-md-1 col-sm-1">
+          </div>
+          <div class="col-md-7 col-sm-7">
               <section id="items">
                 {% block user_panel_content %}{% endblock user_panel_content %}
               </section>

@@ -12,20 +12,23 @@
         .buyerfamily_title {
             text-transform:uppercase;
             font-size:22px;
-            color:#00195c;
+            color:#00A8B5;
             font-weight:bold;
 
         }
 
     </style>
+      <div class="separador-20"> </div>
+    <div class="buyerfamily_title" >Cadastrar Familiares</div>
+    <hr style="border-color:#BDEEF0" class="line">
 
     {% for familymember in familymembers %}
       {% if not forloop.counter|divisibleby:2 %}
         <div class="row">
       {% endif %}
         <div class="col-md-6">
-          <div class="item list" style="border: 1px solid #f9f9f9; padding:10px; margin-bottom:10px">
-            <div class="x_option" style="position:absolute; width:21px; padding:0 0px 0 6px; right:5px" pk="{{familymember.pk}}">×</div>
+          <div class="item list" style="border: 1px solid #f9f9f9; padding:10px; margin-bottom:10px;  background-color:#BDEEF0">
+            <div class="x_option" style="position:absolute; width:21px; padding:0 0px 0 6px; right:5px;" pk="{{familymember.pk}}">×</div>
             <div class="separador-10"> </div>
             <b>Nome</b>: {{familymember.name}}<br>
             <b>Gênero</b>: {{familymember.gender}}<br>
@@ -42,9 +45,6 @@
       {% endif %}
     {% endfor %}
 
-    <div class="separador-20"> </div>
-    <div class="buyerfamily_title">Cadastrar Familiares</div>
-    <hr class="line">
 
 
 
@@ -99,15 +99,23 @@
           {% elif field.name == "gender" %}
             <div class="separador-10"> </div>
             <div class="form-group">
+            <div class="row">
               <label>Gênero do Usuário</label>
+              <div class="col-md-3">
               <label class="container_radio" style="font-weight:bold">Masculino
                 <input id="male" type="radio" name="gender" value="Masculino" {% if field.value == "Masculino" %}checked{% endif %} required="required">
                 <span class="checkmark_radio"></span>
               </label>
+              </div>
+              <div class="col-md-3">
               <label class="container_radio" style="font-weight:bold">Feminino
                 <input id="female" type="radio" name="gender" value="Feminino" {% if field.value == "Feminino" %}checked{% endif %} required="required">
                 <span class="checkmark_radio"></span>
               </label>
+              </div>
+              <div class="col-md-6">
+              </div>
+              </div>
             </div>
             <div class="separador-10"> </div>
 
@@ -135,7 +143,7 @@
 
     {% endfor %}
     <div class="separador-20"> </div>
-    <button type="submit" class="btn btn-default pull-right" id="submit">Cadastrar</button>
+     <button type="submit" class="btn btn-default center-block" style="background-color:#FF513F; width:50%" id="submit">Cadastrar</button>
   </form>
 
 {% block jquery %}

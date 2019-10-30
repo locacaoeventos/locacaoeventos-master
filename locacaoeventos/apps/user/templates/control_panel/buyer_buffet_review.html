@@ -11,13 +11,13 @@
 
 	<section>
         <div class="row">
-            <div class="col-md-3">
-                <div class="img-center center-cropped place_image" style="background-image: url(/media/{{place.photo}}); width:100%; height:100px;"></div>
+            <div class="col-md-5">
+                <div class="img-center center-cropped place_image" style="background-image: url(/media/{{place.photo}}); width:100%; height:200px;"></div>
             </div>
-            <div class="col-md-9">
-                <a href="/buffet/detalhar/?pk={{place.pk}}" style="font-weight:bold; color:#021a5d; font-size:22px">{{place.name}}</a><br>
+            <div class="col-md-7">
+                <a href="/buffet/detalhar/?pk={{place.pk}}" style="font-weight:bold; color:#021a5d; font-size:22px; color:#00A7b6">{{place.name}}</a><br>
                 {% language 'pt-br' %}
-                    <i>{{place.day}}</i><br>
+                    <i class="icon_menu fa fa-map-marker" style="color:#00A7b6"></i> {{place.address}}<br>
                 {% endlanguage %}
             </div>
         </div>
@@ -60,23 +60,21 @@
                 </aside>
                 <div class="separador-10"> </div>
 
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="separador-15"> </div>
                     <label for="form-review-message">Nos conte um pouco da sua experiência!</label>
                     <textarea class="form-control" id="comment_id" name="comment" rows="6" >{{review.comment}}</textarea>
                     <div class="error_message" id="comment_obligatory">Comentário obrigatório se alguma das avaliações for menor ou igual à 2</div>
                     <div class="separador-15"> </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row" style="text->
                 	<input class="hidden" id="pk_id" name="reservation_pk" type="text" value="{{place.reservation_pk}}"/>
                 	<input class="rate hidden" id="rate_infraestructure_id" name="rate_infraestructure" type="number" value="{{review.rate_infraestructure}}"/>
                 	<input class="rate hidden" id="rate_rides_id" name="rate_rides" type="number" value="{{review.rate_rides}}"/>
                 	<input class="rate hidden" id="rate_cost_benefit_id" name="rate_cost_benefit" type="number" value="{{review.rate_cost_benefit}}"/>
                 	<input class="rate hidden" id="rate_attendance_id" name="rate_attendance" type="number" value="{{review.rate_attendance}}"/>
                 	<input class="rate hidden" id="rate_children_opinion_id" name="rate_children_opinion" type="number" value="{{review.rate_children_opinion}}"/>
-                    <div class="separador-10"> </div>
-                    <button type="submit" class="btn btn-default" id="send_button">{% if review %}Salvar{% else %}Enviar{% endif %}</button>
-                    <div class="separador-30"> </div>
+                    <button type="submit" class="btn btn-default " style="background-color:#FF513F; margin-right:85%;width:15%" id="send_button">{% if review %}Salvar{% else %}Enviar{% endif %}</button>
                 </div>
 
 

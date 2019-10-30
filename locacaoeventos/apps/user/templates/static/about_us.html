@@ -1,4 +1,4 @@
-{% extends "static/_base_static.html" %}
+{% extends "static/_base_static_aboutus.html" %}
 {% block page_title %}Sobre Nós{% endblock page_title %}
 
 {% block content_static %}
@@ -9,13 +9,13 @@
     }
 </style>
     <section>
-        <h2>Quem Somos Nós</h2>
+        <h1 style="color:#4fa7bc">Quem Somos</h2>
         <div class="separador-30"> </div>
 
 
 
 
-        <p>O <img src="/static/img/123festas/logo_horizontal.png" style="width:100px; margin:-30px 5px 0px 5px;"/> é uma startup brasileira criada por quatro empreendedores com o objetivo de levar mais <b>facilidade</b> à vida dos pais e mães modernos, que no dia-a-dia agitado procuram <b>praticidade</b>, <b>agilidade</b> e <b>eficiência</b>.</p>
+        <p>O <b>123festas</b> é uma startup brasileira criada por quatro empreendedores com o objetivo de levar mais <b>facilidade</b> à vida dos pais e mães modernos, que no dia-a-dia agitado procuram <b>praticidade</b>, <b>agilidade</b> e <b>eficiência</b>.</p>
 
         <p>O site possibilita <b>encontrar</b> o local ideal para festa de aniversário dos seus filhos, com uma variedade de lugares incríveis.</p><br>
         
@@ -32,24 +32,7 @@
     </section>
 
     <div class="separador-30"> </div>
-    <section>
-        <h2>Missão</h2>
-        <p>Proporcionar uma alternativa moderna, tecnológica e eficiente que facilite o processo de busca, comparação e reserva do melhor buffet infantil para realizar a festa dos sonhos do seu filho.</p>
 
-        <div class="separador-30"> </div>
-        <h2>Visão</h2>
-        <p>Ser a empresa líder de mercado, realizando sonhos e levando felicidade às crianças e suas famílias.</p>
-
-        <div class="separador-30"> </div>
-        <h2>Valores</h2>
-        <p>O <b>123Festas</b> conta com 5 pilares  baseado na sua cultura e no seu relacionamento com clientes e fornecedores:</p>
-        <p>- Fazer mais e melhor a cada dia</p>
-        <p>- Inovar em todos os momentos</p>
-        <p>- Criar alegria e diversão </p>
-        <p>- Focar no Cliente</p>
-        <p>- Espírito aventureiro e criativo</p>
-        
-    </section>
         
 
     <div class="separador-30"> </div>
@@ -70,6 +53,6 @@
 
 
 
-{% block how_it_works %}
+{% comment %} {% block how_it_works %}
     {% include "_how_it_works.html" %}
-{% endblock how_it_works %}
+{% endblock how_it_works %} {% endcomment %}
