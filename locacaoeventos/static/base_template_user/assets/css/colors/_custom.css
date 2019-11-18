@@ -2905,9 +2905,10 @@ ul.bullets li a:hover {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
   font-weight: bold;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   padding: 12px 0;
 }
+
 .navigation-sidebar li a:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
   opacity: 1;

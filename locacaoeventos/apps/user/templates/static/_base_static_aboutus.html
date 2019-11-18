@@ -1,0 +1,77 @@
+{% extends "_base_user.html" %}
+{% block content %} 
+
+
+    <div id="page-content">
+        <section class="container">
+            <div class="row row-flex">
+                <!--Content-->
+                <div class="col-md-7">
+                    <div class="separador-30"> </div>
+                    {% block content_static %}{% endblock content_static %}
+                </div>
+                <!--Sidebar-->
+                <div class="col-md-5 col-v-centered">
+                    <aside id="sidebar">
+                        <section>
+                        <div class="separador-30">
+                        <div class="separador-30">
+                            <a href="#"><img src="/static/img/menu/sobre-nos.jpg" alt=""></a>
+                        </section>
+                    </aside>
+                    <!-- /#sidebar-->
+                </div>
+                <!-- /.col-md-3-->
+                <!--end Sidebar-->
+            </div>
+            <div class="row" >
+            <section>
+                <div class="col-md-4">
+                <h2 style="color:#4fa7bc">Missão</h2>
+                <p>Proporcionar uma alternativa moderna, tecnológica e eficiente que facilite o processo de busca, comparação e reserva do melhor buffet infantil para realizar a festa dos sonhos do seu filho.</p>
+
+                </div>
+                <div class="col-md-4">
+
+                <h2 style="color:#4fa7bc">Visão</h2>
+                <p>Ser a empresa líder de mercado, realizando sonhos e levando felicidade às crianças e suas famílias.</p>
+                </div>
+
+                <div class="col-md-4">
+                <h2 style="color:#4fa7bc">Valores</h2>
+                <p>O <b>123Festas</b> conta com 5 pilares  baseado na sua cultura e no seu relacionamento com clientes e fornecedores:</p>
+                <p>- Fazer mais e melhor a cada dia</p>
+                <p>- Inovar em todos os momentos</p>
+                <p>- Criar alegria e diversão </p>
+                <p>- Focar no Cliente</p>
+                <p>- Espírito aventureiro e criativo</p>
+                </div>
+  
+            </section>
+            </div>
+            {% block how_it_works %}{% endblock how_it_works %}
+        </section>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

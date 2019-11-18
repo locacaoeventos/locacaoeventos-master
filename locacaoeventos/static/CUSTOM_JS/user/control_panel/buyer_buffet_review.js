@@ -5,11 +5,11 @@
 function rating(element){
     var ratingElement =
         '<span class="stars">'+
-            '<i class="fa fa-star s1" data-score="1"></i>'+
-            '<i class="fa fa-star s2" data-score="2"></i>'+
-            '<i class="fa fa-star s3" data-score="3"></i>'+
-            '<i class="fa fa-star s4" data-score="4"></i>'+
-            '<i class="fa fa-star s5" data-score="5"></i>'+
+            '<i class="fa fa-star s1" style="color:#99E5E9" data-score="1"></i>'+
+            '<i class="fa fa-star s2" style="color:#99E5E9" data-score="2"></i>'+
+            '<i class="fa fa-star s3" style="color:#99E5E9" data-score="3"></i>'+
+            '<i class="fa fa-star s4" style="color:#99E5E9" data-score="4"></i>'+
+            '<i class="fa fa-star s5" style="color:#99E5E9" data-score="5"></i>'+
         '</span>'
     ;
     if( !element ) { element = ''; }
