@@ -58,30 +58,33 @@
                         </div>
                             <div class="col-md-12" style="padding-top:17%; font-size:30px">
                             {% if can_refund and not place.canceled and not place.has_passed %}
-                                <div class="col-md-6" >
-						    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px;{% if not place.has_passed %} background-color:#f74235{% endif %}" class="btn btn-default pull-right" {% if not place.has_passed %}disabled{% endif %}>
-						    		{% if place.has_passed and not place.canceled %}
-						    			{% if place.review_rates != "None" %}
-						    				Editar Avaliação
-						    			{% else %}
-						    				Avalie o Estabelecimento
-						    			{% endif %}
-                                    {% elif place.canceled %}
-                                        Festa Cancelada
-						    		{% else %}
-						    			O Evento está chegando!
-						    		{% endif %}
-						    	</a><br><br>
-                                </div>
-                                
-                                <div class="col-md-6" >
-                                    <a href="/usuario/cancelar-buffet/?placereservation_pk={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px" class="btn btn-default pull-right">
-                                        Cancelar Festa
-                                    </a>
-                               </div>
+
+        						    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px;{% if not place.has_passed %} background-color:#f74235{% endif %}" class="btn btn-default" {% if not place.has_passed %}disabled{% endif %}>
+        						    		{% if place.has_passed and not place.canceled %}
+        						    			{% if place.review_rates != "None" %}
+        						    				Editar Avaliação
+        						    			{% else %}
+        						    				Avalie o Estabelecimento
+        						    			{% endif %}
+                                            {% elif place.canceled %}
+                                                Festa Cancelada
+        						    		{% else %}
+        						    			O Evento está chegando!
+        						    		{% endif %}
+        						    	</a>
+
+                                        {% if place.can_cancel != False and not place.canceled %}
+                                            <a href="/usuario/cancelar-buffet/?placereservation_pk={{place.pk_reservation}}&place_refund={{place.can_cancel}}" style="font-size:12px; padding: 7px 12px 7px 12px" class="btn btn-default">
+                                                Cancelar Festa
+                                            </a>
+                                        {% elif place.canceled %}
+                                            <a style="font-size:12px; padding: 7px 12px 7px 12px" class="btn btn-default">
+                                                Festa Cancelada
+                                            </a>
+                                        {% endif %}
                             {% else %}
                                 <div class="col-md-12" >
-						    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px; background-color:#FF513F" class="btn btn-default pull-right" {% if not place.has_passed %}disabled{% endif %}>
+						    	<a href="/usuario/avaliar-buffet/?reservation={{place.pk_reservation}}" style="font-size:12px; padding: 7px 12px 7px 12px; background-color:#FB857E" class="btn btn-default pull-right" {% if not place.has_passed %}disabled{% endif %}>
 						    		{% if place.has_passed and not place.canceled %}
 						    			{% if place.review_rates != "None" %}
 						    				Editar Avaliação

@@ -26,7 +26,7 @@ class BuyerForm(TOCForm):
     
 
     confirm = fields.CharField(required=True, widget=forms.PasswordInput,label="Senha", min_length="6")
-    password = fields.CharField(required=True, widget=forms.PasswordInput,label="Senha", min_length="6")
+    password = fields.CharField(required=False, widget=forms.PasswordInput,label="Senha", min_length="6")
     accepts_newsletter = forms.BooleanField(required=False, initial="checked")
 
 

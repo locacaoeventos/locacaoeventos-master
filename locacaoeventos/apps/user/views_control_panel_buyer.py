@@ -146,6 +146,7 @@ class ListPlaceBought(View):
 
             place_dic["canceled"] = reservation.canceled
 
+            place_dic["can_cancel"] = get_can_cancel(reservation, place)
 
             place_list.append(place_dic)
         place_list = sorted(place_list, key=lambda k: k['day'], reverse=True) 
@@ -163,6 +164,8 @@ class CancelPlaceReservation(View):
     def get(self, request, *args, **kwargs):
         context = base_context(request.user)
         context["placereservation_pk"] = request.GET.get("placereservation_pk")
+        context["place_refund"] = request.GET.get("place_refund")
+
         return render(request, "control_panel/buyer_placereservation_cancelled.html", context)
 
 class CancelPlaceReservationConfirmed(View):
@@ -170,24 +173,77 @@ class CancelPlaceReservationConfirmed(View):
         context = base_context(request.user)
         # =========== BEGIN REFUND
         placereservation_pk = request.GET.get("placereservation_pk")
+        place_refund = request.GET.get("place_refund")
+
         placereservation = PlaceReservation.objects.get(pk=placereservation_pk)
+        reservation = placereservation
+        place = placereservation.place
         pagarme_transaction = placereservation.pagarme_transaction
         pagarme.authentication_key(settings.PAGARME_API_KEY)
         trx = pagarme.transaction.find_by({
           'id': pagarme_transaction
         })[0]
-        print(trx)
+        # print(trx)
+
+        print()
+        print()
+        print()
+        cancellation_policy = place.cancellation_policy
+        print('cancellation_policy', cancellation_policy)
+
+        days_before_event = (reservation.unavailability.day - datetime.datetime.today().date()).days
+        print('days_before_event', days_before_event)
+
+        hours_after_creating_reservation = (datetime.datetime.today().replace(tzinfo=None) - reservation.creation.replace(tzinfo=None)).total_seconds()/60/60
+        print('hours_after_creating_reservation', hours_after_creating_reservation)
+
+        place_reservation_price = reservation.value
+        print('place_reservation_price', place_reservation_price)
+
+        refund = False
+        if cancellation_policy == "flexivel":
+            # flexivel
+            # Cancelamento até 48 horas após fazer a reserva e até 7 dias antes do evento, após este período pagamento integral do valor da reserva.
+            if hours_after_creating_reservation < 48 and days_before_event < 7:
+                refund = 1
+        elif cancellation_policy == "moderada":
+            # moderada
+            # Cancelamento até 48 horas após fazer a reserva e até 14 dias antes do evento, após este período pagamento integral do valor da reserva.
+            if hours_after_creating_reservation < 48 and days_before_event < 14:
+                refund = 1
+        elif cancellation_policy == "rigorosa":
+            # rigorosa
+            # 50% do reembolso caso o cancelamento ocorra ate 48 horas após fazer a reserva e até 21 dias antes do evento, após este período pagamento integral do valor da reserva.
+            if hours_after_creating_reservation < 48 and days_before_event < 21:
+                refund = 0.5
+
+
+
+
+
         amount = trx["authorized_amount"]
         refunded = trx["refunded_amount"]
 
-        params_refund = {
-            # 'amount': amount-refunded
-            'amount': 1
-        }
+        print(amount)
+        print(refunded)
+
+        if refund == 1:
+            if amount != refunded:
+                params_refund = {
+                    'amount': amount-refunded
+                }
+        else:
+            if refunded < amount/2:
+                params_refund = {
+                    'amount': amount/2-refunded
+                }
+
+
         refunded_trx = pagarme.transaction.refund(trx['id'], params_refund)
         # =========== END REFUND
 
         placereservation.canceled = True
+        placereservation.save()
         return render(request, "control_panel/buyer_placereservation_cancelled_confirmed.html", context)
 
 

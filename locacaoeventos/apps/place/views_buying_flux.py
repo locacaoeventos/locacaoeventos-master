@@ -203,7 +203,8 @@ class PurchasePlace(View):
             buyer=buyer,
             unavailability=unavailability,
             creation=datetime.now(),
-            pagarme_transaction=pagarme_transaction     
+            pagarme_transaction=pagarme_transaction,
+            value=data["amount"]/100
         )
 
 

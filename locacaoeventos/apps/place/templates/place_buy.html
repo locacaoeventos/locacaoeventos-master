@@ -311,86 +311,12 @@ JS imports
     <script src="https://assets.pagar.me/pagarme-js/3.0/pagarme.min.js"></script>
     <script src="https://assets.pagar.me/checkout/1.1.0/checkout.js"></script>
     <script type="text/javascript" src="/static/slider/nouislider.min.js"></script>
-    
-    <script>
-      // Capacity
-      update_capacity()
-      // source: https://refreshless.com/nouislider/
-      var slider_page = document.getElementById('search_capacity');
-      var start_value = parseInt({{capacity}})
-      noUiSlider.create(slider_page, {
-        start: [start_value],
-        range: {
-          'min': [0],
-          'max': [500]
-        },
-        step: 10,
-        connect: [true, false],
-      });
-      slider_page.noUiSlider.on("slide", function(values){
-        if(values<500){
-          $("#capacity_string").html(parseInt(values))
-        } else {
-          $("#capacity_string").html("500+")
-        }
-        $("#capacity_form").val(parseInt(values))
-        update_capacity()
-      })
-      slider_page.noUiSlider.on("change", function(values){
-      })
-
-
-
-      function update_capacity(){
-        var url_string = window.location.href
-        var url = new URL(url_string);
-        var place_pk = url.searchParams.get("place_pk");
-
-        var capacidade = $("#capacity_form").val()
-
-        var date = url.searchParams.get("date");
-        date_form = encodeURIComponent(date)
-
-        var period = url.searchParams.get("period");
-        period_form = encodeURIComponent(period)
-
-
-        var url_str = "/buffet/comprar/?place_pk=" + "{{place_pk}}" +  "&capacidade=" + capacidade + "&date=" + date_form + "&period=" + period_form
-
-
-        $("#check_availability").attr("onClick", "location='" + url_str + "'")
-
-
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // Help tip
-      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank' style='text-decoration:underline'>aqui</a>.")
-      $("#help_tip").css("position", "absolute")
-      $("#help_tip").css("top", "-5px")
-      $("#help_tip").css("left", "120px")
-
+    {% block old_custom_js %}{% endblock old_custom_js %}
+<script>
 
       // Credit Card
       $(document).on('click', "#pay-credit-card", function() {
+        console.log('PAGARME')
         var checkout = new PagarMeCheckout.Checkout({
           encryption_key: "{{encryption_key}}",
           success: function(data) {
@@ -407,13 +333,6 @@ JS imports
             url_str += "&city=" + $("#id_city").val()
             url_str += "&neighbourhood=" + $("#id_neighbourhood").val()
             url_str += "&street=" + $("#id_street").val()
-
-
-
-
-
-
-
             window.location.replace(url_str);
           },
           error: function(err) {
@@ -493,6 +412,85 @@ JS imports
       //     },
       //   });
       // });
+
+    </script>
+    <script>
+      // Capacity
+      update_capacity()
+      // source: https://refreshless.com/nouislider/
+      var slider_page = document.getElementById('search_capacity');
+      var start_value = parseInt({{capacity}})
+      noUiSlider.create(slider_page, {
+        start: [start_value],
+        range: {
+          'min': [0],
+          'max': [500]
+        },
+        step: 10,
+        connect: [true, false],
+      });
+      slider_page.noUiSlider.on("slide", function(values){
+        if(values<500){
+          $("#capacity_string").html(parseInt(values))
+        } else {
+          $("#capacity_string").html("500+")
+        }
+        $("#capacity_form").val(parseInt(values))
+        update_capacity()
+      })
+      slider_page.noUiSlider.on("change", function(values){
+      })
+
+
+
+      function update_capacity(){
+        var url_string = window.location.href
+        var url = new URL(url_string);
+        var place_pk = url.searchParams.get("place_pk");
+
+        var capacidade = $("#capacity_form").val()
+
+        var date = url.searchParams.get("date");
+        date_form = encodeURIComponent(date)
+
+        var period = url.searchParams.get("period");
+        period_form = encodeURIComponent(period)
+
+
+        var url_str = "/buffet/comprar/?place_pk=" + "{{place_pk}}" +  "&capacidade=" + capacidade + "&date=" + date_form + "&period=" + period_form
+
+
+        $("#check_availability").attr("onClick", "location='" + url_str + "'")
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // Help tip
+      $("#help_tip p").html("O código postal pode ser consultado no site dos correios, <a href='http://www.buscacep.correios.com.br/sistemas/buscacep/' target='_blank' style='text-decoration:underline'>aqui</a>.")
+      $("#help_tip").css("position", "absolute")
+      $("#help_tip").css("top", "-5px")
+      $("#help_tip").css("left", "120px")
+
+
 
     </script>
 

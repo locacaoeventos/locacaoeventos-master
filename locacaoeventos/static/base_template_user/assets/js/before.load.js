@@ -52,7 +52,6 @@ $('.header .toggle-navigation').on( "click", function() {
 });
 
 $('#page-content').on( "click", function() {
-    console.log("aAAAAAAA")
 	if( $('body').hasClass('navigation-off-canvas') ){
 		$('#outer-wrapper').removeClass('show-nav');
 	}

@@ -34,6 +34,7 @@ class PlaceReservation(models.Model):
     creation = models.DateTimeField(auto_now_add=True)
     pagarme_transaction = models.CharField(max_length=64, blank=True, null=True)
     canceled = models.BooleanField(default=False)
+    value = models.FloatField()
     def __str__(self):
         return self.place.name
 

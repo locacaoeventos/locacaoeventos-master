@@ -514,3 +514,60 @@ def order_by(option, places_pk):
     else:
         data = { "none": "True" }
     return data
+
+
+
+
+
+
+
+
+
+
+
+
+
+def get_can_cancel(reservation, place):
+    print()
+    print()
+    print()
+    cancellation_policy = place.cancellation_policy
+    print('cancellation_policy', cancellation_policy)
+
+    days_before_event = (reservation.unavailability.day - datetime.today().date()).days
+    print('days_before_event', days_before_event)
+
+    hours_after_creating_reservation = (datetime.today().replace(tzinfo=None) - reservation.creation.replace(tzinfo=None)).total_seconds()/60/60
+    print('hours_after_creating_reservation', hours_after_creating_reservation)
+
+    place_reservation_price = reservation.value
+    print('place_reservation_price', place_reservation_price)
+
+    refund = False
+    if cancellation_policy == "flexivel":
+        # flexivel
+        # Cancelamento até 48 horas após fazer a reserva e até 7 dias antes do evento, após este período pagamento integral do valor da reserva.
+        if hours_after_creating_reservation < 48 and days_before_event < 7:
+            refund = place_reservation_price
+    elif cancellation_policy == "moderada":
+        # moderada
+        # Cancelamento até 48 horas após fazer a reserva e até 14 dias antes do evento, após este período pagamento integral do valor da reserva.
+        if hours_after_creating_reservation < 48 and days_before_event < 14:
+            refund = place_reservation_price
+    elif cancellation_policy == "rigorosa":
+        # rigorosa
+        # 50% do reembolso caso o cancelamento ocorra ate 48 horas após fazer a reserva e até 21 dias antes do evento, após este período pagamento integral do valor da reserva.
+        if hours_after_creating_reservation < 48 and days_before_event < 21:
+            refund = place_reservation_price/2
+
+    return refund
+
+
+
+
+
+
+
+
+
+
