@@ -17,35 +17,27 @@ CSS imports
 Body code
 ===================================================== -->
 <section class="hero-image search-filter-middle height-500">
-  <div class="inner" style="vertical-align:top; padding-top:40px">
+  <div class="inner" style="vertical-align:top; padding-top:40px; -webkit-filter: grayscale(1); filter: grayscale(1);">
     <div class="container">
-      <div style="max-width:650px; display:inline-block"><h1 id="home_title">Encontre o melhor local para a sua festa!</h1></div>
+      <div style="max-width:1000px; display:inline-block;background-color:transparent!important"><h1 id="home_title" style="text-transform:none !important;background-color:transparent!important">Encontre o melhor local para a sua festa!</h1></div>
       <div class="search-bar horizontal">
         <form class="main-search border-less-inputs background-dark narrow" role="form" method="post" enctype="multipart/form-data" novalidate>{%csrf_token%}
           <div class="input-row" style="min-height:230px">
             <div style="width:100%">
-              <label class="form_label" for="place" style="width:100%">Localização ou Nome do Buffet</label>
-              <div class="input-group location" style="width:100%; padding-right:37px;">
+              <div class="input-group location" style="width:100%;">
                 <input type="text" class="form-control" id="place_id" name="place" placeholder="Localização ou Nome" style="width:100%">
-                <button type="submit" class="btn btn-default" id="home_send"><i class="fa fa-search"></i></button>
               </div>
             </div>
             <br>
 
-            <div class="form_label" id="home_arrow" for="date">
-              Busca Avançada
-              <span id="home_arrow_symbol">&#709;</span>
-            </div>
             <div class="separador-20"> </div>
-            <div id="home_advanced" class="row" style="display:none">
+            <div class="row">
               <div class="col-md-6">
-                <label class="form_label" for="date">Data da Comemoração</label>
                 <input type="text" class="form-control calendar_input" id="date_id" name="date" autocomplete="off">
                 {% include "calendar-input.html" %}
                 <div class="separador-10"> </div>
               </div>
               <div class="col-md-6">
-                <label class="form_label" for="capacity">Quantidade de Convidados</label>
                 {# <div class="quantity"> #}
 
                 <input type="number" id="capacity_id" name="capacity" class="form-control" placeholder="Número de Convidados" step="10">
@@ -53,17 +45,16 @@ Body code
               </div>
               <div class="separador-20"> </div>
             </div>
-
-
-
-
           </div>
+          <SPAN style="background-color:red!important;background:red!important">BUSCAR</SPAN>
+          <div type="submit" style="background-color:#FF543B!important;background:#FF543B!important">BUSCAR</div>
+
         </form>
       </div>
     </div>
   </div>
   <div class="background">
-    <img src="/static/img/background/brooke-lark-158026-unsplash-reduced.jpg" alt="">
+    <img src="/static/img/background/home-1-compressor.jpg" alt="" style="webkit-filter: brightness(60%);filter: brightness(60%);">
   </div>
 </section>
 
