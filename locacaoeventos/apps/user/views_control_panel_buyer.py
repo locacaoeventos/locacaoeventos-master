@@ -146,7 +146,11 @@ class ListPlaceBought(View):
 
             place_dic["canceled"] = reservation.canceled
 
-            place_dic["can_cancel"] = get_can_cancel(reservation, place)
+            place_dic["can_cancel"] = get_can_cancel(reservation, place)[0]
+            # Debug
+            place_dic["days_before_event"] = get_can_cancel(reservation, place)[1]
+            place_dic["hours_after_creating_reservation"] = get_can_cancel(reservation, place)[2]
+            place_dic["place_reservation_price"] = get_can_cancel(reservation, place)[3]
 
             place_list.append(place_dic)
         place_list = sorted(place_list, key=lambda k: k['day'], reverse=True) 

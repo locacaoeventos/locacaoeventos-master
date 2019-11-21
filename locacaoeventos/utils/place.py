@@ -560,7 +560,7 @@ def get_can_cancel(reservation, place):
         if hours_after_creating_reservation < 48 and days_before_event < 21:
             refund = place_reservation_price/2
 
-    return refund
+    return [refund, days_before_event, hours_after_creating_reservation, place_reservation_price]
 
 
 
