@@ -547,17 +547,17 @@ def get_can_cancel(reservation, place):
     if cancellation_policy == "flexivel":
         # flexivel
         # Cancelamento até 48 horas após fazer a reserva e até 7 dias antes do evento, após este período pagamento integral do valor da reserva.
-        if hours_after_creating_reservation < 48 and days_before_event < 7:
+        if hours_after_creating_reservation < 48 and days_before_event > 7:
             refund = place_reservation_price
     elif cancellation_policy == "moderada":
         # moderada
         # Cancelamento até 48 horas após fazer a reserva e até 14 dias antes do evento, após este período pagamento integral do valor da reserva.
-        if hours_after_creating_reservation < 48 and days_before_event < 14:
+        if hours_after_creating_reservation < 48 and days_before_event > 14:
             refund = place_reservation_price
     elif cancellation_policy == "rigorosa":
         # rigorosa
         # 50% do reembolso caso o cancelamento ocorra ate 48 horas após fazer a reserva e até 21 dias antes do evento, após este período pagamento integral do valor da reserva.
-        if hours_after_creating_reservation < 48 and days_before_event < 21:
+        if hours_after_creating_reservation < 48 and days_before_event > 21:
             refund = place_reservation_price/2
 
     return [refund, days_before_event, hours_after_creating_reservation, place_reservation_price]

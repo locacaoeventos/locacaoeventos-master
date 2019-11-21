@@ -72,10 +72,6 @@
         						    			O Evento está chegando!
         						    		{% endif %}
         						    	</a>
-                                        {{place.can_cancel}}
-                                        {{place.days_before_event}}
-                                        {{place.hours_after_creating_reservation}}
-                                        {{place.place_reservation_price}}
                                         {% if place.can_cancel != False and not place.canceled %}
                                             <a href="/usuario/cancelar-buffet/?placereservation_pk={{place.pk_reservation}}&place_refund={{place.can_cancel}}" style="font-size:12px; padding: 7px 12px 7px 12px" class="btn btn-default">
                                                 Cancelar Festa
